@@ -1,0 +1,21 @@
+{
+  "_comment": "Bluesky 공개 AppView getAuthorFeed 로 순회 수집할 AI 연구자·빌더 핸들. 존재하지 않거나 실패하는 계정은 자동으로 건너뜀.",
+  "handles": [
+    "huggingface.bsky.social",
+    "simonwillison.net",
+    "karpathy.bsky.social",
+    "ollama.com",
+    "emollick.bsky.social",
+    "natolambert.bsky.social",
+    "timkellogg.me",
+    "rasbt.bsky.social",
+    "hamel.bsky.social",
+    "jeffdean.bsky.social",
+    "thomwolf.bsky.social",
+    "clem.hf.co",
+    "swyx.io"
+  ],
+  "lookback_hours": 72,
+  "min_likes": 15,
+  "posts_per_account": 30
+}

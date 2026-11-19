@@ -1,0 +1,51 @@
+name: collect
+
+# 매시 정각 수집 → 신규 요약 최대 4개(플랫폼당 2개, 하루 상한 DAILY_SUMMARY_CAP) → 수명 주기 정리
+on:
+  schedule:
+    - cron: "0 * * * *"         # 1시간마다
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "DB/LLM 없이 수집·점수만 확인"
+        type: boolean
+        default: false
+
+concurrency:
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: worker/requirements.txt
+
+      - name: Install
+        run: pip install -r worker/requirements.txt
+
+      - name: Unit tests
+        working-directory: worker
+        run: python -m pytest -q
+
+      - name: Run pipeline
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUMMARY_TOP_N: ${{ vars.SUMMARY_TOP_N || '4' }}
+          DAILY_SUMMARY_CAP: ${{ vars.DAILY_SUMMARY_CAP || '96' }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ] || [ -z "$SUPABASE_URL" ]; then
+            echo "Supabase secrets not set (or dry_run requested) → dry-run"
+            python worker/run_pipeline.py --dry-run
+          else
+            python worker/run_pipeline.py
+          fi

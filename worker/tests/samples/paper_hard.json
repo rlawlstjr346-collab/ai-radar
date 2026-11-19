@@ -1,0 +1,11 @@
+{
+  "_note": "합성(synthetic) 테스트 픽스처 — 실존 논문이 아님. 요약기 톤/팩트 준수 검증용.",
+  "platform_id": "huggingface",
+  "platform_name": "Hugging Face",
+  "source_name": "HF Daily Papers",
+  "category": "research",
+  "original_title": "DraftLoop: Self-Speculative Decoding with Early-Exit Draft Heads for Lossless LLM Inference Acceleration",
+  "canonical_url": "https://arxiv.org/abs/2611.00001",
+  "metrics": {"upvotes": 142, "comments": 9},
+  "body": "Autoregressive decoding in large language models (LLMs) is memory-bandwidth bound: each generated token requires a full forward pass through all layers. Speculative decoding mitigates this by letting a small draft model propose several tokens that the large target model verifies in parallel, but it requires training and serving a separate draft model. We propose DraftLoop, a self-speculative decoding method that attaches lightweight early-exit draft heads to intermediate layers of the target model itself, so no external draft model is needed. Draft heads are trained for 6 GPU-hours with the target model frozen. On Llama-3-70B, DraftLoop achieves a 2.4x wall-clock speedup over standard autoregressive decoding and 1.3x over Medusa, while provably preserving the target model's output distribution (lossless). Quality on MT-Bench is unchanged. Memory overhead is 1.8% of model parameters. Limitations: speedup decreases as batch size grows and falls below 1.2x at batch size 32, and we evaluate only English benchmarks. Code and draft-head weights are released under the Apache-2.0 license."
+}

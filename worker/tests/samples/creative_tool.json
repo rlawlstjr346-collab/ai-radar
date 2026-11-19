@@ -1,0 +1,11 @@
+{
+  "_note": "합성(synthetic) 테스트 픽스처 — 실존 Space 가 아님. 요약기 톤/팩트 준수 검증용.",
+  "platform_id": "huggingface",
+  "platform_name": "Hugging Face",
+  "source_name": "HF Trending Spaces",
+  "category": "video_audio",
+  "original_title": "Groove2Motion — make anyone dance to your song",
+  "canonical_url": "https://huggingface.co/spaces/example-lab/groove2motion",
+  "metrics": {"likes": 1240, "trending_rank": 3, "sdk": "gradio", "hardware": "zero-a10g"},
+  "body": "Upload a full-body photo and a music clip (up to 10 seconds), and Groove2Motion generates a dance video of the person moving to the beat. It combines a beat-tracking audio encoder with an open image-to-video diffusion model fine-tuned on 40k licensed dance clips. Runs free on ZeroGPU; generation takes about 90 seconds per clip. Output resolution is 512x768 at 24 fps. Known issues: hands and fingers can look distorted during fast moves, loose clothing sometimes flickers, and only one person per photo is supported. Do not upload photos of people without their consent. Model weights are released under CC BY-NC 4.0 (non-commercial use only)."
+}
