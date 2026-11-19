@@ -65,7 +65,7 @@ class RSSAdapter(BaseAdapter):
                 category=self.source.default_category if gh else classify_news(title, self.source.default_category),
                 url=link,
                 title=title,
-                body=strip_html(content, 4000),
+                body=strip_html(content, 20000),     # 릴리스 노트·블로그 본문은 길게 (items.raw_body 대체 원문용)
                 thumbnail_url=_thumbnail(e),
                 metrics={"feed": "github_release" if gh else "official_blog"},
                 engagement=engagement,

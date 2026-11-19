@@ -157,3 +157,24 @@ def test_no_summarizer_still_collects():
 
 def test_unused_namespace():
     assert SimpleNamespace(a=1).a == 1
+
+
+def test_raw_body_saved_only_from_original_sources_and_upgraded_when_longer():
+    from pipeline.merge import RAW_BODY_LIMIT, RAW_BODY_MIN
+    long_text = "Paper abstract sentence. " * 40
+    paper = group_raw_items([raw("papers", "https://arxiv.org/abs/2611.00021", body=long_text)])["arxiv:2611.00021"]
+    row = {"source_id": "papers", **new_item_row(paper)}
+    assert row["raw_body"] == long_text.strip()
+
+    short = group_raw_items([raw("papers", "https://arxiv.org/abs/2611.00022", body="tiny")])["arxiv:2611.00022"]
+    assert new_item_row(short)["raw_body"] is None and len("tiny") < RAW_BODY_MIN
+
+    hn = RawItem(source_id="hn", source_name="HN", platform_id="hacker-news", category="dev",
+                 url="https://example.com/story", title="t", body="Hacker News story with 500 points. " * 20,
+                 engagement=500, published_at=NOW)
+    hn_candidate = next(iter(group_raw_items([hn]).values()))
+    assert new_item_row(hn_candidate)["raw_body"] is None          # 링크 전달 소스의 상투 문구는 저장 안 함
+
+    longer = group_raw_items([raw("rss", "https://arxiv.org/abs/2611.00021", body=long_text * 3)])["arxiv:2611.00021"]
+    assert merge_into_existing(row, longer)["raw_body"] == (long_text * 3).strip()[:RAW_BODY_LIMIT]
+    assert "raw_body" not in merge_into_existing({**row, "raw_body": long_text * 5}, longer)

@@ -75,10 +75,38 @@ export function isFetchableUrl(raw: string): boolean {
   }
 }
 
-/** arXiv 초록 페이지는 본문이 없어서, 가능하면 HTML 전문 페이지를 먼저 시도 */
+/**
+ * 원문 후보 URL. arXiv(abs·pdf·html)와 Hugging Face 논문 페이지는 HTML 전문 페이지를 먼저 시도한다
+ * (초록 페이지엔 본문이 없고, PDF 는 텍스트로 읽을 수 없어서).
+ */
 export function candidateUrls(url: string): string[] {
-  const m = url.match(/^https?:\/\/(?:www\.)?arxiv\.org\/abs\/([\w.]+)/i);
-  return m ? [`https://arxiv.org/html/${m[1]}`, url] : [url];
+  const m =
+    url.match(/^https?:\/\/(?:www\.)?arxiv\.org\/(?:abs|pdf|html)\/(\d{4}\.\d{4,5})(?:v\d+)?/i) ??
+    url.match(/^https?:\/\/(?:www\.)?huggingface\.co\/papers\/(\d{4}\.\d{4,5})/i);
+  if (!m) return [url];
+  const html = `https://arxiv.org/html/${m[1]}`;
+  const abs = `https://arxiv.org/abs/${m[1]}`;
+  return [...new Set([html, abs, url])].filter((u) => !/\/pdf\//i.test(u));
+}
+
+/** raw_body 를 대체 원문으로 쓰기 위한 최소 분량 */
+export const MIN_RAW_BODY_CHARS = 400;
+const MIN_EXCERPT_CHARS = 200;
+
+export type SourceKind = "page" | "raw_body" | "excerpt";
+
+/** 원문 페이지 → (막히면) 수집 때 저장한 raw_body → (짧더라도) metrics 발췌 순으로 대체 원문을 고른다 */
+export function chooseSourceText(
+  fetched: { text: string; truncated: boolean } | null,
+  rawBody: string | null | undefined,
+  excerpt: string | null | undefined,
+): { text: string; truncated: boolean; kind: SourceKind } | null {
+  if (fetched?.text.trim()) return { ...fetched, kind: "page" };
+  const raw = (rawBody ?? "").trim();
+  if (raw.length >= MIN_RAW_BODY_CHARS) return { text: raw.slice(0, MAX_SOURCE_CHARS), truncated: true, kind: "raw_body" };
+  const ex = (excerpt ?? "").trim();
+  if (ex.length >= MIN_EXCERPT_CHARS) return { text: ex, truncated: true, kind: "excerpt" };
+  return null;
 }
 
 export function htmlToText(html: string): string {
@@ -130,7 +158,7 @@ export async function fetchSourceText(
 
 // ── LLM 생성 (단 1회 호출) ───────────────────────────────────────────────────────
 export async function generateEasyOriginal(
-  input: { title: string; url: string; hookTitle: string; sourceText: string; truncated: boolean },
+  input: Parameters<typeof buildEasyOriginalUserMessage>[0],
   client: Pick<Anthropic, "messages"> = new Anthropic(),
 ): Promise<EasyOriginal> {
   const res = await client.messages.parse({
@@ -171,7 +199,7 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
   const anon = deps.anon ?? createClient(env!.url, env!.anonKey, { auth: { persistSession: false } });
   const { data, error } = await anon
     .from("items")
-    .select("id,original_title,canonical_url,metrics_json,summaries!inner(hook_title,easy_original_json)")
+    .select("id,original_title,canonical_url,metrics_json,raw_body,summaries!inner(hook_title,easy_original_json)")
     .eq("id", id)
     .maybeSingle();
   if (error) return unavailable(502, "failed", "기사 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
@@ -181,6 +209,7 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
     original_title: string;
     canonical_url: string;
     metrics_json: Record<string, unknown> | null;
+    raw_body?: string | null;
     summaries: { hook_title: string; easy_original_json: unknown } | Array<{ hook_title: string; easy_original_json: unknown }>;
   };
   const summary = Array.isArray(row.summaries) ? row.summaries[0] : row.summaries;
@@ -201,17 +230,19 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
   if (running) return running;
   const job = (async (): Promise<EasyResult> => {
     try {
+      // ① 원문 페이지(arXiv 는 HTML 전문 우선) → ② 403/429 등으로 막히면 수집 때 저장한 raw_body → ③ 짧은 발췌
       const fetched = await (deps.fetchText ?? fetchSourceText)(row.canonical_url);
       const excerpt = typeof row.metrics_json?._excerpt === "string" ? row.metrics_json._excerpt : "";
-      const sourceText = fetched?.text ?? excerpt;
-      if (!sourceText.trim()) return unavailable(422, "failed", "원문을 가져오지 못해서 해설을 만들 수 없었어요. 원문 링크로 직접 확인해 주세요.");
+      const source = chooseSourceText(fetched, row.raw_body, excerpt);
+      if (!source) return unavailable(422, "failed", "원문을 가져오지 못해서 해설을 만들 수 없었어요. 원문 링크로 직접 확인해 주세요.");
 
       const easy = await (deps.generate ?? generateEasyOriginal)({
         title: row.original_title,
         url: row.canonical_url,
         hookTitle: summary?.hook_title ?? row.original_title,
-        sourceText,
-        truncated: fetched ? fetched.truncated : true,
+        sourceText: source.text,
+        truncated: source.truncated,
+        sourceKind: source.kind,
       });
       const save = await service.from("summaries").update({ easy_original_json: easy }).eq("item_id", id);
       if (save.error) console.error("[ai-radar] easy_original cache write failed:", save.error.message);

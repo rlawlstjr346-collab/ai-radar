@@ -35,13 +35,22 @@ export function buildEasyOriginalUserMessage(input: {
   hookTitle: string;
   sourceText: string;
   truncated: boolean;
+  /** page: 원문 페이지 / raw_body: 페이지 접근이 막혀 수집 때 받은 RSS·API 본문 / excerpt: 짧은 발췌만 */
+  sourceKind?: "page" | "raw_body" | "excerpt";
 }): string {
+  const kindNote =
+    input.sourceKind === "raw_body"
+      ? `- 주의: 원문 페이지 접근이 막혀서, 수집 때 받은 RSS·API 본문을 대신 줬어요. source_note 에 그렇게 밝혀 줘.`
+      : input.sourceKind === "excerpt"
+        ? `- 주의: 원문 페이지 접근이 막혀서 짧은 발췌만 있어요. 주어진 범위만 해설하고 source_note 에 그렇게 밝혀 줘.`
+        : null;
   return [
     `# 기사`,
     `- 원문 제목: ${input.title}`,
     `- 원문 URL: ${input.url}`,
     `- 우리 카드 제목: ${input.hookTitle}`,
     input.truncated ? `- 주의: 원문이 길어서 앞부분만 주어졌어요.` : `- 원문 전문이 주어졌어요.`,
+    ...(kindNote ? [kindNote] : []),
     ``,
     `<source>`,
     input.sourceText,

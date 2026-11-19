@@ -18,17 +18,26 @@ interface Props {
   onSelectPlatform: (id: string) => void;
 }
 
+/** 우상단 상대 시간 배지 — 3시간 이내는 초록 라이브 점 + 고대비 */
 function Freshness({ iso, now }: { iso: string; now: number }) {
   const f = freshness(iso, now);
-  if (f.label === "NEW") {
-    return (
-      <span className="rounded border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-px font-mono text-[10px] font-semibold tracking-wider text-emerald-300">
-        NEW
-      </span>
-    );
-  }
+  if (!f.label) return null;
   return (
-    <span className={`font-mono text-[11px] tabular-nums ${f.fresh ? "text-emerald-300/90" : "text-gray-500"}`}>{f.label}</span>
+    <time
+      dateTime={iso}
+      title={new Date(iso).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
+      className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-medium tabular-nums ${
+        f.fresh ? "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/25" : "text-gray-300"
+      }`}
+    >
+      {f.fresh && (
+        <span className="relative flex h-1.5 w-1.5" aria-hidden>
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+        </span>
+      )}
+      {f.label}
+    </time>
   );
 }
 
@@ -62,7 +71,7 @@ export default function ItemCard({ item, platform, selected, now, onSelect, onSe
   return (
     <Spotlight rgb={CATEGORY_META[item.category].rgb} selected={selected} className="flex h-full flex-col">
       <div className="relative flex flex-1 flex-col gap-3 p-4">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
           <span className="ml-auto">
             <Freshness iso={item.created_at} now={now} />
@@ -106,12 +115,12 @@ export function SpotlightCard({ item, platform, selected, now, rank, onSelect, o
     <Spotlight rgb={meta.rgb} selected={selected} className="h-full">
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full opacity-[0.18] blur-3xl"
+        className="pointer-events-none absolute right-0 top-0 h-56 w-56 -translate-y-1/2 rounded-full opacity-[0.18] blur-3xl"
         style={{ background: `rgb(${meta.rgb})` }}
       />
       <div className="relative flex h-full flex-col gap-4 p-5 sm:flex-row sm:p-6">
         <div className="flex min-w-0 flex-1 flex-col gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-gray-300">
               <Sparkles className="h-3 w-3" style={{ color: `rgb(${meta.rgb})` }} aria-hidden />
               Top Spotlight · {String(rank).padStart(2, "0")}

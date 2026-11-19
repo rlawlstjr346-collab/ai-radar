@@ -143,7 +143,7 @@ class SupabaseStore:
         existing: dict[str, dict] = {}
         for i in range(0, len(keys), self.CHUNK):
             rows = (self.sb.table("items")
-                    .select("id,source_id,dedup_key,metrics_json,thumbnail_url,published_at")
+                    .select("id,source_id,dedup_key,metrics_json,thumbnail_url,published_at,raw_body")
                     .in_("dedup_key", keys[i:i + self.CHUNK]).execute().data) or []
             existing.update({r["dedup_key"]: r for r in rows})
 

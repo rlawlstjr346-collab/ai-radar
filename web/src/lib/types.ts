@@ -51,6 +51,8 @@ export interface FeedItem {
   difficulty: Difficulty;
   terms: Term[];
   entities: Entity[];
+  /** [원본 쉽게 읽기] 해설이 이미 준비돼 있는지 (샘플 데이터 또는 DB 캐시) */
+  easy_original_ready: boolean;
 }
 
 /** [원본 쉽게 읽기] 완독 해설 — summaries.easy_original_json */
@@ -79,12 +81,21 @@ export type EasyOriginalResponse =
 
 export type DataSource = "supabase" | "sample";
 
+/**
+ * [원본 쉽게 읽기] 제공 방식
+ * - sample     : 로컬 샘플 — 해설이 준비된 기사에서만 열 수 있음
+ * - on_demand  : DB + 생성 키 연결 — 어떤 기사든 처음 누를 때 생성
+ * - cache_only : DB 만 연결 — 이미 캐시된 해설만 열 수 있음
+ */
+export type EasyOriginalMode = "sample" | "on_demand" | "cache_only";
+
 export interface RadarData {
   platforms: Platform[];
   items: FeedItem[];
   source: DataSource;
   /** 데이터를 만든 시각(ISO). 서버·클라이언트가 같은 기준 시각으로 정렬해 hydration 불일치를 막는다 */
   generatedAt: string;
+  easyMode: EasyOriginalMode;
   /** 샘플 폴백 이유 등 화면 상단 안내 문구 */
   notice?: string;
 }

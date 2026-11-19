@@ -78,12 +78,45 @@ export function pastFeed(items: FeedItem[], category: CategoryFilter, query = ""
   );
 }
 
-/** 3시간 이내 유입분은 NEW / N시간 전, 그 외엔 날짜 */
+/** 한국 시간 기준 날짜 번호 (서버·브라우저 시간대가 달라도 같은 값 → hydration 일치) */
+const KST_DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" });
+function kstDayNumber(ms: number): number {
+  return Date.parse(`${KST_DAY.format(new Date(ms))}T00:00:00Z`) / 86_400_000;
+}
+
+/**
+ * 카드 우상단 상대 시간 배지.
+ *   1분 미만 '방금 전' · 1시간 미만 'N분 전' · 3시간 미만 'N시간 전'  → fresh(라이브 점 표시)
+ *   같은 날 '오늘 · N시간 전' · 전날 '어제' · 7일 미만 'N일 전' · 그 이상은 날짜
+ */
 export function freshness(iso: string, now: number): { label: string; fresh: boolean } {
-  const h = ageHours(iso, now);
-  if (h < 1) return { label: "NEW", fresh: true };
-  if (h < FRESH_HOURS) return { label: `${Math.floor(h)}시간 전`, fresh: true };
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return { label: "", fresh: false };
+  const minutes = Math.max(0, Math.floor((now - t) / 60_000));
+  const hours = Math.floor(minutes / 60);
+  if (minutes < 1) return { label: "방금 전", fresh: true };
+  if (minutes < 60) return { label: `${minutes}분 전`, fresh: true };
+  if (hours < FRESH_HOURS) return { label: `${hours}시간 전`, fresh: true };
+  const dayDiff = kstDayNumber(now) - kstDayNumber(t);
+  if (dayDiff <= 0) return { label: `오늘 · ${hours}시간 전`, fresh: false };
+  if (dayDiff === 1) return { label: "어제", fresh: false };
+  if (dayDiff < 7) return { label: `${dayDiff}일 전`, fresh: false };
   return { label: formatDate(iso), fresh: false };
+}
+
+/** 1면 TOP SPOTLIGHT 후보: 짧은 소셜 단문 제외, 원문 해독 가치가 있는 기사(원문 난이도 2+ 또는 주요 분야) */
+const SPOTLIGHT_CATEGORIES = new Set<Category>(["research", "dev", "industry", "llm_chat"]);
+export function isSpotlightEligible(item: FeedItem): boolean {
+  return item.category !== "social" && (item.difficulty >= 2 || SPOTLIGHT_CATEGORIES.has(item.category));
+}
+
+/**
+ * 이미 신선도 순으로 정렬된 목록에서 TOP SPOTLIGHT 를 고른다.
+ * [원본 쉽게 읽기]가 준비된 기사를 먼저, 없으면 나머지 후보에서 — 첫 클릭이 '빈 해설'로 끝나지 않게.
+ */
+export function pickSpotlight(ranked: FeedItem[], count = SPOTLIGHT_COUNT): FeedItem[] {
+  const eligible = ranked.filter(isSpotlightEligible);
+  return [...eligible.filter((i) => i.easy_original_ready), ...eligible.filter((i) => !i.easy_original_ready)].slice(0, count);
 }
 
 export function groupPlatforms(platforms: Platform[], category: CategoryFilter): Array<[Category, Platform[]]> {

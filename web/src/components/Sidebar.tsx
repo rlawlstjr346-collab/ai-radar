@@ -33,7 +33,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex min-w-0 items-center gap-2.5">
       <span className="relative grid h-8 w-8 place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111827]">
         <span
           className="radar-sweep absolute inset-0 bg-[conic-gradient(from_0deg,rgba(52,211,153,0.35),transparent_35%)]"
@@ -41,7 +41,7 @@ export function Logo() {
         />
         <Radar className="relative h-4 w-4 text-emerald-300" strokeWidth={2} aria-hidden />
       </span>
-      <div className="leading-tight">
+      <div className="min-w-0 leading-tight">
         <p className="text-[14px] font-semibold tracking-tight text-white">AI Radar</p>
         <p className="text-[11px] text-gray-500">입문자를 위한 글로벌 AI 소식</p>
       </div>
@@ -89,7 +89,7 @@ export function CategoryChips({
                   }`
             }
           >
-            <span className="flex items-center gap-2">
+            <span className="flex min-w-0 items-center gap-2 truncate">
               <o.Icon className={`h-3.5 w-3.5 ${active ? (o.text ?? "text-white") : "text-gray-500 group-hover:text-gray-300"}`} aria-hidden />
               {o.label}
             </span>
@@ -128,7 +128,7 @@ export function ViewTabs({
             } ${active ? "bg-white/[0.08] text-white" : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"}`}
           >
             <Icon className={`h-3.5 w-3.5 ${active ? "text-emerald-300" : ""}`} aria-hidden />
-            <span>{compact ? short : label}</span>
+            <span className="min-w-0 truncate">{compact ? short : label}</span>
             {!compact && viewCounts && <span className="ml-auto font-mono text-[11px] tabular-nums text-gray-600">{viewCounts[id]}</span>}
           </button>
         );

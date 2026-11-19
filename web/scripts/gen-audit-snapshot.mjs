@@ -104,8 +104,8 @@ const md = `# AI Radar — Audit Snapshot
 | 항목 | 값 |
 |---|---|
 | 로컬 샘플 기사 | ${SAMPLE_FEED.length}개 (hot ${SAMPLE_FEED.filter((i) => i.lifecycle_status === "hot").length} / warm ${SAMPLE_FEED.filter((i) => i.lifecycle_status === "warm").length}) |
-| benefit_tag 있는 기사 | ${SAMPLE_FEED.filter((i) => i.benefit_tag).length}개 |
 | [원본 쉽게 읽기] 준비된 기사 | ${covered.length}개 — ${covered.map((i) => `\`${i.id}\``).join(", ")} |
+| 실전 이득 칩(benefit_tag) | ${SAMPLE_FEED.filter((i) => i.benefit_tag).length}개 기사에만 |
 | 원문 난이도 분포 | 🌱1: ${SAMPLE_FEED.filter((i) => i.difficulty === 1).length} · ⚡2: ${SAMPLE_FEED.filter((i) => i.difficulty === 2).length} · 🔥3: ${SAMPLE_FEED.filter((i) => i.difficulty === 3).length} |
 | 플랫폼 도감 | ${platforms.length}곳 (자동 수집 ${platforms.filter((p) => p.collect_status === "active").length} · 도감 전용 ${platforms.filter((p) => p.collect_status === "directory_only").length}) |
 | 추적 파일 수 | ${tree.count} |
@@ -139,7 +139,7 @@ ${top5.map((it, i) => renderArticle(it, i + 1)).join("\n---\n\n")}
 |---|---|---|
 | \`/\` | 서버 컴포넌트 (ISR \`revalidate = 600\`) | \`loadRadarData()\` → Supabase(anon) 또는 로컬 샘플 폴백 → \`<RadarApp data>\` |
 | \`/?item=<id>\` · \`/?platform=<id>\` | 같은 페이지 + 쿼리 | 공유 링크 / 뒤로가기 시 해당 기사·플랫폼을 바로 연다 (warm 기사는 '지난 주요 소식' 탭으로 자동 전환) |
-| \`/api/items/[id]/easy-original\` | Route Handler (\`force-dynamic\`, \`maxDuration 60\`) | [원본 쉽게 읽기] JSON. 샘플 모드: 로컬 데이터. DB 모드: \`summaries.easy_original_json\` 캐시 → 없으면 원문 fetch(SSRF 차단) → Claude 1회 → 캐시 저장 |
+| \`/api/items/[id]/easy-original\` | Route Handler (\`force-dynamic\`, \`maxDuration 60\`) | [원본 쉽게 읽기] JSON. 샘플 모드: 로컬 데이터. DB 모드: \`summaries.easy_original_json\` 캐시 → 없으면 원문 fetch(SSRF 차단, arXiv 는 /html 전문 우선) → 403/429 등으로 막히면 \`items.raw_body\` → 짧은 발췌 → Claude 1회 → 캐시 저장 |
 
 ### 데이터 흐름
 
@@ -161,10 +161,10 @@ ${top5.map((it, i) => renderArticle(it, i + 1)).join("\n---\n\n")}
 | \`view\` | \`"feed" \\| "past" \\| "directory"\` | 라이브 피드 / 지난 주요 소식 / 플랫폼 도감 |
 | \`category\` | \`CategoryFilter\` | 전체 + 7개 카테고리 |
 | \`query\` | \`string\` | 실시간 키워드 검색 (제목·benefit_tag·요약·엔티티 태그·용어·플랫폼명, 공백 구분 AND). \`/\` 포커스, Esc 지우기 |
-| \`selection\` | \`{type:"item"\\|"platform", id} \\| null\` | 우측 패널 내용. 첫 진입 시 최상단 카드 기본 선택(URL 미기록). 선택/닫기 시 \`history.pushState\`, \`popstate\` 로 복원 |
-| \`sheetOpen\` | \`boolean\` | 모바일 바텀시트 — 사용자가 직접 누르거나 공유 링크로 왔을 때만 연다 |
+| \`selection\` | \`{type:"item"\\|"platform", id} \\| null\` | 상세 내용. 와이드 화면 첫 진입 시 TOP SPOTLIGHT 01 기본 선택(URL 미기록). 선택/닫기 시 \`history.pushState\`, \`popstate\` 로 복원. 카드 '선택됨' 표시는 상세가 실제로 보일 때만 |
+| \`sheetOpen\` | \`boolean\` | 드로어(768~1359px)·바텀시트(<768px) — 사용자가 직접 누르거나 공유 링크로 왔을 때만 연다 |
 | \`now\` | \`number\` | 서버 \`generatedAt\` 로 시작(hydration 일치) 후 1분마다 갱신 — NEW/N시간 전, 신선도 정렬 기준 |
-| \`isDesktop\` | \`useSyncExternalStore(matchMedia)\` | lg 이상이면 우측 고정 패널, 미만이면 바텀시트만 렌더 (중복 DOM 방지) |
+| \`layout\` | \`"wide" \\| "split" \\| "mobile"\` (\`useSyncExternalStore(matchMedia)\`) | ≥1360px 우측 고정 패널 3단 / 768~1359px 슬라이드 드로어 / <768px 바텀시트 — 폭에 맞는 하나만 렌더 (중복 DOM 방지). CSS 그리드는 \`lg:\`(사이드바+피드)·\`wide:\`(+패널) 브레이크포인트로 같은 경계를 쓴다 |
 | ItemDetail \`tab\` | \`"summary" \\| "easy"\` | [1분 핵심 요약] / [원본 쉽게 읽기]. 기사가 바뀌면 요약 탭으로 초기화 |
 | EasyOriginalView 메모리 캐시 | \`Map<id, response>\` | 같은 세션에서 탭을 오가도 API 재호출 없음 |
 

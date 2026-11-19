@@ -4,11 +4,13 @@ import { SAMPLE_EASY_ORIGINAL } from "@/data/sample-easy-original";
 import { SAMPLE_FEED } from "@/data/sample-feed";
 import {
   candidateUrls,
+  chooseSourceText,
   coerceEasyOriginal,
   fetchSourceText,
   getEasyOriginal,
   htmlToText,
   isFetchableUrl,
+  MIN_RAW_BODY_CHARS,
   type EasyDeps,
 } from "@/lib/easy-original";
 import type { EasyOriginal } from "@/lib/types";
@@ -17,9 +19,11 @@ const BANNED = ["혁신적", "획기적", "패러다임", "게임 체인저", "�
 const EMOJI = /\p{Extended_Pictographic}/u;
 
 describe("hooks & benefit tags (sample feed)", () => {
-  it("benefit_tag is 16 chars or less, has no emoji, and most cards have one", () => {
+  it("benefit_tag is used sparingly (12-15 cards), 16 chars or less, no emoji, no plain fact summaries", () => {
     const tagged = SAMPLE_FEED.filter((i) => i.benefit_tag);
-    expect(tagged.length).toBeGreaterThanOrEqual(20);
+    expect(tagged.length).toBeGreaterThanOrEqual(12);
+    expect(tagged.length).toBeLessThanOrEqual(15);
+    expect(SAMPLE_FEED.find((i) => i.id === "sample-anthropic-ipo")?.benefit_tag).toBeNull();
     for (const i of tagged) {
       expect(i.benefit_tag!.length, `${i.id}: ${i.benefit_tag}`).toBeLessThanOrEqual(16);
       expect(EMOJI.test(i.benefit_tag!), i.id).toBe(false);
@@ -154,11 +158,35 @@ describe("getEasyOriginal — database mode", () => {
     expect(fetchText).toHaveBeenCalledWith("https://example.com/post");
   });
 
-  it("falls back to the collected excerpt when the page cannot be fetched", async () => {
+  it("when the page is blocked (403/429) it falls back to items.raw_body, then to a long-enough excerpt", async () => {
     const { client } = fakeService();
-    const generate = vi.fn(async () => EASY);
-    await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: client, generate, fetchText: async () => null, hasLlmKey: true });
-    expect(generate).toHaveBeenCalledWith(expect.objectContaining({ sourceText: "excerpt text", truncated: true }));
+    const blocked = async () => null;
+    const longRaw = "Release notes paragraph. ".repeat(30);
+
+    const g1 = vi.fn(async () => EASY);
+    await getEasyOriginal("abc", { anon: fakeAnon({ ...row(null), raw_body: longRaw }), service: client, generate: g1, fetchText: blocked, hasLlmKey: true });
+    expect(g1).toHaveBeenCalledWith(expect.objectContaining({ sourceText: longRaw.trim(), sourceKind: "raw_body", truncated: true }));
+
+    const longExcerpt = "Collected excerpt sentence. ".repeat(10);
+    const g2 = vi.fn(async () => EASY);
+    await getEasyOriginal("abc", {
+      anon: fakeAnon({ ...row(null), raw_body: "too short", metrics_json: { _excerpt: longExcerpt } }),
+      service: client, generate: g2, fetchText: blocked, hasLlmKey: true,
+    });
+    expect(g2).toHaveBeenCalledWith(expect.objectContaining({ sourceText: longExcerpt.trim(), sourceKind: "excerpt" }));
+
+    const g3 = vi.fn(async () => EASY);
+    const none = await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: client, generate: g3, fetchText: blocked, hasLlmKey: true });
+    expect(none.httpStatus).toBe(422);
+    expect(g3).not.toHaveBeenCalled();
+  });
+
+  it("chooseSourceText prefers the fetched page over stored bodies", () => {
+    const page = { text: "page text", truncated: false };
+    expect(chooseSourceText(page, "x".repeat(1000), "y".repeat(300))?.kind).toBe("page");
+    expect(chooseSourceText(null, "x".repeat(MIN_RAW_BODY_CHARS), null)?.kind).toBe("raw_body");
+    expect(chooseSourceText(null, "x".repeat(MIN_RAW_BODY_CHARS - 1), "y".repeat(250))?.kind).toBe("excerpt");
+    expect(chooseSourceText(null, null, "short")).toBeNull();
   });
 
   it("reports a friendly failure if generation throws, and 404 for unknown items", async () => {
@@ -201,6 +229,15 @@ describe("source fetching safety", () => {
     expect(candidateUrls("https://arxiv.org/abs/2611.14848")).toEqual([
       "https://arxiv.org/html/2611.14848",
       "https://arxiv.org/abs/2611.14848",
+    ]);
+    expect(candidateUrls("https://arxiv.org/pdf/2611.14848v2")).toEqual([
+      "https://arxiv.org/html/2611.14848",
+      "https://arxiv.org/abs/2611.14848",
+    ]);
+    expect(candidateUrls("https://huggingface.co/papers/2611.14848")).toEqual([
+      "https://arxiv.org/html/2611.14848",
+      "https://arxiv.org/abs/2611.14848",
+      "https://huggingface.co/papers/2611.14848",
     ]);
     expect(candidateUrls("https://example.com/a")).toEqual(["https://example.com/a"]);
   });

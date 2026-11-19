@@ -1,4 +1,6 @@
-import type { Category, Difficulty, Entity, FeedItem, Lifecycle, Term } from "@/lib/types";
+import type { Category, Difficulty, Entity, FeedItem, Term } from "@/lib/types";
+
+import { SAMPLE_EASY_ORIGINAL } from "./sample-easy-original";
 
 /**
  * Supabase 환경변수가 없을 때 보여주는 폴백 피드 — 36장.
@@ -6,11 +8,13 @@ import type { Category, Difficulty, Entity, FeedItem, Lifecycle, Term } from "@/
  * 2026-11-19 에 worker 수집 어댑터(--dry-run 과 같은 경로)로 실제 공개 소스
  * (HF Papers/Models/Spaces, Hacker News, GitHub Releases, Civitai nsfw=false, Bluesky, OpenAI·DeepMind RSS,
  * Anthropic sitemap)에서 가져온 아이템 중 7개 카테고리가 고루 섞이도록 골랐다.
- * 요약은 요약기 프롬프트(newneek-v1) 규칙대로 '수집된 원문 텍스트에 있는 사실만' 써서 작성했다.
+ * 요약은 요약기 프롬프트(newneek-v1.1) 규칙대로 '수집된 원문 텍스트에 있는 사실만' 써서 작성했다.
  * 원문이 제목뿐인 아이템(일부 HN·Anthropic)은 그렇다고 밝히고 원문 링크로 안내한다.
  *
- * created_at 은 원문 발행 시각(= 그때 수집됐다고 가정)이고, lifecycle_status 는 2026-11-19 기준 스냅샷이다
- * (0~7일 hot, 8~30일 warm). DB 를 연결하면 이 파일은 쓰이지 않는다.
+ * published_at 은 원문의 실제 발행 시각(상세 패널 표시).
+ * created_at(레이더 수집 시각)과 lifecycle_status 는 파일 맨 아래 buildSampleFeed(now) 가
+ * '지금' 기준 상대 시각(COLLECTED_AGO)으로 계산한다 → 언제 열어도 살아 있는 라이브 피드처럼 보인다.
+ * DB 를 연결하면 이 파일은 쓰이지 않는다.
  */
 
 type CardInput = {
@@ -21,7 +25,6 @@ type CardInput = {
   score: number;
   at: string;
   sources?: number;
-  life?: Lifecycle;
   /** 원문 난이도(해독 배지): 1 가벼운 트렌드 / 2 개발 실무 문서 / 3 박사급 논문 */
   difficulty: Difficulty;
   hook: string;
@@ -45,9 +48,9 @@ function card(c: CardInput): FeedItem {
     thumbnail_url: null,
     importance_score: c.score,
     source_count: c.sources ?? 1,
-    lifecycle_status: c.life ?? "hot",
+    lifecycle_status: "hot", // buildSampleFeed 가 수집 경과시간으로 다시 계산
     published_at: c.at,
-    created_at: c.at,
+    created_at: c.at, // buildSampleFeed 가 '지금 - 수집 경과시간'으로 덮어씀
     hook_title: c.hook,
     benefit_tag: c.benefit ?? null,
     context_ko: c.context,
@@ -58,12 +61,13 @@ function card(c: CardInput): FeedItem {
     difficulty: c.difficulty,
     terms: c.terms ?? [],
     entities: c.entities ?? [],
+    easy_original_ready: false, // buildSampleFeed 가 채움
   };
 }
 
 const e = (name: string, kind: string, ...tags: string[]): Entity => ({ name, kind, tags });
 
-export const SAMPLE_FEED: FeedItem[] = [
+const SAMPLE_BASE: FeedItem[] = [
   // ─────────────────────────────── industry · 빅테크·트렌드 ───────────────────────────────
   card({
     id: "gpt-6-2-astra-sol",
@@ -75,7 +79,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-17T17:45:00Z",
     difficulty: 1,
     hook: "더 잘하는데 더 싸졌대요: OpenAI 새 모델 Astra·Sol",
-    benefit: "더 낮은 비용으로 업무",
     context:
       "OpenAI는 새 모델을 낼 때마다 ChatGPT, 코딩 도구 Codex, 개발자용 API에 차례로 넣어 왔거든요. 이번엔 이름이 두 개짜리 세트로 나왔어요.",
     what:
@@ -96,7 +99,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T23:26:25Z",
     difficulty: 1,
     hook: "Claude 만든 회사 주식, 11월 19일부터 나스닥에서 거래돼요",
-    benefit: "주당 83달러 공모가",
     context:
       "회사가 주식시장에 처음 이름을 올리는 걸 '상장(IPO)'이라고 하거든요. 상장 직전엔 처음 주식을 얼마에 팔지, 즉 공모가를 정해요.",
     what:
@@ -136,7 +138,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T08:00:00Z",
     difficulty: 1,
     hook: "회사에 AI가 안 퍼진다면? 이 보험사는 임원부터 먼저 썼어요",
-    benefit: "사내 AI 정착 노하우",
     context:
       "회사에 새 도구가 들어와도 막상 직원들이 안 쓰는 경우가 많거든요. 그래서 'AI를 어떻게 정착시키냐'가 요즘 기업들의 큰 고민이에요.",
     what:
@@ -154,9 +155,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://revscope.co/blog/search-seo-geo-2026",
     score: 32.46,
     at: "2026-11-18T00:17:58Z",
-    difficulty: 1,
+    difficulty: 2,
     hook: "검색 결과에 AI 요약이 뜨면, 웹사이트 클릭이 40% 줄었어요",
-    benefit: "내 블로그 유입 점검",
     context:
       "예전엔 구글에서 검색하면 링크를 눌러 웹사이트로 들어갔거든요. 요즘은 검색 결과 맨 위에 AI가 답을 바로 정리해서 보여줘요.",
     what:
@@ -220,7 +220,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T08:00:00Z",
     difficulty: 2,
     hook: "AI 코딩 비서에게 내 PC를 맡겨도 될까? 울타리가 있어요",
-    benefit: "파일·네트워크 접근 제한",
     context:
       "코딩 AI가 내 컴퓨터에서 명령어를 직접 실행하면 편하지만, 실수로 중요한 파일을 지우거나 인터넷에 뭘 보낼까 봐 걱정되거든요.",
     what:
@@ -260,7 +259,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://github.com/ollama/ollama/releases/tag/v0.40.16",
     score: 17.93,
     at: "2026-11-09T23:45:36Z",
-    life: "warm",
     difficulty: 2,
     hook: "맥에서 AI 돌릴 때 메모리 27GB가 남아요",
     benefit: "맥 메모리 27GiB 절약",
@@ -283,7 +281,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 35.27,
     sources: 2,
     at: "2026-11-18T21:35:43Z",
-    difficulty: 1,
+    difficulty: 2,
     hook: "구글 새 AI 'Neon', 형님 모델보다 작업당 비용 32% 싸요",
     benefit: "작업당 비용 32% 절감",
     context:
@@ -305,7 +303,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-17T03:44:46Z",
     difficulty: 2,
     hook: "사진 보고 대화하는 텐센트 AI, 허깅페이스에서 바로 받아요",
-    benefit: "공개 가중치 다운로드",
     context:
       "요즘 AI 모델은 글만 읽는 게 아니라 사진을 보고 설명하는 것까지 하거든요. 이런 걸 '멀티모달'이라고 불러요.",
     what:
@@ -328,7 +325,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-17T10:16:41Z",
     difficulty: 2,
     hook: "덩치 대신 '반복'으로 깊게 생각하는 90억짜리 작은 AI",
-    benefit: "Apache 2.0 상업 이용",
     context:
       "AI 모델은 보통 여러 층을 한 번씩 차례로 통과하며 생각하거든요. 층을 많이 쌓을수록 똑똑해지지만 그만큼 무거워져요.",
     what:
@@ -349,7 +345,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/thinkingmachines/Inkling-2-Small",
     score: 25.76,
     at: "2026-11-04T19:51:05Z",
-    life: "warm",
     difficulty: 2,
     hook: "한 달 새 3만 번 내려받힌, 상업 이용도 되는 대화 AI",
     benefit: "상업 이용 가능 라이선스",
@@ -369,10 +364,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/Edge0/Edge0-145B-NVFP4",
     score: 24.2,
     at: "2026-11-11T05:22:51Z",
-    life: "warm",
     difficulty: 2,
     hook: "1450억 파라미터 AI를 4비트로 압축, 더 작은 장비로",
-    benefit: "4비트 경량화 모델",
     context:
       "큰 AI 모델은 그대로 돌리면 비싼 서버가 필요하거든요. 그래서 숫자를 덜 정밀하게 저장해 크기를 줄이는 '양자화'를 많이 써요.",
     what:
@@ -413,7 +406,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T21:42:44Z",
     difficulty: 3,
     hook: "20년 넘게 아무도 못 끝낸 블랙홀 계산, Claude가 마무리했어요",
-    benefit: "물리학 난제 2개 해결",
     context:
       "AI 회사들은 요즘 '과학 연구를 얼마나 도울 수 있나'를 보여주는 사례를 자주 공개하거든요.",
     what:
@@ -449,7 +441,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T09:29:32Z",
     difficulty: 3,
     hook: "AI의 '생각 비용'을 385배 아낀다는 새 추론법",
-    benefit: "추론 효율 385배 주장",
     context:
       "요즘 AI는 어려운 문제를 풀 때 오래 '생각'하느라 계산 비용이 많이 들거든요. 그래서 더 싸게 생각하는 방법을 찾는 연구가 활발해요.",
     what:
@@ -487,7 +478,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://arxiv.org/abs/2611.14848",
     score: 23.89,
     at: "2026-11-10T00:00:00Z",
-    life: "warm",
     difficulty: 3,
     hook: "램 업그레이드 없이 집 PC로 큰 AI, 응답이 1.97배 빨라져요",
     benefit: "응답속도 평균 1.97배",
@@ -589,7 +579,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-14T02:14:35Z",
     difficulty: 2,
     hook: "카페 소음 낀 녹음, 목소리만 쏙 뽑아내요",
-    benefit: "실시간 잡음 제거",
+    benefit: "무료 실시간 잡음 제거",
     context: "녹음할 때 에어컨 소리, 키보드 소리가 같이 들어가면 듣기 힘들거든요.",
     what:
       "Inworld의 voice-isolator는 잡음을 지우고 사람 목소리만 남겨 주는 모델이에요. 48kHz 고음질을 지원하고 실시간 스트리밍으로도 쓸 수 있어요. Apache 2.0으로 공개됐어요.",
@@ -605,10 +595,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/Zyphra/ZONOS3-Mini",
     score: 23.89,
     at: "2026-11-09T05:03:57Z",
-    life: "warm",
     difficulty: 2,
     hook: "한 달 11만 번 받힌 목소리 AI, 여러 언어로 읽어줘요",
-    benefit: "다국어 음성 합성",
     context: "AI가 글을 읽어 주는 TTS는 이제 목소리 흉내까지 내는 단계로 왔거든요.",
     what:
       "Zyphra의 ZONOS3-Mini는 여러 언어를 지원하는 TTS 모델로, 목소리 복제 기능도 있어요. 한 달 새 11만 번 넘게 다운로드됐어요.",
@@ -628,7 +616,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T22:55:32Z",
     difficulty: 2,
     hook: "ComfyUI 업데이트, 최신 이미지 모델을 블록 하나로 연결",
-    benefit: "MiniMax H3 노드 추가",
     context:
       "ComfyUI는 이미지·영상 AI 기능을 레고 블록(노드)처럼 이어 붙여 쓰는 도구거든요. 새 블록이 추가되면 할 수 있는 일이 늘어나요.",
     what:
@@ -648,7 +635,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-18T18:38:19Z",
     difficulty: 2,
     hook: "그림 전체 말고 망친 부분만 다시: 인페인팅 워크플로",
-    benefit: "부분 수정 워크플로",
     context:
       "AI 그림에서 손가락 하나, 배경 한 구석만 고치고 싶을 때가 많거든요. 이렇게 일부만 다시 그리는 걸 '인페인팅'이라고 해요.",
     what:
@@ -685,10 +671,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image",
     score: 26.78,
     at: "2026-11-03T06:34:36Z",
-    life: "warm",
     difficulty: 2,
     hook: "그리기·바꾸기·고치기를 한 모델로, 한 달 76만 다운로드",
-    benefit: "생성·편집 올인원",
     context: "이미지 AI는 '새로 그리기'와 '있는 그림 고치기'를 따로 하는 경우가 많았거든요.",
     what:
       "MiniMax-H3-Image는 글로 그림을 만들고, 이미지를 넣어 다른 이미지로 바꾸고, 이미지 편집까지 하는 모델이에요. 한 달 새 76만 번 가까이 다운로드됐고 좋아요도 1,600개를 넘었어요.",
@@ -704,10 +688,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/speridlabs/idol",
     score: 22.58,
     at: "2026-10-28T15:55:17Z",
-    life: "warm",
     difficulty: 2,
     hook: "사진 한 장을 돌려보는 3D로, 상업 이용도 되는 공개 모델",
-    benefit: "Apache 2.0 3D 변환",
+    benefit: "상업 이용 무료 3D 변환",
     context: "사진을 3D 모델로 바꾸는 기술은 게임, 쇼핑, 메타버스 분야에서 수요가 많거든요.",
     what:
       "speridlabs의 idol은 이미지를 3D로 바꿔 주는 모델이에요. '가우시안 스플래팅' 방식을 쓰고 Apache 2.0으로 공개됐어요. 좋아요가 2,400개를 넘었어요.",
@@ -745,7 +728,6 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-19T06:40:15Z",
     difficulty: 1,
     hook: "같은 AI도 '얼마나 고민하냐'에 따라 그림이 달라져요",
-    benefit: "AI 모델 비교 요령",
     context:
       "개발자 사이먼 윌리슨은 새 AI가 나올 때마다 '자전거 타는 펠리컨을 SVG로 그려줘'라고 시켜 보는 걸로 유명하거든요.",
     what:
@@ -789,3 +771,75 @@ export const SAMPLE_FEED: FeedItem[] = [
     entities: [e("Ethan Mollick", "platform", "commentary"), e("Game development", "technique", "ai-adoption")],
   }),
 ];
+
+/**
+ * 샘플 '레이더 수집' 경과시간(분). 로컬 폴백 피드가 늘 살아 있는 라이브 피드처럼 보이도록
+ * 지금 기준 20분 전 ~ 3일 전(hot)에 고르게 분포시키고, 6개는 8~23일 전(warm, 지난 주요 소식)에 둔다.
+ * [원본 쉽게 읽기]가 준비된 8개 기사는 가장 최근(20분~4시간 전)에 들어온 것으로 둬서
+ * 신선도 정렬에서 TOP SPOTLIGHT 와 첫 줄을 차지한다.
+ * (원문의 실제 발행일은 published_at 에 그대로 남아 상세 패널에 표시된다)
+ */
+const MIN = 1;
+const HOUR = 60 * MIN;
+const DAY = 24 * HOUR;
+const COLLECTED_AGO: Record<string, number> = {
+  // 원본 쉽게 읽기 준비된 핵심 8개
+  "gemini-4-neon": 20 * MIN,
+  "anthropic-ipo": 45 * MIN,
+  "vllm-0-34": 70 * MIN,
+  "windows-agent-telemetry": 95 * MIN,
+  "google-ai-answers-traffic": 2 * HOUR + 5 * MIN,
+  "claude-black-hole-physics": 2 * HOUR + 30 * MIN,
+  "haru-4b": 3 * HOUR + 10 * MIN,
+  "tideway-moe": 4 * HOUR,
+  // 나머지 라이브 피드 (8시간 ~ 3일 전)
+  "gpt-6-2-astra-sol": 8 * HOUR,
+  "openai-chip-design": 9 * HOUR,
+  "jeveration": 10 * HOUR,
+  "emollick-element-names": 11 * HOUR + 30 * MIN,
+  "pelican-gemini-4": 13 * HOUR,
+  "tencent-hy4-flash": 14 * HOUR + 30 * MIN,
+  "energy-based-reasoners": 16 * HOUR,
+  "codex-sandbox": 18 * HOUR,
+  "harvard-code-review": 20 * HOUR,
+  "comfyui-0-46": 22 * HOUR,
+  "sumitomo-life-chatgpt": 1 * DAY,
+  "llm-reverse-engineering": 1 * DAY + 2 * HOUR,
+  "genie-4": 1 * DAY + 5 * HOUR,
+  "civitai-inpaint-workflow": 1 * DAY + 8 * HOUR,
+  "sensenova-loop-9b": 1 * DAY + 12 * HOUR,
+  "apple-fastframes": 1 * DAY + 16 * HOUR,
+  "slack-moji": 1 * DAY + 20 * HOUR,
+  "emollick-astra-uneven": 2 * DAY,
+  "inworld-voice-isolator": 2 * DAY + 6 * HOUR,
+  "emollick-ai-gaming": 2 * DAY + 10 * HOUR,
+  "longcat-video-avatar": 2 * DAY + 16 * HOUR,
+  "tiny-voca": 2 * DAY + 22 * HOUR,
+  // 지난 주요 소식 (8~23일 전)
+  "ollama-0-40-16": 8 * DAY + 4 * HOUR,
+  "edge0-145b": 9 * DAY,
+  "zonos3-mini": 11 * DAY,
+  "inkling-2-small": 14 * DAY,
+  "minimax-h3-image": 17 * DAY,
+  "speridlabs-idol": 23 * DAY,
+};
+
+const HOT_MAX_MINUTES = 7 * DAY;
+
+/** now(ms) 기준으로 수집 시각·수명 상태·해설 준비 여부를 채운 샘플 피드 */
+export function buildSampleFeed(now: number): FeedItem[] {
+  return SAMPLE_BASE.map((item) => {
+    const ago = COLLECTED_AGO[item.id.replace(/^sample-/, "")];
+    if (ago === undefined) throw new Error(`COLLECTED_AGO missing for ${item.id}`);
+    return {
+      ...item,
+      created_at: new Date(now - ago * 60_000).toISOString(),
+      lifecycle_status: ago <= HOT_MAX_MINUTES ? "hot" : "warm",
+      easy_original_ready: Boolean(SAMPLE_EASY_ORIGINAL[item.id]),
+    };
+  });
+}
+
+/** 테스트·스냅샷용 고정 기준 시각 (화면은 요청 시각 기준으로 buildSampleFeed 를 다시 부른다) */
+export const SAMPLE_REFERENCE_TIME = Date.parse("2026-11-19T10:00:00Z");
+export const SAMPLE_FEED: FeedItem[] = buildSampleFeed(SAMPLE_REFERENCE_TIME);

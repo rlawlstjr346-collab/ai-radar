@@ -1,30 +1,45 @@
 "use client";
 
-import { Activity, ChevronDown, History, Info, Search, Telescope, X } from "lucide-react";
+import { Activity, ChevronDown, History, Search, Telescope, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 import { CATEGORY_ORDER } from "@/lib/categories";
-import { hotFeed, HOT_LIMIT, matchesQuery, PAGE_SIZE, pastFeed, SPOTLIGHT_COUNT, type CategoryFilter } from "@/lib/filter";
+import { hotFeed, HOT_LIMIT, matchesQuery, PAGE_SIZE, pastFeed, pickSpotlight, type CategoryFilter } from "@/lib/filter";
 import type { FeedItem, Platform, RadarData } from "@/lib/types";
 
-import { BottomSheet, DesktopPanel, type Selection } from "./ContextPanel";
+import { BottomSheet, DesktopPanel, SideDrawer, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
 import ItemCard, { SpotlightCard } from "./ItemCard";
 import Sidebar, { CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
 
-const DESKTOP_QUERY = "(min-width: 1024px)"; // Tailwind lg
 const CLOCK_TICK_MS = 60_000;
 
-/** 화면이 lg 이상인지. 서버 렌더에선 true(데스크톱 패널) */
-function useIsDesktop(): boolean {
+/**
+ * 화면 폭 3단계 (CSS 브레이크포인트와 같은 값)
+ *   wide   >=1360px : 사이드바 + 피드 + 우측 고정 패널 (3단)
+ *   split  768~1359 : 피드 중심, 상세는 오른쪽 슬라이드 드로어 (1024 미만은 상단 가로 필터 바)
+ *   mobile <768     : 상단 바 + 바텀시트
+ */
+type LayoutMode = "wide" | "split" | "mobile";
+const WIDE_QUERY = "(min-width: 1360px)";
+const SPLIT_QUERY = "(min-width: 768px)";
+
+function readLayoutMode(): LayoutMode {
+  if (window.matchMedia(WIDE_QUERY).matches) return "wide";
+  if (window.matchMedia(SPLIT_QUERY).matches) return "split";
+  return "mobile";
+}
+
+/** 서버 렌더에선 wide 로 그린 뒤, 브라우저에서 실제 폭으로 바로 맞춘다 */
+function useLayoutMode(): LayoutMode {
   return useSyncExternalStore(
     (cb) => {
-      const mq = window.matchMedia(DESKTOP_QUERY);
-      mq.addEventListener("change", cb);
-      return () => mq.removeEventListener("change", cb);
+      const queries = [WIDE_QUERY, SPLIT_QUERY].map((q) => window.matchMedia(q));
+      queries.forEach((mq) => mq.addEventListener("change", cb));
+      return () => queries.forEach((mq) => mq.removeEventListener("change", cb));
     },
-    () => window.matchMedia(DESKTOP_QUERY).matches,
-    () => true,
+    readLayoutMode,
+    () => "wide",
   );
 }
 
@@ -167,8 +182,10 @@ function FeedList({
   onSelectPlatform: (id: string) => void;
 }) {
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const tops = spotlight ? items.slice(0, SPOTLIGHT_COUNT) : [];
-  const rest = items.slice(tops.length);
+  // TOP SPOTLIGHT: 짧은 소셜 단문 제외, 원본 해설이 준비된 기사 우선 (pickSpotlight)
+  const tops = spotlight ? pickSpotlight(items) : [];
+  const topIds = new Set(tops.map((i) => i.id));
+  const rest = items.filter((i) => !topIds.has(i.id));
   const shown = rest.slice(0, visible);
   const remaining = rest.length - shown.length;
   const isSelected = (id: string) => selection?.type === "item" && selection.id === id;
@@ -229,18 +246,20 @@ function FeedList({
 }
 
 export default function RadarApp({ data }: { data: RadarData }) {
-  const isDesktop = useIsDesktop();
+  const layout = useLayoutMode();
   const now = useNow(data.generatedAt);
   const [view, setView] = useState<View>("feed");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [query, setQuery] = useState("");
-  // 첫 진입 시 데스크톱 우측 패널이 놀지 않도록 최상단 카드를 기본 선택 (URL 에는 쓰지 않는다)
+  // 와이드 화면 첫 진입 시 우측 패널이 놀지 않도록 1면 첫 카드(TOP SPOTLIGHT 01)를 기본 선택 (URL 에는 쓰지 않는다).
+  // 드로어·바텀시트 구간에선 이 기본 선택으로 화면을 가리지 않는다 (sheetOpen=false 유지).
   const defaultSelection = useMemo<Selection>(() => {
-    const first = hotFeed(data.items, "all", Date.parse(data.generatedAt))[0];
+    const ranked = hotFeed(data.items, "all", Date.parse(data.generatedAt));
+    const first = pickSpotlight(ranked)[0] ?? ranked[0];
     return first ? { type: "item", id: first.id } : null;
   }, [data.items, data.generatedAt]);
   const [selection, setSelection] = useState<Selection>(defaultSelection);
-  // 모바일 바텀시트는 사용자가 직접 눌렀을 때만 연다 (기본 선택으로 화면을 가리지 않게)
+  // 드로어·바텀시트는 사용자가 직접 눌렀거나 공유 링크로 들어왔을 때만 연다
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
@@ -332,14 +351,18 @@ export default function RadarApp({ data }: { data: RadarData }) {
     onSelectItem: selectItem,
     onSelectPlatform: selectPlatform,
     onClose: close,
+    easyMode: data.easyMode,
   };
+  // 카드 '선택됨' 표시는 상세 내용이 실제로 화면에 보일 때만
+  const visibleSelection: Selection = layout === "wide" || sheetOpen ? selection : null;
   // 필터·보기가 바뀌면 '더보기' 페이지 수를 처음으로 되돌린다
   const listKey = `${view}:${category}:${query}`;
 
   return (
-    <div className="lg:grid lg:h-dvh lg:grid-cols-[236px_minmax(0,1fr)_400px] lg:overflow-hidden xl:grid-cols-[248px_minmax(0,1fr)_440px]">
+    // 1024~1359: 사이드바(220) + 피드 2단 / >=1360: + 우측 고정 패널 3단. 모든 열은 min-w-0 로 좌우 밀림 방지
+    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[220px_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[232px_minmax(0,1fr)_clamp(380px,28vw,460px)]">
       {/* 좌측: 데스크톱 사이드바 */}
-      <div className="hidden border-r border-white/[0.06] bg-[#090d14] lg:block">
+      <div className="hidden min-w-0 overflow-hidden border-r border-white/[0.06] bg-[#090d14] lg:block">
         <Sidebar
           view={view}
           category={category}
@@ -352,27 +375,29 @@ export default function RadarApp({ data }: { data: RadarData }) {
       </div>
 
       {/* 모바일 상단 컨트롤 */}
-      <header className="flex flex-col gap-3 border-b border-white/[0.06] bg-[#090d14] px-4 pb-3 pt-4 lg:hidden">
-        <Logo />
+      <header className="flex min-w-0 flex-col gap-3 border-b border-white/[0.06] bg-[#090d14] px-4 pb-3 pt-4 md:px-6 lg:hidden">
+        <div className="flex min-w-0 items-center justify-between gap-3">
+          <Logo />
+          {data.source === "sample" && (
+            <span className="shrink-0 rounded-md border border-amber-400/20 bg-amber-400/[0.06] px-2 py-0.5 text-[11px] text-amber-200/90">
+              샘플 데이터
+            </span>
+          )}
+        </div>
         <ViewTabs view={view} onView={setView} compact />
         <CategoryChips category={category} onCategory={setCategory} counts={counts} layout="row" />
       </header>
 
       {/* 중앙 */}
-      <main className="@container thin-scroll min-w-0 px-4 py-6 sm:px-6 lg:overflow-y-auto lg:px-8 lg:py-8">
-        {data.notice && (
-          <div role="status" className="mb-6 flex items-start gap-2.5 rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-2.5 text-[13px] text-gray-300">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-sky-300" aria-hidden />
-            <span className="leading-relaxed">{data.notice}</span>
-          </div>
-        )}
+      {/* 샘플 데이터 안내는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
+      <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-7 lg:py-8 wide:px-8">
 
         {view === "directory" ? (
           <DirectoryView
             platforms={data.platforms}
             items={data.items}
             category={category}
-            selectedId={selection?.type === "platform" ? selection.id : null}
+            selectedId={visibleSelection?.type === "platform" ? visibleSelection.id : null}
             onSelect={selectPlatform}
           />
         ) : (
@@ -383,7 +408,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
               key={listKey}
               items={view === "feed" ? hotItems : pastItems}
               platformsById={platformsById}
-              selection={selection}
+              selection={visibleSelection}
               now={now}
               spotlight={view === "feed" && !query.trim()}
               onSelect={selectItem}
@@ -393,9 +418,10 @@ export default function RadarApp({ data }: { data: RadarData }) {
         )}
       </main>
 
-      {/* 우측: 데스크톱 컨텍스트 패널 / 모바일 바텀시트 */}
-      <div className="hidden lg:block lg:h-dvh">{isDesktop && <DesktopPanel {...panelProps} />}</div>
-      {!isDesktop && <BottomSheet {...panelProps} selection={sheetOpen ? selection : null} onClose={closeSheet} />}
+      {/* 우측: 와이드 고정 패널 / 분할 창 드로어 / 모바일 바텀시트 — 화면 폭에 맞는 하나만 렌더링 */}
+      <div className="hidden min-w-0 wide:block wide:h-dvh">{layout === "wide" && <DesktopPanel {...panelProps} />}</div>
+      {layout === "split" && <SideDrawer {...panelProps} selection={sheetOpen ? selection : null} onClose={closeSheet} />}
+      {layout === "mobile" && <BottomSheet {...panelProps} selection={sheetOpen ? selection : null} onClose={closeSheet} />}
     </div>
   );
 }

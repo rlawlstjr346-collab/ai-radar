@@ -1,10 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import samplePlatforms from "@/data/platforms.sample.json";
-import { SAMPLE_FEED } from "@/data/sample-feed";
+import { buildSampleFeed, SAMPLE_FEED, SAMPLE_REFERENCE_TIME } from "@/data/sample-feed";
 import { getSupabaseEnv, loadRadarData, normalizeFeedRow } from "@/lib/data";
 import { CATEGORY_ORDER } from "@/lib/categories";
-import { filterItems, freshness, groupPlatforms, hotFeed, hotRankScore, HOT_LIMIT, matchesQuery, pastFeed, recentForPlatform } from "@/lib/filter";
+import { filterItems, freshness, groupPlatforms, hotFeed, hotRankScore, HOT_LIMIT, isSpotlightEligible, matchesQuery, pastFeed, pickSpotlight, recentForPlatform } from "@/lib/filter";
 import { splitByTerms } from "@/lib/terms";
 import type { Platform } from "@/lib/types";
 
@@ -189,15 +189,68 @@ describe("hourly rotation in the UI", () => {
     expect(past.map((i) => i.id)).toEqual(["w2", "w1"]);
   });
 
-  it("labels items under 3 hours as NEW / N시간 전, older ones with a date", () => {
-    expect(freshness(new Date(now - 20 * 60_000).toISOString(), now)).toEqual({ label: "NEW", fresh: true });
-    expect(freshness(new Date(now - 2.5 * 3_600_000).toISOString(), now)).toEqual({ label: "2시간 전", fresh: true });
-    expect(freshness("2026-11-17T10:00:00Z", now)).toEqual({ label: "2026.11.17", fresh: false });
+  it("renders live relative-time badges (KST calendar for 오늘/어제)", () => {
+    // now = 2026-11-19 12:00Z = 21:00 KST
+    const ago = (min: number) => new Date(now - min * 60_000).toISOString();
+    expect(freshness(ago(0.2), now)).toEqual({ label: "방금 전", fresh: true });
+    expect(freshness(ago(25), now)).toEqual({ label: "25분 전", fresh: true });
+    expect(freshness(ago(150), now)).toEqual({ label: "2시간 전", fresh: true });
+    expect(freshness(ago(5 * 60), now)).toEqual({ label: "오늘 · 5시간 전", fresh: false });
+    expect(freshness(ago(22 * 60), now)).toEqual({ label: "어제", fresh: false }); // 11-18 23:00 KST
+    expect(freshness(ago(3 * 24 * 60), now)).toEqual({ label: "3일 전", fresh: false });
+    expect(freshness("2026-11-01T10:00:00Z", now)).toEqual({ label: "2026.11.01", fresh: false });
+    expect(freshness("not a date", now).label).toBe("");
   });
 
   it("sample data ranks a non-empty live feed with every category present", () => {
     const feed = hotFeed(SAMPLE_FEED, "all", Date.parse("2026-11-19T09:00:00Z"));
     expect(feed.length).toBeGreaterThanOrEqual(24);
     expect(new Set(feed.map((i) => i.category))).toEqual(new Set(CATEGORY_ORDER));
+  });
+});
+
+describe("TOP SPOTLIGHT & sample timing", () => {
+  const ref = SAMPLE_REFERENCE_TIME;
+
+  it("spotlight skips short social posts and prefers articles with a ready easy-original", () => {
+    const base = SAMPLE_FEED.find((i) => i.id === "sample-vllm-0-34")!;
+    const social = { ...base, id: "s", category: "social" as const, difficulty: 1 as const, easy_original_ready: true };
+    const plain = { ...base, id: "p", category: "dev" as const, difficulty: 2 as const, easy_original_ready: false };
+    const ready = { ...base, id: "r", category: "research" as const, difficulty: 3 as const, easy_original_ready: true };
+    const lightTrend = { ...base, id: "t", category: "image_design" as const, difficulty: 1 as const, easy_original_ready: false };
+    expect(isSpotlightEligible(social)).toBe(false);
+    expect(isSpotlightEligible(lightTrend)).toBe(false);
+    expect(pickSpotlight([social, plain, ready, lightTrend]).map((i) => i.id)).toEqual(["r", "p"]);
+  });
+
+  it("in sample mode the spotlight and the first row come from the 8 articles with walkthroughs", () => {
+    const ranked = hotFeed(SAMPLE_FEED, "all", ref);
+    const tops = pickSpotlight(ranked);
+    expect(tops).toHaveLength(2);
+    expect(tops.every((i) => i.easy_original_ready && i.category !== "social")).toBe(true);
+    const rest = ranked.filter((i) => !tops.includes(i));
+    expect(rest.slice(0, 3).every((i) => i.easy_original_ready)).toBe(true);
+    expect(SAMPLE_FEED.filter((i) => i.easy_original_ready)).toHaveLength(8);
+  });
+
+  it("sample collection times spread from ~20 minutes to ~3 days (hot) and 8+ days (warm)", () => {
+    const minutesAgo = (i: (typeof SAMPLE_FEED)[number]) => (ref - Date.parse(i.created_at)) / 60_000;
+    const hot = SAMPLE_FEED.filter((i) => i.lifecycle_status === "hot").map(minutesAgo);
+    const warm = SAMPLE_FEED.filter((i) => i.lifecycle_status === "warm").map(minutesAgo);
+    expect(Math.min(...hot)).toBe(20);
+    expect(Math.max(...hot)).toBeLessThanOrEqual(3 * 24 * 60);
+    expect(warm.every((m) => m > 7 * 24 * 60 && m <= 30 * 24 * 60)).toBe(true);
+    // 상대 시간 라벨이 다양하게 나와야 라이브 피드처럼 보인다
+    const labels = new Set(SAMPLE_FEED.map((i) => freshness(i.created_at, ref).label.replace(/\d+/g, "N")));
+    for (const l of ["N분 전", "N시간 전", "오늘 · N시간 전", "어제", "N일 전"]) expect(labels.has(l), l).toBe(true);
+    // 사이트를 열 때마다 '지금' 기준으로 다시 계산된다
+    const later = buildSampleFeed(ref + 3_600_000);
+    expect(Date.parse(later[0].created_at) - Date.parse(SAMPLE_FEED[0].created_at)).toBe(3_600_000);
+  });
+
+  it("dense articles carry a realistic source-difficulty badge", () => {
+    const byId = (id: string) => SAMPLE_FEED.find((i) => i.id === id)!;
+    expect(byId("sample-gemini-4-neon").difficulty).toBeGreaterThanOrEqual(2);
+    expect(byId("sample-google-ai-answers-traffic").difficulty).toBeGreaterThanOrEqual(2);
   });
 });

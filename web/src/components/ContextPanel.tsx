@@ -3,7 +3,7 @@
 import { Radar, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import type { FeedItem, Platform } from "@/lib/types";
+import type { EasyOriginalMode, FeedItem, Platform } from "@/lib/types";
 
 import ItemDetail from "./ItemDetail";
 import PlatformProfile from "./PlatformProfile";
@@ -17,13 +17,23 @@ interface Props {
   onSelectItem: (id: string) => void;
   onSelectPlatform: (id: string) => void;
   onClose: () => void;
+  /** [원본 쉽게 읽기] 제공 방식 — 해설을 띄울 수 없는 기사에선 유도 배너를 숨긴다 */
+  easyMode: EasyOriginalMode;
 }
 
-function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatform }: Omit<Props, "onClose">) {
+function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatform, easyMode }: Omit<Props, "onClose">) {
   const byId = new Map(platforms.map((p) => [p.id, p]));
   if (selection?.type === "item") {
     const item = items.find((i) => i.id === selection.id);
-    if (item) return <ItemDetail item={item} platform={byId.get(item.platform_id)} onSelectPlatform={onSelectPlatform} />;
+    if (item)
+      return (
+        <ItemDetail
+          item={item}
+          platform={byId.get(item.platform_id)}
+          onSelectPlatform={onSelectPlatform}
+          canReadEasy={item.easy_original_ready || easyMode === "on_demand"}
+        />
+      );
   }
   if (selection?.type === "platform") {
     const platform = byId.get(selection.id);
@@ -55,7 +65,7 @@ function EmptyPanel() {
   );
 }
 
-/** 데스크톱(lg 이상) 우측 고정 패널 */
+/** 와이드(≥1360px) 우측 고정 패널 */
 export function DesktopPanel(props: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
@@ -84,7 +94,7 @@ export function DesktopPanel(props: Props) {
   );
 }
 
-/** 모바일·태블릿(lg 미만) 바텀시트. 핸들을 아래로 끌거나, 바깥을 누르거나, ESC 로 닫힌다. */
+/** 모바일(<768px) 바텀시트. 핸들을 아래로 끌거나, 바깥을 누르거나, ESC 로 닫힌다. (모바일에서만 렌더링됨) */
 export function BottomSheet(props: Props) {
   const open = props.selection !== null;
   const [dragY, setDragY] = useState(0);
@@ -97,9 +107,8 @@ export function BottomSheet(props: Props) {
 
   useEffect(() => {
     if (!open) return;
-    const mobile = window.matchMedia("(max-width: 1023px)").matches;
     const prev = document.body.style.overflow;
-    if (mobile) document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     sheetRef.current?.focus();
@@ -135,7 +144,7 @@ export function BottomSheet(props: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden">
+    <div className="fixed inset-0 z-50">
       <button
         type="button"
         aria-label="닫기"
@@ -171,6 +180,68 @@ export function BottomSheet(props: Props) {
           </button>
         </div>
         <div ref={scrollRef} key={key} className="thin-scroll overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">
+          <PanelContent {...props} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 분할 창·노트북(768~1359px) 오른쪽 슬라이드 오버 드로어.
+ * 상시 공간을 차지하지 않고, 반투명 딤 위로 열린다. X·바깥 클릭·Esc 로 닫힌다.
+ */
+export function SideDrawer(props: Props) {
+  const open = props.selection !== null;
+  const panelRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { onClose } = props;
+  const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    panelRef.current?.focus();
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, onClose]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [key]);
+
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50">
+      <button
+        type="button"
+        aria-label="닫기"
+        tabIndex={-1}
+        onClick={onClose}
+        className="animate-fade-in absolute inset-0 bg-black/55 backdrop-blur-[2px]"
+      />
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="상세 보기"
+        tabIndex={-1}
+        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(480px,92vw)] min-w-0 flex-col border-l border-white/15 bg-[#0d121c] shadow-[-16px_0_48px_rgba(0,0,0,0.55)] focus:outline-none"
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="상세 보기 닫기"
+          className="absolute right-3 top-3 z-20 grid h-8 w-8 place-items-center rounded-full bg-black/40 text-gray-300 backdrop-blur transition hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+        >
+          <X className="h-4 w-4" aria-hidden />
+        </button>
+        <div ref={scrollRef} key={key} className="thin-scroll h-full overflow-y-auto overscroll-contain">
           <PanelContent {...props} />
         </div>
       </div>

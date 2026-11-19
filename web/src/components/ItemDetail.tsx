@@ -31,6 +31,8 @@ interface Props {
   item: FeedItem;
   platform?: Platform;
   onSelectPlatform: (id: string) => void;
+  /** 이 기사의 [원본 쉽게 읽기]를 실제로 띄울 수 있는지 — 없으면 대형 유도 배너를 숨긴다 */
+  canReadEasy?: boolean;
 }
 
 function Section({
@@ -105,6 +107,7 @@ export default function ItemDetail({
   item,
   platform,
   onSelectPlatform,
+  canReadEasy = true,
 }: Props) {
   const meta = CATEGORY_META[item.category];
   const [tab, setTab] = useState<Tab>("summary");
@@ -242,28 +245,30 @@ export default function ItemDetail({
             )}
 
             <div className="flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={() => setTab("easy")}
-                className="group flex items-center gap-3 rounded-xl border border-emerald-300/25 bg-emerald-300/[0.06] px-4 py-3.5 text-left transition hover:border-emerald-300/45 hover:bg-emerald-300/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/50"
-              >
-                <BookOpenText
-                  className="h-5 w-5 shrink-0 text-emerald-300"
-                  aria-hidden
-                />
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="text-[12px] text-emerald-200/80">
-                    영어 원문 막막하다면?
+              {canReadEasy && (
+                <button
+                  type="button"
+                  onClick={() => setTab("easy")}
+                  className="group flex items-center gap-3 rounded-xl border border-emerald-300/25 bg-emerald-300/[0.06] px-4 py-3.5 text-left transition hover:border-emerald-300/45 hover:bg-emerald-300/[0.1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/50"
+                >
+                  <BookOpenText
+                    className="h-5 w-5 shrink-0 text-emerald-300"
+                    aria-hidden
+                  />
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="text-[12px] text-emerald-200/80">
+                      영어 원문 막막하다면?
+                    </span>
+                    <span className="text-[14px] font-semibold text-white">
+                      원본 전체 쉽게 읽기
+                    </span>
                   </span>
-                  <span className="text-[14px] font-semibold text-white">
-                    원본 전체 쉽게 읽기
-                  </span>
-                </span>
-                <ArrowRight
-                  className="h-4 w-4 shrink-0 text-emerald-300 transition group-hover:translate-x-0.5"
-                  aria-hidden
-                />
-              </button>
+                  <ArrowRight
+                    className="h-4 w-4 shrink-0 text-emerald-300 transition group-hover:translate-x-0.5"
+                    aria-hidden
+                  />
+                </button>
+              )}
               <a
                 href={item.canonical_url}
                 target="_blank"

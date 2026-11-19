@@ -17,6 +17,8 @@ from collector.normalize import canonicalize_url, make_dedup_key
 from collector.scoring import importance_score
 
 EXCERPT_LIMIT = 4000
+RAW_BODY_LIMIT = 20_000      # items.raw_body 상한 (005 마이그레이션 CHECK 와 같은 값)
+RAW_BODY_MIN = 300           # 이보다 짧은 본문은 해설 대체 원문으로 쓸 가치가 없어 저장하지 않음
 
 # 링크를 '전달'하는 소스 — 같은 이슈의 원본 소스(논문·블로그·릴리스)가 있으면 제목·본문·소속을 양보한다
 AGGREGATOR_PLATFORMS = {"hacker-news", "bluesky"}
@@ -96,7 +98,16 @@ def new_item_row(c: Candidate, now: Optional[datetime] = None) -> dict:
         "importance_score": c.score(now),
         "source_count": c.source_count,
         "published_at": c.published_at.isoformat() if c.published_at else None,
+        "raw_body": raw_body_of(c),
     }
+
+
+def raw_body_of(c: Candidate) -> Optional[str]:
+    """[원본 쉽게 읽기] 대체 원문용 본문. 링크만 전달하는 소스(HN·Bluesky)의 상투 문구는 저장하지 않는다."""
+    if is_aggregator(c.platform_id):
+        return None
+    body = (c.body or "").strip()
+    return body[:RAW_BODY_LIMIT] if len(body) >= RAW_BODY_MIN else None
 
 
 def merge_into_existing(row: dict, c: Candidate, now: Optional[datetime] = None) -> dict:
@@ -123,6 +134,9 @@ def merge_into_existing(row: dict, c: Candidate, now: Optional[datetime] = None)
     }
     if not row.get("thumbnail_url") and c.thumbnail_url:
         update["thumbnail_url"] = c.thumbnail_url
+    new_raw = raw_body_of(c)
+    if new_raw and len(new_raw) > len(row.get("raw_body") or ""):
+        update["raw_body"] = new_raw
     return update
 
 
