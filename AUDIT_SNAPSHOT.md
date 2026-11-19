@@ -1,18 +1,18 @@
 # AI Radar — Audit Snapshot
 
 > 외부 총괄 아키텍트 검수용 스냅샷. `web/scripts/gen-audit-snapshot.mjs` 가 실제 소스 파일을 읽어 자동 생성했다.
-> 생성 시각: 2026-11-19T10:54:06.275Z · 기준 커밋: `06a5eef` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
+> 생성 시각: 2026-11-19T12:42:24.950Z · 기준 커밋: `48aee6a` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
 
 ## 요약 수치
 
 | 항목 | 값 |
 |---|---|
-| 로컬 샘플 기사 | 36개 (hot 29 / warm 7) |
-| benefit_tag 있는 기사 | 28개 |
+| 로컬 샘플 기사 | 36개 (hot 30 / warm 6) |
 | [원본 쉽게 읽기] 준비된 기사 | 8개 — `sample-anthropic-ipo`, `sample-gemini-4-neon`, `sample-google-ai-answers-traffic`, `sample-windows-agent-telemetry`, `sample-claude-black-hole-physics`, `sample-haru-4b`, `sample-vllm-0-34`, `sample-tideway-moe` |
-| 원문 난이도 분포 | 🌱1: 13 · ⚡2: 19 · 🔥3: 4 |
+| 실전 이득 칩(benefit_tag) | 13개 기사에만 |
+| 원문 난이도 분포 | 🌱1: 11 · ⚡2: 21 · 🔥3: 4 |
 | 플랫폼 도감 | 26곳 (자동 수집 10 · 도감 전용 16) |
-| 추적 파일 수 | 89 |
+| 추적 파일 수 | 91 |
 
 ## ① 전체 파일 트리
 
@@ -28,7 +28,8 @@ ai-radar/
 │   │   ├── 001_init.sql
 │   │   ├── 002_enable_anthropic_bluesky_sources.sql
 │   │   ├── 003_categories_and_hourly_rotation.sql
-│   │   └── 004_easy_original_and_hooks.sql
+│   │   ├── 004_easy_original_and_hooks.sql
+│   │   └── 005_item_raw_body_fallback.sql
 │   └── seed/
 │       └── seed_platforms.sql
 ├── web/
@@ -40,7 +41,8 @@ ai-radar/
 │   │   └── window.svg
 │   ├── scripts/
 │   │   ├── gen-audit-snapshot.mjs
-│   │   └── gen-sample-platforms.mjs
+│   │   ├── gen-sample-platforms.mjs
+│   │   └── layout-audit.browser.js
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── api/
@@ -319,13 +321,22 @@ export function buildEasyOriginalUserMessage(input: {
   hookTitle: string;
   sourceText: string;
   truncated: boolean;
+  /** page: 원문 페이지 / raw_body: 페이지 접근이 막혀 수집 때 받은 RSS·API 본문 / excerpt: 짧은 발췌만 */
+  sourceKind?: "page" | "raw_body" | "excerpt";
 }): string {
+  const kindNote =
+    input.sourceKind === "raw_body"
+      ? `- 주의: 원문 페이지 접근이 막혀서, 수집 때 받은 RSS·API 본문을 대신 줬어요. source_note 에 그렇게 밝혀 줘.`
+      : input.sourceKind === "excerpt"
+        ? `- 주의: 원문 페이지 접근이 막혀서 짧은 발췌만 있어요. 주어진 범위만 해설하고 source_note 에 그렇게 밝혀 줘.`
+        : null;
   return [
     `# 기사`,
     `- 원문 제목: ${input.title}`,
     `- 원문 URL: ${input.url}`,
     `- 우리 카드 제목: ${input.hookTitle}`,
     input.truncated ? `- 주의: 원문이 길어서 앞부분만 주어졌어요.` : `- 원문 전문이 주어졌어요.`,
+    ...(kindNote ? [kindNote] : []),
     ``,
     `<source>`,
     input.sourceText,
@@ -345,7 +356,7 @@ export function buildEasyOriginalUserMessage(input: {
 |---|---|
 | id | `sample-anthropic-ipo` |
 | 플랫폼 · 카테고리 | Anthropic · 빅테크·트렌드 |
-| benefit_tag | 주당 83달러 공모가 |
+| benefit_tag | (없음) |
 | 원문 난이도 해독 배지 | 원문: 가벼운 트렌드 → 1분 정리 |
 | importance_score · 수명 | 35.56 · hot |
 | 원문 | https://anthropic.com/news/anthropic-prices-initial-public-offering |
@@ -393,7 +404,7 @@ export function buildEasyOriginalUserMessage(input: {
 | id | `sample-gemini-4-neon` |
 | 플랫폼 · 카테고리 | Google DeepMind · 챗봇·생산성 |
 | benefit_tag | 작업당 비용 32% 절감 |
-| 원문 난이도 해독 배지 | 원문: 가벼운 트렌드 → 1분 정리 |
+| 원문 난이도 해독 배지 | 원문: 개발 실무 문서 → 쉽게 해독 완료 |
 | importance_score · 수명 | 35.27 · hot |
 | 원문 | https://deepmind.google/blog/introducing-gemini-4-neon |
 
@@ -445,8 +456,8 @@ export function buildEasyOriginalUserMessage(input: {
 |---|---|
 | id | `sample-google-ai-answers-traffic` |
 | 플랫폼 · 카테고리 | Hacker News · 빅테크·트렌드 |
-| benefit_tag | 내 블로그 유입 점검 |
-| 원문 난이도 해독 배지 | 원문: 가벼운 트렌드 → 1분 정리 |
+| benefit_tag | (없음) |
+| 원문 난이도 해독 배지 | 원문: 개발 실무 문서 → 쉽게 해독 완료 |
 | importance_score · 수명 | 32.46 · hot |
 | 원문 | https://revscope.co/blog/search-seo-geo-2026 |
 
@@ -542,7 +553,7 @@ export function buildEasyOriginalUserMessage(input: {
 |---|---|
 | id | `sample-claude-black-hole-physics` |
 | 플랫폼 · 카테고리 | Anthropic · 논문·신기술 |
-| benefit_tag | 물리학 난제 2개 해결 |
+| benefit_tag | (없음) |
 | 원문 난이도 해독 배지 | 원문: 박사급 논문 → 쉽게 해독 완료 |
 | importance_score · 수명 | 28.07 · hot |
 | 원문 | https://anthropic.com/research/claude-black-hole-physics |
@@ -596,7 +607,7 @@ export function buildEasyOriginalUserMessage(input: {
 |---|---|---|
 | `/` | 서버 컴포넌트 (ISR `revalidate = 600`) | `loadRadarData()` → Supabase(anon) 또는 로컬 샘플 폴백 → `<RadarApp data>` |
 | `/?item=<id>` · `/?platform=<id>` | 같은 페이지 + 쿼리 | 공유 링크 / 뒤로가기 시 해당 기사·플랫폼을 바로 연다 (warm 기사는 '지난 주요 소식' 탭으로 자동 전환) |
-| `/api/items/[id]/easy-original` | Route Handler (`force-dynamic`, `maxDuration 60`) | [원본 쉽게 읽기] JSON. 샘플 모드: 로컬 데이터. DB 모드: `summaries.easy_original_json` 캐시 → 없으면 원문 fetch(SSRF 차단) → Claude 1회 → 캐시 저장 |
+| `/api/items/[id]/easy-original` | Route Handler (`force-dynamic`, `maxDuration 60`) | [원본 쉽게 읽기] JSON. 샘플 모드: 로컬 데이터. DB 모드: `summaries.easy_original_json` 캐시 → 없으면 원문 fetch(SSRF 차단, arXiv 는 /html 전문 우선) → 403/429 등으로 막히면 `items.raw_body` → 짧은 발췌 → Claude 1회 → 캐시 저장 |
 
 ### 데이터 흐름
 
@@ -618,10 +629,10 @@ export function buildEasyOriginalUserMessage(input: {
 | `view` | `"feed" \| "past" \| "directory"` | 라이브 피드 / 지난 주요 소식 / 플랫폼 도감 |
 | `category` | `CategoryFilter` | 전체 + 7개 카테고리 |
 | `query` | `string` | 실시간 키워드 검색 (제목·benefit_tag·요약·엔티티 태그·용어·플랫폼명, 공백 구분 AND). `/` 포커스, Esc 지우기 |
-| `selection` | `{type:"item"\|"platform", id} \| null` | 우측 패널 내용. 첫 진입 시 최상단 카드 기본 선택(URL 미기록). 선택/닫기 시 `history.pushState`, `popstate` 로 복원 |
-| `sheetOpen` | `boolean` | 모바일 바텀시트 — 사용자가 직접 누르거나 공유 링크로 왔을 때만 연다 |
+| `selection` | `{type:"item"\|"platform", id} \| null` | 상세 내용. 와이드 화면 첫 진입 시 TOP SPOTLIGHT 01 기본 선택(URL 미기록). 선택/닫기 시 `history.pushState`, `popstate` 로 복원. 카드 '선택됨' 표시는 상세가 실제로 보일 때만 |
+| `sheetOpen` | `boolean` | 드로어(768~1359px)·바텀시트(<768px) — 사용자가 직접 누르거나 공유 링크로 왔을 때만 연다 |
 | `now` | `number` | 서버 `generatedAt` 로 시작(hydration 일치) 후 1분마다 갱신 — NEW/N시간 전, 신선도 정렬 기준 |
-| `isDesktop` | `useSyncExternalStore(matchMedia)` | lg 이상이면 우측 고정 패널, 미만이면 바텀시트만 렌더 (중복 DOM 방지) |
+| `layout` | `"wide" \| "split" \| "mobile"` (`useSyncExternalStore(matchMedia)`) | ≥1360px 우측 고정 패널 3단 / 768~1359px 슬라이드 드로어 / <768px 바텀시트 — 폭에 맞는 하나만 렌더 (중복 DOM 방지). CSS 그리드는 `lg:`(사이드바+피드)·`wide:`(+패널) 브레이크포인트로 같은 경계를 쓴다 |
 | ItemDetail `tab` | `"summary" \| "easy"` | [1분 핵심 요약] / [원본 쉽게 읽기]. 기사가 바뀌면 요약 탭으로 초기화 |
 | EasyOriginalView 메모리 캐시 | `Map<id, response>` | 같은 세션에서 탭을 오가도 API 재호출 없음 |
 

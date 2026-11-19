@@ -3,8 +3,22 @@
 // 손으로 옮겨 적지 않고 실제 소스 파일을 읽어 만들기 때문에, 데이터·프롬프트를 바꾼 뒤 다시 실행하면 된다.
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
+import { registerHooks } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+
+// 앱 코드는 Next.js 관례대로 확장자 없이 import 한다 ("./sample-easy-original").
+// Node 의 TypeScript 실행은 확장자가 필요하므로, 상대 경로 import 가 실패하면 ".ts" 를 붙여 다시 찾는다.
+registerHooks({
+  resolve(specifier, context, nextResolve) {
+    try {
+      return nextResolve(specifier, context);
+    } catch (err) {
+      if (specifier.startsWith(".") && !/\.[cm]?[jt]sx?$|\.json$/.test(specifier)) return nextResolve(`${specifier}.ts`, context);
+      throw err;
+    }
+  },
+});
 
 const here = dirname(fileURLToPath(import.meta.url));
 const web = join(here, "..");
