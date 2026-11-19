@@ -41,6 +41,8 @@ export interface FeedItem {
   /** 수집(유입) 시각 — 신선도 정렬과 'N시간 전' 표시의 기준 */
   created_at: string;
   hook_title: string;
+  /** 10~16자 실전 이득 칩 (예: "상업용 무료 라이선스"). 없을 수 있음 */
+  benefit_tag: string | null;
   context_ko: string | null;
   what_ko: string | null;
   analogy_ko: string | null;
@@ -50,6 +52,30 @@ export interface FeedItem {
   terms: Term[];
   entities: Entity[];
 }
+
+/** [원본 쉽게 읽기] 완독 해설 — summaries.easy_original_json */
+export interface EasyOriginalSection {
+  /** 원문 흐름의 한 부분 (예: "초록", "핵심 원리", "실험 결과", "한계") */
+  heading: string;
+  /** 입문자가 100% 이해하도록 풀어 쓴 문단 */
+  body: string;
+  /** 해당 부분의 원문 핵심 문장·수치 (짧게, 원어 그대로). 없을 수 있음 */
+  quote: string | null;
+}
+
+export interface EasyOriginal {
+  sections: EasyOriginalSection[];
+  /** 실제 원문 링크에 들어갈 때 관람 포인트 2~3줄 */
+  watch_points: string[];
+  /** 어떤 원문을 바탕으로 썼는지 (예: "Anthropic 공식 보도자료 전문") */
+  source_note?: string | null;
+  generated_at?: string | null;
+  model?: string | null;
+}
+
+export type EasyOriginalResponse =
+  | { status: "ready"; easy_original: EasyOriginal; cached: boolean; source: DataSource }
+  | { status: "unavailable"; reason: "not_prepared" | "generator_unavailable" | "not_found" | "failed"; message: string };
 
 export type DataSource = "supabase" | "sample";
 

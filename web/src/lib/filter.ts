@@ -9,10 +9,33 @@ export const PAGE_SIZE = 12;
 export const SPOTLIGHT_COUNT = 2;
 const FRESH_HOURS = 3;
 
-export function filterItems(items: FeedItem[], category: CategoryFilter, beginnerOnly: boolean): FeedItem[] {
+/** 키워드 검색: 공백으로 나눈 모든 단어가 제목·이득 칩·요약·기술 태그·용어·플랫폼명 어딘가에 있으면 통과 */
+export function matchesQuery(item: FeedItem, query: string, platformName?: string): boolean {
+  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return true;
+  const haystack = [
+    item.hook_title,
+    item.benefit_tag,
+    item.context_ko,
+    item.what_ko,
+    item.analogy_ko,
+    item.why_ko,
+    item.caveats_ko,
+    platformName,
+    item.platform_id,
+    ...item.entities.flatMap((e) => [e.name, ...e.tags]),
+    ...item.terms.map((t) => t.term),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+  return tokens.every((t) => haystack.includes(t));
+}
+
+export function filterItems(items: FeedItem[], category: CategoryFilter, query = "", names?: Map<string, string>): FeedItem[] {
   return items
     .filter((i) => category === "all" || i.category === category)
-    .filter((i) => !beginnerOnly || i.difficulty === 1)
+    .filter((i) => matchesQuery(i, query, names?.get(i.platform_id)))
     .sort((a, b) => b.importance_score - a.importance_score);
 }
 
@@ -28,11 +51,17 @@ export function hotRankScore(item: Pick<FeedItem, "importance_score" | "created_
 }
 
 /** 메인 라이브 피드: hot 만, 신선도 중력 순, 최대 HOT_LIMIT 개 */
-export function hotFeed(items: FeedItem[], category: CategoryFilter, beginnerOnly: boolean, now: number): FeedItem[] {
+export function hotFeed(
+  items: FeedItem[],
+  category: CategoryFilter,
+  now: number,
+  query = "",
+  names?: Map<string, string>,
+): FeedItem[] {
   return items
     .filter((i) => i.lifecycle_status === "hot")
     .filter((i) => category === "all" || i.category === category)
-    .filter((i) => !beginnerOnly || i.difficulty === 1)
+    .filter((i) => matchesQuery(i, query, names?.get(i.platform_id)))
     .map((i) => [i, hotRankScore(i, now)] as const)
     .sort((a, b) => b[1] - a[1])
     .slice(0, HOT_LIMIT)
@@ -40,11 +69,12 @@ export function hotFeed(items: FeedItem[], category: CategoryFilter, beginnerOnl
 }
 
 /** 지난 주요 소식: warm(8~30일), 중요도 순 */
-export function pastFeed(items: FeedItem[], category: CategoryFilter, beginnerOnly: boolean): FeedItem[] {
+export function pastFeed(items: FeedItem[], category: CategoryFilter, query = "", names?: Map<string, string>): FeedItem[] {
   return filterItems(
     items.filter((i) => i.lifecycle_status === "warm"),
     category,
-    beginnerOnly,
+    query,
+    names,
   );
 }
 

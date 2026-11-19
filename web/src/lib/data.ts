@@ -11,7 +11,7 @@ const HOT_FETCH_LIMIT = 200;
 const WARM_FETCH_LIMIT = 60;
 const ITEM_COLUMNS =
   "id,platform_id,category,canonical_url,thumbnail_url,importance_score,source_count,lifecycle_status,published_at,created_at," +
-  "summaries!inner(hook_title,context_ko,what_ko,analogy_ko,why_ko,caveats_ko,difficulty,terms_json,extracted_entities)";
+  "summaries!inner(hook_title,benefit_tag,context_ko,what_ko,analogy_ko,why_ko,caveats_ko,difficulty,terms_json,extracted_entities)";
 
 export function getSupabaseEnv(): { url: string; anonKey: string } | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
@@ -93,6 +93,7 @@ export function normalizeFeedRow(row: Record<string, unknown>): FeedItem | null 
     published_at: (row.published_at as string | null) ?? null,
     created_at: String(row.created_at ?? ""),
     hook_title: s.hook_title,
+    benefit_tag: typeof s.benefit_tag === "string" && s.benefit_tag.trim() ? s.benefit_tag.trim() : null,
     context_ko: (s.context_ko as string | null) ?? null,
     what_ko: (s.what_ko as string | null) ?? null,
     analogy_ko: (s.analogy_ko as string | null) ?? null,

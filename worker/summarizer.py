@@ -133,7 +133,7 @@ def glossary_line(g: dict) -> str:
 # ─────────────────────────────────────────────────────────────────────────────
 # 후처리 린트 (재호출하지 않고 경고만)
 # ─────────────────────────────────────────────────────────────────────────────
-_KO_FIELDS = ("hook_title", "context_ko", "what_ko", "analogy_ko", "why_ko", "caveats_ko")
+_KO_FIELDS = ("hook_title", "benefit_tag", "context_ko", "what_ko", "analogy_ko", "why_ko", "caveats_ko")
 _NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 
 
@@ -151,6 +151,9 @@ def lint_output(out: SummaryLLMOutput) -> list[str]:
     for n in sorted(set(_NUM_RE.findall(ko_text))):
         if n not in fact_nums and n not in {"1", "2", "3"}:   # '한두 개', '세 줄' 류 소수는 허용
             warnings.append(f"number_not_in_fact_sheet: '{n}'")
+
+    if out.benefit_tag and len(out.benefit_tag.strip()) > P.BENEFIT_TAG_MAX:
+        warnings.append(f"benefit_tag_too_long: {len(out.benefit_tag.strip())} > {P.BENEFIT_TAG_MAX}")
 
     for t in out.terms:
         if t.term not in ko_text:

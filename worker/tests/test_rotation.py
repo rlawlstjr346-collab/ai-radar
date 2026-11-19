@@ -90,7 +90,7 @@ class CountingSummarizer:
         out = SummaryLLMOutput.model_validate({
             "_fact_sheet": {"what_it_is": "x", "key_claims": [], "metrics": [], "compared_against": [],
                             "license": None, "availability": None, "limitations": [], "not_stated": []},
-            "hook_title": "t", "context_ko": "c", "what_ko": "w", "analogy_ko": None, "why_ko": "y",
+            "hook_title": "t", "benefit_tag": None, "context_ko": "c", "what_ko": "w", "analogy_ko": None, "why_ko": "y",
             "caveats_ko": None, "difficulty": 1, "terms": [], "extracted_entities": []})
         return SummaryResult(output=out, prompt_version="t", model="stub")
 

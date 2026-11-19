@@ -89,10 +89,15 @@ export const CATEGORY_META: Record<
   },
 };
 
-export const DIFFICULTY_META: Record<Difficulty, { Icon: LucideIcon; label: string; className: string }> = {
-  1: { Icon: Sprout, label: "완전입문", className: "text-emerald-300" },
-  2: { Icon: Zap, label: "교양실전", className: "text-amber-300" },
-  3: { Icon: Flame, label: "개발심화", className: "text-rose-300" },
+/**
+ * '원문 난이도 해독 배지' — difficulty 는 요약 난이도가 아니라 원문이 얼마나 어려웠는지.
+ * 요약은 언제나 입문자용이라, 배지는 "어려운 걸 쉽게 풀어 왔다"는 신호로 읽힌다.
+ * (이모지 대신 같은 의미의 Lucide 아이콘: 🔥 Flame / ⚡ Zap / 🌱 Sprout)
+ */
+export const DIFFICULTY_META: Record<Difficulty, { Icon: LucideIcon; label: string; short: string; className: string }> = {
+  1: { Icon: Sprout, label: "원문: 가벼운 트렌드 → 1분 정리", short: "가벼운 트렌드 → 1분 정리", className: "text-emerald-300" },
+  2: { Icon: Zap, label: "원문: 개발 실무 문서 → 쉽게 해독 완료", short: "개발 실무 문서 → 쉽게 해독", className: "text-amber-300" },
+  3: { Icon: Flame, label: "원문: 박사급 논문 → 쉽게 해독 완료", short: "박사급 논문 → 쉽게 해독", className: "text-rose-300" },
 };
 
 export const STATUS_META = {

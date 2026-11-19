@@ -68,7 +68,7 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
                     <span className="min-w-0 flex-1">
                       <span className="line-clamp-2 text-[13.5px] font-medium leading-snug text-gray-100">{i.hook_title}</span>
                       <span className="mt-1.5 flex items-center gap-3">
-                        <DifficultyBadge level={i.difficulty} />
+                        <DifficultyBadge level={i.difficulty} variant="short" />
                         <span className="font-mono text-[11px] text-gray-500">{formatDate(i.published_at ?? i.created_at)}</span>
                       </span>
                     </span>

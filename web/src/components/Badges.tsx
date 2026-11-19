@@ -1,3 +1,5 @@
+import { BadgeCheck, Laptop, PiggyBank, ShieldCheck, Sparkles, Timer, type LucideIcon } from "lucide-react";
+
 import { CATEGORY_META, DIFFICULTY_META, STATUS_META } from "@/lib/categories";
 import type { Category, CollectStatus, Difficulty, Platform } from "@/lib/types";
 
@@ -66,13 +68,46 @@ export function PlatformMark({
   );
 }
 
-export function DifficultyBadge({ level, compact }: { level: Difficulty; compact?: boolean }) {
+/** 원문 난이도 해독 배지. variant="short" 는 카드용 (화면 낭독기는 항상 전체 문구를 읽는다) */
+export function DifficultyBadge({ level, variant = "full" }: { level: Difficulty; variant?: "full" | "short" }) {
   const m = DIFFICULTY_META[level];
   return (
-    <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${m.className}`}>
-      <m.Icon className="h-3 w-3" strokeWidth={2.2} aria-hidden />
-      {!compact && m.label}
-      {compact && <span className="sr-only">{m.label}</span>}
+    <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${m.className}`} title={m.label}>
+      <m.Icon className="h-3 w-3 shrink-0" strokeWidth={2.2} aria-hidden />
+      {variant === "full" ? (
+        m.label
+      ) : (
+        <>
+          <span aria-hidden>{m.short}</span>
+          <span className="sr-only">{m.label}</span>
+        </>
+      )}
+    </span>
+  );
+}
+
+/** benefit_tag 내용에 맞는 아이콘 (데이터엔 이모지를 넣지 않고 화면이 고른다) */
+function benefitIcon(tag: string): LucideIcon {
+  if (/무료|라이선스|상업|Apache|MIT/i.test(tag)) return BadgeCheck;
+  if (/로컬|노트북|PC|맥|온디바이스|GPU|구동/i.test(tag)) return Laptop;
+  if (/배|속도|단축|ms|빠르|시간/i.test(tag)) return Timer;
+  if (/비용|절감|절약|달러|가격|공모가/i.test(tag)) return PiggyBank;
+  if (/설정|끄기|제한|보안/i.test(tag)) return ShieldCheck;
+  return Sparkles;
+}
+
+/** '내게 생기는 이득' 칩 — 스크롤 중 시선이 멈추게 */
+export function BenefitChip({ tag, size = "sm" }: { tag: string | null | undefined; size?: "sm" | "md" }) {
+  if (!tag) return null;
+  const Icon = benefitIcon(tag);
+  return (
+    <span
+      className={`relative z-10 inline-flex max-w-full items-center gap-1.5 rounded-md border border-emerald-300/25 bg-emerald-300/[0.08] font-semibold text-emerald-200 ${
+        size === "md" ? "px-2.5 py-1 text-[12.5px]" : "px-2 py-0.5 text-[11.5px]"
+      }`}
+    >
+      <Icon className={size === "md" ? "h-3.5 w-3.5" : "h-3 w-3"} strokeWidth={2.2} aria-hidden />
+      <span className="truncate">{tag}</span>
     </span>
   );
 }

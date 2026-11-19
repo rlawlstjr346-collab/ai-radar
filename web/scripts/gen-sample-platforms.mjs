@@ -14,6 +14,7 @@ for (const file of [
   "supabase/migrations/001_init.sql",
   "supabase/migrations/002_enable_anthropic_bluesky_sources.sql",
   "supabase/migrations/003_categories_and_hourly_rotation.sql",
+  "supabase/migrations/004_easy_original_and_hooks.sql",
   "supabase/seed/seed_platforms.sql",
 ]) {
   await db.exec(readFileSync(join(root, file), "utf8"));

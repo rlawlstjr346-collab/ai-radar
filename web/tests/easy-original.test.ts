@@ -1,0 +1,228 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { SAMPLE_EASY_ORIGINAL } from "@/data/sample-easy-original";
+import { SAMPLE_FEED } from "@/data/sample-feed";
+import {
+  candidateUrls,
+  coerceEasyOriginal,
+  fetchSourceText,
+  getEasyOriginal,
+  htmlToText,
+  isFetchableUrl,
+  type EasyDeps,
+} from "@/lib/easy-original";
+import type { EasyOriginal } from "@/lib/types";
+
+const BANNED = ["혁신적", "획기적", "패러다임", "게임 체인저", "게임체인저", "새로운 지평", "충격", "경악", "역대급", "미쳤다", "무조건"];
+const EMOJI = /\p{Extended_Pictographic}/u;
+
+describe("hooks & benefit tags (sample feed)", () => {
+  it("benefit_tag is 16 chars or less, has no emoji, and most cards have one", () => {
+    const tagged = SAMPLE_FEED.filter((i) => i.benefit_tag);
+    expect(tagged.length).toBeGreaterThanOrEqual(20);
+    for (const i of tagged) {
+      expect(i.benefit_tag!.length, `${i.id}: ${i.benefit_tag}`).toBeLessThanOrEqual(16);
+      expect(EMOJI.test(i.benefit_tag!), i.id).toBe(false);
+    }
+  });
+
+  it("hook titles avoid clickbait words and emoji", () => {
+    for (const i of SAMPLE_FEED) {
+      for (const b of BANNED) expect(i.hook_title.includes(b), `${i.id}: ${b}`).toBe(false);
+      expect(EMOJI.test(i.hook_title), i.id).toBe(false);
+      expect(i.hook_title.length, i.id).toBeLessThanOrEqual(48);
+    }
+  });
+});
+
+describe("sample easy-original data", () => {
+  it("only references real sample cards and follows the shape", () => {
+    const ids = new Set(SAMPLE_FEED.map((i) => i.id));
+    const entries = Object.entries(SAMPLE_EASY_ORIGINAL);
+    expect(entries.length).toBeGreaterThanOrEqual(8);
+    for (const [id, easy] of entries) {
+      expect(ids.has(id), id).toBe(true);
+      expect(easy.sections.length, id).toBeGreaterThanOrEqual(5);
+      expect(easy.watch_points.length, id).toBeGreaterThanOrEqual(2);
+      expect(easy.watch_points.length, id).toBeLessThanOrEqual(3);
+      for (const s of easy.sections) {
+        expect(s.heading.trim().length, id).toBeGreaterThan(0);
+        expect(s.body.length, `${id}: ${s.heading}`).toBeGreaterThan(80);
+        if (s.quote) expect(s.quote.split(/\s+/).length, `${id}: ${s.quote}`).toBeLessThanOrEqual(25);
+        for (const b of BANNED) expect(s.body.includes(b), `${id}: ${b}`).toBe(false);
+      }
+      expect(coerceEasyOriginal(easy)).not.toBeNull();
+    }
+  });
+
+  it("the five most important sample cards that have originals are all covered", () => {
+    const covered = SAMPLE_FEED.filter((i) => SAMPLE_EASY_ORIGINAL[i.id]).sort((a, b) => b.importance_score - a.importance_score);
+    expect(covered.slice(0, 5).map((i) => i.id)).toEqual([
+      "sample-anthropic-ipo",
+      "sample-gemini-4-neon",
+      "sample-google-ai-answers-traffic",
+      "sample-windows-agent-telemetry",
+      "sample-claude-black-hole-physics",
+    ]);
+  });
+});
+
+describe("getEasyOriginal — sample mode (no Supabase env)", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("returns the prepared walkthrough, 'not_prepared' for others, 404 for unknown, 400 for bad ids", async () => {
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "");
+    const ready = await getEasyOriginal("sample-vllm-0-34");
+    expect(ready.httpStatus).toBe(200);
+    expect(ready.body.status).toBe("ready");
+
+    const notPrepared = await getEasyOriginal("sample-slack-moji");
+    expect(notPrepared.body).toMatchObject({ status: "unavailable", reason: "not_prepared" });
+
+    expect((await getEasyOriginal("sample-nope")).httpStatus).toBe(404);
+    expect((await getEasyOriginal("../../etc/passwd")).httpStatus).toBe(400);
+  });
+});
+
+// ── DB 모드: Supabase 클라이언트를 아주 얇은 가짜로 대체 ─────────────────────────────
+const EASY: EasyOriginal = {
+  sections: [{ heading: "h", body: "쉬운 설명", quote: "q" }],
+  watch_points: ["w1", "w2"],
+  source_note: "s",
+};
+
+function fakeAnon(row: Record<string, unknown> | null, error: unknown = null) {
+  return {
+    from: () => ({
+      select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: row, error }) }) }),
+    }),
+  } as unknown as EasyDeps["anon"];
+}
+
+function fakeService() {
+  const writes: Array<{ value: unknown; id: unknown }> = [];
+  const client = {
+    from: () => ({
+      update: (value: unknown) => ({
+        eq: async (_col: string, id: unknown) => {
+          writes.push({ value, id });
+          return { error: null };
+        },
+      }),
+    }),
+  } as unknown as NonNullable<EasyDeps["service"]>;
+  return { client, writes };
+}
+
+const row = (easy: unknown) => ({
+  id: "abc",
+  original_title: "Title",
+  canonical_url: "https://example.com/post",
+  metrics_json: { _excerpt: "excerpt text" },
+  summaries: { hook_title: "훅", easy_original_json: easy },
+});
+
+describe("getEasyOriginal — database mode", () => {
+  it("returns the cached walkthrough instantly without calling the LLM", async () => {
+    const generate = vi.fn();
+    const r = await getEasyOriginal("abc", { anon: fakeAnon(row(EASY)), service: null, generate, hasLlmKey: false });
+    expect(r.body).toMatchObject({ status: "ready", cached: true, source: "supabase" });
+    expect(generate).not.toHaveBeenCalled();
+  });
+
+  it("explains how to enable generation when keys are missing", async () => {
+    const r = await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: null, hasLlmKey: true });
+    expect(r.httpStatus).toBe(503);
+    expect(r.body).toMatchObject({ status: "unavailable", reason: "generator_unavailable" });
+  });
+
+  it("generates once on first request, caches to summaries, and shares concurrent requests", async () => {
+    const { client, writes } = fakeService();
+    const generate = vi.fn(async () => {
+      await new Promise((r) => setTimeout(r, 20));
+      return EASY;
+    });
+    const fetchText = vi.fn(async () => ({ text: "full original text ".repeat(20), truncated: false }));
+    const deps: EasyDeps = { anon: fakeAnon(row(null)), service: client, generate, fetchText, hasLlmKey: true };
+
+    const [a, b] = await Promise.all([getEasyOriginal("abc", deps), getEasyOriginal("abc", deps)]);
+    expect(a.body).toMatchObject({ status: "ready", cached: false });
+    expect(b.body).toEqual(a.body);
+    expect(generate).toHaveBeenCalledTimes(1);
+    expect(writes).toEqual([{ value: { easy_original_json: EASY }, id: "abc" }]);
+    expect(fetchText).toHaveBeenCalledWith("https://example.com/post");
+  });
+
+  it("falls back to the collected excerpt when the page cannot be fetched", async () => {
+    const { client } = fakeService();
+    const generate = vi.fn(async () => EASY);
+    await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: client, generate, fetchText: async () => null, hasLlmKey: true });
+    expect(generate).toHaveBeenCalledWith(expect.objectContaining({ sourceText: "excerpt text", truncated: true }));
+  });
+
+  it("reports a friendly failure if generation throws, and 404 for unknown items", async () => {
+    const { client } = fakeService();
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const failing = await getEasyOriginal("abc", {
+      anon: fakeAnon(row(null)),
+      service: client,
+      generate: async () => {
+        throw new Error("boom");
+      },
+      fetchText: async () => ({ text: "x".repeat(500), truncated: false }),
+      hasLlmKey: true,
+    });
+    expect(failing.body).toMatchObject({ status: "unavailable", reason: "failed" });
+    spy.mockRestore();
+    expect((await getEasyOriginal("zzz", { anon: fakeAnon(null) })).httpStatus).toBe(404);
+  });
+});
+
+describe("source fetching safety", () => {
+  it("only allows public http(s) URLs", () => {
+    expect(isFetchableUrl("https://arxiv.org/abs/2611.1")).toBe(true);
+    for (const bad of [
+      "file:///etc/passwd",
+      "http://localhost:3000",
+      "http://127.0.0.1/x",
+      "http://10.0.0.5",
+      "http://192.168.1.1",
+      "http://169.254.169.254/latest/meta-data",
+      "http://[::1]/",
+      "javascript:alert(1)",
+      "not a url",
+    ]) {
+      expect(isFetchableUrl(bad), bad).toBe(false);
+    }
+  });
+
+  it("tries the arXiv full-text HTML page before the abstract page", () => {
+    expect(candidateUrls("https://arxiv.org/abs/2611.14848")).toEqual([
+      "https://arxiv.org/html/2611.14848",
+      "https://arxiv.org/abs/2611.14848",
+    ]);
+    expect(candidateUrls("https://example.com/a")).toEqual(["https://example.com/a"]);
+  });
+
+  it("strips scripts and tags into readable text", () => {
+    const text = htmlToText("<html><script>evil()</script><nav>menu</nav><h1>Title</h1><p>Hello &amp; welcome</p></html>");
+    expect(text).toBe("Title\nHello & welcome");
+  });
+
+  it("fetchSourceText skips failed candidates and short pages", async () => {
+    const calls: string[] = [];
+    const fake = (async (url: string) => {
+      calls.push(url);
+      if (url.includes("/html/")) return new Response("nope", { status: 404 });
+      return new Response(`<html><body><p>${"Real abstract text. ".repeat(30)}</p></body></html>`, {
+        status: 200,
+        headers: { "content-type": "text/html" },
+      });
+    }) as unknown as typeof fetch;
+    const r = await fetchSourceText("https://arxiv.org/abs/2611.14848", fake);
+    expect(calls).toEqual(["https://arxiv.org/html/2611.14848", "https://arxiv.org/abs/2611.14848"]);
+    expect(r?.text.startsWith("Real abstract text.")).toBe(true);
+    expect(await fetchSourceText("http://localhost/x", fake)).toBeNull();
+  });
+});

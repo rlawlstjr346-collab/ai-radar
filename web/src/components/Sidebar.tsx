@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, Compass, History, LayoutGrid, Radar, Sprout, type LucideIcon } from "lucide-react";
+import { Activity, Compass, History, LayoutGrid, Radar, type LucideIcon } from "lucide-react";
 
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
 import type { CategoryFilter } from "@/lib/filter";
@@ -11,13 +11,11 @@ export type View = "feed" | "past" | "directory";
 export interface FilterState {
   view: View;
   category: CategoryFilter;
-  beginnerOnly: boolean;
 }
 
 interface Props extends FilterState {
   onView: (v: View) => void;
   onCategory: (c: CategoryFilter) => void;
-  onBeginnerOnly: (v: boolean) => void;
   counts: Record<CategoryFilter, number>;
   viewCounts: Record<View, number>;
   source: DataSource;
@@ -48,26 +46,6 @@ export function Logo() {
         <p className="text-[11px] text-gray-500">입문자를 위한 글로벌 AI 소식</p>
       </div>
     </div>
-  );
-}
-
-export function BeginnerToggle({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={value}
-      onClick={() => onChange(!value)}
-      className="flex w-full items-center justify-between gap-3 rounded-lg border border-white/[0.08] bg-white/[0.02] px-2.5 py-2 text-left text-[13px] transition hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50"
-    >
-      <span className="flex items-center gap-2 text-gray-200">
-        <Sprout className="h-3.5 w-3.5 text-emerald-300" aria-hidden />
-        입문만 보기
-      </span>
-      <span className={`relative h-[18px] w-8 shrink-0 rounded-full transition ${value ? "bg-emerald-400" : "bg-white/15"}`} aria-hidden>
-        <span className={`absolute top-[2px] h-[14px] w-[14px] rounded-full bg-white shadow transition-all ${value ? "left-[16px]" : "left-[2px]"}`} />
-      </span>
-    </button>
   );
 }
 
@@ -175,12 +153,6 @@ export default function Sidebar(p: Props) {
         <SectionLabel>Category</SectionLabel>
         <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
       </section>
-      {p.view !== "directory" && (
-        <section className="flex flex-col gap-1.5">
-          <SectionLabel>Level</SectionLabel>
-          <BeginnerToggle value={p.beginnerOnly} onChange={p.onBeginnerOnly} />
-        </section>
-      )}
       <div className="mt-auto flex items-start gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
         <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-amber-400" : "animate-pulse bg-emerald-400"}`} aria-hidden />
         <p className="text-[11px] leading-relaxed text-gray-500">

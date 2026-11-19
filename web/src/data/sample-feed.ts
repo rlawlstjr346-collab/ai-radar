@@ -22,8 +22,11 @@ type CardInput = {
   at: string;
   sources?: number;
   life?: Lifecycle;
+  /** 원문 난이도(해독 배지): 1 가벼운 트렌드 / 2 개발 실무 문서 / 3 박사급 논문 */
   difficulty: Difficulty;
   hook: string;
+  /** 10~16자 실전 이득 칩. 원문이 받쳐 주는 이득이 없으면 생략 */
+  benefit?: string;
   context: string;
   what: string;
   analogy?: string | null;
@@ -46,6 +49,7 @@ function card(c: CardInput): FeedItem {
     published_at: c.at,
     created_at: c.at,
     hook_title: c.hook,
+    benefit_tag: c.benefit ?? null,
     context_ko: c.context,
     what_ko: c.what,
     analogy_ko: c.analogy ?? null,
@@ -70,7 +74,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     sources: 2,
     at: "2026-11-17T17:45:00Z",
     difficulty: 1,
-    hook: "OpenAI가 새 모델 두 개를 한꺼번에 내놨어요: Astra와 Sol",
+    hook: "더 잘하는데 더 싸졌대요: OpenAI 새 모델 Astra·Sol",
+    benefit: "더 낮은 비용으로 업무",
     context:
       "OpenAI는 새 모델을 낼 때마다 ChatGPT, 코딩 도구 Codex, 개발자용 API에 차례로 넣어 왔거든요. 이번엔 이름이 두 개짜리 세트로 나왔어요.",
     what:
@@ -90,14 +95,15 @@ export const SAMPLE_FEED: FeedItem[] = [
     sources: 2,
     at: "2026-11-18T23:26:25Z",
     difficulty: 1,
-    hook: "Claude 만든 회사, 드디어 주식시장 데뷔 가격을 정했어요",
+    hook: "Claude 만든 회사 주식, 11월 19일부터 나스닥에서 거래돼요",
+    benefit: "주당 83달러 공모가",
     context:
       "회사가 주식시장에 처음 이름을 올리는 걸 '상장(IPO)'이라고 하거든요. 상장 직전엔 처음 주식을 얼마에 팔지, 즉 공모가를 정해요.",
     what:
-      "앤트로픽이 공식 뉴스 페이지에 'IPO 공모가를 정했다'는 소식을 올렸어요. 해커뉴스에서도 바로 화제가 돼서 댓글이 280개 넘게 달렸어요.",
-    analogy: "인기 맛집이 프랜차이즈 가맹점을 처음 모집하면서 '가맹비는 이만큼이에요' 하고 가격표를 붙인 순간이에요.",
-    why: "AI 회사들이 연구소에서 상장 기업으로 바뀌면, 투자자 눈치를 보며 제품을 더 자주, 더 빨리 내놓게 될 수 있어요.",
-    caveats: "레이더가 가져온 건 공식 페이지 제목뿐이라, 공모가 숫자 같은 자세한 내용은 원문에서 확인해 주세요.",
+      "앤트로픽이 보통주 공모가를 주당 83달러로 정했어요. 모두 9억 8천만 주를 내놓고, 11월 19일부터 나스닥에서 'ANT'라는 이름표로 거래가 시작될 예정이래요.",
+    analogy: "인기 맛집이 처음으로 '우리 가게 지분 한 조각은 이 가격이에요' 하고 가격표를 붙인 순간이에요.",
+    why: "AI 회사들이 연구소에서 상장 기업으로 바뀌면, 투자자 눈치를 보며 제품을 더 자주, 더 빨리 내놓게 될 수 있어요. 해커뉴스에서도 댓글이 280개 넘게 달렸어요.",
+    caveats: "공모는 11월 20일에 마무리될 예정이고, 그 전에 정해진 절차를 거쳐야 해요. 투자 판단은 공식 투자설명서를 직접 확인하세요.",
     terms: [{ term: "IPO", easy: "회사가 처음으로 주식을 일반 사람들에게 파는 '주식시장 데뷔 무대'예요." }],
     entities: [e("Anthropic", "company", "ipo")],
   }),
@@ -109,8 +115,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 33.16,
     sources: 2,
     at: "2026-11-18T00:00:00Z",
-    difficulty: 2,
-    hook: "AI가 AI를 돌릴 반도체 설계까지 거들고 있대요",
+    difficulty: 1,
+    hook: "AI가 자기가 돌아갈 반도체 설계까지 거들기 시작했어요",
     context:
       "반도체 칩은 아주 작은 회로 수십억 개를 빈틈없이 배치해야 해서, 설계에 전문가들이 엄청난 시간을 쓰거든요.",
     what:
@@ -129,7 +135,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 26.51,
     at: "2026-11-18T08:00:00Z",
     difficulty: 1,
-    hook: "일본 보험사에선 임원들이 먼저 ChatGPT를 써 봤대요",
+    hook: "회사에 AI가 안 퍼진다면? 이 보험사는 임원부터 먼저 썼어요",
+    benefit: "사내 AI 정착 노하우",
     context:
       "회사에 새 도구가 들어와도 막상 직원들이 안 쓰는 경우가 많거든요. 그래서 'AI를 어떻게 정착시키냐'가 요즘 기업들의 큰 고민이에요.",
     what:
@@ -148,15 +155,16 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 32.46,
     at: "2026-11-18T00:17:58Z",
     difficulty: 1,
-    hook: "구글 AI 답변 때문에 웹사이트 방문이 40% 줄었다고요?",
+    hook: "검색 결과에 AI 요약이 뜨면, 웹사이트 클릭이 40% 줄었어요",
+    benefit: "내 블로그 유입 점검",
     context:
       "예전엔 구글에서 검색하면 링크를 눌러 웹사이트로 들어갔거든요. 요즘은 검색 결과 맨 위에 AI가 답을 바로 정리해서 보여줘요.",
     what:
-      "'구글 AI 답변이 검색 유입을 40% 줄이고 있다'는 제목의 글이 해커뉴스에서 700점 가까이 받으며 크게 화제가 됐어요. 댓글도 540개 넘게 달렸어요.",
+      "연구자들이 미국 데스크톱 사용자를 무작위로 나눠 한쪽만 AI 요약을 숨겨 봤더니, 요약이 보이는 쪽은 검색 한 번당 바깥 웹사이트 클릭이 0.62번에서 0.37번으로 약 40% 줄었대요. 이 AI 요약은 이제 추적 중인 키워드의 61% 넘게에서 나타나요.",
     analogy: "서점 입구에서 직원이 책 내용을 다 요약해 주면, 손님이 굳이 책장까지 안 가는 것과 비슷해요.",
-    why: "블로그나 쇼핑몰을 운영한다면 '검색으로 손님이 온다'는 공식이 흔들리고 있다는 신호예요.",
-    caveats: "레이더가 가져온 건 제목과 반응 수뿐이에요. 40%가 어떤 기준의 숫자인지는 원문에서 꼭 확인해 주세요.",
-    terms: [{ term: "검색 유입", easy: "검색 결과를 눌러서 내 웹사이트로 들어온 방문자예요." }],
+    why: "블로그나 쇼핑몰을 운영한다면 '검색 순위만 높으면 손님이 온다'는 공식이 흔들리고 있다는 신호예요. 해커뉴스에서도 댓글 540개 넘게 토론이 붙었어요.",
+    caveats: "핵심 실험은 아직 동료 검토 전인 논문이고, 데스크톱 검색만 다뤘어요.",
+    terms: [{ term: "AI 요약", easy: "검색 결과 맨 위에 AI가 여러 사이트 내용을 모아 답을 미리 정리해 보여주는 칸이에요." }],
     entities: [e("Google AI Overviews", "tool", "search", "seo")],
   }),
 
@@ -169,14 +177,15 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 31.0,
     at: "2026-11-16T22:58:20Z",
     difficulty: 2,
-    hook: "윈도우 11이 내가 어떤 코딩 AI를 쓰는지 기록하고 있었다?",
+    hook: "윈도우 11, 내가 쓰는 코딩 AI 목록을 기본 설정으로 보내고 있었어요",
+    benefit: "설정 한 번으로 끄기",
     context:
       "운영체제는 오류를 고치려고 사용 기록을 조금씩 모으거든요. 그런데 '어디까지 모아도 되냐'는 늘 민감한 주제예요.",
     what:
-      "'윈도우 11이 사용자가 쓰는 코딩 에이전트와 개발 도구 정보를 수집하고 있다'는 글이 해커뉴스에서 700점 넘게 받으며 댓글 600개 이상 토론이 벌어졌어요.",
-    analogy: "집 관리 업체가 고장 점검한다고 들어와서, 내가 쓰는 주방 도구 브랜드까지 적어 간 걸 알게 된 기분이에요.",
-    why: "회사 코드나 개인 프로젝트를 다룬다면, 내 PC의 개인정보 설정을 한 번 열어 보는 계기로 삼아 볼 만해요.",
-    caveats: "레이더가 가져온 건 제목과 토론 규모예요. 실제로 무엇을 어떻게 모으는지는 원문과 마이크로소프트 설명을 함께 봐야 해요.",
+      "한 개발자가 윈도우 11 시스템 파일을 뜯어보니, codex·claude·copilot·cursor 같은 코딩 에이전트와 python·gcc 같은 개발 도구를 썼는지 기록하는 부품이 있었대요. '선택적 진단 데이터'가 켜져 있으면 이 기록이 마이크로소프트로 업로드되는데, 그가 테스트한 미국 설정에선 기본으로 켜져 있었어요.",
+    analogy: "집 관리 업체가 고장 점검한다고 들어와서, 내가 쓰는 주방 도구 브랜드 목록까지 적어 간 걸 알게 된 기분이에요.",
+    why: "설정 → 개인 정보 및 보안 → 진단 및 피드백에서 '선택적 진단 데이터 보내기'를 끄면 돼요. 회사 PC라면 한 번 확인해 볼 만해요.",
+    caveats: "기록되는 건 프롬프트나 코드가 아니라 '어떤 도구를 썼는지' 표시예요. 한 사람이 직접 분석한 결과라 다른 지역 설정에선 다를 수 있어요.",
     terms: [{ term: "코딩 에이전트", easy: "말로 시키면 코드를 직접 읽고 고치고 실행까지 해 주는 AI 조수예요." }],
     entities: [e("Windows 11", "platform", "privacy", "telemetry")],
   }),
@@ -187,8 +196,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://slowchronicle.com/posts/llm-assisted-reverse-engineering",
     score: 29.46,
     at: "2026-11-18T22:29:13Z",
-    difficulty: 3,
-    hook: "설명서 없는 프로그램, AI랑 같이 뜯어보기",
+    difficulty: 2,
+    hook: "설명서 없는 프로그램, 이제 AI랑 같이 뜯어봐요",
     context:
       "이미 만들어진 프로그램을 거꾸로 분석해서 속 구조를 알아내는 걸 '리버스 엔지니어링'이라고 하거든요. 원래는 전문가들도 몇 날 며칠 걸리는 일이에요.",
     what:
@@ -210,7 +219,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 26.51,
     at: "2026-11-18T08:00:00Z",
     difficulty: 2,
-    hook: "AI 코딩 도우미가 내 컴퓨터에서 '선 넘지 않게' 하는 방법",
+    hook: "AI 코딩 비서에게 내 PC를 맡겨도 될까? 울타리가 있어요",
+    benefit: "파일·네트워크 접근 제한",
     context:
       "코딩 AI가 내 컴퓨터에서 명령어를 직접 실행하면 편하지만, 실수로 중요한 파일을 지우거나 인터넷에 뭘 보낼까 봐 걱정되거든요.",
     what:
@@ -227,8 +237,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://github.com/vllm-project/vllm/releases/tag/v0.34.0",
     score: 24.05,
     at: "2026-11-18T21:02:33Z",
-    difficulty: 3,
-    hook: "AI 서버 엔진 vLLM, 412명이 힘을 모은 대형 업데이트",
+    difficulty: 2,
+    hook: "같은 GPU로 더 많이: vLLM 업데이트로 디코딩 최대 1.95배",
+    benefit: "디코딩 최대 1.95배",
     context:
       "vLLM은 회사들이 AI 모델을 많은 사람에게 동시에 서비스할 때 쓰는 오픈소스 엔진이거든요. 업데이트 하나에 서버 비용이 달라질 수 있어요.",
     what:
@@ -251,7 +262,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-09T23:45:36Z",
     life: "warm",
     difficulty: 2,
-    hook: "내 PC용 AI 앱 Ollama, 맥에서 메모리를 27GB나 아꼈어요",
+    hook: "맥에서 AI 돌릴 때 메모리 27GB가 남아요",
+    benefit: "맥 메모리 27GiB 절약",
     context:
       "Ollama는 명령어 한 줄로 AI 모델을 내 컴퓨터에 깔아 쓰게 해 주는 앱이거든요. 큰 모델은 메모리를 많이 먹어서 늘 고민이었어요.",
     what:
@@ -272,14 +284,15 @@ export const SAMPLE_FEED: FeedItem[] = [
     sources: 2,
     at: "2026-11-18T21:35:43Z",
     difficulty: 1,
-    hook: "구글이 새 제미나이 'Neon'을 공개했어요",
+    hook: "구글 새 AI 'Neon', 형님 모델보다 작업당 비용 32% 싸요",
+    benefit: "작업당 비용 32% 절감",
     context:
       "구글은 Gemini 4 모델들에 원소 이름을 붙여 내놓고 있거든요. Carbon, Hydrogen에 이어 이번엔 Neon이에요.",
     what:
-      "구글 딥마인드가 공식 블로그에 Gemini 4 Neon 소개 글을 올렸어요. 같은 날 해커뉴스에서도 800점 넘게 받으며 댓글 650개 이상이 달렸어요.",
-    analogy: "같은 스마트폰 시리즈에서 '프로', '라이트'처럼 쓰임새별 모델이 하나 더 나온 거라고 보면 돼요.",
-    why: "제미나이 앱을 쓰고 있다면 곧 고를 수 있는 모델이 달라질 수 있어요. 커뮤니티에선 다른 최신 모델과 비교하는 글이 쏟아지고 있어요.",
-    caveats: "레이더가 가져온 건 공식 글 제목이라, 성능이나 가격은 원문에서 확인해 주세요.",
+      "Gemini 4 Neon은 가장 어려운 장기 작업용 Carbon과 빠른 일상 작업용 Hydrogen 사이에서 깊이와 효율의 균형을 잡은 모델이에요. 구글은 기본 설정에서 Carbon보다 작업당 비용이 32% 낮다고 했고, 개발자 가격은 입력 100만 토큰당 3달러예요.",
+    analogy: "같은 스마트폰 시리즈에서 '최상위 프로'와 '라이트' 사이에 가성비 좋은 중간 모델이 나온 거라고 보면 돼요.",
+    why: "구글 AI Pro·Ultra 구독자라면 제미나이 앱 모델 선택 메뉴에서 바로 고를 수 있어요. 해커뉴스에선 댓글 650개 넘게 비교 토론이 벌어졌어요.",
+    caveats: "성능 순위는 구글이 공개한 벤치마크 기준이에요. 무료 사용자에게 열리는지는 원문에 없어요.",
     terms: [{ term: "Gemini", easy: "구글이 만든 AI 모델 이름이자 대화형 AI 서비스 이름이에요." }],
     entities: [e("Gemini 4 Neon", "model", "llm"), e("Google DeepMind", "company", "research")],
   }),
@@ -291,7 +304,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 29.5,
     at: "2026-11-17T03:44:46Z",
     difficulty: 2,
-    hook: "텐센트가 그림도 읽는 대화형 AI를 허깅페이스에 올렸어요",
+    hook: "사진 보고 대화하는 텐센트 AI, 허깅페이스에서 바로 받아요",
+    benefit: "공개 가중치 다운로드",
     context:
       "요즘 AI 모델은 글만 읽는 게 아니라 사진을 보고 설명하는 것까지 하거든요. 이런 걸 '멀티모달'이라고 불러요.",
     what:
@@ -312,8 +326,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/sensenova/SenseNova-Loop-9B",
     score: 27.77,
     at: "2026-11-17T10:16:41Z",
-    difficulty: 3,
-    hook: "같은 층을 빙글빙글 다시 도는 AI, SenseNova-Loop",
+    difficulty: 2,
+    hook: "덩치 대신 '반복'으로 깊게 생각하는 90억짜리 작은 AI",
+    benefit: "Apache 2.0 상업 이용",
     context:
       "AI 모델은 보통 여러 층을 한 번씩 차례로 통과하며 생각하거든요. 층을 많이 쌓을수록 똑똑해지지만 그만큼 무거워져요.",
     what:
@@ -336,7 +351,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-04T19:51:05Z",
     life: "warm",
     difficulty: 2,
-    hook: "한 달 새 3만 번 내려받힌 공개 대화 AI, Inkling-2-Small",
+    hook: "한 달 새 3만 번 내려받힌, 상업 이용도 되는 대화 AI",
+    benefit: "상업 이용 가능 라이선스",
     context:
       "누구나 내려받아 쓸 수 있는 '공개 모델'은 다운로드 수가 곧 인기 지표거든요.",
     what:
@@ -354,8 +370,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 24.2,
     at: "2026-11-11T05:22:51Z",
     life: "warm",
-    difficulty: 3,
-    hook: "1450억 파라미터 모델을 4비트로 꾹꾹 눌러 담았어요",
+    difficulty: 2,
+    hook: "1450억 파라미터 AI를 4비트로 압축, 더 작은 장비로",
+    benefit: "4비트 경량화 모델",
     context:
       "큰 AI 모델은 그대로 돌리면 비싼 서버가 필요하거든요. 그래서 숫자를 덜 정밀하게 저장해 크기를 줄이는 '양자화'를 많이 써요.",
     what:
@@ -376,7 +393,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 28.84,
     at: "2026-11-17T21:16:12Z",
     difficulty: 1,
-    hook: "AI가 코드를 빨리 짜니까, 이번엔 '검토'가 막혔대요",
+    hook: "AI가 코드를 빨리 짤수록, 사람 검토가 새 병목이 된대요",
     context:
       "개발 현장에선 누가 쓴 코드를 다른 사람이 읽고 확인하는 '코드 리뷰'를 거쳐야 실제 서비스에 들어가거든요.",
     what:
@@ -394,13 +411,16 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://anthropic.com/research/claude-black-hole-physics",
     score: 28.07,
     at: "2026-11-18T21:42:44Z",
-    difficulty: 2,
-    hook: "Claude가 블랙홀 물리학 연구에 손을 보탰다고요?",
+    difficulty: 3,
+    hook: "20년 넘게 아무도 못 끝낸 블랙홀 계산, Claude가 마무리했어요",
+    benefit: "물리학 난제 2개 해결",
     context:
       "AI 회사들은 요즘 '과학 연구를 얼마나 도울 수 있나'를 보여주는 사례를 자주 공개하거든요.",
-    what: "앤트로픽 연구 페이지에 'Claude와 블랙홀 물리학'이라는 제목의 새 글이 올라왔어요.",
-    why: "AI가 문서 정리를 넘어 어려운 과학 문제에 어떻게 쓰이는지 궁금했다면 읽어 볼 만한 사례예요.",
-    caveats: "레이더가 가져온 건 페이지 제목뿐이에요. Claude가 정확히 어떤 역할을 했는지는 원문에서 확인해 주세요.",
+    what:
+      "앤트로픽은 Claude Fable 5.2가 블랙홀과 양자 중력에 관한 이론물리학 미해결 문제 두 개를 풀었다고 발표했어요. 그중 하나는 물리학자들이 2003년에 계산 방법만 세워 두고 아무도 끝내지 못한 문제였는데, Claude는 자기 복제본들로 작은 연구팀을 꾸려 계산을 나눠 하고 서로 검산했대요.",
+    analogy: "20년 동안 반쯤 풀다 만 거대한 수학 숙제를, AI 조교 여럿이 나눠 풀고 서로 답을 맞춰 본 셈이에요!",
+    why: "AI가 문서 정리를 넘어, 사람이 오래 못 푼 과학 계산을 실제로 마무리하는 단계까지 왔다는 사례예요.",
+    caveats: "앤트로픽도 두 결과 모두 우리 우주를 직접 설명하거나 당장 실생활에 쓰이는 건 아니라고 밝혔어요.",
     terms: [{ term: "블랙홀", easy: "중력이 너무 세서 빛조차 빠져나오지 못하는 우주 공간이에요." }],
     entities: [e("Claude", "model", "science"), e("Anthropic", "company", "research")],
   }),
@@ -411,8 +431,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://deepmind.google/blog/genie-4-is-now-available",
     score: 27.63,
     at: "2026-11-18T18:13:42Z",
-    difficulty: 2,
-    hook: "구글 딥마인드 Genie 4, 이제 써 볼 수 있대요",
+    difficulty: 1,
+    hook: "구글 딥마인드 Genie 4, 이제 직접 써볼 수 있대요",
     context:
       "Genie는 구글 딥마인드가 연구해 온 'AI가 만들어 내는 세상' 계열 프로젝트 이름이거든요.",
     what: "구글 딥마인드 공식 블로그에 'Genie 4를 이제 이용할 수 있다'는 공지가 올라왔어요.",
@@ -428,7 +448,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 29.8,
     at: "2026-11-18T09:29:32Z",
     difficulty: 3,
-    hook: "추론 비용을 385배 아낀다는 '에너지 기반 추론기'",
+    hook: "AI의 '생각 비용'을 385배 아낀다는 새 추론법",
+    benefit: "추론 효율 385배 주장",
     context:
       "요즘 AI는 어려운 문제를 풀 때 오래 '생각'하느라 계산 비용이 많이 들거든요. 그래서 더 싸게 생각하는 방법을 찾는 연구가 활발해요.",
     what:
@@ -447,7 +468,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 25.36,
     at: "2026-11-18T00:00:00Z",
     difficulty: 3,
-    hook: "그림 한 장을 0.08초 만에, 한 번에 그려내는 AI",
+    hook: "그림 한 장 0.08초, 기존 통합 모델보다 최대 122배 빨라요",
+    benefit: "이미지 생성 78ms",
     context:
       "이미지 AI는 보통 여러 단계를 거치며 그림을 조금씩 다듬거든요. 그래서 빠르게 만들기가 어려웠어요.",
     what:
@@ -467,7 +489,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-10T00:00:00Z",
     life: "warm",
     difficulty: 3,
-    hook: "집 컴퓨터로 거대 AI 돌리기, 메모리 정리만 잘해도 2배 빨라져요",
+    hook: "램 업그레이드 없이 집 PC로 큰 AI, 응답이 1.97배 빨라져요",
+    benefit: "응답속도 평균 1.97배",
     context:
       "개인정보나 비용 때문에 큰 MoE 모델을 내 PC에서 돌리고 싶은 사람이 많거든요. 그런데 집 컴퓨터는 메모리가 부족해서 모델이 그래픽카드, 램, SSD에 흩어져요.",
     what:
@@ -488,7 +511,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 28.55,
     at: "2026-11-16T17:21:04Z",
     difficulty: 2,
-    hook: "애플이 글로 영상을 만드는 AI를 허깅페이스에 올렸어요",
+    hook: "애플도 글로 영상 만드는 AI를 허깅페이스에 공개했어요",
     context:
       "글을 쓰면 영상이 나오는 'text-to-video' 모델은 보통 구글, 오픈AI 같은 회사가 앞장서 왔거든요.",
     what:
@@ -507,13 +530,15 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 27.89,
     at: "2026-11-12T11:05:59Z",
     difficulty: 2,
-    hook: "말 끊어도 바로 알아듣는 AI 목소리, 한국어도 돼요",
+    hook: "말 끊어도 바로 알아듣는 AI 목소리, 한국어까지 공개됐어요",
+    benefit: "내 PC GPU로 구동",
     context:
       "대부분의 음성 AI는 내가 말을 끝내야 대답을 시작하거든요. 그래서 대화가 무전기처럼 느껴졌어요.",
     what:
       "Haru-4B는 듣기와 말하기를 동시에 하는 '풀 듀플렉스' 음성-투-음성 모델이에요. 한국어, 영어, 일본어 등 9개 언어를 지원하고, Apache 2.0으로 공개돼서 좋아요 1,400개를 넘겼어요.",
     analogy: "무전기처럼 '오버!' 하고 차례를 기다리는 대신, 전화처럼 자연스럽게 말이 겹쳐도 되는 대화예요.",
-    why: "한국어 음성 비서를 만들고 싶은 개발자라면 무료로 시험해 볼 수 있는 선택지가 생겼어요.",
+    why: "메모리 12GB 정도의 엔비디아 그래픽카드가 있으면 내 PC에서 웹 데모를 띄워 직접 말을 걸어 볼 수 있어요.",
+    caveats: "연구용으로 공개된 기본 모델이에요. 목소리는 내가 쓸 권리가 있는 녹음으로만 넣어야 해요.",
     terms: [{ term: "풀 듀플렉스", easy: "전화 통화처럼 듣기와 말하기가 동시에 되는 방식이에요." }],
     entities: [e("Haru-4B", "model", "speech-to-speech", "full-duplex")],
   }),
@@ -524,8 +549,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/n4ze3m/tiny-voca",
     score: 27.18,
     at: "2026-11-14T15:46:27Z",
-    difficulty: 1,
-    hook: "작고 가벼운 글 읽어주기 AI, tiny-voca",
+    difficulty: 2,
+    hook: "인터넷 없이 글 읽어주는 초경량 목소리 AI",
+    benefit: "온디바이스 경량 TTS",
     context: "글을 목소리로 읽어 주는 TTS는 보통 모델이 커서 휴대폰이나 작은 기기에서 돌리기 어려웠거든요.",
     what:
       "tiny-voca는 영어 텍스트를 음성으로 바꿔 주는 작은 모델이에요. ONNX와 GGUF 형식으로 배포돼서 다양한 기기에서 돌리기 쉽고, 한 달 새 4,400번 넘게 다운로드됐어요.",
@@ -543,7 +569,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 26.36,
     at: "2026-11-13T02:45:33Z",
     difficulty: 2,
-    hook: "목소리만 넣으면 아바타가 말하는 영상이 뚝딱",
+    hook: "녹음 파일만 있으면 말하는 아바타 영상이 나와요",
+    benefit: "MIT 라이선스 무료",
     context: "말하는 사람 영상을 만들려면 원래 촬영, 녹음, 편집이 다 필요했거든요.",
     what:
       "중국 메이퇀의 LongCat-Video-Avatar-1.6은 음성(과 이미지·텍스트)을 넣으면 그에 맞춰 말하는 아바타 영상을 만들어요. 이어지는 영상 생성도 지원하고 MIT 라이선스로 공개됐어요.",
@@ -560,8 +587,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     url: "https://huggingface.co/inworld/voice-isolator",
     score: 24.56,
     at: "2026-11-14T02:14:35Z",
-    difficulty: 1,
-    hook: "시끄러운 카페 녹음에서 목소리만 쏙 뽑아내요",
+    difficulty: 2,
+    hook: "카페 소음 낀 녹음, 목소리만 쏙 뽑아내요",
+    benefit: "실시간 잡음 제거",
     context: "녹음할 때 에어컨 소리, 키보드 소리가 같이 들어가면 듣기 힘들거든요.",
     what:
       "Inworld의 voice-isolator는 잡음을 지우고 사람 목소리만 남겨 주는 모델이에요. 48kHz 고음질을 지원하고 실시간 스트리밍으로도 쓸 수 있어요. Apache 2.0으로 공개됐어요.",
@@ -578,8 +606,9 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 23.89,
     at: "2026-11-09T05:03:57Z",
     life: "warm",
-    difficulty: 1,
-    hook: "한 달에 11만 번 내려받힌 목소리 AI, ZONOS3-Mini",
+    difficulty: 2,
+    hook: "한 달 11만 번 받힌 목소리 AI, 여러 언어로 읽어줘요",
+    benefit: "다국어 음성 합성",
     context: "AI가 글을 읽어 주는 TTS는 이제 목소리 흉내까지 내는 단계로 왔거든요.",
     what:
       "Zyphra의 ZONOS3-Mini는 여러 언어를 지원하는 TTS 모델로, 목소리 복제 기능도 있어요. 한 달 새 11만 번 넘게 다운로드됐어요.",
@@ -598,7 +627,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 24.29,
     at: "2026-11-18T22:55:32Z",
     difficulty: 2,
-    hook: "ComfyUI 새 버전, 최신 이미지 AI 블록이 또 늘었어요",
+    hook: "ComfyUI 업데이트, 최신 이미지 모델을 블록 하나로 연결",
+    benefit: "MiniMax H3 노드 추가",
     context:
       "ComfyUI는 이미지·영상 AI 기능을 레고 블록(노드)처럼 이어 붙여 쓰는 도구거든요. 새 블록이 추가되면 할 수 있는 일이 늘어나요.",
     what:
@@ -617,7 +647,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 23.22,
     at: "2026-11-18T18:38:19Z",
     difficulty: 2,
-    hook: "그림 일부만 쓱 고치는 ComfyUI 작업법, 가이드까지 업데이트",
+    hook: "그림 전체 말고 망친 부분만 다시: 인페인팅 워크플로",
+    benefit: "부분 수정 워크플로",
     context:
       "AI 그림에서 손가락 하나, 배경 한 구석만 고치고 싶을 때가 많거든요. 이렇게 일부만 다시 그리는 걸 '인페인팅'이라고 해요.",
     what:
@@ -636,7 +667,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 22.46,
     at: "2026-11-16T16:52:00Z",
     difficulty: 1,
-    hook: "말로 설명하면 브라우저가 이모지를 그려줘요",
+    hook: "설치 없이 브라우저에서, 말로 설명하면 이모지가 그려져요",
+    benefit: "설치 없이 웹에서 체험",
     context: "팀 메신저에서 쓸 나만의 이모지를 만들려면 보통 그림 실력이 필요했거든요.",
     what:
       "허깅페이스 Space 'Slack Moji'는 원하는 이모지를 글로 설명하면, 작은 AI 모델이 내 브라우저 안에서 바로 그려줘요.",
@@ -655,7 +687,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-11-03T06:34:36Z",
     life: "warm",
     difficulty: 2,
-    hook: "한 달 76만 다운로드, 그리기와 고치기를 다 하는 MiniMax-H3-Image",
+    hook: "그리기·바꾸기·고치기를 한 모델로, 한 달 76만 다운로드",
+    benefit: "생성·편집 올인원",
     context: "이미지 AI는 '새로 그리기'와 '있는 그림 고치기'를 따로 하는 경우가 많았거든요.",
     what:
       "MiniMax-H3-Image는 글로 그림을 만들고, 이미지를 넣어 다른 이미지로 바꾸고, 이미지 편집까지 하는 모델이에요. 한 달 새 76만 번 가까이 다운로드됐고 좋아요도 1,600개를 넘었어요.",
@@ -673,7 +706,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     at: "2026-10-28T15:55:17Z",
     life: "warm",
     difficulty: 2,
-    hook: "사진 한 장을 3D로 바꾸는 idol, 좋아요 2,400개 돌파",
+    hook: "사진 한 장을 돌려보는 3D로, 상업 이용도 되는 공개 모델",
+    benefit: "Apache 2.0 3D 변환",
     context: "사진을 3D 모델로 바꾸는 기술은 게임, 쇼핑, 메타버스 분야에서 수요가 많거든요.",
     what:
       "speridlabs의 idol은 이미지를 3D로 바꿔 주는 모델이에요. '가우시안 스플래팅' 방식을 쓰고 Apache 2.0으로 공개됐어요. 좋아요가 2,400개를 넘었어요.",
@@ -692,7 +726,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 25.2,
     at: "2026-11-19T03:10:07Z",
     difficulty: 1,
-    hook: "구글이 원소 이름을 다 써버리는 날은 11월 24일?",
+    hook: "이 속도면 구글은 11월 24일에 원소 이름이 바닥난대요",
     context:
       "구글은 Gemini 4 모델들에 Carbon, Neon, Hydrogen 같은 원소 이름을 붙이고 있거든요. 출시 간격도 점점 짧아지고 있어요.",
     what:
@@ -710,7 +744,8 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 23.42,
     at: "2026-11-19T06:40:15Z",
     difficulty: 1,
-    hook: "'자전거 타는 펠리컨'으로 본 제미나이 4 삼형제",
+    hook: "같은 AI도 '얼마나 고민하냐'에 따라 그림이 달라져요",
+    benefit: "AI 모델 비교 요령",
     context:
       "개발자 사이먼 윌리슨은 새 AI가 나올 때마다 '자전거 타는 펠리컨을 SVG로 그려줘'라고 시켜 보는 걸로 유명하거든요.",
     what:
@@ -728,7 +763,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 22.96,
     at: "2026-11-17T18:30:03Z",
     difficulty: 1,
-    hook: "미리 써 본 GPT-6.2 Astra 후기: '들쑥날쑥한데 큰일은 해낸다'",
+    hook: "새 GPT 미리 써 본 교수 후기: 다루긴 까다로운데 큰일은 해낸다",
     context: "새 AI가 나오면 출시 전에 먼저 써 보는 사람들의 후기가 가장 빨리 퍼지거든요.",
     what:
       "이선 몰릭 교수는 출시 전 GPT-6.2 Astra를 써 보니 다른 모델보다 다루기 까다롭고 들쑥날쑥했대요. 그런데 '블렌더와 유니티로 우주 엘리베이터를 처음부터 만들어 줘' 같은 큰 프로젝트를 주자 결과물을 내놨다고 해요.",
@@ -745,7 +780,7 @@ export const SAMPLE_FEED: FeedItem[] = [
     score: 24.11,
     at: "2026-11-17T14:34:59Z",
     difficulty: 1,
-    hook: "게임 업계만 AI 없이 코딩한다? 그건 아닐 거래요",
+    hook: "게임만은 AI 없이 코딩한다? 교수는 '아니다'에 한 표",
     context: "게임 팬과 언론 사이에선 'AI로 만든 게임'에 대한 거부감이 꽤 크거든요.",
     what:
       "이선 몰릭 교수는 게임만 사람이 AI 도움 없이 코드를 짜는 유일한 분야로 남을 거라는 생각은 틀렸다고 했어요. 그런 압박 때문에 오히려 일하는 사람에게 힘이 되는 방향으로 AI 사용을 이끌 기회를 놓칠 수 있다고 걱정했어요.",

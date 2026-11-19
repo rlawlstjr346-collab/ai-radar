@@ -27,6 +27,7 @@ GOOD = {
         "limitations": ["hands distorted"], "not_stated": [],
     },
     "hook_title": "사진 한 장이 춤을 춰요",
+    "benefit_tag": "웹 데모 바로 체험",
     "context_ko": "원래는 어려웠거든요.",
     "what_ko": "한 클립에 90초 정도 걸린대요. LoRA 같은 건 안 써요.",
     "analogy_ko": None,
@@ -140,3 +141,21 @@ def test_long_body_is_truncated_with_warning():
     result = Summarizer(client).summarize(long_item)
     assert any(w.startswith("body_truncated") for w in result.warnings)
     assert "뒷부분 생략" in client.messages.calls[0]["messages"][0]["content"]
+
+
+def test_benefit_tag_is_saved_and_linted():
+    from summarizer_schema import SummaryResult
+    r = SummaryResult(output=SummaryLLMOutput.model_validate(GOOD), prompt_version="v", model="m")
+    assert r.to_summary_row("id")["benefit_tag"] == "웹 데모 바로 체험"
+    long_tag = dict(GOOD, benefit_tag="이 도구 하나면 모든 작업이 다섯 배 빨라져요")
+    assert any(w.startswith("benefit_tag_too_long") for w in lint_output(SummaryLLMOutput.model_validate(long_tag)))
+    clickbait = dict(GOOD, hook_title="충격! 디자이너 끝났다")
+    assert any("충격" in w for w in lint_output(SummaryLLMOutput.model_validate(clickbait)))
+    none_tag = SummaryResult(output=SummaryLLMOutput.model_validate(dict(GOOD, benefit_tag=None)), prompt_version="v", model="m")
+    assert none_tag.to_summary_row("id")["benefit_tag"] is None
+
+
+def test_prompt_defines_source_difficulty_and_hook_angles():
+    assert P.PROMPT_VERSION == "newneek-v1.1"
+    for needle in ("원문 난이도", "박사급 논문", "benefit_tag", "돈·시간 절약", "통념", "무료로 써볼"):
+        assert needle in P.SYSTEM_PROMPT, needle

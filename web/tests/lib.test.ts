@@ -4,7 +4,7 @@ import samplePlatforms from "@/data/platforms.sample.json";
 import { SAMPLE_FEED } from "@/data/sample-feed";
 import { getSupabaseEnv, loadRadarData, normalizeFeedRow } from "@/lib/data";
 import { CATEGORY_ORDER } from "@/lib/categories";
-import { filterItems, freshness, groupPlatforms, hotFeed, hotRankScore, HOT_LIMIT, pastFeed, recentForPlatform } from "@/lib/filter";
+import { filterItems, freshness, groupPlatforms, hotFeed, hotRankScore, HOT_LIMIT, matchesQuery, pastFeed, recentForPlatform } from "@/lib/filter";
 import { splitByTerms } from "@/lib/terms";
 import type { Platform } from "@/lib/types";
 
@@ -83,11 +83,23 @@ describe("sample data", () => {
 });
 
 describe("filters", () => {
-  it("filters by category and beginner-only, sorted by importance", () => {
-    const research = filterItems(SAMPLE_FEED, "research", false);
+  it("filters by category, sorted by importance — no article is hidden by difficulty any more", () => {
+    const research = filterItems(SAMPLE_FEED, "research");
     expect(research.every((i) => i.category === "research")).toBe(true);
     expect(research[0].importance_score).toBeGreaterThanOrEqual(research[1].importance_score);
-    expect(filterItems(SAMPLE_FEED, "all", true).every((i) => i.difficulty === 1)).toBe(true);
+    expect(filterItems(SAMPLE_FEED, "all")).toHaveLength(SAMPLE_FEED.length);
+    expect(new Set(SAMPLE_FEED.map((i) => i.difficulty))).toEqual(new Set([1, 2, 3]));
+  });
+
+  it("keyword search matches title, benefit tag, body, entity tags and platform name (all words, any case)", () => {
+    const names = new Map((samplePlatforms as Platform[]).map((p) => [p.id, p.name]));
+    expect(filterItems(SAMPLE_FEED, "all", "vllm").map((i) => i.id)).toContain("sample-vllm-0-34");
+    expect(filterItems(SAMPLE_FEED, "all", "1.95배").map((i) => i.id)).toEqual(["sample-vllm-0-34"]);
+    expect(filterItems(SAMPLE_FEED, "all", "text-to-speech").length).toBeGreaterThanOrEqual(2);
+    expect(filterItems(SAMPLE_FEED, "all", "bluesky", names).every((i) => i.platform_id === "bluesky")).toBe(true);
+    expect(filterItems(SAMPLE_FEED, "all", "GEMINI 구글").length).toBeGreaterThanOrEqual(1);
+    expect(filterItems(SAMPLE_FEED, "all", "존재하지않는검색어xyz")).toEqual([]);
+    expect(matchesQuery(SAMPLE_FEED[0], "   ")).toBe(true);
   });
 
   it("groups platforms with active ones first", () => {
@@ -166,14 +178,14 @@ describe("hourly rotation in the UI", () => {
   it("hot rank lets a fresh story beat an older high-score one", () => {
     expect(hotRankScore(mk("a", 1, 20), now)).toBeGreaterThan(hotRankScore(mk("b", 30, 40), now));
     expect(hotRankScore(mk("c", 0, 10), now)).toBeCloseTo(10 / Math.pow(2, 1.5));
-    const feed = hotFeed([mk("old", 30, 40), mk("fresh", 1, 20), mk("past", 1, 99, "warm")], "all", false, now);
+    const feed = hotFeed([mk("old", 30, 40), mk("fresh", 1, 20), mk("past", 1, 99, "warm")], "all", now);
     expect(feed.map((i) => i.id)).toEqual(["fresh", "old"]);
   });
 
   it("caps the live feed at 60 and keeps warm items in the past tab", () => {
     const many = Array.from({ length: 80 }, (_, i) => mk(`h${i}`, i, 30));
-    expect(hotFeed(many, "all", false, now)).toHaveLength(HOT_LIMIT);
-    const past = pastFeed([mk("w1", 200, 10, "warm"), mk("w2", 300, 30, "warm"), mk("h", 1, 50)], "all", false);
+    expect(hotFeed(many, "all", now)).toHaveLength(HOT_LIMIT);
+    const past = pastFeed([mk("w1", 200, 10, "warm"), mk("w2", 300, 30, "warm"), mk("h", 1, 50)], "all");
     expect(past.map((i) => i.id)).toEqual(["w2", "w1"]);
   });
 
@@ -184,7 +196,7 @@ describe("hourly rotation in the UI", () => {
   });
 
   it("sample data ranks a non-empty live feed with every category present", () => {
-    const feed = hotFeed(SAMPLE_FEED, "all", false, Date.parse("2026-11-19T09:00:00Z"));
+    const feed = hotFeed(SAMPLE_FEED, "all", Date.parse("2026-11-19T09:00:00Z"));
     expect(feed.length).toBeGreaterThanOrEqual(24);
     expect(new Set(feed.map((i) => i.category))).toEqual(new Set(CATEGORY_ORDER));
   });

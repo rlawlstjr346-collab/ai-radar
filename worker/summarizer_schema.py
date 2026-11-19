@@ -70,11 +70,13 @@ class SummaryLLMOutput(BaseModel):
 
     fact_sheet: FactSheet = Field(alias="_fact_sheet")      # ← 반드시 첫 필드
     hook_title: str
+    benefit_tag: Optional[str] = Field(description="10~16자 실전 이득 칩 (이모지 없이). 근거 없으면 null")
     context_ko: str
     what_ko: str
     analogy_ko: Optional[str]
     why_ko: str
     caveats_ko: Optional[str]
+    # 원문 난이도(해독 배지): 1 가벼운 트렌드 / 2 개발 실무 문서 / 3 박사급 논문. 요약은 항상 입문자용.
     difficulty: Literal[1, 2, 3]
     terms: list[Term]
     extracted_entities: list[Entity]
@@ -96,6 +98,7 @@ class SummaryResult(BaseModel):
         return {
             "item_id": item_id,
             "hook_title": o.hook_title,
+            "benefit_tag": (o.benefit_tag or "").strip() or None,
             "context_ko": o.context_ko,
             "what_ko": o.what_ko,
             "analogy_ko": o.analogy_ko,

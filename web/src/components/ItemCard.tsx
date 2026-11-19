@@ -6,7 +6,7 @@ import { CATEGORY_META } from "@/lib/categories";
 import { freshness } from "@/lib/filter";
 import type { FeedItem, Platform } from "@/lib/types";
 
-import { CategoryTag, DifficultyBadge, PlatformBadge } from "./Badges";
+import { BenefitChip, CategoryTag, DifficultyBadge, PlatformBadge } from "./Badges";
 import Spotlight from "./Spotlight";
 
 interface Props {
@@ -69,6 +69,12 @@ export default function ItemCard({ item, platform, selected, now, onSelect, onSe
           </span>
         </div>
 
+        {item.benefit_tag && (
+          <div>
+            <BenefitChip tag={item.benefit_tag} />
+          </div>
+        )}
+
         <h3 className="text-[15.5px] font-semibold leading-snug tracking-[-0.01em] text-gray-50">
           <CoverButton item={item} selected={selected} onSelect={onSelect} className="" />
         </h3>
@@ -76,9 +82,9 @@ export default function ItemCard({ item, platform, selected, now, onSelect, onSe
         {item.context_ko && <p className="line-clamp-2 text-[13px] leading-relaxed text-gray-400">{item.context_ko}</p>}
 
         <div className="mt-auto flex flex-col gap-2 border-t border-white/[0.05] pt-3">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <CategoryTag category={item.category} />
-            <DifficultyBadge level={item.difficulty} />
+            <DifficultyBadge level={item.difficulty} variant="short" />
             {item.source_count > 1 && (
               <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-gray-500">
                 <Radio className="h-3 w-3" aria-hidden />
@@ -114,6 +120,11 @@ export function SpotlightCard({ item, platform, selected, now, rank, onSelect, o
               <Freshness iso={item.created_at} now={now} />
             </span>
           </div>
+          {item.benefit_tag && (
+            <div>
+              <BenefitChip tag={item.benefit_tag} size="md" />
+            </div>
+          )}
           <h3 className="text-[19px] font-semibold leading-snug tracking-[-0.015em] text-white sm:text-[21px]">
             <CoverButton item={item} selected={selected} onSelect={onSelect} className="" />
           </h3>
@@ -121,7 +132,7 @@ export function SpotlightCard({ item, platform, selected, now, rank, onSelect, o
           <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-1">
             <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
             <CategoryTag category={item.category} />
-            <DifficultyBadge level={item.difficulty} />
+            <DifficultyBadge level={item.difficulty} variant="short" />
             {item.source_count > 1 && (
               <span className="inline-flex items-center gap-1 text-[11px] text-gray-500">
                 <Radio className="h-3 w-3" aria-hidden />

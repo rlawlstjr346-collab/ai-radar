@@ -1,16 +1,16 @@
 "use client";
 
-import { Activity, ChevronDown, History, Info, Telescope } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { Activity, ChevronDown, History, Info, Search, Telescope, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 import { CATEGORY_ORDER } from "@/lib/categories";
-import { hotFeed, HOT_LIMIT, PAGE_SIZE, pastFeed, SPOTLIGHT_COUNT, type CategoryFilter } from "@/lib/filter";
+import { hotFeed, HOT_LIMIT, matchesQuery, PAGE_SIZE, pastFeed, SPOTLIGHT_COUNT, type CategoryFilter } from "@/lib/filter";
 import type { FeedItem, Platform, RadarData } from "@/lib/types";
 
 import { BottomSheet, DesktopPanel, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
 import ItemCard, { SpotlightCard } from "./ItemCard";
-import Sidebar, { BeginnerToggle, CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
+import Sidebar, { CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
 
 const DESKTOP_QUERY = "(min-width: 1024px)"; // Tailwind lg
 const CLOCK_TICK_MS = 60_000;
@@ -66,11 +66,85 @@ function FeedHeader({ view, total }: { view: "feed" | "past"; total: number }) {
   );
 }
 
+/** 실시간 키워드 검색 — '/' 로 포커스, Esc 로 지우기 */
+function SearchBox({ value, onChange, total }: { value: string; onChange: (v: string) => void; total: number }) {
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      const typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
+      if (e.key === "/" && !typing) {
+        e.preventDefault();
+        ref.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+  return (
+    <div className="relative">
+      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" aria-hidden />
+      <input
+        ref={ref}
+        type="search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            onChange("");
+            (e.target as HTMLInputElement).blur();
+          }
+        }}
+        placeholder="제목·요약·기술 태그 검색 (예: 무료, 로컬, Gemini)"
+        aria-label="소식 검색"
+        className="w-full rounded-xl border border-white/[0.08] bg-white/[0.02] py-2.5 pl-9 pr-24 text-[14px] text-gray-100 placeholder:text-gray-500 transition focus:border-emerald-300/40 focus:bg-white/[0.04] focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+      />
+      <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1.5">
+        {value ? (
+          <>
+            <span className="font-mono text-[11px] text-gray-500" aria-live="polite">
+              {total}건
+            </span>
+            <button
+              type="button"
+              onClick={() => onChange("")}
+              aria-label="검색어 지우기"
+              className="grid h-6 w-6 place-items-center rounded-md text-gray-400 hover:bg-white/[0.08] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+            >
+              <X className="h-3.5 w-3.5" aria-hidden />
+            </button>
+          </>
+        ) : (
+          <kbd className="hidden rounded border border-white/10 px-1.5 py-px font-mono text-[10px] text-gray-500 sm:inline">/</kbd>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** ?item=… / ?platform=… ↔ 선택 상태 */
+function readSelectionFromUrl(): Selection {
+  const params = new URLSearchParams(window.location.search);
+  const item = params.get("item");
+  if (item) return { type: "item", id: item };
+  const platform = params.get("platform");
+  if (platform) return { type: "platform", id: platform };
+  return null;
+}
+
+function writeSelectionToUrl(sel: Selection) {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("item");
+  url.searchParams.delete("platform");
+  if (sel) url.searchParams.set(sel.type, sel.id);
+  if (url.href !== window.location.href) window.history.pushState(null, "", url);
+}
+
 function EmptyFeed() {
   return (
     <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-white/10 px-6 py-14 text-center">
       <Telescope className="h-6 w-6 text-gray-500" aria-hidden />
-      <p className="text-sm leading-relaxed text-gray-400">이 조건에 맞는 소식이 아직 없어요. 필터를 바꿔보시겠어요?</p>
+      <p className="text-sm leading-relaxed text-gray-400">이 조건에 맞는 소식이 아직 없어요. 검색어나 필터를 바꿔보시겠어요?</p>
     </div>
   );
 }
@@ -159,18 +233,53 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const now = useNow(data.generatedAt);
   const [view, setView] = useState<View>("feed");
   const [category, setCategory] = useState<CategoryFilter>("all");
-  const [beginnerOnly, setBeginnerOnly] = useState(false); // 첫 접속엔 모든 기사가 보이도록 OFF
-  // 첫 진입 시 데스크톱 우측 패널이 놀지 않도록 최상단 카드를 기본 선택
-  const [selection, setSelection] = useState<Selection>(() => {
-    const first = hotFeed(data.items, "all", false, Date.parse(data.generatedAt))[0];
+  const [query, setQuery] = useState("");
+  // 첫 진입 시 데스크톱 우측 패널이 놀지 않도록 최상단 카드를 기본 선택 (URL 에는 쓰지 않는다)
+  const defaultSelection = useMemo<Selection>(() => {
+    const first = hotFeed(data.items, "all", Date.parse(data.generatedAt))[0];
     return first ? { type: "item", id: first.id } : null;
-  });
+  }, [data.items, data.generatedAt]);
+  const [selection, setSelection] = useState<Selection>(defaultSelection);
   // 모바일 바텀시트는 사용자가 직접 눌렀을 때만 연다 (기본 선택으로 화면을 가리지 않게)
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
-  const hotItems = useMemo(() => hotFeed(data.items, category, beginnerOnly, now), [data.items, category, beginnerOnly, now]);
-  const pastItems = useMemo(() => pastFeed(data.items, category, beginnerOnly), [data.items, category, beginnerOnly]);
+  const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
+  const hotItems = useMemo(() => hotFeed(data.items, category, now, query, names), [data.items, category, now, query, names]);
+  const pastItems = useMemo(() => pastFeed(data.items, category, query, names), [data.items, category, query, names]);
+
+  // URL 의 선택이 실제 데이터에 있는지 확인하고, 그 기사/플랫폼이 보이는 탭으로 이동
+  const applySelection = useCallback(
+    (sel: Selection, fromUrl: boolean) => {
+      if (sel?.type === "item") {
+        const item = data.items.find((i) => i.id === sel.id);
+        if (!item) return false;
+        if (fromUrl) setView(item.lifecycle_status === "warm" ? "past" : "feed");
+      } else if (sel?.type === "platform") {
+        if (!data.platforms.some((p) => p.id === sel.id)) return false;
+        if (fromUrl) setView("directory");
+      }
+      setSelection(sel);
+      return true;
+    },
+    [data.items, data.platforms],
+  );
+
+  // 공유 링크로 들어왔을 때 + 브라우저 뒤로/앞으로 가기
+  useEffect(() => {
+    const fromLocation = () => {
+      const sel = readSelectionFromUrl();
+      if (sel && applySelection(sel, true)) {
+        setSheetOpen(true);
+      } else {
+        setSelection(defaultSelection);
+        setSheetOpen(false);
+      }
+    };
+    if (readSelectionFromUrl()) fromLocation();
+    window.addEventListener("popstate", fromLocation);
+    return () => window.removeEventListener("popstate", fromLocation);
+  }, [applySelection, defaultSelection]);
 
   const counts = useMemo(() => {
     const pool =
@@ -178,12 +287,12 @@ export default function RadarApp({ data }: { data: RadarData }) {
         ? data.platforms.map((p) => p.category)
         : data.items
             .filter((i) => i.lifecycle_status === (view === "feed" ? "hot" : "warm"))
-            .filter((i) => !beginnerOnly || i.difficulty === 1)
+            .filter((i) => matchesQuery(i, query, names.get(i.platform_id)))
             .map((i) => i.category);
     const c = { all: view === "feed" ? Math.min(pool.length, HOT_LIMIT) : pool.length } as Record<CategoryFilter, number>;
     for (const cat of CATEGORY_ORDER) c[cat] = pool.filter((x) => x === cat).length;
     return c;
-  }, [view, data.items, data.platforms, beginnerOnly]);
+  }, [view, data.items, data.platforms, query, names]);
 
   const viewCounts = useMemo(
     () => ({
@@ -195,18 +304,26 @@ export default function RadarApp({ data }: { data: RadarData }) {
   );
 
   const selectItem = useCallback((id: string) => {
-    setSelection({ type: "item", id });
+    const sel: Selection = { type: "item", id };
+    setSelection(sel);
     setSheetOpen(true);
+    writeSelectionToUrl(sel);
   }, []);
   const selectPlatform = useCallback((id: string) => {
-    setSelection({ type: "platform", id });
+    const sel: Selection = { type: "platform", id };
+    setSelection(sel);
     setSheetOpen(true);
+    writeSelectionToUrl(sel);
   }, []);
   const close = useCallback(() => {
     setSelection(null);
     setSheetOpen(false);
+    writeSelectionToUrl(null);
   }, []);
-  const closeSheet = useCallback(() => setSheetOpen(false), []);
+  const closeSheet = useCallback(() => {
+    setSheetOpen(false);
+    writeSelectionToUrl(null);
+  }, []);
 
   const panelProps = {
     selection,
@@ -217,7 +334,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
     onClose: close,
   };
   // 필터·보기가 바뀌면 '더보기' 페이지 수를 처음으로 되돌린다
-  const listKey = `${view}:${category}:${beginnerOnly}`;
+  const listKey = `${view}:${category}:${query}`;
 
   return (
     <div className="lg:grid lg:h-dvh lg:grid-cols-[236px_minmax(0,1fr)_400px] lg:overflow-hidden xl:grid-cols-[248px_minmax(0,1fr)_440px]">
@@ -226,10 +343,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
         <Sidebar
           view={view}
           category={category}
-          beginnerOnly={beginnerOnly}
           onView={setView}
           onCategory={setCategory}
-          onBeginnerOnly={setBeginnerOnly}
           counts={counts}
           viewCounts={viewCounts}
           source={data.source}
@@ -241,7 +356,6 @@ export default function RadarApp({ data }: { data: RadarData }) {
         <Logo />
         <ViewTabs view={view} onView={setView} compact />
         <CategoryChips category={category} onCategory={setCategory} counts={counts} layout="row" />
-        {view !== "directory" && <BeginnerToggle value={beginnerOnly} onChange={setBeginnerOnly} />}
       </header>
 
       {/* 중앙 */}
@@ -264,13 +378,14 @@ export default function RadarApp({ data }: { data: RadarData }) {
         ) : (
           <div className="flex flex-col gap-6">
             <FeedHeader view={view} total={view === "feed" ? hotItems.length : pastItems.length} />
+            <SearchBox value={query} onChange={setQuery} total={view === "feed" ? hotItems.length : pastItems.length} />
             <FeedList
               key={listKey}
               items={view === "feed" ? hotItems : pastItems}
               platformsById={platformsById}
               selection={selection}
               now={now}
-              spotlight={view === "feed"}
+              spotlight={view === "feed" && !query.trim()}
               onSelect={selectItem}
               onSelectPlatform={selectPlatform}
             />
