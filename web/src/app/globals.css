@@ -6,22 +6,7 @@
  * 유채색은 --accent 와 --live(LIVE 점) 둘뿐 (Palette Budget).
  */
 :root {
-  --bg-base: #0f0f10;
-  --bg-surface: #19191a;
-  --bg-elevated: #232325;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16); /* 입력창·아웃라인 버튼 테두리 */
-  --text-primary: #f0f0f0;
-  --text-secondary: #a1a1a6;
-  --text-tertiary: #6e6e73;
-  --accent: #20b8cd;
-  --live: #22c55e;
-  --scrim: rgba(0, 0, 0, 0.55); /* 드로어·시트 뒤 딤 */
-  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* 시트·드로어 감속 곡선 */
-  color-scheme: dark;
-}
-
-:root[data-theme="paper"] {
+  /* 기본(첫 방문) = Paper · Warm Paper Reading Mode — 첫 페인트부터 종이 토큰이라 다크 깜빡임이 없다 */
   --bg-base: #fcfcf9; /* 순백(완전한 흰색) 금지 */
   --bg-surface: #f3f3ee;
   --bg-elevated: #eaeae3;
@@ -30,10 +15,42 @@
   --text-primary: #27251e;
   --text-secondary: #5c5a52;
   --text-tertiary: #8a877d;
+  --text-reading: #22201c; /* 상세 패널 읽기 본문 */
+  --text-heading: #18181b; /* 원본 쉽게 읽기 문단 소제목 */
   --accent: #016a71;
   --live: #22c55e;
   --scrim: rgba(39, 37, 30, 0.28);
+  /* 상세 요약 섹션 시맨틱 포인트 (종이에선 톤다운) */
+  --sem-context: #4f46e5;
+  --sem-what: #0f766e;
+  --sem-why: #047857;
+  --sem-caveat: #b45309;
+  --sheen: rgba(255, 255, 255, 0.24); /* solid 버튼 광택 */
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* 시트·드로어 감속 곡선 */
   color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  /* 선택 시 Dark · Quiet Research Room */
+  --bg-base: #0f0f10;
+  --bg-surface: #19191a;
+  --bg-elevated: #232325;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f0f0f0;
+  --text-secondary: #a1a1a6;
+  --text-tertiary: #6e6e73;
+  --text-reading: #efefef;
+  --text-heading: #f5f5f5;
+  --accent: #20b8cd;
+  --live: #22c55e;
+  --scrim: rgba(0, 0, 0, 0.55);
+  --sem-context: #a5b4fc;
+  --sem-what: #5eead4;
+  --sem-why: #6ee7b7;
+  --sem-caveat: #fcd34d;
+  --sheen: rgba(32, 184, 205, 0.28);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -47,6 +64,12 @@
   --color-fg-2: var(--text-secondary);
   --color-fg-3: var(--text-tertiary);
   --color-accent: var(--accent);
+  --color-reading: var(--text-reading);
+  --color-heading: var(--text-heading);
+  --color-sem-context: var(--sem-context);
+  --color-sem-what: var(--sem-what);
+  --color-sem-why: var(--sem-why);
+  --color-sem-caveat: var(--sem-caveat);
   --color-live: var(--live);
   --color-scrim: var(--scrim);
   /* 예전 이름 호환 (bg-bg, bg-card, bg-card-2, text-ink, text-muted) */
@@ -117,7 +140,7 @@ kbd,
   color: var(--text-primary);
 }
 .t-panel-title {
-  font-size: 22px;
+  font-size: 22.5px;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.02em;
@@ -125,15 +148,20 @@ kbd,
 }
 @media (min-width: 640px) {
   .t-panel-title {
-    font-size: 24px;
+    font-size: 23.5px;
   }
 }
 .t-body {
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.75;
-  color: var(--text-primary);
+  line-height: 1.8;
+  color: var(--text-reading);
   max-width: 64ch;
+}
+@media (min-width: 640px) {
+  .t-body {
+    font-size: 16.5px;
+  }
 }
 .t-meta {
   font-size: 12.5px;
@@ -149,7 +177,25 @@ kbd,
 
 /* 긴 한국어 본문 읽기 리듬 (예전 이름 호환) */
 .prose-ko p {
-  line-height: 1.75;
+  line-height: 1.8;
+}
+
+/* ── 핵심 구절 형광펜 밑줄 (Readwise Reader) — 용어 툴팁의 점선 밑줄과 헷갈리지 않게 아래 38% 형광 + 실선 ── */
+.hl-mark {
+  background-color: transparent;
+  background-image: linear-gradient(to top, color-mix(in srgb, #20b8cd 22%, transparent) 38%, transparent 38%);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, #0f766e 45%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  border-radius: 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: inherit;
+}
+:root[data-theme="dark"] .hl-mark {
+  background-image: linear-gradient(to top, color-mix(in srgb, #20b8cd 26%, transparent) 38%, transparent 38%);
+  text-decoration-color: color-mix(in srgb, #5eead4 55%, transparent);
 }
 
 /* 얇은 스크롤바 */
@@ -264,7 +310,118 @@ kbd,
   animation: toast-in 200ms var(--ease-sheet);
 }
 
+/* ── 지속형(Sustained) 모션 3종 — prefers-reduced-motion 이면 모두 정지 ───────────── */
+
+/* ① 선택된 기사: 둥근 외곽선 1.5px 를 따라 틸→시안 광원이 7초에 한 바퀴 유영 (Raycast·Magic UI Border Beam) */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+@keyframes beam-breathe {
+  0%,
+  100% {
+    box-shadow:
+      inset 2px 0 0 var(--accent),
+      0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow:
+      inset 2px 0 0 var(--accent),
+      0 6px 22px -10px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+}
+.beam[data-active="true"] {
+  animation: beam-breathe 3.6s ease-in-out infinite;
+}
+.beam[data-active="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg 250deg,
+    color-mix(in srgb, var(--accent) 35%, transparent) 290deg,
+    var(--accent) 330deg,
+    #67e8f9 348deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: beam-spin 7s linear infinite;
+}
+
+/* ② LIVE·3시간 이내 점: 코어 점 + 2.4초마다 퍼지는 레이더 파동 (Vercel) */
+@keyframes live-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  80%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+.live-ping {
+  position: relative;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  background-color: var(--live);
+}
+.live-ping::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--live);
+  animation: live-ripple 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ③ 메인 solid 버튼: 5.5초마다 한 번 대각선 광택이 스친다 (Stripe Sheen) */
+@keyframes sheen-sweep {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  18%,
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--sheen), transparent);
+  transform: translateX(-120%) skewX(-20deg);
+  animation: sheen-sweep 5.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .beam[data-active="true"],
+  .beam[data-active="true"]::before,
+  .live-ping::after,
+  .sheen::after {
+    animation: none;
+  }
   .animate-sheet-up,
   .animate-drawer-in,
   .animate-fade-in,

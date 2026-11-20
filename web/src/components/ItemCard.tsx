@@ -2,6 +2,7 @@
 
 import { CATEGORY_META } from "@/lib/categories";
 import { freshness } from "@/lib/filter";
+import { stripHighlightMarks } from "@/lib/highlight";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitTakeaway, PlatformBadge, QuietTag } from "./Badges";
@@ -38,7 +39,7 @@ function Freshness({ iso, now }: { iso: string; now: number }) {
     >
       {f.fresh && (
         <>
-          <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />
+          <span className="live-ping" aria-hidden />
           <span className="sr-only">방금 들어온 소식, </span>
         </>
       )}
@@ -101,7 +102,10 @@ function CoverButton({ item, selected, onSelect }: { item: FeedItem; selected: b
 }
 
 /** 요약 한 줄: 배경 정의(context) 대신 '무슨 일이 터졌는지'(what) */
-const preview = (item: FeedItem) => item.what_ko ?? item.context_ko;
+const preview = (item: FeedItem) => {
+  const t = item.what_ko ?? item.context_ko;
+  return t ? stripHighlightMarks(t) : t;
+};
 
 /** 메타 한 줄: 플랫폼 · 상대시간 (+ 조용한 텍스트 배지) */
 function Meta({
@@ -150,7 +154,7 @@ function QuietTags({ item }: { item: FeedItem }) {
 export function LeadStory({ item, platform, selected, now, onSelect, onSelectPlatform, onEntity }: Props) {
   const text = preview(item);
   return (
-    <div data-active={selected ? "true" : "false"} className="surface relative flex flex-col gap-3 rounded-2xl p-6 sm:p-8">
+    <div data-active={selected ? "true" : "false"} className="surface beam relative flex flex-col gap-3 rounded-2xl p-6 sm:p-8">
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
       <h2 className="t-lead">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
@@ -168,7 +172,7 @@ export function LeadStory({ item, platform, selected, now, onSelect, onSelectPla
 export function FeatureStory({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
   const text = preview(item);
   return (
-    <div data-active={selected ? "true" : "false"} className="row-hover relative flex h-full flex-col gap-2 rounded-lg px-3 py-4">
+    <div data-active={selected ? "true" : "false"} className="row-hover beam relative flex h-full flex-col gap-2 rounded-lg px-3 py-4">
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} />
       <h3 className="t-feature">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
@@ -181,7 +185,7 @@ export function FeatureStory({ item, platform, selected, now, onSelect, onSelect
 /** ③ 브리핑 스트림 한 줄 — 4위~, 그리고 필터·검색 결과 전부 */
 export function StreamRow({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
   return (
-    <div data-active={selected ? "true" : "false"} className="row-hover relative flex flex-col gap-1.5 rounded-lg px-3 py-4">
+    <div data-active={selected ? "true" : "false"} className="row-hover beam relative flex flex-col gap-1.5 rounded-lg px-3 py-4">
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
       <h3 className="t-stream">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />

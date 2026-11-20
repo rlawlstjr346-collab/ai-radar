@@ -10,7 +10,7 @@ const listeners = new Set<() => void>();
 const readTheme = (): Theme => parseTheme(document.documentElement.dataset.theme);
 
 function setTheme(t: Theme) {
-  if (t === "paper") document.documentElement.dataset.theme = "paper";
+  if (t === "dark") document.documentElement.dataset.theme = "dark";
   else delete document.documentElement.dataset.theme;
   try {
     localStorage.setItem(THEME_STORAGE_KEY, t);
@@ -28,7 +28,7 @@ function useTheme(): Theme {
       return () => listeners.delete(cb);
     },
     readTheme,
-    () => "dark",
+    () => "paper",
   );
 }
 

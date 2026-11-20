@@ -15,8 +15,8 @@ const block = (selector: string) => {
 
 describe("DESIGN.md 토큰 ↔ globals.css", () => {
   it.each([
-    ["dark", ":root"],
-    ["paper", ':root[data-theme="paper"]'],
+    ["paper", ":root"],
+    ["dark", ':root[data-theme="dark"]'],
   ] as const)("%s 테마 값이 CSS 변수와 일치한다", (theme, selector) => {
     const body = block(selector).toLowerCase();
     for (const [name, hex] of Object.entries(THEME_TOKENS[theme])) {
@@ -24,8 +24,10 @@ describe("DESIGN.md 토큰 ↔ globals.css", () => {
     }
   });
 
-  it("종이 테마는 순백 #FFFFFF 를 쓰지 않는다", () => {
-    expect(block(':root[data-theme="paper"]').toLowerCase()).not.toMatch(/#fff(fff)?\b/);
+  it("기본(:root)이 종이 테마라 첫 페인트부터 종이 — 순백 #FFFFFF 는 쓰지 않는다", () => {
+    expect(block(":root")).toContain("color-scheme: light");
+    expect(block(":root").toLowerCase()).not.toMatch(/#fff(fff)?\b/);
+    expect(block(':root[data-theme="dark"]')).toContain("color-scheme: dark");
   });
 
   it("마우스 추적 글로우·필름 그레인 장식이 사라졌다", () => {
@@ -53,10 +55,17 @@ describe("대비율 (WCAG)", () => {
 });
 
 describe("테마 저장", () => {
-  it("알 수 없는 값은 다크로", () => {
-    expect(parseTheme(null)).toBe("dark");
-    expect(parseTheme("weird")).toBe("dark");
-    expect(parseTheme("paper")).toBe("paper");
+  it("첫 방문·알 수 없는 값은 종이로, 다크는 고른 사람만", () => {
+    expect(parseTheme(null)).toBe("paper");
+    expect(parseTheme(undefined)).toBe("paper");
+    expect(parseTheme("weird")).toBe("paper");
+    expect(parseTheme("dark")).toBe("dark");
+  });
+
+  it("저장 키는 v2 — 예전 키에 남은 다크 선택은 무시하고 종이로 새로 시작", () => {
+    expect(THEME_STORAGE_KEY).toBe("ai-radar-theme-v2");
+    expect(THEME_BOOT_SCRIPT).toContain('==="dark"');
+    expect(THEME_BOOT_SCRIPT).toContain('dataset.theme="dark"');
   });
 
   it("부트 스크립트가 같은 저장 키를 읽고, 저장소 오류를 삼킨다", () => {

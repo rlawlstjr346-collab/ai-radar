@@ -39,9 +39,20 @@ const ITEM_BASE =
   "press flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 const itemState = (active: boolean) => (active ? "bg-elevated font-medium text-fg" : "text-fg-2 hover:bg-elevated hover:text-fg");
 
+/** 로고·제호: 누르면 루트(/)로 이동하며 새로고침 — 필터·검색·선택이 모두 처음 상태로 */
 export function Logo() {
   return (
-    <div className="flex min-w-0 items-center gap-2.5">
+    // 풀 새로고침이 목적이라 next/link 대신 일반 <a> 를 쓴다
+    // eslint-disable-next-line @next/next/no-html-link-for-pages
+    <a
+      href="/"
+      onClick={(e) => {
+        e.preventDefault();
+        window.location.href = "/";
+      }}
+      aria-label="AI Radar 처음 화면으로 새로고침"
+      className="flex min-w-0 cursor-pointer items-center gap-2.5 rounded-lg transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    >
       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-elevated">
         <Radar className="h-[15px] w-[15px] text-fg" strokeWidth={1.8} aria-hidden />
       </span>
@@ -49,7 +60,7 @@ export function Logo() {
         <p className="text-[14px] font-bold tracking-tight text-fg">AI Radar</p>
         <p className="truncate text-[12px] text-fg-3">입문자를 위한 글로벌 AI 소식</p>
       </div>
-    </div>
+    </a>
   );
 }
 

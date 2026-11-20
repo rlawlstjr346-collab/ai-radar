@@ -138,13 +138,13 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
         {easy.sections.map((s, i) => (
           <li key={i} className="flex flex-col gap-2">
             {/* 문단 순서가 실제 원문 순서라 번호는 의미가 있다 — 조용한 tertiary 로만 */}
-            <h3 className="flex items-baseline gap-2 text-[16px] font-semibold leading-snug text-fg">
-              <span className="tnum text-[13px] font-medium text-fg-3">{i + 1}</span>
+            <h3 className="flex items-baseline gap-2.5 text-[17px] font-bold leading-snug text-heading">
+              <span className="tnum shrink-0 rounded-md bg-accent/12 px-1.5 py-0.5 text-[12.5px] font-bold leading-none text-accent">{i + 1}</span>
               {s.heading}
             </h3>
-            <TermText text={s.body} terms={item.terms} className={body} />
+            <TermText text={s.body} terms={item.terms} className={body} highlight />
             {s.quote && (
-              <blockquote className="rounded-r-lg border-l-2 border-accent bg-elevated py-2.5 pl-4 pr-3 text-[13.5px] italic leading-relaxed text-fg-2">
+              <blockquote className="rounded-r-lg border-l-2 border-accent/60 bg-accent/[0.05] py-2.5 pl-4 pr-3 text-[14px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}

@@ -39,11 +39,32 @@ export function OriginalLink({ url, variant }: { url: string; variant: "primary"
   );
 }
 
-/** 소제목 라벨은 13px tertiary, 번호 없이 (step 은 예전 호출부 호환용으로 받기만 한다) */
-function Section({ step, title, children }: { step: string; title: string; children: React.ReactNode }) {
+/** 요약 섹션별 시맨틱 포인트 색 (Notion AI 식) — 라벨 앞 작은 점과 라벨 글자에만 */
+const SECTION_TONE = {
+  context: "text-sem-context",
+  what: "text-sem-what",
+  why: "text-sem-why",
+  caveat: "text-sem-caveat",
+} as const;
+
+/** 소제목 라벨 13px semibold + 컬러 도트 (step 은 예전 호출부 호환용으로 받기만 한다) */
+function Section({
+  step,
+  title,
+  tone,
+  children,
+}: {
+  step: string;
+  title: string;
+  tone?: keyof typeof SECTION_TONE;
+  children: React.ReactNode;
+}) {
   return (
     <section className="flex flex-col gap-2" data-step={step}>
-      <h3 className="text-[13px] font-medium text-fg-3">{title}</h3>
+      <h3 className={`flex items-center gap-2 text-[13px] font-semibold ${tone ? SECTION_TONE[tone] : "text-fg-3"}`}>
+        {tone && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-current" aria-hidden />}
+        {title}
+      </h3>
       {children}
     </section>
   );
@@ -114,28 +135,30 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
             ) : (
               <>
                 {item.context_ko && (
-                  <Section step="01" title="원래는요">
-                    <TermText text={item.context_ko} terms={item.terms} className={body} />
+                  <Section step="01" title="원래는요" tone="context">
+                    <TermText text={item.context_ko} terms={item.terms} className={body} highlight />
                   </Section>
                 )}
                 {item.what_ko && (
-                  <Section step="02" title="무슨 일이냐면요">
-                    <TermText text={item.what_ko} terms={item.terms} className={body} />
+                  <Section step="02" title="무슨 일이냐면요" tone="what">
+                    <TermText text={item.what_ko} terms={item.terms} className={body} highlight />
                     {item.analogy_ko && (
-                      <aside className="mt-2 flex flex-col gap-1 rounded-r-lg border-l-2 border-accent bg-elevated py-3.5 pl-4 pr-4">
-                        <p className="text-[13px] font-medium text-fg-3">솔직히 외계어 같죠? 쉽게 비유하자면요</p>
+                      <aside className="mt-2 flex flex-col gap-1 rounded-r-lg border-l-[3px] border-amber-500/70 bg-amber-500/[0.08] py-3.5 pl-4 pr-4">
+                        <p className="text-[13px] font-semibold text-amber-700 [:root[data-theme=dark]_&]:text-amber-300">
+                          솔직히 외계어 같죠? 쉽게 비유하자면요
+                        </p>
                         <TermText text={item.analogy_ko} terms={item.terms} className="t-body" />
                       </aside>
                     )}
                   </Section>
                 )}
                 {item.why_ko && (
-                  <Section step="03" title="왜 중요할까요?">
-                    <TermText text={item.why_ko} terms={item.terms} className={body} />
+                  <Section step="03" title="왜 중요할까요?" tone="why">
+                    <TermText text={item.why_ko} terms={item.terms} className={body} highlight />
                   </Section>
                 )}
                 {item.caveats_ko && (
-                  <Section step="04" title="참고할 점">
+                  <Section step="04" title="참고할 점" tone="caveat">
                     <TermText
                       text={item.caveats_ko}
                       terms={item.terms}
@@ -156,7 +179,8 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               {canReadEasy ? (
                 <>
                   {/* 요약 탭의 주인공: 원본 쉽게 읽기 (외부 이탈보다 먼저) */}
-                  <button type="button" onClick={() => setTab("easy")} className={`${BTN_PRIMARY} justify-between text-left`}>
+                  {/* 5.5초마다 한 번 은은한 광택이 스치는 유일한 solid 버튼 */}
+                  <button type="button" onClick={() => setTab("easy")} className={`${BTN_PRIMARY} sheen relative overflow-hidden justify-between text-left`}>
                     <span className="flex min-w-0 items-center gap-3">
                       <BookOpenText className="h-5 w-5 shrink-0" aria-hidden />
                       <span className="flex min-w-0 flex-col">

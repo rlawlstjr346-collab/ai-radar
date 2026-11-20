@@ -1,7 +1,8 @@
-/** 듀얼 리딩 테마 (DESIGN.md §2). 값은 globals.css 의 :root / [data-theme="paper"] 와 같아야 한다. */
+/** 듀얼 리딩 테마 (DESIGN.md §2). 값은 globals.css 의 :root(종이, 기본) / [data-theme="dark"] 와 같아야 한다. */
 export type Theme = "dark" | "paper";
 
-export const THEME_STORAGE_KEY = "ai-radar-theme";
+// v2: 기본값이 다크 → 종이로 바뀌어서, 예전 키에 남은 '다크' 선택을 무시하고 모두 종이로 새로 시작한다
+export const THEME_STORAGE_KEY = "ai-radar-theme-v2";
 
 export const THEME_TOKENS = {
   dark: {
@@ -24,15 +25,17 @@ export const THEME_TOKENS = {
   },
 } as const satisfies Record<Theme, Record<string, string>>;
 
+/** 저장값이 없거나 알 수 없으면 종이(기본) */
 export function parseTheme(v: string | null | undefined): Theme {
-  return v === "paper" ? "paper" : "dark";
+  return v === "dark" ? "dark" : "paper";
 }
 
 /**
  * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마를 바로 적용해 깜빡임을 없앤다.
- * localStorage 가 막힌 환경(사생활 보호 창 등)에서도 조용히 기본 다크로.
+ * 기본 CSS 가 이미 종이라서, 다크를 고른 사람만 data-theme="dark" 를 붙인다.
+ * localStorage 가 막힌 환경(사생활 보호 창 등)에서도 조용히 기본 종이로.
  */
-export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="paper")document.documentElement.dataset.theme="paper"}catch(e){}`;
+export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
 
 /** WCAG 상대 휘도 */
 function luminance(hex: string): number {

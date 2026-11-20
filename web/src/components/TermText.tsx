@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from
 import { Languages } from "lucide-react";
 import { createPortal } from "react-dom";
 
+import { highlightSegments, stripHighlightMarks } from "@/lib/highlight";
 import { splitByTerms } from "@/lib/terms";
 import type { Term } from "@/lib/types";
 
@@ -121,9 +122,23 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
   );
 }
 
-/** 본문 문단 — terms 에 있는 단어에 툴팁 밑줄을 자동으로 단다 */
-export default function TermText({ text, terms, className }: { text: string; terms: Term[]; className?: string }) {
-  const segments = splitByTerms(text, terms);
+/**
+ * 본문 문단 — terms 에 있는 단어에 툴팁 점선 밑줄을 자동으로 단다.
+ * highlight: 핵심 구절(==마커== 또는 자동 감지한 수치·인용 구절)에 형광펜 밑줄 (lib/highlight.ts).
+ * 하이라이트를 그리지 않을 때도 ==마커== 는 화면에 보이지 않게 걷어낸다.
+ */
+export default function TermText({
+  text,
+  terms,
+  className,
+  highlight = false,
+}: {
+  text: string;
+  terms: Term[];
+  className?: string;
+  highlight?: boolean;
+}) {
+  const segments = highlight ? highlightSegments(text, terms) : splitByTerms(stripHighlightMarks(text), terms);
   return (
     <p className={className}>
       {segments.map((s, i) =>
@@ -131,6 +146,10 @@ export default function TermText({ text, terms, className }: { text: string; ter
           <TermTooltip key={i} term={s.term}>
             {s.text}
           </TermTooltip>
+        ) : "hl" in s && s.hl ? (
+          <mark key={i} className="hl-mark">
+            {s.text}
+          </mark>
         ) : (
           <span key={i}>{s.text}</span>
         ),

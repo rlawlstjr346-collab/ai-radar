@@ -74,7 +74,7 @@ function FeedHeader({ view, total, children }: { view: "feed" | "past"; total: n
         <span className="t-meta inline-flex items-center gap-1.5">
           {isFeed ? (
             <>
-              <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />
+              <span className="live-ping" aria-hidden />
               <span>Live · 매시 정각 스캔</span>
             </>
           ) : (
