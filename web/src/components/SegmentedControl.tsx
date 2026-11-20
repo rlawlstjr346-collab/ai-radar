@@ -59,14 +59,14 @@ export default function SegmentedControl<K extends string>({
       ref={wrapRef}
       role={role}
       aria-label={label}
-      className={`relative flex min-w-0 gap-1 rounded-xl border border-white/[0.07] border-t-white/[0.12] bg-white/[0.02] p-1 ${
+      className={`relative flex min-w-0 gap-1 rounded-lg bg-elevated p-1 ${
         stretch ? "" : "thin-scroll overflow-x-auto"
       } ${className}`}
     >
       {pill && (
         <span
           aria-hidden
-          className="sliding-pill pointer-events-none absolute bottom-1 left-0 top-1 rounded-lg border border-white/[0.08] border-t-white/[0.16] bg-white/[0.09] shadow-sm"
+          className="sliding-pill pointer-events-none absolute bottom-1 left-0 top-1 rounded-md bg-canvas"
           style={{ transform: `translateX(${pill.x}px)`, width: pill.w }}
         />
       )}
@@ -85,13 +85,13 @@ export default function SegmentedControl<K extends string>({
             aria-controls={controls}
             {...(role === "tablist" ? { "aria-selected": active } : { "aria-checked": active })}
             onClick={() => onChange(key)}
-            className={`press relative z-10 inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
+            className={`press relative z-10 inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-[13.5px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               stretch ? "flex-1" : "shrink-0"
-            } ${active ? "text-zinc-50" : "text-zinc-400 hover:text-zinc-200"}`}
+            } ${active ? "text-fg" : "text-fg-2 hover:text-fg"}`}
           >
-            {Icon && <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />}
+            {Icon && <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />}
             <span className="truncate">{text}</span>
-            {count !== undefined && <span className="tnum font-mono text-[11px] text-zinc-500">{count}</span>}
+            {count !== undefined && <span className="tnum text-[12px] text-fg-3">{count}</span>}
           </button>
         );
       })}

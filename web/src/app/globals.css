@@ -1,30 +1,60 @@
 @import "tailwindcss";
 
 /*
- * AI Radar — 무채색 옵시디언(Zinc) 디자인 시스템
- * - 바탕 #09090B (파란 기 없음), 카드 #121215 → hover #17171B → active #1C1C22
- * - 카드 테두리는 위쪽만 살짝 밝은 '상단 광원' 헤어라인
- * - 초록(emerald)은 LIVE 점과 3시간 이내 시간 배지에만 쓴다 (나머지는 무채색 + 카테고리 포인트)
+ * AI Radar — 토큰은 저장소 루트 DESIGN.md 가 기준이다. 여기 값만 고치고, 컴포넌트에는 hex 를 쓰지 않는다.
+ * 기본: Dark · Quiet Research Room   /   <html data-theme="paper">: Warm Paper Reading Mode
+ * 유채색은 --accent 와 --live(LIVE 점) 둘뿐 (Palette Budget).
  */
 :root {
-  --bg: #09090b;
-  --card: #121215;
-  --card-hover: #17171b;
-  --card-active: #1c1c22;
-  --panel: #0f0f12;
-  --text: #e4e4e7;
-  --title: #fafafa;
-  --muted: #a1a1aa;
-  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* iOS 시트 감속 곡선 */
+  --bg-base: #0f0f10;
+  --bg-surface: #19191a;
+  --bg-elevated: #232325;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16); /* 입력창·아웃라인 버튼 테두리 */
+  --text-primary: #f0f0f0;
+  --text-secondary: #a1a1a6;
+  --text-tertiary: #6e6e73;
+  --accent: #20b8cd;
+  --live: #22c55e;
+  --scrim: rgba(0, 0, 0, 0.55); /* 드로어·시트 뒤 딤 */
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* 시트·드로어 감속 곡선 */
   color-scheme: dark;
 }
 
+:root[data-theme="paper"] {
+  --bg-base: #fcfcf9; /* 순백(완전한 흰색) 금지 */
+  --bg-surface: #f3f3ee;
+  --bg-elevated: #eaeae3;
+  --border-subtle: rgba(39, 37, 30, 0.1);
+  --border-strong: rgba(39, 37, 30, 0.2);
+  --text-primary: #27251e;
+  --text-secondary: #5c5a52;
+  --text-tertiary: #8a877d;
+  --accent: #016a71;
+  --live: #22c55e;
+  --scrim: rgba(39, 37, 30, 0.28);
+  color-scheme: light;
+}
+
 @theme inline {
-  --color-bg: var(--bg);
-  --color-card: var(--card);
-  --color-card-2: var(--card-hover);
-  --color-ink: var(--text);
-  --color-muted: var(--muted);
+  /* DESIGN.md 토큰 → Tailwind 유틸리티 (bg-canvas, bg-surface, bg-elevated, border-line, text-fg, text-fg-2, text-fg-3, text-accent, bg-live) */
+  --color-canvas: var(--bg-base);
+  --color-surface: var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-line: var(--border-subtle);
+  --color-line-strong: var(--border-strong);
+  --color-fg: var(--text-primary);
+  --color-fg-2: var(--text-secondary);
+  --color-fg-3: var(--text-tertiary);
+  --color-accent: var(--accent);
+  --color-live: var(--live);
+  --color-scrim: var(--scrim);
+  /* 예전 이름 호환 (bg-bg, bg-card, bg-card-2, text-ink, text-muted) */
+  --color-bg: var(--bg-base);
+  --color-card: var(--bg-surface);
+  --color-card-2: var(--bg-elevated);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-secondary);
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Malgun Gothic", "Segoe UI", sans-serif;
 }
@@ -36,8 +66,8 @@
 
 html,
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg-base);
+  color: var(--text-primary);
 }
 
 body {
@@ -47,15 +77,8 @@ body {
   overflow-wrap: anywhere;
 }
 
-/* 2% 필름 그레인 — 어두운 면의 색 뭉침(밴딩)을 잡아준다. 클릭은 통과 */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  pointer-events: none;
-  opacity: 0.02;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 /* 시간·카운트·점수 숫자는 고정폭 — 값이 바뀌어도 레이아웃이 흔들리지 않게 */
@@ -66,74 +89,116 @@ kbd,
   font-variant-numeric: tabular-nums;
 }
 
-/* 긴 한국어 본문 읽기 리듬 */
+/* ── 타입 스케일 (DESIGN.md §3) ──────────────────────────────────────────── */
+.t-lead {
+  font-size: clamp(26px, 1.4rem + 0.9vw, 32px);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+}
+.t-feature {
+  font-size: 20px;
+  font-weight: 680;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+@media (min-width: 1024px) {
+  .t-feature {
+    font-size: 21px;
+  }
+}
+.t-stream {
+  font-size: 18.5px;
+  font-weight: 600;
+  line-height: 1.42;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+.t-panel-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+@media (min-width: 640px) {
+  .t-panel-title {
+    font-size: 24px;
+  }
+}
+.t-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-primary);
+  max-width: 64ch;
+}
+.t-meta {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 1024px) {
+  .t-meta {
+    font-size: 13px;
+  }
+}
+
+/* 긴 한국어 본문 읽기 리듬 (예전 이름 호환) */
 .prose-ko p {
-  line-height: 1.85;
+  line-height: 1.75;
 }
 
 /* 얇은 스크롤바 */
 .thin-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+  scrollbar-color: var(--border-strong) transparent;
 }
 
-/* ── 카드 표면: 상단 광원 헤어라인 ─────────────────────────────────────────── */
+/* ── 피드 행: 박스 없이 배경색만 바뀌는 호버(<120ms), 선택은 왼쪽 2px accent + surface ─────── */
+.row-hover {
+  transition: background-color 100ms ease-out;
+}
+.row-hover:hover {
+  background-color: var(--bg-surface);
+}
+.row-hover[data-active="true"] {
+  background-color: var(--bg-surface);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+/* 예전 카드 표면(.surface) — 도감 카드용, 테두리 없이 표면 색으로만 */
 .surface {
-  background-color: var(--card);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-top-color: rgba(255, 255, 255, 0.16);
-  transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    transform 200ms var(--ease-sheet),
-    box-shadow 200ms ease;
+  background-color: var(--bg-surface);
+  transition: background-color 100ms ease-out;
 }
 .surface:hover {
-  background-color: var(--card-hover);
+  background-color: var(--bg-elevated);
 }
 .surface[data-active="true"] {
-  background-color: var(--card-active);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+  background-color: var(--bg-elevated);
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 
-/* ── 마우스 추적 라디얼 스포트라이트 (마우스 환경에서만) ─────────────────────── */
-.mouse-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  border-radius: inherit;
-  transition: opacity 250ms ease;
-  background: radial-gradient(
-    280px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
-    rgba(255, 255, 255, 0.05),
-    transparent 70%
-  );
-}
-@media (hover: hover) and (pointer: fine) {
-  .surface:hover > .mouse-glow {
-    opacity: 1;
-  }
-  /* 테두리에도 같은 위치의 반사광 */
-  .surface:hover {
-    border-color: rgba(255, 255, 255, 0.1);
-    border-top-color: rgba(255, 255, 255, 0.2);
-  }
-}
-
-/* ── 누름 탄성 ─────────────────────────────────────────────────────────────── */
+/* ── 누름 피드백: 크기 변화 없이 살짝 어두워지기만 ─────────────────────────── */
 .press {
-  transition: transform 140ms var(--ease-sheet);
+  transition:
+    background-color 100ms ease-out,
+    color 100ms ease-out,
+    opacity 100ms ease-out;
 }
 .press:active:not(:disabled) {
-  transform: scale(0.98);
+  opacity: 0.82;
 }
 
 /* ── 슬라이딩 필(세그먼트 탭 선택 배경) ─────────────────────────────────────── */
 .sliding-pill {
   transition:
-    transform 320ms var(--ease-sheet),
-    width 320ms var(--ease-sheet);
+    transform 240ms var(--ease-sheet),
+    width 240ms var(--ease-sheet);
 }
 
 /* ── 쉬머 스켈레톤 ─────────────────────────────────────────────────────────── */
@@ -146,17 +211,12 @@ kbd,
   }
 }
 .shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0.04) 80%
-  );
+  background: linear-gradient(90deg, var(--bg-surface) 0%, var(--bg-elevated) 40%, var(--bg-surface) 80%);
   background-size: 200% 100%;
   animation: shimmer 1.6s linear infinite;
 }
 
-/* ── 등장 모션 ─────────────────────────────────────────────────────────────── */
+/* ── 등장 모션 (사용자 행동에 대한 응답에만) ────────────────────────────────── */
 @keyframes sheet-up {
   from {
     transform: translateY(100%);
@@ -192,25 +252,16 @@ kbd,
   }
 }
 .animate-sheet-up {
-  animation: sheet-up 420ms var(--ease-sheet);
+  animation: sheet-up 380ms var(--ease-sheet);
 }
 .animate-drawer-in {
-  animation: drawer-in 420ms var(--ease-sheet);
+  animation: drawer-in 380ms var(--ease-sheet);
 }
 .animate-fade-in {
-  animation: fade-in 160ms ease-out;
+  animation: fade-in 140ms ease-out;
 }
 .animate-toast-in {
-  animation: toast-in 220ms var(--ease-sheet);
-}
-
-@keyframes radar-sweep {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.radar-sweep {
-  animation: radar-sweep 4s linear infinite;
+  animation: toast-in 200ms var(--ease-sheet);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -218,12 +269,13 @@ kbd,
   .animate-drawer-in,
   .animate-fade-in,
   .animate-toast-in,
-  .radar-sweep,
-  .shimmer {
+  .shimmer,
+  .animate-ping {
     animation: none;
   }
   .sliding-pill,
   .press,
+  .row-hover,
   .surface {
     transition: none;
   }

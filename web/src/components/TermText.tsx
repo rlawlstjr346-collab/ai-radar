@@ -90,7 +90,7 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
         onPointerLeave={(e) => e.pointerType !== "touch" && !pinned && setOpen(false)}
         onFocus={() => setOpen(true)}
         onBlur={() => !pinned && setOpen(false)}
-        className="inline cursor-help rounded-sm font-semibold text-zinc-50 underline decoration-zinc-400/80 decoration-dotted decoration-2 underline-offset-[5px] transition hover:bg-white/[0.06] focus-visible:bg-white/[0.06] focus-visible:outline-none"
+        className="inline cursor-help rounded-sm text-inherit underline decoration-fg-3 decoration-dotted decoration-[1.5px] underline-offset-[5px] transition-colors duration-100 hover:bg-elevated hover:decoration-accent focus-visible:bg-elevated focus-visible:decoration-accent focus-visible:outline-none"
       >
         {children}
       </button>
@@ -106,14 +106,14 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
             left: pos?.left ?? -9999,
             width: `min(${POPOVER_WIDTH}px, calc(100vw - 16px))`,
           }}
-          className="animate-fade-in z-[80] block rounded-xl border border-white/[0.12] border-t-white/[0.2] bg-[#18181B] p-3.5 text-left shadow-2xl shadow-black/60"
+          className="animate-fade-in z-[80] block rounded-lg bg-fg p-3.5 text-left"
           onPointerEnter={() => setOpen(true)}
           onPointerLeave={(e) => e.pointerType !== "touch" && !pinned && setOpen(false)}
         >
-          <span className="mb-1 flex items-center gap-1.5 text-xs font-bold text-zinc-300">
-            <Languages className="h-3.5 w-3.5" aria-hidden /> 외계어 번역기 · {term.term}
+          <span className="mb-1 flex items-center gap-1.5 text-[12.5px] font-semibold text-canvas opacity-75">
+            <Languages className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden /> 외계어 번역기 · {term.term}
           </span>
-          <span className="block text-[13px] font-normal leading-relaxed text-zinc-200">{term.easy}</span>
+          <span className="block text-[14px] font-normal leading-relaxed text-canvas">{term.easy}</span>
         </span>,
         document.body,
       )}

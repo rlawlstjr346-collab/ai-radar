@@ -7,6 +7,12 @@ import type { CategoryFilter } from "@/lib/filter";
 import type { DataSource } from "@/lib/types";
 
 import SegmentedControl from "./SegmentedControl";
+import ThemeToggle from "./ThemeToggle";
+
+/*
+ * 사이드바 = 조용한 유틸리티 (DESIGN.md §1-4).
+ * 영문 대문자 라벨·컬러 아이콘 없이, 14px 단색 아이콘과 글자 위계만. 하단에 다크/종이 테마 스위치.
+ */
 
 export type View = "feed" | "past" | "directory";
 
@@ -29,23 +35,19 @@ const VIEWS: Array<{ id: View; label: string; short: string; Icon: LucideIcon }>
   { id: "directory", label: "글로벌 AI 플랫폼 도감", short: "도감", Icon: Compass },
 ];
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <h2 className="px-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-zinc-500">{children}</h2>;
-}
+const ITEM_BASE =
+  "press flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+const itemState = (active: boolean) => (active ? "bg-elevated font-medium text-fg" : "text-fg-2 hover:bg-elevated hover:text-fg");
 
 export function Logo() {
   return (
     <div className="flex min-w-0 items-center gap-2.5">
-      <span className="relative grid h-8 w-8 place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111827]">
-        <span
-          className="radar-sweep absolute inset-0 bg-[conic-gradient(from_0deg,rgba(255,255,255,0.22),transparent_35%)]"
-          aria-hidden
-        />
-        <Radar className="relative h-4 w-4 text-zinc-100" strokeWidth={2} aria-hidden />
+      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-elevated">
+        <Radar className="h-[15px] w-[15px] text-fg" strokeWidth={1.8} aria-hidden />
       </span>
       <div className="min-w-0 leading-tight">
-        <p className="text-[14px] font-semibold tracking-tight text-zinc-50">AI Radar</p>
-        <p className="text-[11px] text-zinc-500">입문자를 위한 글로벌 AI 소식</p>
+        <p className="text-[14px] font-bold tracking-tight text-fg">AI Radar</p>
+        <p className="truncate text-[12px] text-fg-3">입문자를 위한 글로벌 AI 소식</p>
       </div>
     </div>
   );
@@ -62,15 +64,15 @@ export function CategoryChips({
   counts: Record<CategoryFilter, number>;
   layout: "list" | "row";
 }) {
-  const options: Array<{ id: CategoryFilter; label: string; Icon: LucideIcon; text?: string }> = [
+  const options: Array<{ id: CategoryFilter; label: string; Icon: LucideIcon }> = [
     { id: "all", label: "전체", Icon: LayoutGrid },
-    ...CATEGORY_ORDER.map((c) => ({ id: c, label: CATEGORY_META[c].label, Icon: CATEGORY_META[c].Icon, text: CATEGORY_META[c].text })),
+    ...CATEGORY_ORDER.map((c) => ({ id: c, label: CATEGORY_META[c].label, Icon: CATEGORY_META[c].Icon })),
   ];
   return (
     <div
       role="radiogroup"
       aria-label="카테고리 필터"
-      className={layout === "list" ? "flex flex-col gap-px" : "thin-scroll -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1"}
+      className={layout === "list" ? "flex flex-col gap-px" : "thin-scroll -mx-4 flex gap-1 overflow-x-auto px-4 pb-1"}
     >
       {options.map((o) => {
         const active = category === o.id;
@@ -83,19 +85,17 @@ export function CategoryChips({
             onClick={() => onCategory(o.id)}
             className={
               layout === "list"
-                ? `press group flex items-center justify-between rounded-md px-2 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-                    active ? "bg-white/[0.07] text-zinc-50" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
-                  }`
-                : `press flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-                    active ? "border-white/25 bg-white/[0.08] text-zinc-50" : "border-white/[0.08] text-zinc-400"
+                ? `${ITEM_BASE} justify-between ${itemState(active)}`
+                : `press flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[13.5px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    active ? "bg-elevated font-medium text-fg" : "text-fg-2 hover:text-fg"
                   }`
             }
           >
-            <span className="flex min-w-0 items-center gap-2 truncate">
-              <o.Icon className={`h-3.5 w-3.5 ${active ? (o.text ?? "text-zinc-50") : "text-zinc-500 group-hover:text-zinc-300"}`} aria-hidden />
+            <span className="flex min-w-0 items-center gap-2.5 truncate">
+              {layout === "list" && <o.Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />}
               {o.label}
             </span>
-            <span className="ml-2 font-mono text-[11px] tabular-nums text-zinc-600">{counts[o.id] ?? 0}</span>
+            <span className="ml-2 text-[12px] tabular-nums text-fg-3">{counts[o.id] ?? 0}</span>
           </button>
         );
       })}
@@ -136,13 +136,11 @@ export function ViewTabs({
             role="tab"
             aria-selected={active}
             onClick={() => onView(id)}
-            className={`press flex items-center gap-2 rounded-md px-2 py-1.5 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-              active ? "bg-white/[0.08] text-zinc-50" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
-            }`}
+            className={`${ITEM_BASE} ${itemState(active)}`}
           >
-            <Icon className={`h-3.5 w-3.5 ${active ? "text-zinc-50" : ""}`} aria-hidden />
+            <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />
             <span className="min-w-0 truncate">{label}</span>
-            {viewCounts && <span className="ml-auto font-mono text-[11px] tabular-nums text-zinc-600">{viewCounts[id]}</span>}
+            {viewCounts && <span className="ml-auto text-[12px] tabular-nums text-fg-3">{viewCounts[id]}</span>}
           </button>
         );
       })}
@@ -153,24 +151,24 @@ export function ViewTabs({
 /** 데스크톱 좌측 사이드바 */
 export default function Sidebar(p: Props) {
   return (
-    // 하단 여백(pb-20): 개발 모드의 Next.js 배지(좌하단)와 문구가 겹치지 않게
-    <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-6 overflow-y-auto px-3 pb-20 pt-5">
+    // 하단 여백(pb-16): 개발 모드의 Next.js 배지(좌하단)와 겹치지 않게
+    <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-7 overflow-y-auto px-3 pb-16 pt-5">
       <div className="px-1">
         <Logo />
       </div>
-      <section className="flex flex-col gap-1.5">
-        <SectionLabel>View</SectionLabel>
-        <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} />
-      </section>
-      <section className="flex flex-col gap-1.5">
-        <SectionLabel>Category</SectionLabel>
+      <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} />
+      <section aria-labelledby="sidebar-category" className="flex flex-col gap-1">
+        <h2 id="sidebar-category" className="px-2 pb-1 text-[12.5px] text-fg-3">
+          분야
+        </h2>
         <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
       </section>
-      <div className="mt-auto flex items-start gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
-        <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-amber-400" : "animate-pulse bg-emerald-400"}`} aria-hidden />
-        <p className="text-[11px] leading-relaxed text-zinc-500">
-          {p.source === "sample" ? "샘플 데이터 모드" : "실시간 데이터 연결됨"} · 매시간 새 소식을 물어와요
+      <div className="mt-auto flex flex-col gap-3 px-2">
+        <p className="flex items-center gap-2 text-[12px] leading-relaxed text-fg-3">
+          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-fg-3" : "bg-live"}`} aria-hidden />
+          {p.source === "sample" ? "샘플 데이터 모드" : "실시간 데이터 연결됨"}
         </p>
+        <ThemeToggle />
       </div>
     </nav>
   );

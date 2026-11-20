@@ -144,3 +144,31 @@ export function formatDate(iso: string | null): string {
   if (Number.isNaN(d.getTime())) return "";
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
 }
+
+/** 에디토리얼 1면 상단 기사 수: 리드 1 + 피처 2 (DESIGN.md §4) */
+export const EDITORIAL_TOP = 3;
+
+export interface EditorialLayout {
+  /** ① 리드 스토리 (1위) */
+  lead: FeedItem | null;
+  /** ② 피처 페어 (2·3위) */
+  features: FeedItem[];
+  /** ③ 브리핑 스트림 (4위~) — 필터·검색 중에는 전부 여기 */
+  stream: FeedItem[];
+}
+
+/**
+ * 화면에 보이는 순서 그대로 1면을 나눈다. J/K 탐색도 [lead, ...features, ...stream] 순서를 쓴다.
+ * editorial=false(분야 필터·검색·지난 소식)면 리드/피처 없이 스트림만.
+ */
+export function editorialLayout(items: FeedItem[], editorial: boolean): EditorialLayout {
+  if (!editorial) return { lead: null, features: [], stream: items };
+  const tops = pickSpotlight(items, EDITORIAL_TOP);
+  const topIds = new Set(tops.map((i) => i.id));
+  return { lead: tops[0] ?? null, features: tops.slice(1), stream: items.filter((i) => !topIds.has(i.id)) };
+}
+
+/** 화면 표시 순서의 id 목록 */
+export function editorialOrder(layout: EditorialLayout): string[] {
+  return [...(layout.lead ? [layout.lead] : []), ...layout.features, ...layout.stream].map((i) => i.id);
+}

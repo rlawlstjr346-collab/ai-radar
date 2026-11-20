@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Compass } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 
 import { CATEGORY_META } from "@/lib/categories";
@@ -36,11 +36,8 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-4">
         <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h1 className="flex items-center gap-2.5 text-[24px] font-semibold tracking-[-0.02em] text-[#FAFAFA]">
-            <Compass className="h-5 w-5 text-zinc-400" strokeWidth={1.8} aria-hidden />
-            글로벌 AI 플랫폼 도감
-          </h1>
-          <span className="tnum font-mono text-[12px] text-zinc-500">{platforms.length} platforms</span>
+          <h1 className="text-[22px] font-bold tracking-[-0.02em] text-fg">글로벌 AI 플랫폼 도감</h1>
+          <span className="t-meta tnum">{platforms.length}곳</span>
         </div>
         {/* 성격별 빠른 필터 (슬라이딩 필) */}
         <SegmentedControl
@@ -59,7 +56,7 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
       </header>
 
       {groups.length === 0 && (
-        <p className="rounded-2xl border border-dashed border-white/10 px-6 py-12 text-center text-sm text-zinc-400">
+        <p className="rounded-2xl bg-surface px-6 py-12 text-center text-[15px] text-fg-2">
           이 조건에 맞는 플랫폼이 없어요. 필터를 바꿔 보세요.
         </p>
       )}
@@ -68,13 +65,11 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
         const meta = CATEGORY_META[cat];
         return (
           <section key={cat} aria-labelledby={`dir-${cat}`} className="flex flex-col gap-3">
-            <div className="flex items-center gap-2.5">
-              <meta.Icon className={`h-4 w-4 ${meta.text}`} aria-hidden />
-              <h2 id={`dir-${cat}`} className="text-[15px] font-semibold text-zinc-50">
+            <div className="flex items-baseline gap-2 border-b border-line pb-2">
+              <h2 id={`dir-${cat}`} className="text-[16px] font-semibold text-fg">
                 {meta.label}
               </h2>
-              <span className="tnum font-mono text-[11px] text-zinc-500">{list.length}</span>
-              <span className={`h-px flex-1 bg-gradient-to-r ${meta.gradient} opacity-20`} aria-hidden />
+              <span className="t-meta tnum">{list.length}</span>
             </div>
             <ul className="grid grid-cols-1 gap-3 @xl:grid-cols-2 @5xl:grid-cols-3">
               {list.map((p) => {
@@ -86,18 +81,18 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                         type="button"
                         onClick={() => onSelect(p.id)}
                         aria-pressed={selected}
-                        className={`relative flex h-full w-full flex-col gap-2.5 p-4 text-left focus-visible:outline-none focus-visible:ring-2 ${meta.ring} rounded-2xl`}
+                        className={`relative flex h-full w-full flex-col gap-2.5 p-4 text-left focus-visible:outline-none focus-visible:ring-2 ${meta.ring} rounded-xl`}
                       >
                         <span className="flex items-center gap-2.5">
                           <PlatformMark platform={p} fallbackId={p.id} size="md" />
-                          <span className="min-w-0 flex-1 truncate text-[14.5px] font-semibold text-[#FAFAFA]">{p.name}</span>
-                          <ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-600 transition group-hover/spot:text-zinc-300" aria-hidden />
+                          <span className="min-w-0 flex-1 truncate text-[15.5px] font-semibold text-fg">{p.name}</span>
+                          <ArrowUpRight className="h-4 w-4 shrink-0 text-fg-3 group-hover/spot:text-fg" strokeWidth={1.8} aria-hidden />
                         </span>
-                        <span className="text-[13px] leading-relaxed text-zinc-300">{p.one_liner_ko}</span>
+                        <span className="text-[14px] leading-relaxed text-fg-2">{p.one_liner_ko}</span>
                         <span className="mt-auto flex flex-wrap items-center gap-2 pt-1">
                           <StatusBadge status={p.collect_status} />
                           {countBy[p.id] ? (
-                            <span className="tnum font-mono text-[11px] text-zinc-500">{countBy[p.id]} stories</span>
+                            <span className="t-meta tnum">소식 {countBy[p.id]}건</span>
                           ) : null}
                         </span>
                       </button>

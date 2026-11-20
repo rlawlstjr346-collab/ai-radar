@@ -1,14 +1,7 @@
-"use client";
-
-import { useRef } from "react";
-
 /**
- * 카드 표면 — 무채색 #121215 + 상단 광원 헤어라인(.surface).
- * 마우스 환경((hover: hover))에서는 커서를 따라 반경 280px 의 은은한 흰 반사광(.mouse-glow)이 따라붙는다.
- * 리렌더 없이 CSS 변수(--mouse-x, --mouse-y)만 갱신한다.
- * 선택된 카드는 data-active 로 #1C1C22 + 흰 링(ring-white/30).
- *
- * rgb(카테고리 포인트 색)는 예전 호출부 호환용으로 받기만 하고, 표면 색에는 쓰지 않는다 (색 절제).
+ * 표면 래퍼 — 테두리·그림자·마우스 추적 글로우 없이 표면 색(.surface)만 (DESIGN.md §1-5).
+ * 호버는 bg-elevated 로 100ms, 선택은 data-active 로 왼쪽 2px accent.
+ * 이름은 예전 호출부 호환용으로 유지한다. rgb 는 받기만 하고 쓰지 않는다.
  */
 export default function Spotlight({
   selected,
@@ -20,22 +13,8 @@ export default function Spotlight({
   className?: string;
   children: React.ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
   return (
-    <div
-      ref={ref}
-      data-active={selected ? "true" : "false"}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse") return;
-        const el = ref.current;
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--mouse-x", `${e.clientX - r.left}px`);
-        el.style.setProperty("--mouse-y", `${e.clientY - r.top}px`);
-      }}
-      className={`surface group/spot relative overflow-hidden rounded-2xl ${className}`}
-    >
-      <div aria-hidden className="mouse-glow" />
+    <div data-active={selected ? "true" : "false"} className={`surface group/spot relative overflow-hidden rounded-xl ${className}`}>
       {children}
     </div>
   );

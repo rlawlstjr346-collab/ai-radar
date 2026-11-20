@@ -1,16 +1,27 @@
 "use client";
 
-import { Activity, ChevronDown, History, Search, Telescope, X } from "lucide-react";
+import { ChevronDown, Search, Telescope, X } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 import { CATEGORY_ORDER } from "@/lib/categories";
-import { hotFeed, HOT_LIMIT, matchesQuery, PAGE_SIZE, pastFeed, pickSpotlight, type CategoryFilter } from "@/lib/filter";
+import {
+  editorialLayout,
+  editorialOrder,
+  hotFeed,
+  HOT_LIMIT,
+  matchesQuery,
+  PAGE_SIZE,
+  pastFeed,
+  pickSpotlight,
+  type CategoryFilter,
+} from "@/lib/filter";
 import type { FeedItem, Platform, RadarData } from "@/lib/types";
 
 import { BottomSheet, DesktopPanel, SideDrawer, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
-import ItemCard, { SpotlightCard } from "./ItemCard";
+import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
 import Sidebar, { CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
+import ThemeToggle from "./ThemeToggle";
 
 const CLOCK_TICK_MS = 60_000;
 
@@ -56,26 +67,22 @@ function useNow(initialIso: string): number {
 
 function FeedHeader({ view, total, children }: { view: "feed" | "past"; total: number; children: React.ReactNode }) {
   const isFeed = view === "feed";
-  const Icon = isFeed ? Activity : History;
   return (
-    <header className="flex min-w-0 flex-col gap-3 @3xl:flex-row @3xl:items-center @3xl:gap-5">
-      <div className="flex min-w-0 shrink-0 flex-wrap items-center gap-x-3 gap-y-1">
-        <h1 className="flex items-center gap-2 text-[22px] font-semibold tracking-[-0.02em] text-[#FAFAFA]">
-          <Icon className="h-5 w-5 text-zinc-400" strokeWidth={1.8} aria-hidden />
-          {isFeed ? "실시간 레이더" : "지난 주요 소식"}
-        </h1>
-        {isFeed ? (
-          <span className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-zinc-300">
-            <span className="relative flex h-1.5 w-1.5" aria-hidden>
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            </span>
-            <span className="font-mono tracking-wider">LIVE</span> · 매시 정각 스캔
-          </span>
-        ) : (
-          <span className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] text-zinc-400">8~30일 전 · 중요도 순</span>
-        )}
-        <span className="tnum font-mono text-[12px] text-zinc-500">{total} stories</span>
+    <header className="flex min-w-0 flex-col gap-3 @3xl:flex-row @3xl:items-center @3xl:gap-6">
+      <div className="flex min-w-0 shrink-0 flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h1 className="text-[22px] font-bold tracking-[-0.02em] text-fg">{isFeed ? "실시간 레이더" : "지난 주요 소식"}</h1>
+        <span className="t-meta inline-flex items-center gap-1.5">
+          {isFeed ? (
+            <>
+              <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />
+              <span>Live · 매시 정각 스캔</span>
+            </>
+          ) : (
+            <span>8~30일 전 · 중요도 순</span>
+          )}
+          <span aria-hidden>·</span>
+          <span className="tnum">{total}건</span>
+        </span>
       </div>
       <div className="min-w-0 flex-1">{children}</div>
     </header>
@@ -99,7 +106,7 @@ function SearchBox({ value, onChange, total }: { value: string; onChange: (v: st
   }, []);
   return (
     <div className="relative">
-      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" aria-hidden />
+      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-3" strokeWidth={1.8} aria-hidden />
       <input
         ref={ref}
         type="search"
@@ -113,25 +120,25 @@ function SearchBox({ value, onChange, total }: { value: string; onChange: (v: st
         }}
         placeholder="제목·요약·기술 태그 검색 (예: 무료, 로컬, Gemini)"
         aria-label="소식 검색"
-        className="w-full rounded-xl border border-white/[0.08] border-t-white/[0.14] bg-white/[0.02] py-2 pl-9 pr-24 text-[14px] text-zinc-100 placeholder:text-zinc-500 transition focus:border-white/25 focus:bg-white/[0.04] focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+        className="w-full rounded-lg bg-surface py-2 pl-9 pr-24 text-[14px] text-fg placeholder:text-fg-3 transition-colors duration-100 hover:bg-elevated focus:bg-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-accent [&::-webkit-search-cancel-button]:hidden"
       />
       <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-1.5">
         {value ? (
           <>
-            <span className="font-mono text-[11px] text-zinc-500" aria-live="polite">
+            <span className="tnum text-[12px] text-fg-3" aria-live="polite">
               {total}건
             </span>
             <button
               type="button"
               onClick={() => onChange("")}
               aria-label="검색어 지우기"
-              className="grid h-6 w-6 place-items-center rounded-md text-zinc-400 hover:bg-white/[0.08] hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              className="grid h-6 w-6 place-items-center rounded-md text-fg-3 hover:bg-surface hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <X className="h-3.5 w-3.5" aria-hidden />
             </button>
           </>
         ) : (
-          <kbd className="hidden rounded border border-white/10 px-1.5 py-px font-mono text-[10px] text-zinc-500 sm:inline">/</kbd>
+          <kbd className="hidden rounded bg-canvas px-1.5 py-px text-[11px] text-fg-3 sm:inline">/</kbd>
         )}
       </div>
     </div>
@@ -156,12 +163,6 @@ function writeSelectionToUrl(sel: Selection) {
   if (url.href !== window.location.href) window.history.pushState(null, "", url);
 }
 
-/** 화면에 보이는 순서 그대로: TOP SPOTLIGHT → 나머지 (J/K 탐색과 카드 렌더링이 같은 순서를 쓴다) */
-function displayOrder(items: FeedItem[], spotlight: boolean): { tops: FeedItem[]; rest: FeedItem[] } {
-  const tops = spotlight ? pickSpotlight(items) : [];
-  const topIds = new Set(tops.map((i) => i.id));
-  return { tops, rest: items.filter((i) => !topIds.has(i.id)) };
-}
 
 /**
  * 결과 0건 안내. 특정 분야를 고른 채 검색해서 0건인데 '전체'에는 있으면 그 사실을 알려주고 원클릭으로 넘겨준다
@@ -169,23 +170,23 @@ function displayOrder(items: FeedItem[], spotlight: boolean): { tops: FeedItem[]
  */
 function EmptyFeed({ allCount, onShowAll }: { allCount: number; onShowAll?: () => void }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-white/10 px-6 py-12 text-center">
-      <Telescope className="h-6 w-6 text-zinc-500" aria-hidden />
+    <div className="flex flex-col items-center gap-3 rounded-2xl bg-surface px-6 py-12 text-center">
+      <Telescope className="h-5 w-5 text-fg-3" strokeWidth={1.8} aria-hidden />
       {onShowAll && allCount > 0 ? (
         <>
-          <p className="text-sm leading-relaxed text-zinc-300">
-            선택한 분야에는 없지만 전체 피드에 <span className="tnum font-semibold text-zinc-50">{allCount}</span>건이 있어요.
+          <p className="text-[15px] leading-relaxed text-fg-2">
+            선택한 분야에는 없지만 전체 피드에 <span className="tnum font-semibold text-fg">{allCount}</span>건이 있어요.
           </p>
           <button
             type="button"
             onClick={onShowAll}
-            className="press rounded-lg bg-white px-3.5 py-2 text-[13px] font-semibold text-zinc-950 transition hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="press rounded-lg bg-fg px-3.5 py-2 text-[13.5px] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           >
             전체에서 보기
           </button>
         </>
       ) : (
-        <p className="text-sm leading-relaxed text-zinc-400">이 조건에 맞는 소식이 아직 없어요. 검색어나 필터를 바꿔보시겠어요?</p>
+        <p className="text-[15px] leading-relaxed text-fg-2">이 조건에 맞는 소식이 아직 없어요. 검색어나 필터를 바꿔보시겠어요?</p>
       )}
     </div>
   );
@@ -215,56 +216,55 @@ function FeedList({
   onShowAll?: () => void;
 }) {
   const [visible, setVisible] = useState(PAGE_SIZE);
-  // TOP SPOTLIGHT: 짧은 소셜 단문 제외, 원본 해설이 준비된 기사 우선 (pickSpotlight)
-  const { tops, rest } = displayOrder(items, spotlight);
-  const shown = rest.slice(0, visible);
-  const remaining = rest.length - shown.length;
+  // 1면: 리드 1 + 피처 2 (짧은 소셜 단문 제외, 원본 해설이 준비된 기사 우선 — pickSpotlight). 필터·검색이면 스트림만
+  const { lead, features, stream } = editorialLayout(items, spotlight);
+  const shown = stream.slice(0, visible);
+  const remaining = stream.length - shown.length;
   const isSelected = (id: string) => selection?.type === "item" && selection.id === id;
 
   // J/K 로 다음 기사가 '더보기' 너머에 있으면 그만큼 펼친다
-  const selectedRestIndex = selection?.type === "item" ? rest.findIndex((i) => i.id === selection.id) : -1;
+  const selectedRestIndex = selection?.type === "item" ? stream.findIndex((i) => i.id === selection.id) : -1;
   useEffect(() => {
     if (selectedRestIndex >= visible) setVisible(Math.ceil((selectedRestIndex + 1) / PAGE_SIZE) * PAGE_SIZE);
   }, [selectedRestIndex, visible]);
 
   if (items.length === 0) return <EmptyFeed allCount={emptyAllCount} onShowAll={onShowAll} />;
+  const rowProps = (item: FeedItem) => ({
+    item,
+    platform: platformsById.get(item.platform_id),
+    platformsById,
+    onEntity,
+    selected: isSelected(item.id),
+    now,
+    onSelect,
+    onSelectPlatform,
+  });
+  const topCount = (lead ? 1 : 0) + features.length;
   return (
-    <div className="flex flex-col gap-4">
-      {tops.length > 0 && (
-        <ul className="grid grid-cols-1 gap-4 @5xl:grid-cols-2" aria-label="Top Spotlight">
-          {tops.map((item, i) => (
-            <li key={item.id} data-item-id={item.id}>
-              <SpotlightCard
-                item={item}
-                rank={i + 1}
-                platform={platformsById.get(item.platform_id)}
-                platformsById={platformsById}
-                onEntity={onEntity}
-                selected={isSelected(item.id)}
-                now={now}
-                onSelect={onSelect}
-                onSelectPlatform={onSelectPlatform}
-              />
+    <div className="flex flex-col gap-6">
+      {lead && (
+        <section aria-label="오늘의 리드 소식" data-item-id={lead.id}>
+          <LeadStory {...rowProps(lead)} />
+        </section>
+      )}
+      {features.length > 0 && (
+        <ul className="grid grid-cols-1 border-b border-line pb-4 @xl:grid-cols-2" aria-label="주요 소식">
+          {features.map((item, i) => (
+            <li
+              key={item.id}
+              data-item-id={item.id}
+              className={`min-w-0 ${i > 0 ? "border-t border-line pt-2 @xl:border-l @xl:border-t-0 @xl:pl-4 @xl:pt-0" : "@xl:pr-4"}`}
+            >
+              <FeatureStory {...rowProps(item)} />
             </li>
           ))}
         </ul>
       )}
       {shown.length > 0 && (
-        <ul className="grid grid-cols-1 gap-3 @xl:grid-cols-2 @5xl:grid-cols-3">
+        <ul className="-mt-2 flex flex-col" aria-label={topCount > 0 ? "브리핑" : "소식 목록"}>
           {shown.map((item) => (
-            <li key={item.id} data-item-id={item.id} className="flex">
-              <div className="flex w-full flex-col">
-                <ItemCard
-                  item={item}
-                  platform={platformsById.get(item.platform_id)}
-                  platformsById={platformsById}
-                  onEntity={onEntity}
-                  selected={isSelected(item.id)}
-                  now={now}
-                  onSelect={onSelect}
-                  onSelectPlatform={onSelectPlatform}
-                />
-              </div>
+            <li key={item.id} data-item-id={item.id} className="border-b border-line py-1 last:border-b-0">
+              <StreamRow {...rowProps(item)} />
             </li>
           ))}
         </ul>
@@ -273,11 +273,11 @@ function FeedList({
         <button
           type="button"
           onClick={() => setVisible((v) => v + PAGE_SIZE)}
-          className="press mx-auto mt-2 inline-flex items-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.02] px-4 py-2 text-[13px] text-zinc-300 transition hover:border-white/20 hover:bg-white/[0.05] hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+          className="press mx-auto inline-flex items-center gap-2 rounded-lg px-4 py-2 text-[13.5px] font-medium text-fg-2 hover:bg-surface hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           더보기
-          <span className="font-mono text-[11px] text-zinc-500">
-            {tops.length + shown.length}/{items.length}
+          <span className="tnum text-[12px] text-fg-3">
+            {topCount + shown.length}/{items.length}
           </span>
           <ChevronDown className="h-3.5 w-3.5" aria-hidden />
         </button>
@@ -400,13 +400,15 @@ export default function RadarApp({ data }: { data: RadarData }) {
     [data.platforms, selectPlatform, view],
   );
 
+  // 1면 편집(리드·피처)은 실시간 레이더의 '전체' 화면에서만. 분야 필터·검색 결과는 스트림 규칙
+  const editorial = view === "feed" && category === "all" && !query.trim();
+
   // 지금 화면에 보이는 순서 (J/K 탐색용)
   const navOrder = useMemo(() => {
     if (view === "directory") return [];
     const list = view === "feed" ? hotItems : pastItems;
-    const { tops, rest } = displayOrder(list, view === "feed" && !query.trim());
-    return [...tops, ...rest].map((i) => i.id);
-  }, [view, hotItems, pastItems, query]);
+    return editorialOrder(editorialLayout(list, editorial));
+  }, [view, hotItems, pastItems, editorial]);
 
   // J / ↓ : 다음 기사, K / ↑ : 이전 기사 — 검색창 등 입력 중이 아닐 때만
   useEffect(() => {
@@ -452,9 +454,9 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
   return (
     // 1024~1359: 사이드바(220) + 피드 2단 / >=1360: + 우측 고정 패널 3단. 모든 열은 min-w-0 로 좌우 밀림 방지
-    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[220px_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[228px_minmax(0,1fr)_clamp(380px,28vw,460px)]">
+    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[220px_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[228px_minmax(0,1fr)_clamp(420px,32vw,520px)]">
       {/* 좌측: 데스크톱 사이드바 */}
-      <div className="hidden min-w-0 overflow-hidden border-r border-white/[0.06] bg-[#0C0C0F] lg:block">
+      <div className="hidden min-w-0 overflow-hidden bg-surface lg:block">
         <Sidebar
           view={view}
           category={category}
@@ -467,14 +469,15 @@ export default function RadarApp({ data }: { data: RadarData }) {
       </div>
 
       {/* 모바일 상단 컨트롤 */}
-      <header className="flex min-w-0 flex-col gap-3 border-b border-white/[0.06] bg-[#0C0C0F] px-4 pb-3 pt-4 md:px-6 lg:hidden">
+      <header className="flex min-w-0 flex-col gap-3 border-b border-line bg-surface px-4 pb-3 pt-4 md:px-6 lg:hidden">
         <div className="flex min-w-0 items-center justify-between gap-3">
           <Logo />
-          {data.source === "sample" && (
-            <span className="shrink-0 rounded-md border border-amber-400/20 bg-amber-400/[0.06] px-2 py-0.5 text-[11px] text-amber-200/90">
-              샘플 데이터
-            </span>
-          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {data.source === "sample" && (
+              <span className="whitespace-nowrap rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2">샘플 데이터</span>
+            )}
+            <ThemeToggle compact />
+          </div>
         </div>
         <ViewTabs view={view} onView={setView} compact />
         <CategoryChips category={category} onCategory={setCategory} counts={counts} layout="row" />
@@ -482,7 +485,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
       {/* 중앙 */}
       {/* 샘플 데이터 안내는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
-      <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-7 lg:py-6 wide:px-8">
+      <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-8 lg:py-8">
+        <div className="mx-auto w-full min-w-0 max-w-[920px]">
 
         {view === "directory" ? (
           <DirectoryView
@@ -493,7 +497,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
             onSelect={selectPlatform}
           />
         ) : (
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-6">
             <FeedHeader view={view} total={view === "feed" ? hotItems.length : pastItems.length}>
               <SearchBox value={query} onChange={setQuery} total={view === "feed" ? hotItems.length : pastItems.length} />
             </FeedHeader>
@@ -503,7 +507,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
               platformsById={platformsById}
               selection={visibleSelection}
               now={now}
-              spotlight={view === "feed" && !query.trim()}
+              spotlight={editorial}
               onSelect={selectItem}
               onSelectPlatform={selectPlatform}
               onEntity={onEntity}
@@ -512,6 +516,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
             />
           </div>
         )}
+        </div>
       </main>
 
       {/* 우측: 와이드 고정 패널 / 분할 창 드로어 / 모바일 바텀시트 — 화면 폭에 맞는 하나만 렌더링 */}

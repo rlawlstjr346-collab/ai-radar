@@ -1,5 +1,10 @@
 import { BadgeCheck, BookOpenText, Laptop, PiggyBank, ShieldCheck, Sparkles, Timer, type LucideIcon } from "lucide-react";
 
+/*
+ * Palette Budget (DESIGN.md): 배지는 전부 무채색(bg-elevated + text-fg-2) 이거나 accent 글자.
+ * 유채색 칩·플랫폼 브랜드색 테두리는 쓰지 않는다.
+ */
+
 import { CATEGORY_META, DIFFICULTY_META, STATUS_META } from "@/lib/categories";
 import type { Category, CollectStatus, Difficulty, Platform } from "@/lib/types";
 
@@ -53,7 +58,6 @@ export function PlatformMark({
   /** 출처 스택용 동그란 모양 */
   round?: boolean;
 }) {
-  const color = platform?.theme_color ?? "#9CA3AF";
   const dims = {
     xs: "h-4 w-4 rounded-[4px] text-[8px]",
     sm: "h-5 w-5 rounded-[5px] text-[9px]",
@@ -63,8 +67,7 @@ export function PlatformMark({
   return (
     <span
       aria-hidden
-      className={`grid shrink-0 place-items-center border font-mono font-semibold tracking-tight ${dims} ${round ? "!rounded-full" : ""}`}
-      style={{ color, borderColor: `${color}40`, backgroundColor: `${color}14` }}
+      className={`grid shrink-0 place-items-center bg-elevated font-semibold tracking-tight text-fg-2 ${dims} ${round ? "!rounded-full" : ""}`}
     >
       {monogram(platform?.id ?? fallbackId, platform?.name)}
     </span>
@@ -99,18 +102,39 @@ function benefitIcon(tag: string): LucideIcon {
   return Sparkles;
 }
 
-/** '내게 생기는 이득' 칩 — 스크롤 중 시선이 멈추게 */
+/** '내게 생기는 이득' — 상자 없는 accent 글자 (상세 패널용, 아이콘 포함) */
 export function BenefitChip({ tag, size = "sm" }: { tag: string | null | undefined; size?: "sm" | "md" }) {
   if (!tag) return null;
   const Icon = benefitIcon(tag);
   return (
     <span
-      className={`relative z-10 inline-flex max-w-full items-center gap-1.5 rounded-md border border-amber-400/20 bg-amber-500/10 font-semibold text-amber-200 backdrop-blur-sm ${
-        size === "md" ? "px-2.5 py-1 text-[12.5px]" : "px-2 py-0.5 text-[11.5px]"
+      className={`relative z-10 inline-flex max-w-full items-center gap-1.5 font-medium text-accent ${
+        size === "md" ? "text-[14px]" : "text-[13px]"
       }`}
     >
-      <Icon className={size === "md" ? "h-3.5 w-3.5" : "h-3 w-3"} strokeWidth={2.2} aria-hidden />
+      <Icon className={size === "md" ? "h-4 w-4" : "h-3.5 w-3.5"} strokeWidth={1.8} aria-hidden />
       <span className="truncate">{tag}</span>
+    </span>
+  );
+}
+
+/** 피드용 이득 테이크어웨이 한 줄: "→ 작업당 비용 32% 절감" */
+export function BenefitTakeaway({ tag, className = "" }: { tag: string | null | undefined; className?: string }) {
+  if (!tag) return null;
+  return (
+    <p className={`text-[14px] font-medium leading-snug text-accent ${className}`}>
+      <span aria-hidden>→ </span>
+      <span className="sr-only">내게 생기는 이득: </span>
+      {tag}
+    </p>
+  );
+}
+
+/** 메타 줄의 조용한 텍스트 배지 (완독해설 · 논문 · N곳 포착) */
+export function QuietTag({ children, title }: { children: React.ReactNode; title?: string }) {
+  return (
+    <span className="inline-flex shrink-0 items-center rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2" title={title}>
+      {children}
     </span>
   );
 }
@@ -128,8 +152,8 @@ export function CategoryTag({ category }: { category: Category }) {
 export function StatusBadge({ status }: { status: CollectStatus }) {
   const m = STATUS_META[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-md border px-1.5 py-0.5 text-[11px] font-medium ${m.className}`}>
-      <span className={`h-1.5 w-1.5 rounded-full ${m.dot} ${status === "active" ? "animate-pulse" : ""}`} aria-hidden />
+    <span className={`inline-flex items-center gap-1.5 rounded px-1.5 py-0.5 text-[11.5px] font-medium ${m.className}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${m.dot}`} aria-hidden />
       {m.label}
     </span>
   );
@@ -152,7 +176,7 @@ export function PlatformBadge({
       <span className="truncate">{name}</span>
     </>
   );
-  const base = "relative z-10 inline-flex max-w-[11rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[12px] font-medium text-zinc-200";
+  const base = "relative z-10 inline-flex max-w-[11rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[12.5px] font-medium text-fg-2";
   if (!onSelect) return <span className={base}>{content}</span>;
   return (
     <button
@@ -161,7 +185,7 @@ export function PlatformBadge({
         e.stopPropagation();
         onSelect(platform?.id ?? fallbackId);
       }}
-      className={`${base} cursor-pointer transition hover:bg-white/[0.06] hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`}
+      className={`${base} cursor-pointer transition-colors duration-100 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent`}
       aria-label={`${name} 플랫폼 소개 보기`}
     >
       {content}
@@ -169,18 +193,20 @@ export function PlatformBadge({
   );
 }
 
+/** 예전 카테고리 그라데이션 띠 — 장식 금지 원칙으로 이제 아무것도 그리지 않는다 (호출부 호환) */
 export function CategoryLine({ category }: { category: Category }) {
-  return <div className={`h-px w-full bg-gradient-to-r ${CATEGORY_META[category].gradient} opacity-80`} aria-hidden />;
+  void category;
+  return null;
 }
 
 /** [원본 쉽게 읽기] 완독 해설이 준비된 기사 표시 */
 export function EasyReadyMark() {
   return (
     <span
-      className="relative z-10 inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[10.5px] font-medium text-zinc-300"
+      className="relative z-10 inline-flex items-center gap-1 rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2"
       title="원문 전체를 문단별로 쉽게 풀어 쓴 완독 해설이 있어요"
     >
-      <BookOpenText className="h-3 w-3 text-zinc-400" strokeWidth={2.2} aria-hidden />
+      <BookOpenText className="h-3 w-3" strokeWidth={1.8} aria-hidden />
       완독해설
     </span>
   );
@@ -204,15 +230,15 @@ export function SourceStack({
   const blanks = Math.max(0, Math.min(3, count) - ids.length);
   const names = ids.map((id) => platformsById.get(id)?.name ?? id).join(", ");
   return (
-    <span className="inline-flex items-center gap-1.5 text-[11px] text-zinc-400" title={`${count}곳에서 포착: ${names}`}>
+    <span className="inline-flex items-center gap-1.5 text-[12px] text-fg-3" title={`${count}곳에서 포착: ${names}`}>
       <span className="flex -space-x-1.5" aria-hidden>
         {ids.map((id) => (
-          <span key={id} className="rounded-full ring-2 ring-[#121215]">
+          <span key={id} className="rounded-full ring-2 ring-canvas">
             <PlatformMark platform={platformsById.get(id)} fallbackId={id} size="xs" round />
           </span>
         ))}
         {Array.from({ length: blanks }, (_, i) => (
-          <span key={`b${i}`} className="h-4 w-4 rounded-full border border-white/15 bg-zinc-800 ring-2 ring-[#121215]" />
+          <span key={`b${i}`} className="h-4 w-4 rounded-full bg-elevated ring-2 ring-canvas" />
         ))}
       </span>
       <span className="tnum">{count}곳</span>

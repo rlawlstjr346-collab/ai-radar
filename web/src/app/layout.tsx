@@ -1,4 +1,7 @@
 import type { Metadata, Viewport } from "next";
+
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,22 +10,24 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0F17",
+  themeColor: "#0F0F10",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko">
+    // data-theme 는 첫 페인트 전 인라인 스크립트가 바꾸므로 hydration 경고를 끈다
+    <html lang="ko" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
         <link
           rel="stylesheet"
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body className="min-h-dvh bg-bg text-ink antialiased">{children}</body>
+      <body className="min-h-dvh bg-canvas text-fg antialiased">{children}</body>
     </html>
   );
 }

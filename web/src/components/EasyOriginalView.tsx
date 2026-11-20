@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, BookOpenText, Compass, LoaderCircle, Quote, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, BookOpenText, LoaderCircle, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import type { EasyOriginalResponse, FeedItem } from "@/lib/types";
@@ -48,7 +48,7 @@ function OriginalLink({ url }: { url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="press group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-[14px] font-semibold text-zinc-950 transition hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      className="press group inline-flex items-center justify-center gap-2 rounded-lg bg-fg px-4 py-3 text-[14.5px] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       원문 보러가기
       <ArrowUpRight
@@ -61,12 +61,12 @@ function OriginalLink({ url }: { url: string }) {
 
 export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const state = useEasyOriginal(item.id);
-  const body = "prose-ko text-[15px] leading-[1.85] text-[#E4E4E7]";
+  const body = "prose-ko t-body";
 
   if (state.phase === "loading") {
     return (
       <div className="flex flex-col gap-5" aria-busy="true" aria-live="polite">
-        <p className="inline-flex items-center gap-2 text-[13px] text-zinc-400">
+        <p className="inline-flex items-center gap-2 text-[13.5px] text-fg-2">
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
           원문을 처음부터 끝까지 쉽게 풀어 오는 중이에요…
         </p>
@@ -78,7 +78,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
             <div className="shimmer h-3 w-[96%] rounded" />
             <div className="shimmer h-3 w-[88%] rounded" />
             {i !== 2 && <div className="shimmer h-3 w-3/5 rounded" />}
-            <div className="mt-1 h-3 w-1/2 rounded border-l-2 border-white/10 pl-3">
+            <div className="mt-1 h-3 w-1/2 border-l-2 border-line-strong pl-3">
               <div className="shimmer h-full w-full rounded" />
             </div>
           </div>
@@ -101,12 +101,13 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
     const message = failure ?? "원본 해설을 불러오지 못했어요.";
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+        <div className="flex gap-3 rounded-lg bg-elevated p-4">
           <TriangleAlert
-            className="mt-0.5 h-4 w-4 shrink-0 text-amber-300"
+            className="mt-0.5 h-4 w-4 shrink-0 text-fg-2"
+            strokeWidth={1.8}
             aria-hidden
           />
-          <p className="text-sm leading-relaxed text-zinc-300">{message}</p>
+          <p className="text-[15px] leading-relaxed text-fg-2">{message}</p>
         </div>
         <OriginalLink url={item.canonical_url} />
       </div>
@@ -119,13 +120,13 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const minutes = Math.max(1, Math.round(chars / 500));
   return (
     <div className="flex flex-col gap-7">
-      <p className="inline-flex items-center gap-2 text-[12.5px] text-zinc-400">
-        <BookOpenText className="h-3.5 w-3.5 text-zinc-500" aria-hidden />
-        총 <span className="tnum text-zinc-200">{easy.sections.length}</span>문단 · 약{" "}
-        <span className="tnum text-zinc-200">{minutes}</span>분 완독
+      <p className="t-meta inline-flex items-center gap-2">
+        <BookOpenText className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
+        총 <span className="tnum text-fg-2">{easy.sections.length}</span>문단 · 약{" "}
+        <span className="tnum text-fg-2">{minutes}</span>분 완독
       </p>
       {easy.source_note && (
-        <p className="font-mono text-[11px] leading-relaxed text-zinc-500">
+        <p className="t-meta -mt-4 leading-relaxed">
           {easy.source_note}
           {state.data.source === "supabase" && !state.data.cached
             ? " · 방금 생성됨"
@@ -136,19 +137,14 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       <ol className="flex flex-col gap-7">
         {easy.sections.map((s, i) => (
           <li key={i} className="flex flex-col gap-2">
-            <h3 className="flex items-baseline gap-2 text-[13.5px] font-semibold text-zinc-100">
-              <span className="font-mono text-[11px] text-zinc-500">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+            {/* 문단 순서가 실제 원문 순서라 번호는 의미가 있다 — 조용한 tertiary 로만 */}
+            <h3 className="flex items-baseline gap-2 text-[16px] font-semibold leading-snug text-fg">
+              <span className="tnum text-[13px] font-medium text-fg-3">{i + 1}</span>
               {s.heading}
             </h3>
             <TermText text={s.body} terms={item.terms} className={body} />
             {s.quote && (
-              <blockquote className="flex gap-2 border-l-2 border-white/15 pl-3 font-mono text-[12px] leading-relaxed text-zinc-400">
-                <Quote
-                  className="mt-0.5 h-3 w-3 shrink-0 text-zinc-600"
-                  aria-hidden
-                />
+              <blockquote className="rounded-r-lg border-l-2 border-accent bg-elevated py-2.5 pl-4 pr-3 text-[13.5px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}
@@ -160,18 +156,17 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       </ol>
 
       {easy.watch_points.length > 0 && (
-        <section className="flex flex-col gap-2.5 rounded-xl border border-sky-300/15 bg-sky-300/[0.04] p-4">
-          <h3 className="flex items-center gap-1.5 text-[13px] font-semibold text-sky-200">
-            <Compass className="h-4 w-4" aria-hidden />
+        <section className="flex flex-col gap-2.5 rounded-r-lg border-l-2 border-accent bg-elevated py-4 pl-4 pr-4">
+          <h3 className="text-[13px] font-medium text-fg-3">
             실제 원문 링크 들어가실 때 관람 포인트
           </h3>
           <ul className="flex flex-col gap-1.5">
             {easy.watch_points.map((w, i) => (
               <li
                 key={i}
-                className="flex gap-2 text-[13.5px] leading-relaxed text-sky-50/90"
+                className="flex gap-2.5 text-[15px] leading-[1.7] text-fg"
               >
-                <span className="font-mono text-[11px] leading-[1.9] text-sky-300/70">
+                <span className="tnum text-[13px] leading-[1.95] text-fg-3">
                   {i + 1}
                 </span>
                 <span>{w}</span>

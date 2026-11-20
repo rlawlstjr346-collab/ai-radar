@@ -48,12 +48,13 @@ cd web; npm.cmd test; npm.cmd run lint; npm.cmd run typecheck; npm.cmd run build
 - **후킹은 사실로.** 제목은 돈·시간 절약 / 통념 반전 / 당장 무료로 써보기 중 원문이 받쳐 주는 각도만. `benefit_tag` 는 10~16자, 근거 없으면 비운다.
 - **[원본 쉽게 읽기]** 는 원문 흐름을 순서대로 풀어 쓴 완독 해설 + 관람 포인트. DB 모드에선 첫 요청 때 1회만 생성하고 `summaries.easy_original_json` 에 영구 캐싱한다.
 - 검수용 스냅샷: `cd web && npm run audit:snapshot` → 루트 `AUDIT_SNAPSHOT.md`
+- **디자인 기준은 루트 `DESIGN.md`.** 다크(Quiet Research Room) / 종이(Warm Paper) 두 테마의 토큰, 타입 스케일, No-Box 피드 규칙, CTA 위계가 여기 있고 `web/src/app/globals.css` 와 1:1 로 맞춘다 (`web/tests/theme.test.ts` 가 값과 대비율을 지킨다).
 
 ## 화면 폭별 레이아웃
 
 | 폭 | 구성 | 상세 보기 |
 |---|---|---|
-| 1360px 이상 (전체 창) | 사이드바 + 피드 + 우측 고정 패널 3단 | 첫 진입 시 TOP SPOTLIGHT 01 자동 선택 |
+| 1360px 이상 (전체 창) | 사이드바 + 피드(가운데 920px) + 우측 읽기 패널 `clamp(420px,32vw,520px)` 3단 | 첫 진입 시 리드 스토리 자동 선택 |
 | 1024~1359px (절반 창·노트북) | 사이드바(220px) + 피드 | 오른쪽 슬라이드 드로어 (X·바깥 클릭·Esc 로 닫기) |
 | 768~1023px (좁은 분할 창) | 상단 바 + 가로 필터 + 피드 | 오른쪽 슬라이드 드로어 |
 | 767px 이하 (모바일) | 상단 바 + 가로 필터 + 피드 | 바텀시트 |

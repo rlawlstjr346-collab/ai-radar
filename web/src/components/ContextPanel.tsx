@@ -23,7 +23,7 @@ interface Props {
 }
 
 const ICON_BTN =
-  "press grid h-8 w-8 place-items-center rounded-full bg-black/40 text-zinc-300 backdrop-blur transition hover:bg-white/10 hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40";
+  "press grid h-8 w-8 place-items-center rounded-md bg-surface text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 /** 현재 선택을 공유 URL(?item= / ?platform=)로 */
 export function shareUrlFor(selection: NonNullable<Selection>, location: Pick<Location, "origin" | "pathname">): string {
@@ -68,19 +68,19 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
           title="공유 링크 복사"
           className={ICON_BTN}
         >
-          {copied === "ok" ? <Check className="h-4 w-4 text-zinc-50" aria-hidden /> : <Link2 className="h-4 w-4" aria-hidden />}
+          {copied === "ok" ? <Check className="h-4 w-4 text-accent" aria-hidden /> : <Link2 className="h-4 w-4" strokeWidth={1.8} aria-hidden />}
         </button>
         <button type="button" onClick={onClose} aria-label="상세 보기 닫기" className={ICON_BTN}>
-          <X className="h-4 w-4" aria-hidden />
+          <X className="h-4 w-4" strokeWidth={1.8} aria-hidden />
         </button>
       </div>
       {copied &&
         createPortal(
           <div
             role="status"
-            className="animate-toast-in fixed bottom-6 left-1/2 z-[90] flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/[0.1] border-t-white/[0.2] bg-[#18181B]/95 px-4 py-2 text-[13px] text-zinc-100 shadow-2xl shadow-black/60 backdrop-blur"
+            className="animate-toast-in fixed bottom-6 left-1/2 z-[90] flex -translate-x-1/2 items-center gap-2 rounded-lg bg-fg px-4 py-2 text-[13.5px] font-medium text-canvas"
           >
-            {copied === "ok" ? <Check className="h-4 w-4 text-zinc-50" aria-hidden /> : <X className="h-4 w-4 text-rose-300" aria-hidden />}
+            {copied === "ok" ? <Check className="h-4 w-4" aria-hidden /> : <X className="h-4 w-4" aria-hidden />}
             {copied === "ok" ? "공유 링크가 복사됐어요" : "복사하지 못했어요. 주소창의 링크를 복사해 주세요"}
           </div>,
           document.body,
@@ -113,17 +113,12 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
 function EmptyPanel() {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4 px-8 py-16 text-center">
-      <span className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full border border-white/10 bg-card-2">
-        <span
-          className="radar-sweep absolute inset-0 bg-[conic-gradient(from_0deg,rgba(255,255,255,0.22),transparent_30%)]"
-          aria-hidden
-        />
-        <span className="absolute inset-3 rounded-full border border-white/10" aria-hidden />
-        <Radar className="relative h-8 w-8 text-zinc-300" aria-hidden />
+      <span className="grid h-12 w-12 place-items-center rounded-full bg-elevated">
+        <Radar className="h-5 w-5 text-fg-2" strokeWidth={1.8} aria-hidden />
       </span>
       <div className="flex flex-col gap-1.5">
-        <p className="font-semibold text-zinc-50">레이더 요원 대기 중이에요</p>
-        <p className="text-sm leading-relaxed text-zinc-400">
+        <p className="text-[16px] font-semibold text-fg">레이더 요원 대기 중이에요</p>
+        <p className="text-[14.5px] leading-relaxed text-fg-2">
           가운데 카드를 누르면 여기서 4단계로 쉽게 풀어드리고,
           <br />
           플랫폼 배지를 누르면 그곳이 어떤 사이트인지 소개해 드려요!
@@ -142,7 +137,7 @@ export function DesktopPanel(props: Props) {
   }, [key]);
 
   return (
-    <aside aria-label="상세 보기" className="relative flex h-full flex-col border-l border-white/10 bg-[#0F0F12]">
+    <aside aria-label="상세 보기" className="relative flex h-full flex-col bg-surface">
       <div className="absolute right-3 top-3 z-20">
         <PanelActions selection={props.selection} onClose={props.onClose} />
       </div>
@@ -211,7 +206,7 @@ export function BottomSheet(props: Props) {
         aria-label="닫기"
         tabIndex={-1}
         onClick={onClose}
-        className="animate-fade-in absolute inset-0 bg-black/60 backdrop-blur-[2px]"
+        className="animate-fade-in absolute inset-0 bg-scrim"
       />
       <div
         ref={sheetRef}
@@ -220,7 +215,7 @@ export function BottomSheet(props: Props) {
         aria-label="상세 보기"
         tabIndex={-1}
         style={{ transform: `translateY(${dragY}px)`, transition: dragging ? "none" : "transform 180ms ease-out" }}
-        className="animate-sheet-up absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col overflow-hidden rounded-t-3xl border-t border-white/15 bg-[#0F0F12] shadow-[0_-12px_40px_rgba(0,0,0,0.6)] focus:outline-none"
+        className="animate-sheet-up absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col overflow-hidden rounded-t-2xl bg-surface focus:outline-none"
       >
         <div
           className="flex shrink-0 touch-none items-center justify-between px-4 pb-1 pt-2.5"
@@ -230,7 +225,7 @@ export function BottomSheet(props: Props) {
           onPointerCancel={onPointerUp}
         >
           <span className="w-[4.5rem]" />
-          <span className="h-1.5 w-11 cursor-grab rounded-full bg-white/25 active:cursor-grabbing" aria-hidden />
+          <span className="h-1 w-10 cursor-grab rounded-full bg-line-strong active:cursor-grabbing" aria-hidden />
           <PanelActions selection={props.selection} onClose={onClose} />
         </div>
         <div ref={scrollRef} key={key} className="thin-scroll overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">
@@ -277,7 +272,7 @@ export function SideDrawer(props: Props) {
         aria-label="닫기"
         tabIndex={-1}
         onClick={onClose}
-        className="animate-fade-in absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="animate-fade-in absolute inset-0 bg-scrim"
       />
       <div
         ref={panelRef}
@@ -285,7 +280,7 @@ export function SideDrawer(props: Props) {
         aria-modal="true"
         aria-label="상세 보기"
         tabIndex={-1}
-        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(480px,92vw)] min-w-0 flex-col border-l border-white/15 bg-[#0F0F12] shadow-[-16px_0_48px_rgba(0,0,0,0.55)] focus:outline-none"
+        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(520px,92vw)] min-w-0 flex-col bg-surface focus:outline-none"
       >
         <div className="absolute right-3 top-3 z-20">
           <PanelActions selection={props.selection} onClose={onClose} />
