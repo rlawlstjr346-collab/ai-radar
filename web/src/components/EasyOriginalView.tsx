@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  Compass,
-  LoaderCircle,
-  Quote,
-  TriangleAlert,
-} from "lucide-react";
+import { ArrowUpRight, BookOpenText, Compass, LoaderCircle, Quote, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import type { EasyOriginalResponse, FeedItem } from "@/lib/types";
@@ -54,7 +48,7 @@ function OriginalLink({ url }: { url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[13.5px] font-semibold text-gray-950 transition hover:bg-gray-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+      className="press group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-[14px] font-semibold text-zinc-950 transition hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
     >
       원문 보러가기
       <ArrowUpRight
@@ -67,20 +61,26 @@ function OriginalLink({ url }: { url: string }) {
 
 export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const state = useEasyOriginal(item.id);
-  const body = "prose-ko text-[15px] leading-[1.85] text-[#E5E7EB]";
+  const body = "prose-ko text-[15px] leading-[1.85] text-[#E4E4E7]";
 
   if (state.phase === "loading") {
     return (
       <div className="flex flex-col gap-5" aria-busy="true" aria-live="polite">
-        <p className="inline-flex items-center gap-2 text-[13px] text-gray-400">
+        <p className="inline-flex items-center gap-2 text-[13px] text-zinc-400">
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
           원문을 처음부터 끝까지 쉽게 풀어 오는 중이에요…
         </p>
+        {/* 문단 모양 쉬머 스켈레톤 (제목 한 줄 + 본문 서너 줄 + 인용 한 줄) */}
         {[0, 1, 2].map((i) => (
-          <div key={i} className="flex flex-col gap-2">
-            <div className="h-3.5 w-1/2 animate-pulse rounded bg-white/[0.06]" />
-            <div className="h-3 w-full animate-pulse rounded bg-white/[0.04]" />
-            <div className="h-3 w-11/12 animate-pulse rounded bg-white/[0.04]" />
+          <div key={i} className="flex flex-col gap-2.5">
+            <div className="shimmer h-3.5 w-2/5 rounded" />
+            <div className="shimmer h-3 w-full rounded" />
+            <div className="shimmer h-3 w-[96%] rounded" />
+            <div className="shimmer h-3 w-[88%] rounded" />
+            {i !== 2 && <div className="shimmer h-3 w-3/5 rounded" />}
+            <div className="mt-1 h-3 w-1/2 rounded border-l-2 border-white/10 pl-3">
+              <div className="shimmer h-full w-full rounded" />
+            </div>
           </div>
         ))}
       </div>
@@ -106,7 +106,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
             className="mt-0.5 h-4 w-4 shrink-0 text-amber-300"
             aria-hidden
           />
-          <p className="text-sm leading-relaxed text-gray-300">{message}</p>
+          <p className="text-sm leading-relaxed text-zinc-300">{message}</p>
         </div>
         <OriginalLink url={item.canonical_url} />
       </div>
@@ -114,10 +114,18 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   }
 
   const easy = state.data.easy_original;
+  // 분량 가이드: 한국어 평균 읽기 속도 약 500자/분
+  const chars = easy.sections.reduce((n, s) => n + s.heading.length + s.body.length, 0);
+  const minutes = Math.max(1, Math.round(chars / 500));
   return (
     <div className="flex flex-col gap-7">
+      <p className="inline-flex items-center gap-2 text-[12.5px] text-zinc-400">
+        <BookOpenText className="h-3.5 w-3.5 text-zinc-500" aria-hidden />
+        총 <span className="tnum text-zinc-200">{easy.sections.length}</span>문단 · 약{" "}
+        <span className="tnum text-zinc-200">{minutes}</span>분 완독
+      </p>
       {easy.source_note && (
-        <p className="font-mono text-[11px] leading-relaxed text-gray-500">
+        <p className="font-mono text-[11px] leading-relaxed text-zinc-500">
           {easy.source_note}
           {state.data.source === "supabase" && !state.data.cached
             ? " · 방금 생성됨"
@@ -128,17 +136,17 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       <ol className="flex flex-col gap-7">
         {easy.sections.map((s, i) => (
           <li key={i} className="flex flex-col gap-2">
-            <h3 className="flex items-baseline gap-2 text-[13.5px] font-semibold text-gray-100">
-              <span className="font-mono text-[11px] text-gray-500">
+            <h3 className="flex items-baseline gap-2 text-[13.5px] font-semibold text-zinc-100">
+              <span className="font-mono text-[11px] text-zinc-500">
                 {String(i + 1).padStart(2, "0")}
               </span>
               {s.heading}
             </h3>
             <TermText text={s.body} terms={item.terms} className={body} />
             {s.quote && (
-              <blockquote className="flex gap-2 border-l-2 border-white/15 pl-3 font-mono text-[12px] leading-relaxed text-gray-400">
+              <blockquote className="flex gap-2 border-l-2 border-white/15 pl-3 font-mono text-[12px] leading-relaxed text-zinc-400">
                 <Quote
-                  className="mt-0.5 h-3 w-3 shrink-0 text-gray-600"
+                  className="mt-0.5 h-3 w-3 shrink-0 text-zinc-600"
                   aria-hidden
                 />
                 <span>

@@ -1,4 +1,4 @@
-import { BadgeCheck, Laptop, PiggyBank, ShieldCheck, Sparkles, Timer, type LucideIcon } from "lucide-react";
+import { BadgeCheck, BookOpenText, Laptop, PiggyBank, ShieldCheck, Sparkles, Timer, type LucideIcon } from "lucide-react";
 
 import { CATEGORY_META, DIFFICULTY_META, STATUS_META } from "@/lib/categories";
 import type { Category, CollectStatus, Difficulty, Platform } from "@/lib/types";
@@ -45,10 +45,13 @@ export function PlatformMark({
   platform,
   fallbackId,
   size = "sm",
+  round = false,
 }: {
   platform?: Platform;
   fallbackId: string;
   size?: "xs" | "sm" | "md" | "lg";
+  /** 출처 스택용 동그란 모양 */
+  round?: boolean;
 }) {
   const color = platform?.theme_color ?? "#9CA3AF";
   const dims = {
@@ -60,7 +63,7 @@ export function PlatformMark({
   return (
     <span
       aria-hidden
-      className={`grid shrink-0 place-items-center border font-mono font-semibold tracking-tight ${dims}`}
+      className={`grid shrink-0 place-items-center border font-mono font-semibold tracking-tight ${dims} ${round ? "!rounded-full" : ""}`}
       style={{ color, borderColor: `${color}40`, backgroundColor: `${color}14` }}
     >
       {monogram(platform?.id ?? fallbackId, platform?.name)}
@@ -73,7 +76,7 @@ export function DifficultyBadge({ level, variant = "full" }: { level: Difficulty
   const m = DIFFICULTY_META[level];
   return (
     <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${m.className}`} title={m.label}>
-      <m.Icon className="h-3 w-3 shrink-0" strokeWidth={2.2} aria-hidden />
+      <m.Icon className={`h-3 w-3 shrink-0 ${m.iconClass}`} strokeWidth={2.2} aria-hidden />
       {variant === "full" ? (
         m.label
       ) : (
@@ -102,7 +105,7 @@ export function BenefitChip({ tag, size = "sm" }: { tag: string | null | undefin
   const Icon = benefitIcon(tag);
   return (
     <span
-      className={`relative z-10 inline-flex max-w-full items-center gap-1.5 rounded-md border border-emerald-300/25 bg-emerald-300/[0.08] font-semibold text-emerald-200 ${
+      className={`relative z-10 inline-flex max-w-full items-center gap-1.5 rounded-md border border-amber-400/20 bg-amber-500/10 font-semibold text-amber-200 backdrop-blur-sm ${
         size === "md" ? "px-2.5 py-1 text-[12.5px]" : "px-2 py-0.5 text-[11.5px]"
       }`}
     >
@@ -149,7 +152,7 @@ export function PlatformBadge({
       <span className="truncate">{name}</span>
     </>
   );
-  const base = "relative z-10 inline-flex max-w-[11rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[12px] font-medium text-gray-200";
+  const base = "relative z-10 inline-flex max-w-[11rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[12px] font-medium text-zinc-200";
   if (!onSelect) return <span className={base}>{content}</span>;
   return (
     <button
@@ -158,7 +161,7 @@ export function PlatformBadge({
         e.stopPropagation();
         onSelect(platform?.id ?? fallbackId);
       }}
-      className={`${base} cursor-pointer transition hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`}
+      className={`${base} cursor-pointer transition hover:bg-white/[0.06] hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30`}
       aria-label={`${name} 플랫폼 소개 보기`}
     >
       {content}
@@ -168,4 +171,52 @@ export function PlatformBadge({
 
 export function CategoryLine({ category }: { category: Category }) {
   return <div className={`h-px w-full bg-gradient-to-r ${CATEGORY_META[category].gradient} opacity-80`} aria-hidden />;
+}
+
+/** [원본 쉽게 읽기] 완독 해설이 준비된 기사 표시 */
+export function EasyReadyMark() {
+  return (
+    <span
+      className="relative z-10 inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[10.5px] font-medium text-zinc-300"
+      title="원문 전체를 문단별로 쉽게 풀어 쓴 완독 해설이 있어요"
+    >
+      <BookOpenText className="h-3 w-3 text-zinc-400" strokeWidth={2.2} aria-hidden />
+      완독해설
+    </span>
+  );
+}
+
+/**
+ * Perplexity 스타일 출처 스택 — 같은 소식을 포착한 플랫폼들을 겹친 동그라미로.
+ * platformIds 가 source_count 보다 적으면 남은 자리는 빈 동그라미로 채운다.
+ */
+export function SourceStack({
+  platformIds,
+  count,
+  platformsById,
+}: {
+  platformIds: string[];
+  count: number;
+  platformsById: Map<string, Platform>;
+}) {
+  if (count <= 1) return null;
+  const ids = [...new Set(platformIds)].slice(0, 3);
+  const blanks = Math.max(0, Math.min(3, count) - ids.length);
+  const names = ids.map((id) => platformsById.get(id)?.name ?? id).join(", ");
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[11px] text-zinc-400" title={`${count}곳에서 포착: ${names}`}>
+      <span className="flex -space-x-1.5" aria-hidden>
+        {ids.map((id) => (
+          <span key={id} className="rounded-full ring-2 ring-[#121215]">
+            <PlatformMark platform={platformsById.get(id)} fallbackId={id} size="xs" round />
+          </span>
+        ))}
+        {Array.from({ length: blanks }, (_, i) => (
+          <span key={`b${i}`} className="h-4 w-4 rounded-full border border-white/15 bg-zinc-800 ring-2 ring-[#121215]" />
+        ))}
+      </span>
+      <span className="tnum">{count}곳</span>
+      <span className="sr-only">에서 포착: {names}</span>
+    </span>
+  );
 }

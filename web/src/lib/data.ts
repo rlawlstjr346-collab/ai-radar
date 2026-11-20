@@ -11,6 +11,7 @@ const HOT_FETCH_LIMIT = 200;
 const WARM_FETCH_LIMIT = 60;
 const ITEM_COLUMNS =
   "id,platform_id,category,canonical_url,thumbnail_url,importance_score,source_count,lifecycle_status,published_at,created_at," +
+  "seen_platforms:metrics_json->_seen_platforms," +
   "summaries!inner(hook_title,benefit_tag,context_ko,what_ko,analogy_ko,why_ko,caveats_ko,difficulty,terms_json,extracted_entities," +
   // 해설 본문 전체 대신 '준비됐는지'만 알 수 있게 첫 섹션 제목만 가져온다
   "easy_ready:easy_original_json->sections->0->>heading)";
@@ -97,6 +98,9 @@ export function normalizeFeedRow(row: Record<string, unknown>): FeedItem | null 
     thumbnail_url: (row.thumbnail_url as string | null) ?? null,
     importance_score: Number(row.importance_score ?? 0),
     source_count: Number(row.source_count ?? 1),
+    source_platforms: Array.isArray(row.seen_platforms) && row.seen_platforms.length > 0
+      ? (row.seen_platforms as unknown[]).filter((x): x is string => typeof x === "string")
+      : [String(row.platform_id)],
     lifecycle_status: (["hot", "warm", "archived"].includes(String(row.lifecycle_status))
       ? row.lifecycle_status
       : "hot") as Lifecycle,

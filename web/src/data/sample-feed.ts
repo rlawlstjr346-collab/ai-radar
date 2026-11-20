@@ -25,6 +25,8 @@ type CardInput = {
   score: number;
   at: string;
   sources?: number;
+  /** 여러 곳에서 포착된 경우 그 플랫폼들 (수집 당시 실제로 함께 잡힌 소스) */
+  sourcePlatforms?: string[];
   /** 원문 난이도(해독 배지): 1 가벼운 트렌드 / 2 개발 실무 문서 / 3 박사급 논문 */
   difficulty: Difficulty;
   hook: string;
@@ -48,6 +50,7 @@ function card(c: CardInput): FeedItem {
     thumbnail_url: null,
     importance_score: c.score,
     source_count: c.sources ?? 1,
+    source_platforms: c.sourcePlatforms ?? [c.platform],
     lifecycle_status: "hot", // buildSampleFeed 가 수집 경과시간으로 다시 계산
     published_at: c.at,
     created_at: c.at, // buildSampleFeed 가 '지금 - 수집 경과시간'으로 덮어씀
@@ -76,6 +79,7 @@ const SAMPLE_BASE: FeedItem[] = [
     url: "https://openai.com/index/introducing-gpt-6-2-astra-sol",
     score: 40.78,
     sources: 2,
+    sourcePlatforms: ["openai", "hacker-news"],
     at: "2026-11-17T17:45:00Z",
     difficulty: 1,
     hook: "더 잘하는데 더 싸졌대요: OpenAI 새 모델 Astra·Sol",
@@ -96,6 +100,7 @@ const SAMPLE_BASE: FeedItem[] = [
     url: "https://anthropic.com/news/anthropic-prices-initial-public-offering",
     score: 35.56,
     sources: 2,
+    sourcePlatforms: ["anthropic", "hacker-news"],
     at: "2026-11-18T23:26:25Z",
     difficulty: 1,
     hook: "Claude 만든 회사 주식, 11월 19일부터 나스닥에서 거래돼요",
@@ -116,6 +121,7 @@ const SAMPLE_BASE: FeedItem[] = [
     url: "https://openai.com/index/advancing-chip-design-with-our-models",
     score: 33.16,
     sources: 2,
+    sourcePlatforms: ["openai", "hacker-news"],
     at: "2026-11-18T00:00:00Z",
     difficulty: 1,
     hook: "AI가 자기가 돌아갈 반도체 설계까지 거들기 시작했어요",
@@ -280,6 +286,7 @@ const SAMPLE_BASE: FeedItem[] = [
     url: "https://deepmind.google/blog/introducing-gemini-4-neon",
     score: 35.27,
     sources: 2,
+    sourcePlatforms: ["google-deepmind", "hacker-news"],
     at: "2026-11-18T21:35:43Z",
     difficulty: 2,
     hook: "구글 새 AI 'Neon', 형님 모델보다 작업당 비용 32% 싸요",
@@ -774,7 +781,7 @@ const SAMPLE_BASE: FeedItem[] = [
 
 /**
  * 샘플 '레이더 수집' 경과시간(분). 로컬 폴백 피드가 늘 살아 있는 라이브 피드처럼 보이도록
- * 지금 기준 20분 전 ~ 3일 전(hot)에 고르게 분포시키고, 6개는 8~23일 전(warm, 지난 주요 소식)에 둔다.
+ * 지금 기준 20분 전 ~ 5일 전(hot)에 고르게 분포시키고, 6개는 8~23일 전(warm, 지난 주요 소식)에 둔다.
  * [원본 쉽게 읽기]가 준비된 8개 기사는 가장 최근(20분~4시간 전)에 들어온 것으로 둬서
  * 신선도 정렬에서 TOP SPOTLIGHT 와 첫 줄을 차지한다.
  * (원문의 실제 발행일은 published_at 에 그대로 남아 상세 패널에 표시된다)
@@ -812,9 +819,9 @@ const COLLECTED_AGO: Record<string, number> = {
   "slack-moji": 1 * DAY + 20 * HOUR,
   "emollick-astra-uneven": 2 * DAY,
   "inworld-voice-isolator": 2 * DAY + 6 * HOUR,
-  "emollick-ai-gaming": 2 * DAY + 10 * HOUR,
-  "longcat-video-avatar": 2 * DAY + 16 * HOUR,
-  "tiny-voca": 2 * DAY + 22 * HOUR,
+  "emollick-ai-gaming": 3 * DAY + 2 * HOUR,
+  "longcat-video-avatar": 3 * DAY + 14 * HOUR,
+  "tiny-voca": 4 * DAY + 20 * HOUR,
   // 지난 주요 소식 (8~23일 전)
   "ollama-0-40-16": 8 * DAY + 4 * HOUR,
   "edge0-145b": 9 * DAY,

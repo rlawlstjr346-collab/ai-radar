@@ -1,12 +1,15 @@
 "use client";
 
 import { ArrowUpRight, Compass } from "lucide-react";
+import { useState } from "react";
 
 import { CATEGORY_META } from "@/lib/categories";
 import { groupPlatforms, type CategoryFilter } from "@/lib/filter";
+import { matchesPlatformFilter, PLATFORM_FILTER_LABEL, type PlatformFilter } from "@/lib/platform-traits";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { PlatformMark, StatusBadge } from "./Badges";
+import SegmentedControl from "./SegmentedControl";
 import Spotlight from "./Spotlight";
 
 interface Props {
@@ -17,25 +20,49 @@ interface Props {
   onSelect: (id: string) => void;
 }
 
+const FILTERS: PlatformFilter[] = ["all", "live", "free", "open_local"];
+
 export default function DirectoryView({ platforms, items, category, selectedId, onSelect }: Props) {
-  const groups = groupPlatforms(platforms, category);
+  const [trait, setTrait] = useState<PlatformFilter>("all");
+  const filtered = platforms.filter((p) => matchesPlatformFilter(p, trait));
+  const groups = groupPlatforms(filtered, category);
   const countBy = items.reduce<Record<string, number>>((acc, i) => {
     acc[i.platform_id] = (acc[i.platform_id] ?? 0) + 1;
     return acc;
   }, {});
+  const inCategory = (p: Platform) => category === "all" || p.category === category;
 
   return (
-    <div className="flex flex-col gap-10">
-      <header className="flex flex-col gap-2">
-        <h1 className="flex items-center gap-2.5 text-[26px] font-semibold tracking-[-0.02em] text-white">
-          <Compass className="h-6 w-6 text-emerald-300" strokeWidth={1.8} aria-hidden />
-          글로벌 AI 플랫폼 도감
-        </h1>
-        <p className="max-w-2xl text-[14.5px] leading-relaxed text-gray-400">
-          한국에선 잘 안 알려졌지만 전 세계 AI 덕후들이 매일 들락거리는 알짜 사이트 {platforms.length}곳이에요. 카드를 누르면 여기가
-          어떤 곳인지, 왜 가볼 만한지 알려드릴게요.
-        </p>
+    <div className="flex flex-col gap-8">
+      <header className="flex flex-col gap-4">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h1 className="flex items-center gap-2.5 text-[24px] font-semibold tracking-[-0.02em] text-[#FAFAFA]">
+            <Compass className="h-5 w-5 text-zinc-400" strokeWidth={1.8} aria-hidden />
+            글로벌 AI 플랫폼 도감
+          </h1>
+          <span className="tnum font-mono text-[12px] text-zinc-500">{platforms.length} platforms</span>
+        </div>
+        {/* 성격별 빠른 필터 (슬라이딩 필) */}
+        <SegmentedControl
+          role="radiogroup"
+          label="플랫폼 성격 필터"
+          stretch={false}
+          value={trait}
+          onChange={setTrait}
+          className="self-start max-w-full"
+          options={FILTERS.map((f) => ({
+            key: f,
+            label: PLATFORM_FILTER_LABEL[f],
+            count: platforms.filter((p) => inCategory(p) && matchesPlatformFilter(p, f)).length,
+          }))}
+        />
       </header>
+
+      {groups.length === 0 && (
+        <p className="rounded-2xl border border-dashed border-white/10 px-6 py-12 text-center text-sm text-zinc-400">
+          이 조건에 맞는 플랫폼이 없어요. 필터를 바꿔 보세요.
+        </p>
+      )}
 
       {groups.map(([cat, list]) => {
         const meta = CATEGORY_META[cat];
@@ -43,10 +70,10 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
           <section key={cat} aria-labelledby={`dir-${cat}`} className="flex flex-col gap-3">
             <div className="flex items-center gap-2.5">
               <meta.Icon className={`h-4 w-4 ${meta.text}`} aria-hidden />
-              <h2 id={`dir-${cat}`} className="text-[15px] font-semibold text-white">
+              <h2 id={`dir-${cat}`} className="text-[15px] font-semibold text-zinc-50">
                 {meta.label}
               </h2>
-              <span className="font-mono text-[11px] text-gray-500">{list.length}</span>
+              <span className="tnum font-mono text-[11px] text-zinc-500">{list.length}</span>
               <span className={`h-px flex-1 bg-gradient-to-r ${meta.gradient} opacity-20`} aria-hidden />
             </div>
             <ul className="grid grid-cols-1 gap-3 @xl:grid-cols-2 @5xl:grid-cols-3">
@@ -54,7 +81,7 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                 const selected = selectedId === p.id;
                 return (
                   <li key={p.id}>
-                    <Spotlight rgb={meta.rgb} selected={selected} className="h-full">
+                    <Spotlight selected={selected} className="h-full">
                       <button
                         type="button"
                         onClick={() => onSelect(p.id)}
@@ -63,13 +90,15 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                       >
                         <span className="flex items-center gap-2.5">
                           <PlatformMark platform={p} fallbackId={p.id} size="md" />
-                          <span className="min-w-0 flex-1 truncate text-[14.5px] font-semibold text-white">{p.name}</span>
-                          <ArrowUpRight className="h-4 w-4 shrink-0 text-gray-600 transition group-hover/spot:text-gray-300" aria-hidden />
+                          <span className="min-w-0 flex-1 truncate text-[14.5px] font-semibold text-[#FAFAFA]">{p.name}</span>
+                          <ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-600 transition group-hover/spot:text-zinc-300" aria-hidden />
                         </span>
-                        <span className="text-[13px] leading-relaxed text-gray-300">{p.one_liner_ko}</span>
+                        <span className="text-[13px] leading-relaxed text-zinc-300">{p.one_liner_ko}</span>
                         <span className="mt-auto flex flex-wrap items-center gap-2 pt-1">
                           <StatusBadge status={p.collect_status} />
-                          {countBy[p.id] ? <span className="font-mono text-[11px] text-gray-500">{countBy[p.id]} stories</span> : null}
+                          {countBy[p.id] ? (
+                            <span className="tnum font-mono text-[11px] text-zinc-500">{countBy[p.id]} stories</span>
+                          ) : null}
                         </span>
                       </button>
                     </Spotlight>

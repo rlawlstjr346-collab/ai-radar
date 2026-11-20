@@ -233,12 +233,13 @@ describe("TOP SPOTLIGHT & sample timing", () => {
     expect(SAMPLE_FEED.filter((i) => i.easy_original_ready)).toHaveLength(8);
   });
 
-  it("sample collection times spread from ~20 minutes to ~3 days (hot) and 8+ days (warm)", () => {
+  it("sample collection times spread from ~20 minutes to ~5 days (hot) and 8+ days (warm)", () => {
     const minutesAgo = (i: (typeof SAMPLE_FEED)[number]) => (ref - Date.parse(i.created_at)) / 60_000;
     const hot = SAMPLE_FEED.filter((i) => i.lifecycle_status === "hot").map(minutesAgo);
     const warm = SAMPLE_FEED.filter((i) => i.lifecycle_status === "warm").map(minutesAgo);
     expect(Math.min(...hot)).toBe(20);
-    expect(Math.max(...hot)).toBeLessThanOrEqual(3 * 24 * 60);
+    expect(Math.max(...hot)).toBeLessThanOrEqual(5 * 24 * 60);
+    expect(Math.max(...hot)).toBeGreaterThan(4 * 24 * 60);
     expect(warm.every((m) => m > 7 * 24 * 60 && m <= 30 * 24 * 60)).toBe(true);
     // 상대 시간 라벨이 다양하게 나와야 라이브 피드처럼 보인다
     const labels = new Set(SAMPLE_FEED.map((i) => freshness(i.created_at, ref).label.replace(/\d+/g, "N")));
@@ -252,5 +253,42 @@ describe("TOP SPOTLIGHT & sample timing", () => {
     const byId = (id: string) => SAMPLE_FEED.find((i) => i.id === id)!;
     expect(byId("sample-gemini-4-neon").difficulty).toBeGreaterThanOrEqual(2);
     expect(byId("sample-google-ai-answers-traffic").difficulty).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("card face helpers, directory filters, sharing", () => {
+  it("drops entities that repeat the card's platform and keeps the rest unique", async () => {
+    const { visibleEntities } = await import("@/components/ItemCard");
+    const base = SAMPLE_FEED.find((i) => i.id === "sample-gemini-4-neon")!;
+    const platform = (samplePlatforms as Platform[]).find((p) => p.id === base.platform_id);
+    const names = visibleEntities(base, platform);
+    expect(names).toContain("Gemini 4 Neon");
+    expect(names).not.toContain("Google DeepMind");
+  });
+
+  it("every sample card lists its source platforms (multi-source cards include Hacker News)", () => {
+    for (const i of SAMPLE_FEED) {
+      expect(i.source_platforms[0], i.id).toBe(i.platform_id);
+      expect(i.source_platforms.length, i.id).toBe(i.source_count);
+    }
+    expect(SAMPLE_FEED.find((i) => i.id === "sample-anthropic-ipo")!.source_platforms).toEqual(["anthropic", "hacker-news"]);
+  });
+
+  it("directory quick filters narrow the 26 platforms by trait", async () => {
+    const { matchesPlatformFilter } = await import("@/lib/platform-traits");
+    const platforms = samplePlatforms as Platform[];
+    const count = (f: "all" | "live" | "free" | "open_local") => platforms.filter((p) => matchesPlatformFilter(p, f)).length;
+    expect(count("all")).toBe(26);
+    expect(count("live")).toBe(10);
+    expect(count("free")).toBe(15);
+    expect(count("open_local")).toBe(6);
+    expect(platforms.some((p) => p.id === "midjourney" && matchesPlatformFilter(p, "free"))).toBe(false);
+  });
+
+  it("share URLs carry exactly one selection param", async () => {
+    const { shareUrlFor } = await import("@/components/ContextPanel");
+    const loc = { origin: "https://radar.example", pathname: "/" };
+    expect(shareUrlFor({ type: "item", id: "sample-vllm-0-34" }, loc)).toBe("https://radar.example/?item=sample-vllm-0-34");
+    expect(shareUrlFor({ type: "platform", id: "r/odd id" }, loc)).toBe("https://radar.example/?platform=r%2Fodd%20id");
   });
 });

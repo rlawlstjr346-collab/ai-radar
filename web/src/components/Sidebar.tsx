@@ -6,6 +6,8 @@ import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
 import type { CategoryFilter } from "@/lib/filter";
 import type { DataSource } from "@/lib/types";
 
+import SegmentedControl from "./SegmentedControl";
+
 export type View = "feed" | "past" | "directory";
 
 export interface FilterState {
@@ -22,13 +24,13 @@ interface Props extends FilterState {
 }
 
 const VIEWS: Array<{ id: View; label: string; short: string; Icon: LucideIcon }> = [
-  { id: "feed", label: "오늘의 AI 레이더 피드", short: "라이브", Icon: Activity },
+  { id: "feed", label: "실시간 레이더", short: "실시간", Icon: Activity },
   { id: "past", label: "지난 주요 소식", short: "지난 소식", Icon: History },
   { id: "directory", label: "글로벌 AI 플랫폼 도감", short: "도감", Icon: Compass },
 ];
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <h2 className="px-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-gray-500">{children}</h2>;
+  return <h2 className="px-2 font-mono text-[10.5px] font-medium uppercase tracking-[0.14em] text-zinc-500">{children}</h2>;
 }
 
 export function Logo() {
@@ -36,14 +38,14 @@ export function Logo() {
     <div className="flex min-w-0 items-center gap-2.5">
       <span className="relative grid h-8 w-8 place-items-center overflow-hidden rounded-lg border border-white/10 bg-[#111827]">
         <span
-          className="radar-sweep absolute inset-0 bg-[conic-gradient(from_0deg,rgba(52,211,153,0.35),transparent_35%)]"
+          className="radar-sweep absolute inset-0 bg-[conic-gradient(from_0deg,rgba(255,255,255,0.22),transparent_35%)]"
           aria-hidden
         />
-        <Radar className="relative h-4 w-4 text-emerald-300" strokeWidth={2} aria-hidden />
+        <Radar className="relative h-4 w-4 text-zinc-100" strokeWidth={2} aria-hidden />
       </span>
       <div className="min-w-0 leading-tight">
-        <p className="text-[14px] font-semibold tracking-tight text-white">AI Radar</p>
-        <p className="text-[11px] text-gray-500">입문자를 위한 글로벌 AI 소식</p>
+        <p className="text-[14px] font-semibold tracking-tight text-zinc-50">AI Radar</p>
+        <p className="text-[11px] text-zinc-500">입문자를 위한 글로벌 AI 소식</p>
       </div>
     </div>
   );
@@ -81,19 +83,19 @@ export function CategoryChips({
             onClick={() => onCategory(o.id)}
             className={
               layout === "list"
-                ? `group flex items-center justify-between rounded-md px-2 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-                    active ? "bg-white/[0.07] text-white" : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"
+                ? `press group flex items-center justify-between rounded-md px-2 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
+                    active ? "bg-white/[0.07] text-zinc-50" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
                   }`
-                : `flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-                    active ? "border-white/25 bg-white/[0.08] text-white" : "border-white/[0.08] text-gray-400"
+                : `press flex shrink-0 items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-[13px] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
+                    active ? "border-white/25 bg-white/[0.08] text-zinc-50" : "border-white/[0.08] text-zinc-400"
                   }`
             }
           >
             <span className="flex min-w-0 items-center gap-2 truncate">
-              <o.Icon className={`h-3.5 w-3.5 ${active ? (o.text ?? "text-white") : "text-gray-500 group-hover:text-gray-300"}`} aria-hidden />
+              <o.Icon className={`h-3.5 w-3.5 ${active ? (o.text ?? "text-zinc-50") : "text-zinc-500 group-hover:text-zinc-300"}`} aria-hidden />
               {o.label}
             </span>
-            <span className="ml-2 font-mono text-[11px] tabular-nums text-gray-600">{counts[o.id] ?? 0}</span>
+            <span className="ml-2 font-mono text-[11px] tabular-nums text-zinc-600">{counts[o.id] ?? 0}</span>
           </button>
         );
       })}
@@ -112,9 +114,20 @@ export function ViewTabs({
   compact?: boolean;
   viewCounts?: Record<View, number>;
 }) {
+  // 좁은 화면 상단 바: 슬라이딩 필 세그먼트
+  if (compact) {
+    return (
+      <SegmentedControl
+        label="보기 전환"
+        value={view}
+        onChange={onView}
+        options={VIEWS.map(({ id, short, Icon }) => ({ key: id, label: short, Icon }))}
+      />
+    );
+  }
   return (
-    <div role="tablist" aria-label="보기 전환" className={compact ? "grid grid-cols-3 gap-1 rounded-lg border border-white/[0.06] bg-white/[0.02] p-1" : "flex flex-col gap-px"}>
-      {VIEWS.map(({ id, label, short, Icon }) => {
+    <div role="tablist" aria-label="보기 전환" className="flex flex-col gap-px">
+      {VIEWS.map(({ id, label, Icon }) => {
         const active = view === id;
         return (
           <button
@@ -123,13 +136,13 @@ export function ViewTabs({
             role="tab"
             aria-selected={active}
             onClick={() => onView(id)}
-            className={`flex items-center gap-2 rounded-md px-2 py-1.5 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
-              compact ? "justify-center py-2" : ""
-            } ${active ? "bg-white/[0.08] text-white" : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-200"}`}
+            className={`press flex items-center gap-2 rounded-md px-2 py-1.5 text-[13px] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
+              active ? "bg-white/[0.08] text-zinc-50" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
+            }`}
           >
-            <Icon className={`h-3.5 w-3.5 ${active ? "text-emerald-300" : ""}`} aria-hidden />
-            <span className="min-w-0 truncate">{compact ? short : label}</span>
-            {!compact && viewCounts && <span className="ml-auto font-mono text-[11px] tabular-nums text-gray-600">{viewCounts[id]}</span>}
+            <Icon className={`h-3.5 w-3.5 ${active ? "text-zinc-50" : ""}`} aria-hidden />
+            <span className="min-w-0 truncate">{label}</span>
+            {viewCounts && <span className="ml-auto font-mono text-[11px] tabular-nums text-zinc-600">{viewCounts[id]}</span>}
           </button>
         );
       })}
@@ -155,7 +168,7 @@ export default function Sidebar(p: Props) {
       </section>
       <div className="mt-auto flex items-start gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-2.5 py-2">
         <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-amber-400" : "animate-pulse bg-emerald-400"}`} aria-hidden />
-        <p className="text-[11px] leading-relaxed text-gray-500">
+        <p className="text-[11px] leading-relaxed text-zinc-500">
           {p.source === "sample" ? "샘플 데이터 모드" : "실시간 데이터 연결됨"} · 매시간 새 소식을 물어와요
         </p>
       </div>

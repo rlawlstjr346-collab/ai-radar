@@ -43,6 +43,7 @@ class Candidate:
     metrics: dict
     seen_sources: list[str] = field(default_factory=list)
     source_names: list[str] = field(default_factory=list)
+    seen_platforms: list[str] = field(default_factory=list)
 
     @property
     def source_count(self) -> int:
@@ -64,11 +65,14 @@ def group_raw_items(raws: list[RawItem]) -> dict[str, Candidate]:
                 platform_id=r.platform_id, category=r.category, title=r.title, body=r.body,
                 thumbnail_url=r.thumbnail_url, published_at=r.published_at, engagement=r.engagement,
                 metrics=dict(r.metrics), seen_sources=[r.source_id], source_names=[r.source_name],
+                seen_platforms=[r.platform_id],
             )
             continue
         if r.source_id not in c.seen_sources:
             c.seen_sources.append(r.source_id)
             c.source_names.append(r.source_name)
+        if r.platform_id not in c.seen_platforms:
+            c.seen_platforms.append(r.platform_id)
         c.engagement = max(c.engagement, r.engagement)
         c.metrics.update({k: v for k, v in r.metrics.items() if k not in c.metrics})
         if is_aggregator(c.platform_id) and not is_aggregator(r.platform_id):
@@ -92,7 +96,8 @@ def new_item_row(c: Candidate, now: Optional[datetime] = None) -> dict:
         "original_title": c.title[:500],
         "category": c.category,
         "thumbnail_url": c.thumbnail_url,
-        "metrics_json": {**c.metrics, "_seen_sources": c.seen_sources, "_engagement": c.engagement,
+        "metrics_json": {**c.metrics, "_seen_sources": c.seen_sources, "_seen_platforms": c.seen_platforms,
+                         "_engagement": c.engagement,
                          "_excerpt": c.body[:EXCERPT_LIMIT],
                          "_excerpt_from_aggregator": is_aggregator(c.platform_id)},
         "importance_score": c.score(now),
@@ -125,8 +130,14 @@ def merge_into_existing(row: dict, c: Candidate, now: Optional[datetime] = None)
         excerpt, old_agg = c.body[:EXCERPT_LIMIT], new_agg
 
     published = _parse(row.get("published_at")) or c.published_at
-    metrics = {**old, **c.metrics, "_seen_sources": seen, "_engagement": engagement, "_excerpt": excerpt,
-               "_excerpt_from_aggregator": old_agg}
+    platforms = list(old.get("_seen_platforms") or [])
+    if not platforms and row.get("platform_id"):
+        platforms = [row["platform_id"]]
+    for pid in c.seen_platforms:
+        if pid not in platforms:
+            platforms.append(pid)
+    metrics = {**old, **c.metrics, "_seen_sources": seen, "_seen_platforms": platforms, "_engagement": engagement,
+               "_excerpt": excerpt, "_excerpt_from_aggregator": old_agg}
     update = {
         "metrics_json": metrics,
         "source_count": len(seen),

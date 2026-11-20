@@ -35,6 +35,8 @@ export interface FeedItem {
   thumbnail_url: string | null;
   importance_score: number;
   source_count: number;
+  /** 이 소식을 포착한 플랫폼들 (출처 스택 표시용). 최소 [platform_id] */
+  source_platforms: string[];
   /** hot: 0~7일 메인 피드 / warm: 8~30일 지난 주요 소식 / archived: 31일+ */
   lifecycle_status: Lifecycle;
   published_at: string | null;

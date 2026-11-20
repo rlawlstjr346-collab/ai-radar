@@ -1,19 +1,28 @@
 @import "tailwindcss";
 
-/* AI Radar — 딥 차콜 다크 + 뉴닉 가독성 */
+/*
+ * AI Radar — 무채색 옵시디언(Zinc) 디자인 시스템
+ * - 바탕 #09090B (파란 기 없음), 카드 #121215 → hover #17171B → active #1C1C22
+ * - 카드 테두리는 위쪽만 살짝 밝은 '상단 광원' 헤어라인
+ * - 초록(emerald)은 LIVE 점과 3시간 이내 시간 배지에만 쓴다 (나머지는 무채색 + 카테고리 포인트)
+ */
 :root {
-  --bg: #0b0f17;
-  --card: #111827;
-  --card-2: #161e2e;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
+  --bg: #09090b;
+  --card: #121215;
+  --card-hover: #17171b;
+  --card-active: #1c1c22;
+  --panel: #0f0f12;
+  --text: #e4e4e7;
+  --title: #fafafa;
+  --muted: #a1a1aa;
+  --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* iOS 시트 감속 곡선 */
   color-scheme: dark;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-card: var(--card);
-  --color-card-2: var(--card-2);
+  --color-card-2: var(--card-hover);
   --color-ink: var(--text);
   --color-muted: var(--muted);
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
@@ -38,6 +47,25 @@ body {
   overflow-wrap: anywhere;
 }
 
+/* 2% 필름 그레인 — 어두운 면의 색 뭉침(밴딩)을 잡아준다. 클릭은 통과 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 시간·카운트·점수 숫자는 고정폭 — 값이 바뀌어도 레이아웃이 흔들리지 않게 */
+time,
+kbd,
+.font-mono,
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
 /* 긴 한국어 본문 읽기 리듬 */
 .prose-ko p {
   line-height: 1.85;
@@ -46,9 +74,89 @@ body {
 /* 얇은 스크롤바 */
 .thin-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
 }
 
+/* ── 카드 표면: 상단 광원 헤어라인 ─────────────────────────────────────────── */
+.surface {
+  background-color: var(--card);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top-color: rgba(255, 255, 255, 0.16);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms var(--ease-sheet),
+    box-shadow 200ms ease;
+}
+.surface:hover {
+  background-color: var(--card-hover);
+}
+.surface[data-active="true"] {
+  background-color: var(--card-active);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+/* ── 마우스 추적 라디얼 스포트라이트 (마우스 환경에서만) ─────────────────────── */
+.mouse-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity 250ms ease;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+    rgba(255, 255, 255, 0.05),
+    transparent 70%
+  );
+}
+@media (hover: hover) and (pointer: fine) {
+  .surface:hover > .mouse-glow {
+    opacity: 1;
+  }
+  /* 테두리에도 같은 위치의 반사광 */
+  .surface:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* ── 누름 탄성 ─────────────────────────────────────────────────────────────── */
+.press {
+  transition: transform 140ms var(--ease-sheet);
+}
+.press:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* ── 슬라이딩 필(세그먼트 탭 선택 배경) ─────────────────────────────────────── */
+.sliding-pill {
+  transition:
+    transform 320ms var(--ease-sheet),
+    width 320ms var(--ease-sheet);
+}
+
+/* ── 쉬머 스켈레톤 ─────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.04) 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* ── 등장 모션 ─────────────────────────────────────────────────────────────── */
 @keyframes sheet-up {
   from {
     transform: translateY(100%);
@@ -65,9 +173,6 @@ body {
     opacity: 1;
   }
 }
-.animate-sheet-up {
-  animation: sheet-up 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
 @keyframes drawer-in {
   from {
     transform: translateX(100%);
@@ -76,11 +181,27 @@ body {
     transform: translateX(0);
   }
 }
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.animate-sheet-up {
+  animation: sheet-up 420ms var(--ease-sheet);
+}
 .animate-drawer-in {
-  animation: drawer-in 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: drawer-in 420ms var(--ease-sheet);
 }
 .animate-fade-in {
   animation: fade-in 160ms ease-out;
+}
+.animate-toast-in {
+  animation: toast-in 220ms var(--ease-sheet);
 }
 
 @keyframes radar-sweep {
@@ -96,7 +217,14 @@ body {
   .animate-sheet-up,
   .animate-drawer-in,
   .animate-fade-in,
-  .radar-sweep {
+  .animate-toast-in,
+  .radar-sweep,
+  .shimmer {
     animation: none;
+  }
+  .sliding-pill,
+  .press,
+  .surface {
+    transition: none;
   }
 }

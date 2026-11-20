@@ -178,3 +178,18 @@ def test_raw_body_saved_only_from_original_sources_and_upgraded_when_longer():
     longer = group_raw_items([raw("rss", "https://arxiv.org/abs/2611.00021", body=long_text * 3)])["arxiv:2611.00021"]
     assert merge_into_existing(row, longer)["raw_body"] == (long_text * 3).strip()[:RAW_BODY_LIMIT]
     assert "raw_body" not in merge_into_existing({**row, "raw_body": long_text * 5}, longer)
+
+
+def test_seen_platforms_recorded_for_source_stack():
+    hn = RawItem(source_id="hn", source_name="HN", platform_id="hacker-news", category="dev",
+                 url="https://arxiv.org/abs/2611.00031", title="t", body="b", engagement=10, published_at=NOW)
+    c = group_raw_items([raw("papers", "https://arxiv.org/abs/2611.00031"), hn])["arxiv:2611.00031"]
+    row = {"source_id": "papers", **new_item_row(c)}
+    assert row["metrics_json"]["_seen_platforms"] == ["huggingface", "hacker-news"]
+    bsky = RawItem(source_id="bsky", source_name="Bluesky", platform_id="bluesky", category="social",
+                   url="https://arxiv.org/abs/2611.00031", title="t", body="b", engagement=5, published_at=NOW)
+    later = group_raw_items([bsky])["arxiv:2611.00031"]
+    assert merge_into_existing(row, later)["metrics_json"]["_seen_platforms"] == ["huggingface", "hacker-news", "bluesky"]
+    # 예전에 저장돼 _seen_platforms 가 없는 행도 platform_id 로 시작
+    legacy = {**row, "metrics_json": {k: v for k, v in row["metrics_json"].items() if k != "_seen_platforms"}}
+    assert merge_into_existing(legacy, later)["metrics_json"]["_seen_platforms"] == ["huggingface", "bluesky"]

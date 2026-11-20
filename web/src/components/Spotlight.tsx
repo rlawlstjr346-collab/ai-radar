@@ -3,16 +3,19 @@
 import { useRef } from "react";
 
 /**
- * 마우스 위치를 따라 카테고리 포인트 컬러가 은은하게 비치는 스포트라이트 표면 (Magic UI 스타일).
- * 리렌더 없이 CSS 변수(--mx, --my)만 갱신한다.
+ * 카드 표면 — 무채색 #121215 + 상단 광원 헤어라인(.surface).
+ * 마우스 환경((hover: hover))에서는 커서를 따라 반경 280px 의 은은한 흰 반사광(.mouse-glow)이 따라붙는다.
+ * 리렌더 없이 CSS 변수(--mouse-x, --mouse-y)만 갱신한다.
+ * 선택된 카드는 data-active 로 #1C1C22 + 흰 링(ring-white/30).
+ *
+ * rgb(카테고리 포인트 색)는 예전 호출부 호환용으로 받기만 하고, 표면 색에는 쓰지 않는다 (색 절제).
  */
 export default function Spotlight({
-  rgb,
   selected,
   className = "",
   children,
 }: {
-  rgb: string;
+  rgb?: string;
   selected?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -21,37 +24,18 @@ export default function Spotlight({
   return (
     <div
       ref={ref}
+      data-active={selected ? "true" : "false"}
       onPointerMove={(e) => {
+        if (e.pointerType !== "mouse") return;
         const el = ref.current;
         if (!el) return;
         const r = el.getBoundingClientRect();
-        el.style.setProperty("--mx", `${e.clientX - r.left}px`);
-        el.style.setProperty("--my", `${e.clientY - r.top}px`);
+        el.style.setProperty("--mouse-x", `${e.clientX - r.left}px`);
+        el.style.setProperty("--mouse-y", `${e.clientY - r.top}px`);
       }}
-      style={
-        {
-          "--cat": rgb,
-          borderColor: selected ? `rgba(${rgb},0.45)` : undefined,
-        } as React.CSSProperties
-      }
-      className={`group/spot relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0f1520] transition-[border-color,transform,background-color] duration-300 hover:-translate-y-px hover:border-[rgba(var(--cat),0.32)] ${
-        selected ? "bg-[#121a27]" : ""
-      } ${className}`}
+      className={`surface group/spot relative overflow-hidden rounded-2xl ${className}`}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/spot:opacity-100"
-        style={{
-          background: "radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(var(--cat),0.10), transparent 65%)",
-        }}
-      />
-      {selected && (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(600px circle at 0% 0%, rgba(var(--cat),0.08), transparent 60%)" }}
-        />
-      )}
+      <div aria-hidden className="mouse-glow" />
       {children}
     </div>
   );

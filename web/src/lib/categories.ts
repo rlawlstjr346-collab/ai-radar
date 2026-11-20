@@ -28,19 +28,19 @@ export const CATEGORY_META: Record<
     label: "챗봇·생산성",
     full: "챗봇·생산성",
     Icon: MessagesSquare,
-    gradient: "from-sky-400 to-blue-500",
-    text: "text-sky-300",
-    rgb: "56,189,248",
-    ring: "focus-visible:ring-sky-400/60",
+    gradient: "from-blue-400 to-indigo-500",
+    text: "text-blue-300",
+    rgb: "147,197,253",
+    ring: "focus-visible:ring-blue-300/60",
   },
   dev: {
     label: "코딩·에이전트",
     full: "코딩·에이전트",
     Icon: CodeXml,
-    gradient: "from-emerald-400 to-cyan-400",
-    text: "text-emerald-300",
-    rgb: "52,211,153",
-    ring: "focus-visible:ring-emerald-400/60",
+    gradient: "from-cyan-300 to-sky-500",
+    text: "text-cyan-300",
+    rgb: "103,232,249",
+    ring: "focus-visible:ring-cyan-300/60",
   },
   image_design: {
     label: "이미지·디자인",
@@ -73,10 +73,10 @@ export const CATEGORY_META: Record<
     label: "빅테크·트렌드",
     full: "빅테크·트렌드",
     Icon: Building2,
-    gradient: "from-lime-300 to-yellow-400",
-    text: "text-lime-300",
-    rgb: "190,242,100",
-    ring: "focus-visible:ring-lime-300/60",
+    gradient: "from-yellow-200 to-amber-400",
+    text: "text-yellow-200",
+    rgb: "254,240,138",
+    ring: "focus-visible:ring-yellow-200/60",
   },
   social: {
     label: "커뮤니티·화제",
@@ -94,14 +94,19 @@ export const CATEGORY_META: Record<
  * 요약은 언제나 입문자용이라, 배지는 "어려운 걸 쉽게 풀어 왔다"는 신호로 읽힌다.
  * (이모지 대신 같은 의미의 Lucide 아이콘: 🔥 Flame / ⚡ Zap / 🌱 Sprout)
  */
-export const DIFFICULTY_META: Record<Difficulty, { Icon: LucideIcon; label: string; short: string; className: string }> = {
-  1: { Icon: Sprout, label: "원문: 가벼운 트렌드 → 1분 정리", short: "가벼운 트렌드 → 1분 정리", className: "text-emerald-300" },
-  2: { Icon: Zap, label: "원문: 개발 실무 문서 → 쉽게 해독 완료", short: "개발 실무 문서 → 쉽게 해독", className: "text-amber-300" },
-  3: { Icon: Flame, label: "원문: 박사급 논문 → 쉽게 해독 완료", short: "박사급 논문 → 쉽게 해독", className: "text-rose-300" },
+export const DIFFICULTY_META: Record<
+  Difficulty,
+  { Icon: LucideIcon; label: string; short: string; className: string; iconClass: string }
+> = {
+  // 1(가벼운 트렌드)은 힘을 뺀 무채색, 2·3 은 아이콘만 포인트 색
+  1: { Icon: Sprout, label: "원문: 가벼운 트렌드 → 1분 정리", short: "가벼운 트렌드 → 1분 정리", className: "text-zinc-500", iconClass: "text-zinc-500" },
+  2: { Icon: Zap, label: "원문: 개발 실무 문서 → 쉽게 해독 완료", short: "개발 실무 문서 → 쉽게 해독", className: "text-zinc-300", iconClass: "text-amber-300" },
+  3: { Icon: Flame, label: "원문: 박사급 논문 → 쉽게 해독 완료", short: "박사급 논문 → 쉽게 해독", className: "text-zinc-300", iconClass: "text-rose-300" },
 };
 
 export const STATUS_META = {
-  active: { label: "실시간 연동 중", className: "text-emerald-300 border-emerald-400/20 bg-emerald-400/[0.06]", dot: "bg-emerald-400" },
+  // 초록은 LIVE '점'에만 — 글자와 테두리는 무채색
+  active: { label: "실시간 연동 중", className: "text-zinc-200 border-white/10 bg-white/[0.03]", dot: "bg-emerald-400" },
   paused: { label: "잠시 쉬는 중", className: "text-amber-300 border-amber-400/20 bg-amber-400/[0.06]", dot: "bg-amber-400" },
-  directory_only: { label: "도감 추천 사이트", className: "text-gray-400 border-white/10 bg-white/[0.03]", dot: "bg-gray-500" },
+  directory_only: { label: "도감 추천 사이트", className: "text-zinc-400 border-white/10 bg-white/[0.03]", dot: "bg-zinc-500" },
 } as const;
