@@ -1,7 +1,7 @@
 # AI Radar — Audit Snapshot
 
 > 외부 총괄 아키텍트 검수용 스냅샷. `web/scripts/gen-audit-snapshot.mjs` 가 실제 소스 파일을 읽어 자동 생성했다.
-> 생성 시각: 2026-11-19T12:42:24.950Z · 기준 커밋: `48aee6a` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
+> 생성 시각: 2026-11-20T00:38:03.154Z · 기준 커밋: `2986bfc` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
 
 ## 요약 수치
 
@@ -12,7 +12,7 @@
 | 실전 이득 칩(benefit_tag) | 13개 기사에만 |
 | 원문 난이도 분포 | 🌱1: 11 · ⚡2: 21 · 🔥3: 4 |
 | 플랫폼 도감 | 26곳 (자동 수집 10 · 도감 전용 16) |
-| 추적 파일 수 | 91 |
+| 추적 파일 수 | 93 |
 
 ## ① 전체 파일 트리
 
@@ -63,6 +63,7 @@ ai-radar/
 │   │   │   ├── ItemDetail.tsx
 │   │   │   ├── PlatformProfile.tsx
 │   │   │   ├── RadarApp.tsx
+│   │   │   ├── SegmentedControl.tsx
 │   │   │   ├── Sidebar.tsx
 │   │   │   ├── Spotlight.tsx
 │   │   │   └── TermText.tsx
@@ -76,6 +77,7 @@ ai-radar/
 │   │       ├── easy-original-prompt.ts
 │   │       ├── easy-original.ts
 │   │       ├── filter.ts
+│   │       ├── platform-traits.ts
 │   │       ├── terms.ts
 │   │       └── types.ts
 │   ├── tests/
