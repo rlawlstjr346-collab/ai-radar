@@ -1,7 +1,7 @@
 # AI Radar — Audit Snapshot
 
 > 외부 총괄 아키텍트 검수용 스냅샷. `web/scripts/gen-audit-snapshot.mjs` 가 실제 소스 파일을 읽어 자동 생성했다.
-> 생성 시각: 2026-11-20T00:38:03.154Z · 기준 커밋: `2986bfc` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
+> 생성 시각: 2026-11-20T01:06:55.571Z · 기준 커밋: `68d48bc` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
 
 ## 요약 수치
 
@@ -12,7 +12,7 @@
 | 실전 이득 칩(benefit_tag) | 13개 기사에만 |
 | 원문 난이도 분포 | 🌱1: 11 · ⚡2: 21 · 🔥3: 4 |
 | 플랫폼 도감 | 26곳 (자동 수집 10 · 도감 전용 16) |
-| 추적 파일 수 | 93 |
+| 추적 파일 수 | 97 |
 
 ## ① 전체 파일 트리
 
@@ -66,7 +66,8 @@ ai-radar/
 │   │   │   ├── SegmentedControl.tsx
 │   │   │   ├── Sidebar.tsx
 │   │   │   ├── Spotlight.tsx
-│   │   │   └── TermText.tsx
+│   │   │   ├── TermText.tsx
+│   │   │   └── ThemeToggle.tsx
 │   │   ├── data/
 │   │   │   ├── platforms.sample.json
 │   │   │   ├── sample-easy-original.ts
@@ -79,12 +80,14 @@ ai-radar/
 │   │       ├── filter.ts
 │   │       ├── platform-traits.ts
 │   │       ├── terms.ts
+│   │       ├── theme.ts
 │   │       └── types.ts
 │   ├── tests/
 │   │   ├── stubs/
 │   │   │   └── server-only.ts
 │   │   ├── easy-original.test.ts
-│   │   └── lib.test.ts
+│   │   ├── lib.test.ts
+│   │   └── theme.test.ts
 │   ├── .env.local.example
 │   ├── .gitignore
 │   ├── eslint.config.mjs
@@ -139,6 +142,7 @@ ai-radar/
 ├── .env.example
 ├── .gitattributes
 ├── .gitignore
+├── DESIGN.md
 └── README.md
 ````
 
