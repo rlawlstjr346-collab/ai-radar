@@ -1,18 +1,18 @@
 # AI Radar — Audit Snapshot
 
 > 외부 총괄 아키텍트 검수용 스냅샷. `web/scripts/gen-audit-snapshot.mjs` 가 실제 소스 파일을 읽어 자동 생성했다.
-> 생성 시각: 2026-11-20T01:47:26.715Z · 기준 커밋: `290a7b5` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
+> 생성 시각: 2026-11-21T00:04:13.373Z · 기준 커밋: `70b8546` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
 
 ## 요약 수치
 
 | 항목 | 값 |
 |---|---|
-| 로컬 샘플 기사 | 36개 (hot 30 / warm 6) |
-| [원본 쉽게 읽기] 준비된 기사 | 8개 — `sample-anthropic-ipo`, `sample-gemini-4-neon`, `sample-google-ai-answers-traffic`, `sample-windows-agent-telemetry`, `sample-claude-black-hole-physics`, `sample-haru-4b`, `sample-vllm-0-34`, `sample-tideway-moe` |
-| 실전 이득 칩(benefit_tag) | 13개 기사에만 |
-| 원문 난이도 분포 | 🌱1: 11 · ⚡2: 21 · 🔥3: 4 |
-| 플랫폼 도감 | 26곳 (자동 수집 10 · 도감 전용 16) |
-| 추적 파일 수 | 99 |
+| 로컬 샘플 기사 | 118개 (hot 93 / warm 25) |
+| [원본 쉽게 읽기] 준비된 기사 | 11개 — `sample-anthropic-ipo`, `sample-gemini-4-neon`, `sample-google-ai-answers-traffic`, `sample-windows-agent-telemetry`, `sample-claude-black-hole-physics`, `sample-haru-4b`, `sample-toss-agent-platform`, `sample-toss-taste`, `sample-vllm-0-34`, `sample-gpters-claude-code-mode`, `sample-tideway-moe` |
+| 실전 이득 칩(benefit_tag) | 28개 기사에만 |
+| 원문 난이도 분포 | 🌱1: 48 · ⚡2: 53 · 🔥3: 17 |
+| 플랫폼 도감 | 141곳 (자동 수집 52 · 도감 전용 89) |
+| 추적 파일 수 | 110 |
 
 ## ① 전체 파일 트리
 
@@ -29,8 +29,10 @@ ai-radar/
 │   │   ├── 002_enable_anthropic_bluesky_sources.sql
 │   │   ├── 003_categories_and_hourly_rotation.sql
 │   │   ├── 004_easy_original_and_hooks.sql
-│   │   └── 005_item_raw_body_fallback.sql
+│   │   ├── 005_item_raw_body_fallback.sql
+│   │   └── 006_platform_regions_global_sources.sql
 │   └── seed/
+│       ├── seed_platforms_v2_global.sql
 │       └── seed_platforms.sql
 ├── web/
 │   ├── public/
@@ -50,12 +52,13 @@ ai-radar/
 │   │   │   │       └── [id]/
 │   │   │   │           └── easy-original/
 │   │   │   │               └── route.ts
-│   │   │   ├── favicon.ico
 │   │   │   ├── globals.css
+│   │   │   ├── icon.svg
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
 │   │   ├── components/
 │   │   │   ├── Badges.tsx
+│   │   │   ├── BrandLogo.tsx
 │   │   │   ├── ContextPanel.tsx
 │   │   │   ├── DirectoryView.tsx
 │   │   │   ├── EasyOriginalView.tsx
@@ -70,7 +73,11 @@ ai-radar/
 │   │   │   └── ThemeToggle.tsx
 │   │   ├── data/
 │   │   │   ├── platforms.sample.json
+│   │   │   ├── sample-card.ts
+│   │   │   ├── sample-easy-original-kr.ts
 │   │   │   ├── sample-easy-original.ts
+│   │   │   ├── sample-feed-kr.ts
+│   │   │   ├── sample-feed-world.ts
 │   │   │   └── sample-feed.ts
 │   │   └── lib/
 │   │       ├── categories.ts
@@ -80,6 +87,7 @@ ai-radar/
 │   │       ├── filter.ts
 │   │       ├── highlight.ts
 │   │       ├── platform-traits.ts
+│   │       ├── regions.ts
 │   │       ├── terms.ts
 │   │       ├── theme.ts
 │   │       └── types.ts
@@ -109,7 +117,8 @@ ai-radar/
 │   │   ├── civitai.py
 │   │   ├── hacker_news.py
 │   │   ├── huggingface.py
-│   │   └── rss.py
+│   │   ├── rss.py
+│   │   └── x_oembed.py
 │   ├── collector/
 │   │   ├── __init__.py
 │   │   ├── classify.py
@@ -117,7 +126,8 @@ ai-radar/
 │   │   ├── normalize.py
 │   │   └── scoring.py
 │   ├── config/
-│   │   └── bluesky_accounts.json
+│   │   ├── bluesky_accounts.json
+│   │   └── x_discovery.json
 │   ├── pipeline/
 │   │   ├── __init__.py
 │   │   ├── merge.py
@@ -133,6 +143,7 @@ ai-radar/
 │   │   │   ├── creative_tool.json
 │   │   │   └── paper_hard.json
 │   │   ├── test_adapters.py
+│   │   ├── test_global_sources.py
 │   │   ├── test_normalize_scoring.py
 │   │   ├── test_pipeline.py
 │   │   ├── test_rotation.py
@@ -229,6 +240,12 @@ SYSTEM_PROMPT = r"""
 - `terms`: 본문에 나온 어려운 용어 0~4개. `term` 문자열은 한국어 필드 본문에 **글자 그대로** 들어 있어야 해 (화면에서 밑줄 툴팁을 달 거라서). `easy`는 초등학생도 알아듣는 비유 1문장.
 - `extracted_entities`: 원문에 나온 모델·도구·데이터셋·회사·기법·플랫폼. `tags`는 영어 소문자 케밥 표기 (예: "local-llm", "image-generation", "coding").
 
+# 원문 언어별 해독 규칙
+- 영어·일본어·중국어 원문: 사실과 숫자는 원문 그대로 지키고, 문장은 직역하지 말고 쉬운 한국어로 다시 써. 고유명사(모델·회사·제품명)는 원어 표기를 살리고 처음 한 번만 한국어 읽기를 덧붙여도 돼 (예: "큐원(Qwen)").
+- 일본어·중국어 원문의 업계 은어(예: 「垢BAN」, 「卷」, 「具身智能」)는 뜻을 풀어서 쓰고, 필요하면 `terms` 로 넘겨.
+- 이미 한국어인 원문(국내 기업 기술블로그·커뮤니티·논문 리뷰): 번역하지 말고 **해독**해. 사내 인프라·ML 전문용어(예: KV 캐시, 망분리, 하네스, 임베딩, AUROC, 샌드박스)는 입문자 비유로 풀고, `terms` 에 우선 넣어.
+- 사내 블로그의 수치(처리 시간, 클릭률, 비용 절감률)는 "어느 회사가 어떤 조건에서 잰 값인지"를 함께 적어. 다른 회사에도 그대로 통한다고 일반화하지 마.
+
 # 말투 규칙
 - 다정하고 경쾌한 해요체: "~했어요!", "~거든요", "~래요", "솔직히 외계어 같죠? 쉽게 비유하자면요!"
 - 한 문장은 짧게. 영어 직역 어순("~함에 있어서", "~을 통해", "~에 의해") 금지.
@@ -319,6 +336,12 @@ AI를 처음 접한 한국 독자가 원문을 처음부터 끝까지 '완독한
   원문에 실제로 있는 요소만 가리켜. 없는 그림·데모를 만들어내지 마.
 - source_note: 어떤 원문을 바탕으로 썼는지 한 줄 (예: "arXiv 논문 HTML 전문", "공식 블로그 글 앞부분").
 
+# 원문 언어
+- 원문은 영어뿐 아니라 일본어·중국어·한국어일 수 있어. 영어·일본어·중국어는 사실·숫자를 지키면서 쉬운 한국어로 풀어 쓰고,
+  quote 는 원문 언어 그대로 둬.
+- 원문이 이미 한국어(국내 기업 기술블로그·커뮤니티 글)라면 번역하지 말고, 사내 인프라·ML 전문용어를 입문자 비유로 풀어 문단별로 해독해.
+  quote 에는 원문 한국어 문장을 그대로 옮겨.
+
 # 규칙
 - 형광펜 표시: 각 body 에서 가장 핵심인 결론 구절이나 수치 **1곳**만 \`==구절==\` 로 감싸도 돼 (heading·quote 에는 쓰지 마). 없으면 생략.
 - 말투: 다정하고 경쾌한 해요체. 번역투 금지. 과장 광고어(혁신적, 획기적, 게임 체인저, 충격, 역대급 등) 금지. 이모지 금지.
@@ -358,7 +381,7 @@ export function buildEasyOriginalUserMessage(input: {
 
 ## ③ 로컬 샘플 상위 5개 기사 — 실제 렌더링 텍스트 전체
 
-선정 기준: [원본 쉽게 읽기]가 준비된 8개 기사 중 `importance_score` 상위 5개.
+선정 기준: [원본 쉽게 읽기]가 준비된 11개 기사 중 `importance_score` 상위 5개.
 (원문 자동 접근이 막힌 OpenAI 블로그 기사 — 예: GPT-6.2 Astra·Sol — 는 해설을 지어내지 않기 위해 제외했다.)
 
 ### 1. Claude 만든 회사 주식, 11월 19일부터 나스닥에서 거래돼요
