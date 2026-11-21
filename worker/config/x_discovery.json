@@ -1,0 +1,48 @@
+{
+  "_comment": "X(트위터) 무과금 수집기: 아래 공개 커뮤니티 피드에서 공유된 x.com/.../status/... 링크를 찾아 publish.twitter.com/oembed 로 본문을 가져온다. 피드 하나가 실패해도 나머지는 계속.",
+  "max_tweets": 40,
+  "discovery_feeds": [
+    {
+      "name": "r/LocalLLaMA",
+      "url": "https://www.reddit.com/r/LocalLLaMA/.rss"
+    },
+    {
+      "name": "r/MachineLearning",
+      "url": "https://www.reddit.com/r/MachineLearning/.rss"
+    },
+    {
+      "name": "r/singularity",
+      "url": "https://www.reddit.com/r/singularity/.rss"
+    },
+    {
+      "name": "Hacker News",
+      "kind": "hn_algolia",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=x.com%20status&hitsPerPage=50"
+    },
+    {
+      "name": "Hatena IT",
+      "url": "https://b.hatena.ne.jp/hotentry/it.rss"
+    },
+    {
+      "name": "GeekNews",
+      "url": "https://news.hada.io/rss/news"
+    },
+    {
+      "name": "PyTorch KR",
+      "url": "https://discuss.pytorch.kr/c/news/14.rss"
+    },
+    {
+      "name": "Latent Space (AINews)",
+      "url": "https://www.latent.space/feed"
+    },
+    {
+      "name": "Simon Willison",
+      "url": "https://simonwillison.net/atom/everything/"
+    },
+    {
+      "name": "Import AI",
+      "url": "https://importai.substack.com/feed"
+    }
+  ],
+  "require_ai": true
+}

@@ -1,11 +1,12 @@
 "use client";
 
-import { Activity, Compass, History, LayoutGrid, Radar, type LucideIcon } from "lucide-react";
+import { Activity, Compass, History, LayoutGrid, type LucideIcon } from "lucide-react";
 
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
 import type { CategoryFilter } from "@/lib/filter";
 import type { DataSource } from "@/lib/types";
 
+import BrandLogo from "./BrandLogo";
 import SegmentedControl from "./SegmentedControl";
 import ThemeToggle from "./ThemeToggle";
 
@@ -54,7 +55,7 @@ export function Logo() {
       className="flex min-w-0 cursor-pointer items-center gap-2.5 rounded-lg transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-elevated">
-        <Radar className="h-[15px] w-[15px] text-fg" strokeWidth={1.8} aria-hidden />
+        <BrandLogo className="h-[17px] w-[17px] text-fg" />
       </span>
       <div className="min-w-0 leading-tight">
         <p className="text-[14px] font-bold tracking-tight text-fg">AI Radar</p>

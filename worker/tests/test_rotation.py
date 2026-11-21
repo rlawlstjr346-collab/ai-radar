@@ -15,7 +15,7 @@ from collector.classify import classify_hf_model, classify_news, classify_space 
 from collector.models import SourceConfig  # noqa: E402
 from collector.scoring import hot_rank_score  # noqa: E402
 from pipeline.runner import DEFAULT_TOP_N, PER_PLATFORM_CAP, run_pipeline, select_for_summary  # noqa: E402
-from pipeline.store import MemoryStore, load_seed_platform_names, load_seed_sources  # noqa: E402
+from pipeline.store import SEED_SQL, MemoryStore, load_seed_platform_names, load_seed_sources  # noqa: E402
 
 NOW = datetime(2026, 11, 19, 12, tzinfo=timezone.utc)
 SEVEN = {"llm_chat", "dev", "image_design", "video_audio", "research", "industry", "social"}
@@ -26,7 +26,9 @@ def test_seed_uses_only_seven_categories_and_covers_all():
     sources = load_seed_sources()
     assert {s.default_category for s in sources} <= SEVEN
     names = load_seed_platform_names()
-    assert len(names) == 26
+    assert len(names) == 141                                    # 기존 26곳 + 6개 권역 확장 115곳
+    base = load_seed_platform_names(SEED_SQL)
+    assert len(base) == 26 and set(base) <= set(names)          # 기존 26곳 보존
 
 
 @pytest.mark.parametrize("tag, tags, expected", [

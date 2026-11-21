@@ -1,5 +1,7 @@
 import type { EasyOriginal } from "@/lib/types";
 
+import { KR_EASY_ORIGINAL } from "./sample-easy-original-kr";
+
 /**
  * [원본 쉽게 읽기] 로컬 샘플 — 2026-11-19 에 실제 원문 페이지를 가져와 읽고 작성했다.
  * 원문을 가져올 수 있었던 8개 기사만 넣었다 (OpenAI 블로그 등 자동 접근이 막힌 곳은 제외).
@@ -408,3 +410,6 @@ export const SAMPLE_EASY_ORIGINAL: Record<string, EasyOriginal> = {
     ],
   },
 };
+
+// 🇰🇷 국내 기술 아티클 완독 해설 3편 (6개 권역 확장, 2026-11-20)
+Object.assign(SAMPLE_EASY_ORIGINAL, KR_EASY_ORIGINAL);

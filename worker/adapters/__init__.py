@@ -11,6 +11,7 @@ from adapters.civitai import CivitaiAdapter
 from adapters.hacker_news import HackerNewsAdapter
 from adapters.huggingface import HFDailyPapersAdapter, HFTrendingModelsAdapter, HFTrendingSpacesAdapter
 from adapters.rss import RSSAdapter
+from adapters.x_oembed import XOEmbedAdapter
 from collector.models import SourceConfig
 
 # 순서 중요: 구체적인 것 먼저, RSSAdapter(method='rss' 전체)는 마지막 fallback
@@ -22,6 +23,7 @@ REGISTRY: tuple[type[BaseAdapter], ...] = (
     CivitaiAdapter,
     BlueskyAdapter,
     AnthropicSitemapAdapter,
+    XOEmbedAdapter,
     RSSAdapter,
 )
 

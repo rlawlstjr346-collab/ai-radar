@@ -17,7 +17,10 @@ from pipeline.merge import Candidate, merge_into_existing, new_item_row
 
 log = logging.getLogger("ai_radar.store")
 
-SEED_SQL = Path(__file__).resolve().parents[2] / "supabase" / "seed" / "seed_platforms.sql"
+SEED_DIR = Path(__file__).resolve().parents[2] / "supabase" / "seed"
+SEED_SQL = SEED_DIR / "seed_platforms.sql"
+# 시드 적용 순서와 같다: 기본 26곳 → 6개 권역 글로벌 확장
+SEED_SQLS = (SEED_SQL, SEED_DIR / "seed_platforms_v2_global.sql")
 
 # seed_platforms.sql 의 sources VALUES 튜플 파서 (dry-run 이 DB 없이도 같은 소스 목록을 쓰도록)
 _SOURCE_TUPLE_RE = re.compile(
@@ -28,11 +31,20 @@ _PLATFORM_RE = re.compile(
 )
 
 
-def load_seed_sources(path: Path = SEED_SQL) -> list[SourceConfig]:
-    sql = path.read_text(encoding="utf-8")
-    block = sql.split("insert into public.sources", 1)[1]
+def _paths(path: Path | tuple[Path, ...] | None) -> tuple[Path, ...]:
+    if path is None:
+        return tuple(p for p in SEED_SQLS if p.exists())
+    return (path,) if isinstance(path, Path) else path
+
+
+def load_seed_sources(path: Path | tuple[Path, ...] | None = None) -> list[SourceConfig]:
+    tuples = []
+    for p in _paths(path):
+        sql = p.read_text(encoding="utf-8")
+        if "insert into public.sources" in sql:
+            tuples += _SOURCE_TUPLE_RE.findall(sql.split("insert into public.sources", 1)[1])
     sources = []
-    for i, (pid, name, endpoint, method, cat, enabled) in enumerate(_SOURCE_TUPLE_RE.findall(block)):
+    for i, (pid, name, endpoint, method, cat, enabled) in enumerate(tuples):
         sources.append(SourceConfig(
             id=f"seed-{i:02d}-{pid}", platform_id=pid, name=name, endpoint=endpoint, method=method,
             default_category=cat, is_enabled=(enabled == "true"), platform_status="active",
@@ -40,9 +52,12 @@ def load_seed_sources(path: Path = SEED_SQL) -> list[SourceConfig]:
     return sources
 
 
-def load_seed_platform_names(path: Path = SEED_SQL) -> dict[str, str]:
-    sql = path.read_text(encoding="utf-8").split("insert into public.sources", 1)[0]
-    return {pid: name for pid, name, _ in _PLATFORM_RE.findall(sql)}
+def load_seed_platform_names(path: Path | tuple[Path, ...] | None = None) -> dict[str, str]:
+    names: dict[str, str] = {}
+    for p in _paths(path):
+        sql = p.read_text(encoding="utf-8").split("insert into public.sources", 1)[0]
+        names.update({pid: name for pid, name, _ in _PLATFORM_RE.findall(sql)})
+    return names
 
 
 class MemoryStore:

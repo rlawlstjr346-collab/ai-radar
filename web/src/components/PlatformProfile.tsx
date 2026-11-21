@@ -3,6 +3,7 @@
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 
 import { formatDate, recentForPlatform } from "@/lib/filter";
+import { REGION_META, regionOf } from "@/lib/regions";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { CategoryLine, CategoryTag, DifficultyBadge, PlatformMark, StatusBadge } from "./Badges";
@@ -31,8 +32,11 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
               <CategoryTag category={platform.category} />
             </div>
           </div>
-          <div>
+          <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={platform.collect_status} />
+            <span className="text-[12.5px] text-fg-3">
+              {REGION_META[regionOf(platform)].flag} {REGION_META[regionOf(platform)].filter}
+            </span>
           </div>
           <p className="text-[16px] leading-relaxed text-fg-2">{platform.one_liner_ko}</p>
         </header>

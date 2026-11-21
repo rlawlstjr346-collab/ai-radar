@@ -13,7 +13,12 @@ export interface Platform {
   theme_color: string;
   access_note: string | null;
   collect_status: CollectStatus;
+  /** 도감 권역 (migration 006). 예전 데이터엔 없을 수 있어 optional — 없으면 global 로 본다 */
+  region?: Region;
 }
+
+/** kr 국내 / global 북미·글로벌 / jp 일본 / cn 중국 / eu 유럽·기타 / social X·소셜 실시간 */
+export type Region = "kr" | "global" | "jp" | "cn" | "eu" | "social";
 
 export interface Term {
   term: string;

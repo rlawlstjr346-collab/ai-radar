@@ -1,9 +1,9 @@
-import type { Category, Difficulty, Entity, FeedItem, Term } from "@/lib/types";
+import type { FeedItem } from "@/lib/types";
 
 import { SAMPLE_EASY_ORIGINAL } from "./sample-easy-original";
 
 /**
- * Supabase 환경변수가 없을 때 보여주는 폴백 피드 — 36장.
+ * Supabase 환경변수가 없을 때 보여주는 폴백 피드 — 기본 36장 + 6개 권역 확장 82장 = 118장.
  *
  * 2026-11-19 에 worker 수집 어댑터(--dry-run 과 같은 경로)로 실제 공개 소스
  * (HF Papers/Models/Spaces, Hacker News, GitHub Releases, Civitai nsfw=false, Bluesky, OpenAI·DeepMind RSS,
@@ -17,58 +17,9 @@ import { SAMPLE_EASY_ORIGINAL } from "./sample-easy-original";
  * DB 를 연결하면 이 파일은 쓰이지 않는다.
  */
 
-type CardInput = {
-  id: string;
-  platform: string;
-  category: Category;
-  url: string;
-  score: number;
-  at: string;
-  sources?: number;
-  /** 여러 곳에서 포착된 경우 그 플랫폼들 (수집 당시 실제로 함께 잡힌 소스) */
-  sourcePlatforms?: string[];
-  /** 원문 난이도(해독 배지): 1 가벼운 트렌드 / 2 개발 실무 문서 / 3 박사급 논문 */
-  difficulty: Difficulty;
-  hook: string;
-  /** 10~16자 실전 이득 칩. 원문이 받쳐 주는 이득이 없으면 생략 */
-  benefit?: string;
-  context: string;
-  what: string;
-  analogy?: string | null;
-  why: string;
-  caveats?: string | null;
-  terms?: Term[];
-  entities?: Entity[];
-};
-
-function card(c: CardInput): FeedItem {
-  return {
-    id: `sample-${c.id}`,
-    platform_id: c.platform,
-    category: c.category,
-    canonical_url: c.url,
-    thumbnail_url: null,
-    importance_score: c.score,
-    source_count: c.sources ?? 1,
-    source_platforms: c.sourcePlatforms ?? [c.platform],
-    lifecycle_status: "hot", // buildSampleFeed 가 수집 경과시간으로 다시 계산
-    published_at: c.at,
-    created_at: c.at, // buildSampleFeed 가 '지금 - 수집 경과시간'으로 덮어씀
-    hook_title: c.hook,
-    benefit_tag: c.benefit ?? null,
-    context_ko: c.context,
-    what_ko: c.what,
-    analogy_ko: c.analogy ?? null,
-    why_ko: c.why,
-    caveats_ko: c.caveats ?? null,
-    difficulty: c.difficulty,
-    terms: c.terms ?? [],
-    entities: c.entities ?? [],
-    easy_original_ready: false, // buildSampleFeed 가 채움
-  };
-}
-
-const e = (name: string, kind: string, ...tags: string[]): Entity => ({ name, kind, tags });
+import { card, e } from "./sample-card";
+import { KR_CARDS, KR_COLLECTED_AGO } from "./sample-feed-kr";
+import { WORLD_CARDS, WORLD_COLLECTED_AGO } from "./sample-feed-world";
 
 const SAMPLE_BASE: FeedItem[] = [
   // ─────────────────────────────── industry · 빅테크·트렌드 ───────────────────────────────
@@ -833,10 +784,17 @@ const COLLECTED_AGO: Record<string, number> = {
 
 const HOT_MAX_MINUTES = 7 * DAY;
 
+/**
+ * 6개 권역 확장(2026-11-20 수집): 🇰🇷 국내 23장 + 🇯🇵·🇨🇳·𝕏·🇺🇸 59장을 기존 36장 뒤에 붙인다 (기존 카드는 그대로).
+ * 각 파일 머리말에 수집 경로와 작성 원칙이 있다.
+ */
+const ALL_CARDS: FeedItem[] = [...SAMPLE_BASE, ...KR_CARDS, ...WORLD_CARDS];
+const ALL_COLLECTED_AGO: Record<string, number> = { ...COLLECTED_AGO, ...KR_COLLECTED_AGO, ...WORLD_COLLECTED_AGO };
+
 /** now(ms) 기준으로 수집 시각·수명 상태·해설 준비 여부를 채운 샘플 피드 */
 export function buildSampleFeed(now: number): FeedItem[] {
-  return SAMPLE_BASE.map((item) => {
-    const ago = COLLECTED_AGO[item.id.replace(/^sample-/, "")];
+  return ALL_CARDS.map((item) => {
+    const ago = ALL_COLLECTED_AGO[item.id.replace(/^sample-/, "")];
     if (ago === undefined) throw new Error(`COLLECTED_AGO missing for ${item.id}`);
     return {
       ...item,

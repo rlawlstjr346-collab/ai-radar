@@ -3,7 +3,7 @@
 전 세계 AI 소식을 입문자도 술술 읽히게 풀어주는 뉴닉풍 요약 웹 + 글로벌 AI 플랫폼 도감.
 
 ```
-supabase/   DB 스키마(001~005) + 26개 플랫폼(7개 카테고리)·13개 수집 소스 시드
+supabase/   DB 스키마(001~006) + 6개 권역 141개 플랫폼(국내 32·북미 61·일본 16·중국 16·유럽 14·X 2)·60개 수집 소스 시드
 worker/     수집 어댑터 · 중복 제거 · 점수 · 뉴닉 톤 요약기(Claude Haiku 5.5) · 유입/퇴장 수문
 web/        Next.js 화면 (라이브 피드 / 지난 주요 소식 / 플랫폼 도감 / 1분 요약 ↔ 원본 쉽게 읽기 / 검색 / 공유 링크 / 툴팁 / 바텀시트)
 .github/    1시간마다 자동 수집하는 GitHub Actions (실행당 신규 요약 최대 4개, 플랫폼당 2개)
@@ -24,7 +24,7 @@ npm.cmd run dev
 
 | 어디에 | 무엇을 | 효과 |
 |---|---|---|
-| Supabase SQL Editor | `migrations/001_init.sql` → `002_…` → `003_…` → `004_…` → `005_…` → `seed/seed_platforms.sql` 순서로 실행 | DB 준비 |
+| Supabase SQL Editor | `migrations/001_init.sql` → `002_…` → … → `006_…` → `seed/seed_platforms.sql` → `seed/seed_platforms_v2_global.sql` 순서로 실행 | DB 준비 |
 | `web/.env.local` (`.env.local.example` 복사) | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 화면이 샘플 → 실데이터로 |
 | `web/.env.local` 또는 배포 환경의 서버 변수 | `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY` (NEXT_PUBLIC 금지) | [원본 쉽게 읽기]를 처음 누를 때 자동 생성·DB 캐싱 |
 | GitHub 저장소 → Settings → Secrets and variables → Actions | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY` | 1시간마다 자동 수집·요약 |

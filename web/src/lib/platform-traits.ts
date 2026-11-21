@@ -23,10 +23,28 @@ export const FREE_TRIAL_IDS = new Set([
   "luma", // 체험용 크레딧
   "runway", // 체험용 크레딧
   "suno", // 매일 무료 크레딧
+  // ── 6개 권역 확장 (seed_platforms_v2_global.sql 의 access_note 근거)
+  "wrtn", // 기본 기능 무료
+  "liner", // 무료 플랜
+  "deepseek", // 웹·앱 대화 무료
+  "qwen", // Qwen Chat 무료
+  "moonshot-kimi", // 웹 무료
+  "mistral-ai", // Le Chat 무료
+  "deepl", // 무료 번역
+  "cursor", // 무료 플랜
+  "bolt-new", // 무료로 일정량
+  "lovable", // 무료로 일정량
+  "ideogram", // 무료로 일정량
+  "meshy", // 무료 크레딧
 ]);
 
 /** 코드·모델을 공개하거나 내 컴퓨터에서 직접 돌리는 곳 */
-export const OPEN_LOCAL_IDS = new Set(["huggingface", "github", "ollama", "comfyui", "lm-studio", "civitai"]);
+export const OPEN_LOCAL_IDS = new Set([
+  "huggingface", "github", "ollama", "comfyui", "lm-studio", "civitai",
+  // ── 6개 권역 확장: 가중치·코드를 공개해 직접 받아 돌릴 수 있는 곳
+  "lg-exaone", "kakao-kanana", "lablup", "meta-ai", "langchain", "llamaindex", "deepseek", "qwen", "modelscope",
+  "mistral-ai", "black-forest-labs", "stability-ai", "falcon-llm", "elyza", "rinna",
+]);
 
 export type PlatformFilter = "all" | "live" | "free" | "open_local";
 

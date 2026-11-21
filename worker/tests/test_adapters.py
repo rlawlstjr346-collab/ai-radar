@@ -48,10 +48,13 @@ def test_every_seed_source_resolves_to_expected_adapter():
         "Civitai Top Models (SFW)": "CivitaiAdapter", "Bluesky AI Researchers List": "BlueskyAdapter",
     }
     sources = load_seed_sources()
-    assert len(sources) == 13
+    # 기본 13개 + 6개 권역 글로벌 확장 47개 (seed_platforms_v2_global.sql)
+    assert len(sources) == 60
+    assert [s.name for s in sources[:13]] == list(expected)          # 기존 13개는 그대로, 같은 순서
     with httpx.Client() as c:
         for s in sources:
-            assert type(resolve_adapter(s, c)).__name__ == expected[s.name], s.name
+            want = expected.get(s.name) or ("XOEmbedAdapter" if "publish.twitter.com" in s.endpoint else "RSSAdapter")
+            assert type(resolve_adapter(s, c)).__name__ == want, s.name
 
 
 # ── Civitai 안전 필터 ─────────────────────────────────────────────────────────

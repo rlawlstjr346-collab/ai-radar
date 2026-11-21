@@ -40,7 +40,9 @@ const MONOGRAM: Record<string, string> = {
 
 export function monogram(id: string, name?: string): string {
   if (MONOGRAM[id]) return MONOGRAM[id];
-  const words = (name ?? id).replace(/^r\//, "").split(/[\s\-_/]+/).filter(Boolean);
+  // "토스테크 (Toss Tech)" → "토스테크": 괄호 속 부연 설명은 이니셜에서 뺀다
+  const base = (name ?? id).replace(/\s*\([^)]*\)/g, "").trim() || id;
+  const words = base.replace(/^r\//, "").split(/[\s\-_/]+/).filter(Boolean);
   if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
   const w = words[0] ?? "?";
   return w[0].toUpperCase() + (w[1] ?? "");

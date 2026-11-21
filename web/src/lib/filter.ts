@@ -4,7 +4,7 @@ import type { Category, FeedItem, Platform } from "./types";
 export type CategoryFilter = Category | "all";
 
 /** 메인 라이브 피드 최대 노출 수 / 한 번에 더 보여줄 수 / 상단 스포트라이트 수 */
-export const HOT_LIMIT = 60;
+export const HOT_LIMIT = 100;
 export const PAGE_SIZE = 12;
 export const SPOTLIGHT_COUNT = 2;
 const FRESH_HOURS = 3;

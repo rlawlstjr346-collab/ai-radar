@@ -36,16 +36,31 @@ describe("splitByTerms", () => {
 describe("sample data", () => {
   const platforms = samplePlatforms as Platform[];
 
-  it("has all 26 seed platforms (10 active + 16 directory_only) across 7 categories", () => {
-    expect(platforms).toHaveLength(26);
-    expect(platforms.filter((p) => p.collect_status === "active")).toHaveLength(10);
-    expect(platforms.filter((p) => p.collect_status === "directory_only")).toHaveLength(16);
+  it("has all 141 seed platforms (26 base + 115 regional, 52 active + 89 directory_only) across 7 categories", () => {
+    expect(platforms).toHaveLength(141);
+    expect(platforms.filter((p) => p.collect_status === "active")).toHaveLength(52);
+    expect(platforms.filter((p) => p.collect_status === "directory_only")).toHaveLength(89);
     expect(new Set(platforms.map((p) => p.category))).toEqual(new Set(CATEGORY_ORDER));
+    // 기존 26곳은 그대로 남아 있다
+    for (const id of ["huggingface", "hacker-news", "github", "openai", "anthropic", "google-deepmind", "x", "bluesky", "kling", "elevenlabs"]) {
+      expect(platforms.some((p) => p.id === id), id).toBe(true);
+    }
   });
 
-  it("has 30-36 real cards, every category represented, each pointing to a real platform", () => {
-    expect(SAMPLE_FEED.length).toBeGreaterThanOrEqual(30);
-    expect(SAMPLE_FEED.length).toBeLessThanOrEqual(36);
+  it("covers 6 regions with at least 125 platforms and 32 Korean ones", () => {
+    const by = (r: string) => platforms.filter((p) => (p.region ?? "global") === r).length;
+    expect(platforms.length).toBeGreaterThanOrEqual(125);
+    expect(by("kr")).toBe(32);
+    expect(by("jp")).toBeGreaterThanOrEqual(14);
+    expect(by("cn")).toBeGreaterThanOrEqual(14);
+    expect(by("eu")).toBeGreaterThanOrEqual(12);
+    expect(by("social")).toBe(2);
+    expect(by("global") + by("kr") + by("jp") + by("cn") + by("eu") + by("social")).toBe(platforms.length);
+  });
+
+  it("has 110+ real cards, every category represented, each pointing to a real platform", () => {
+    expect(SAMPLE_FEED.length).toBeGreaterThanOrEqual(110);
+    expect(SAMPLE_FEED.length).toBeLessThanOrEqual(130);
     for (const c of CATEGORY_ORDER) {
       expect(SAMPLE_FEED.filter((i) => i.category === c).length, c).toBeGreaterThanOrEqual(4);
     }
@@ -62,8 +77,17 @@ describe("sample data", () => {
       const days = (snapshot - Date.parse(i.created_at)) / 86_400_000;
       expect(i.lifecycle_status, i.id).toBe(days <= 7 ? "hot" : "warm");
     }
-    expect(SAMPLE_FEED.filter((i) => i.lifecycle_status === "hot").length).toBeGreaterThanOrEqual(24);
-    expect(SAMPLE_FEED.filter((i) => i.lifecycle_status === "warm").length).toBeGreaterThanOrEqual(5);
+    expect(SAMPLE_FEED.filter((i) => i.lifecycle_status === "hot").length).toBeGreaterThanOrEqual(85);
+    expect(SAMPLE_FEED.filter((i) => i.lifecycle_status === "warm").length).toBeGreaterThanOrEqual(25);
+  });
+
+  it("includes 18+ Korean, 14+ Japanese, 10+ Chinese and 12+ X cards from the regional sources", () => {
+    const region = new Map((samplePlatforms as Platform[]).map((p) => [p.id, p.region ?? "global"]));
+    const count = (r: string) => SAMPLE_FEED.filter((i) => region.get(i.platform_id) === r).length;
+    expect(count("kr")).toBeGreaterThanOrEqual(18);
+    expect(count("jp")).toBeGreaterThanOrEqual(14);
+    expect(count("cn")).toBeGreaterThanOrEqual(10);
+    expect(SAMPLE_FEED.filter((i) => i.platform_id === "x").length).toBeGreaterThanOrEqual(12);
   });
 
   it("every tooltip term actually appears in the card text (so it can be underlined)", () => {
@@ -129,7 +153,7 @@ describe("data loading", () => {
     expect(getSupabaseEnv()).toBeNull();
     const data = await loadRadarData();
     expect(data.source).toBe("sample");
-    expect(data.platforms).toHaveLength(26);
+    expect(data.platforms).toHaveLength(141);
     expect(data.items).toHaveLength(SAMPLE_FEED.length);
     expect(Number.isNaN(Date.parse(data.generatedAt))).toBe(false);
     expect(data.notice).toBeTruthy();
@@ -182,8 +206,8 @@ describe("hourly rotation in the UI", () => {
     expect(feed.map((i) => i.id)).toEqual(["fresh", "old"]);
   });
 
-  it("caps the live feed at 60 and keeps warm items in the past tab", () => {
-    const many = Array.from({ length: 80 }, (_, i) => mk(`h${i}`, i, 30));
+  it("caps the live feed at 100 and keeps warm items in the past tab", () => {
+    const many = Array.from({ length: 130 }, (_, i) => mk(`h${i}`, i, 30));
     expect(hotFeed(many, "all", now)).toHaveLength(HOT_LIMIT);
     const past = pastFeed([mk("w1", 200, 10, "warm"), mk("w2", 300, 30, "warm"), mk("h", 1, 50)], "all");
     expect(past.map((i) => i.id)).toEqual(["w2", "w1"]);
@@ -223,14 +247,15 @@ describe("TOP SPOTLIGHT & sample timing", () => {
     expect(pickSpotlight([social, plain, ready, lightTrend]).map((i) => i.id)).toEqual(["r", "p"]);
   });
 
-  it("in sample mode the spotlight and the first row come from the 8 articles with walkthroughs", () => {
+  it("in sample mode the spotlight and the first row come from the articles with walkthroughs", () => {
     const ranked = hotFeed(SAMPLE_FEED, "all", ref);
     const tops = pickSpotlight(ranked);
     expect(tops).toHaveLength(2);
     expect(tops.every((i) => i.easy_original_ready && i.category !== "social")).toBe(true);
     const rest = ranked.filter((i) => !tops.includes(i));
     expect(rest.slice(0, 3).every((i) => i.easy_original_ready)).toBe(true);
-    expect(SAMPLE_FEED.filter((i) => i.easy_original_ready)).toHaveLength(8);
+    // 기존 8편 + 국내 기술 아티클 3편 (토스 2 · GPTers 1)
+    expect(SAMPLE_FEED.filter((i) => i.easy_original_ready)).toHaveLength(11);
   });
 
   it("sample collection times spread from ~20 minutes to ~5 days (hot) and 8+ days (warm)", () => {
@@ -274,14 +299,14 @@ describe("card face helpers, directory filters, sharing", () => {
     expect(SAMPLE_FEED.find((i) => i.id === "sample-anthropic-ipo")!.source_platforms).toEqual(["anthropic", "hacker-news"]);
   });
 
-  it("directory quick filters narrow the 26 platforms by trait", async () => {
+  it("directory quick filters narrow the 141 platforms by trait", async () => {
     const { matchesPlatformFilter } = await import("@/lib/platform-traits");
     const platforms = samplePlatforms as Platform[];
     const count = (f: "all" | "live" | "free" | "open_local") => platforms.filter((p) => matchesPlatformFilter(p, f)).length;
-    expect(count("all")).toBe(26);
-    expect(count("live")).toBe(10);
-    expect(count("free")).toBe(15);
-    expect(count("open_local")).toBe(6);
+    expect(count("all")).toBe(141);
+    expect(count("live")).toBe(52);
+    expect(count("free")).toBe(27);
+    expect(count("open_local")).toBe(21);
     expect(platforms.some((p) => p.id === "midjourney" && matchesPlatformFilter(p, "free"))).toBe(false);
   });
 

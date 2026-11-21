@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- AI Radar 파비콘 — components/BrandLogo.tsx 와 같은 심볼 (24 단위 좌표를 4px 여백 안에 배치) -->
+  <rect width="32" height="32" rx="8" fill="#F3F3EE"/>
+  <g transform="translate(4 4)" stroke="#27251E" stroke-width="1.6" stroke-linecap="round">
+    <path d="M20.46 8.92 A9 9 0 1 1 15.08 3.54"/>
+    <path d="M16.92 11.13 A5 5 0 1 1 7.30 10.29" opacity="0.55"/>
+    <path d="M12 12 L16.24 7.76"/>
+  </g>
+  <g transform="translate(4 4)">
+    <circle cx="12" cy="12" r="1.5" fill="#27251E"/>
+    <circle cx="18.36" cy="5.64" r="2" fill="#016A71"/>
+  </g>
+</svg>

@@ -16,13 +16,15 @@ for (const file of [
   "supabase/migrations/003_categories_and_hourly_rotation.sql",
   "supabase/migrations/004_easy_original_and_hooks.sql",
   "supabase/migrations/005_item_raw_body_fallback.sql",
+  "supabase/migrations/006_platform_regions_global_sources.sql",
   "supabase/seed/seed_platforms.sql",
+  "supabase/seed/seed_platforms_v2_global.sql",
 ]) {
   await db.exec(readFileSync(join(root, file), "utf8"));
 }
 
 const { rows } = await db.query(
-  `select id, name, category, one_liner_ko, why_visit_ko, url, theme_color, access_note, collect_status
+  `select id, name, category, one_liner_ko, why_visit_ko, url, theme_color, access_note, collect_status, region
      from platforms
     order by array_position(array['llm_chat','dev','image_design','video_audio','research','industry','social'], category),
              case collect_status when 'active' then 0 else 1 end, name`,

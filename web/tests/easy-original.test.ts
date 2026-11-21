@@ -19,10 +19,10 @@ const BANNED = ["혁신적", "획기적", "패러다임", "게임 체인저", "�
 const EMOJI = /\p{Extended_Pictographic}/u;
 
 describe("hooks & benefit tags (sample feed)", () => {
-  it("benefit_tag is used sparingly (12-15 cards), 16 chars or less, no emoji, no plain fact summaries", () => {
+  it("benefit_tag is used sparingly (12+ cards, at most ~1 in 4), 16 chars or less, no emoji, no plain fact summaries", () => {
     const tagged = SAMPLE_FEED.filter((i) => i.benefit_tag);
     expect(tagged.length).toBeGreaterThanOrEqual(12);
-    expect(tagged.length).toBeLessThanOrEqual(15);
+    expect(tagged.length).toBeLessThanOrEqual(Math.ceil(SAMPLE_FEED.length * 0.25));
     expect(SAMPLE_FEED.find((i) => i.id === "sample-anthropic-ipo")?.benefit_tag).toBeNull();
     for (const i of tagged) {
       expect(i.benefit_tag!.length, `${i.id}: ${i.benefit_tag}`).toBeLessThanOrEqual(16);

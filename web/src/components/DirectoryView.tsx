@@ -6,6 +6,7 @@ import { useState } from "react";
 import { CATEGORY_META } from "@/lib/categories";
 import { groupPlatforms, type CategoryFilter } from "@/lib/filter";
 import { matchesPlatformFilter, PLATFORM_FILTER_LABEL, type PlatformFilter } from "@/lib/platform-traits";
+import { matchesRegion, REGION_META, REGION_ORDER, regionOf, type RegionFilter } from "@/lib/regions";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { PlatformMark, StatusBadge } from "./Badges";
@@ -21,10 +22,14 @@ interface Props {
 }
 
 const FILTERS: PlatformFilter[] = ["all", "live", "free", "open_local"];
+const REGION_FILTERS: RegionFilter[] = ["all", ...REGION_ORDER];
+const regionLabel = (r: RegionFilter) =>
+  r === "all" ? "전체" : r === "social" ? REGION_META.social.filter : `${REGION_META[r].flag} ${REGION_META[r].filter}`;
 
 export default function DirectoryView({ platforms, items, category, selectedId, onSelect }: Props) {
   const [trait, setTrait] = useState<PlatformFilter>("all");
-  const filtered = platforms.filter((p) => matchesPlatformFilter(p, trait));
+  const [region, setRegion] = useState<RegionFilter>("all");
+  const filtered = platforms.filter((p) => matchesPlatformFilter(p, trait) && matchesRegion(p, region));
   const groups = groupPlatforms(filtered, category);
   const countBy = items.reduce<Record<string, number>>((acc, i) => {
     acc[i.platform_id] = (acc[i.platform_id] ?? 0) + 1;
@@ -50,7 +55,21 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
           options={FILTERS.map((f) => ({
             key: f,
             label: PLATFORM_FILTER_LABEL[f],
-            count: platforms.filter((p) => inCategory(p) && matchesPlatformFilter(p, f)).length,
+            count: platforms.filter((p) => inCategory(p) && matchesRegion(p, region) && matchesPlatformFilter(p, f)).length,
+          }))}
+        />
+        {/* 권역 필터: 한국 AI 생태계만 따로 모아보기 등 */}
+        <SegmentedControl
+          role="radiogroup"
+          label="권역 필터"
+          stretch={false}
+          value={region}
+          onChange={setRegion}
+          className="self-start max-w-full"
+          options={REGION_FILTERS.map((r) => ({
+            key: r,
+            label: regionLabel(r),
+            count: platforms.filter((p) => inCategory(p) && matchesPlatformFilter(p, trait) && matchesRegion(p, r)).length,
           }))}
         />
       </header>
@@ -91,6 +110,11 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                         <span className="text-[14px] leading-relaxed text-fg-2">{p.one_liner_ko}</span>
                         <span className="mt-auto flex flex-wrap items-center gap-2 pt-1">
                           <StatusBadge status={p.collect_status} />
+                          {regionOf(p) !== "global" && (
+                            <span className="text-[12px] text-fg-3">
+                              {REGION_META[regionOf(p)].flag} {REGION_META[regionOf(p)].badge}
+                            </span>
+                          )}
                           {countBy[p.id] ? (
                             <span className="t-meta tnum">소식 {countBy[p.id]}건</span>
                           ) : null}

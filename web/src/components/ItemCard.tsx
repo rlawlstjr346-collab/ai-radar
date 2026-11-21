@@ -2,6 +2,7 @@
 
 import { CATEGORY_META } from "@/lib/categories";
 import { freshness } from "@/lib/filter";
+import { editionMark } from "@/lib/regions";
 import { stripHighlightMarks } from "@/lib/highlight";
 import type { FeedItem, Platform } from "@/lib/types";
 
@@ -121,11 +122,24 @@ function Meta({
   onSelectPlatform: (id: string) => void;
   tags?: boolean;
 }) {
+  // 국내·일본·중국·X 출처만 조용한 표식 (북미·글로벌·유럽 카드는 예전 모양 그대로)
+  const edition = editionMark(platform);
   return (
     <div className="t-meta flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+      {edition?.flag && (
+        <span className="-mr-1 text-[12px] leading-none" aria-hidden>
+          {edition.flag}
+        </span>
+      )}
       <span className="-ml-0.5 min-w-0">
         <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
       </span>
+      {edition && (
+        <>
+          <span aria-hidden>·</span>
+          <span className="whitespace-nowrap">{edition.label}</span>
+        </>
+      )}
       <span aria-hidden>·</span>
       <Freshness iso={item.created_at} now={now} />
       {tags && <QuietTags item={item} />}
