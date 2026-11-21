@@ -45,8 +45,14 @@ export interface FeedItem {
   /** hot: 0~7일 메인 피드 / warm: 8~30일 지난 주요 소식 / archived: 31일+ */
   lifecycle_status: Lifecycle;
   published_at: string | null;
-  /** 수집(유입) 시각 — 신선도 정렬과 'N시간 전' 표시의 기준 */
+  /** 워커 수집 시각(ISO) — published_at 이 없을 때와 명확히 분리 */
+  fetched_at?: string | null;
+  /** 정렬·표시 기준 시각 (published_at 우선, 원문에 날짜가 없을 때만 수집 시각) */
   created_at: string;
+  /** 원문 제목 (외국어 기사 자동 번역 시 원문 보존용) */
+  original_title?: string | null;
+  /** 한국어 번역 제목 */
+  title_ko?: string | null;
   hook_title: string;
   /** 10~16자 실전 이득 칩 (예: "상업용 무료 라이선스"). 없을 수 있음 */
   benefit_tag: string | null;
@@ -102,6 +108,8 @@ export interface RadarData {
   source: DataSource;
   /** 데이터를 만든 시각(ISO). 서버·클라이언트가 같은 기준 시각으로 정렬해 hydration 불일치를 막는다 */
   generatedAt: string;
+  /** live-feed.json 스냅샷의 실제 마지막 자동 수집 시각(ISO) */
+  lastCollectedAt?: string | null;
   easyMode: EasyOriginalMode;
   /** 샘플 폴백 이유 등 화면 상단 안내 문구 */
   notice?: string;

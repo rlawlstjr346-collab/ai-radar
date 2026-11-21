@@ -3,7 +3,7 @@
 import { Activity, Compass, History, LayoutGrid, type LucideIcon } from "lucide-react";
 
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
-import type { CategoryFilter } from "@/lib/filter";
+import { formatLastCollected, type CategoryFilter } from "@/lib/filter";
 import type { DataSource } from "@/lib/types";
 
 import BrandLogo from "./BrandLogo";
@@ -30,6 +30,10 @@ interface Props extends FilterState {
   source: DataSource;
   /** 도감 플랫폼 수 (하단 상태 줄) */
   platformCount?: number;
+  /** live-feed.json 마지막 자동 수집 시각(ISO) */
+  lastCollectedAt?: string | null;
+  /** 현재 기준 시각(ms) */
+  now?: number;
 }
 
 /**
@@ -173,6 +177,10 @@ export function ViewTabs({
 
 /** 데스크톱 좌측 사이드바 */
 export default function Sidebar(p: Props) {
+  const collectedLabel = p.lastCollectedAt && p.now !== undefined ? formatLastCollected(p.lastCollectedAt, p.now) : null;
+  const collectedTitle = p.lastCollectedAt
+    ? new Date(p.lastCollectedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
+    : undefined;
   return (
     // 하단 여백(pb-16): 개발 모드의 Next.js 배지(좌하단)와 겹치지 않게
     <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-7 overflow-y-auto px-3 pb-16 pt-5">
@@ -187,10 +195,17 @@ export default function Sidebar(p: Props) {
         <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
       </section>
       <div className="mt-auto flex flex-col gap-3 px-2">
-        <p className="flex items-center gap-2 text-[12px] leading-relaxed text-fg-3">
-          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-accent" : "bg-live"}`} aria-hidden />
-          {statusLine(p.source, p.platformCount)}
-        </p>
+        <div className="flex flex-col gap-1">
+          <p className="flex items-center gap-2 text-[12px] leading-relaxed text-fg-3">
+            <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-accent" : "bg-live"}`} aria-hidden />
+            {statusLine(p.source, p.platformCount)}
+          </p>
+          {collectedLabel && (
+            <p className="pl-3.5 text-[11.5px] tabular-nums text-fg-3" title={collectedTitle}>
+              마지막 자동 수집: {collectedLabel}
+            </p>
+          )}
+        </div>
         <ThemeToggle />
       </div>
     </nav>

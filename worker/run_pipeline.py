@@ -136,6 +136,7 @@ def main(argv: list[str] | None = None) -> int:
             args.snapshot_json,
             report.candidates,
             summaries_by_dedup=summaries_by_dedup,
+            meta_path=meta_path,
         )
         print(f"\n=== 6) 스냅샷 저장: {args.snapshot_json} ({payload['item_count']}건, changed={changed}) ===")
 

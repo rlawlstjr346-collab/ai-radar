@@ -3,7 +3,7 @@ import "server-only";
 import { createClient } from "@supabase/supabase-js";
 
 import samplePlatforms from "@/data/platforms.sample.json";
-import { buildSampleFeed } from "@/data/sample-feed";
+import { SAMPLE_FEED } from "@/data/sample-feed";
 import { loadLiveSnapshot, mergeWithLiveSnapshot } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginalMode, Entity, FeedItem, Lifecycle, Platform, RadarData, Term } from "./types";
 
@@ -29,15 +29,20 @@ export function easyModeForDb(): EasyOriginalMode {
 }
 
 export function sampleData(notice: string): RadarData {
-  const now = Date.now();
-  const base = buildSampleFeed(now);
+  const nowIso = new Date().toISOString();
+  // 기존 샘플 기사의 시간을 Date.now()로 인위적으로 덮어쓰지 않고 실제 원문 발행 시각(published_at) 그대로 유지한다
+  const base = SAMPLE_FEED.map((item) => ({
+    ...item,
+    created_at: item.published_at ?? item.created_at,
+  }));
   const snapshot = loadLiveSnapshot();
   const items = mergeWithLiveSnapshot(base, snapshot.items);
   return {
     platforms: samplePlatforms as Platform[],
     items,
     source: "sample",
-    generatedAt: new Date(now).toISOString(),
+    generatedAt: nowIso,
+    lastCollectedAt: snapshot.generatedAt,
     easyMode: "sample",
     notice,
   };

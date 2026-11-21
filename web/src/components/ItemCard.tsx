@@ -1,7 +1,7 @@
 "use client";
 
 import { CATEGORY_META } from "@/lib/categories";
-import { ageHours, freshness } from "@/lib/filter";
+import { ageHours, formatDate, freshness } from "@/lib/filter";
 import { editionMark } from "@/lib/regions";
 import { stripHighlightMarks } from "@/lib/highlight";
 import type { FeedItem, Platform } from "@/lib/types";
@@ -154,7 +154,17 @@ function Meta({
         </>
       )}
       <span aria-hidden>·</span>
-      <Freshness iso={item.created_at} now={now} />
+      {item.published_at ? (
+        <Freshness iso={item.published_at} now={now} />
+      ) : (
+        <time
+          dateTime={item.fetched_at ?? item.created_at}
+          title={new Date(item.fetched_at ?? item.created_at).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
+          className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap"
+        >
+          수집 {formatDate(item.fetched_at ?? item.created_at)}
+        </time>
+      )}
       {tags && <QuietTags item={item} />}
     </div>
   );

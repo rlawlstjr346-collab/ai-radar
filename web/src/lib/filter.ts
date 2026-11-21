@@ -45,9 +45,25 @@ export function ageHours(iso: string, now: number): number {
   return Math.max(0, (now - t) / 3_600_000);
 }
 
-/** 신선도 중력 정렬 — DB 함수 hot_rank_score 와 같은 식: importance / (수집 후 경과시간h + 2)^1.5 */
-export function hotRankScore(item: Pick<FeedItem, "importance_score" | "created_at">, now: number): number {
-  return Math.max(0, item.importance_score) / Math.pow(ageHours(item.created_at, now) + 2, 1.5);
+/** 신선도 중력 정렬 — DB 함수 hot_rank_score 와 같은 식: importance / (경과시간h + 2)^1.5
+ *  live-feed.json 의 실제 최신 기사(최근 24~48시간)는 정적 샘플 기사보다 1면 상단에 우선 노출된다. */
+export function hotRankScore(
+  item: Pick<FeedItem, "importance_score" | "created_at"> & Partial<Pick<FeedItem, "id" | "published_at">>,
+  now: number,
+): number {
+  const isLive = typeof item.id === "string" && item.id.startsWith("live-");
+  const baseIso = isLive && item.published_at ? item.published_at : item.created_at;
+  const age = ageHours(baseIso, now);
+  if (isLive && item.published_at === null) {
+    return (Math.max(0, item.importance_score) / Math.pow(Math.max(age, 36) + 2, 1.5)) * 0.5;
+  }
+  const base = Math.max(0, item.importance_score) / Math.pow(age + 2, 1.5);
+  if (isLive) {
+    if (age <= 24) return base * 3.0;
+    if (age <= 48) return base * 2.0;
+    return base * 1.25;
+  }
+  return base;
 }
 
 /** 메인 라이브 피드: hot 만, 신선도 중력 순, 최대 HOT_LIMIT 개 */
@@ -80,8 +96,23 @@ export function pastFeed(items: FeedItem[], category: CategoryFilter, query = ""
 
 /** 한국 시간 기준 날짜 번호 (서버·브라우저 시간대가 달라도 같은 값 → hydration 일치) */
 const KST_DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" });
+const KST_TIME = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit", hour12: false });
 function kstDayNumber(ms: number): number {
   return Date.parse(`${KST_DAY.format(new Date(ms))}T00:00:00Z`) / 86_400_000;
+}
+
+/** 마지막 자동 수집 시각 표시 (1시간 미만 'N분 전', 같은 날/24시간 이내 'HH:MM', 그 외 'MM.DD HH:MM') */
+export function formatLastCollected(iso: string | null | undefined, now: number): string | null {
+  if (!iso) return null;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return null;
+  const minutes = Math.max(0, Math.floor((now - t) / 60_000));
+  if (minutes < 1) return "방금 전";
+  if (minutes < 60) return `${minutes}분 전`;
+  const hhmm = KST_TIME.format(new Date(t));
+  if (minutes < 24 * 60) return hhmm;
+  const [, mm, dd] = KST_DAY.format(new Date(t)).split("-");
+  return `${mm}.${dd} ${hhmm}`;
 }
 
 /**

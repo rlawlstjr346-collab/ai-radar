@@ -70,7 +70,14 @@ class RSSAdapter(BaseAdapter):
         cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
         entries = []
         for e in feed.entries:
-            published = parse_dt(e.get("published_parsed") or e.get("updated_parsed"))
+            published = (
+                parse_dt(e.get("published_parsed"))
+                or parse_dt(e.get("published"))
+                or parse_dt(e.get("updated_parsed"))
+                or parse_dt(e.get("updated"))
+                or parse_dt(e.get("created_parsed"))
+                or parse_dt(e.get("created"))
+            )
             if published and published < cutoff:
                 continue
             entries.append((published, e))

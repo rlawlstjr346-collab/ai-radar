@@ -58,8 +58,14 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
   const platformId = typeof r.platform_id === "string" ? r.platform_id.trim() : "";
   const category = String(r.category ?? "") as Category;
   const url = typeof r.canonical_url === "string" ? r.canonical_url.trim() : "";
-  const hookTitle = typeof r.hook_title === "string" ? r.hook_title.trim() : "";
-  const createdAt = typeof r.created_at === "string" ? r.created_at.trim() : "";
+  const titleKo = typeof r.title_ko === "string" && r.title_ko.trim() ? r.title_ko.trim() : null;
+  const originalTitle = typeof r.original_title === "string" && r.original_title.trim() ? r.original_title.trim() : null;
+  const hookTitle = (typeof r.hook_title === "string" && r.hook_title.trim()) || titleKo || "";
+  const publishedAt =
+    typeof r.published_at === "string" && !Number.isNaN(Date.parse(r.published_at)) ? r.published_at.trim() : null;
+  const fetchedAt =
+    typeof r.fetched_at === "string" && !Number.isNaN(Date.parse(r.fetched_at)) ? r.fetched_at.trim() : null;
+  const createdAt = publishedAt ?? (typeof r.created_at === "string" ? r.created_at.trim() : "") ?? fetchedAt ?? "";
 
   if (!id || !VALID_PLATFORM_IDS.has(platformId) || !VALID_CATEGORIES.has(category)) return null;
   if (!VALID_URL_RE.test(url) || BAD_HOST_RE.test(url) || !hookTitle || Number.isNaN(Date.parse(createdAt))) return null;
@@ -100,8 +106,11 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
     source_count: sourcePlatforms.length,
     source_platforms: sourcePlatforms,
     lifecycle_status: lifecycle,
-    published_at: typeof r.published_at === "string" ? r.published_at : null,
+    published_at: publishedAt,
+    fetched_at: fetchedAt,
     created_at: createdAt,
+    original_title: originalTitle,
+    title_ko: titleKo,
     hook_title: hookTitle,
     benefit_tag: typeof r.benefit_tag === "string" && r.benefit_tag.trim() ? r.benefit_tag.trim() : null,
     context_ko: typeof r.context_ko === "string" && r.context_ko.trim() ? r.context_ko.trim() : null,

@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import email.utils
 import json
 import random
 import threading
@@ -61,7 +62,7 @@ def with_query(url: str, **params: Any) -> str:
 
 
 def parse_dt(value: Any) -> Optional[datetime]:
-    """ISO8601 / epoch 초 / feedparser struct_time 을 UTC datetime 으로."""
+    """ISO8601 / RFC2822 / epoch 초 / feedparser struct_time 을 UTC datetime 으로."""
     if value is None or value == "":
         return None
     try:
@@ -69,8 +70,26 @@ def parse_dt(value: Any) -> Optional[datetime]:
             return datetime.fromtimestamp(value, tz=timezone.utc)
         if hasattr(value, "tm_year"):
             return datetime(*value[:6], tzinfo=timezone.utc)
-        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
-        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+        raw = str(value).strip()
+        if not raw:
+            return None
+        try:
+            dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            return dt.astimezone(timezone.utc) if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+        except ValueError:
+            pass
+        try:
+            dt = email.utils.parsedate_to_datetime(raw)
+            if dt is not None:
+                return dt.astimezone(timezone.utc) if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+        except (TypeError, ValueError, IndexError):
+            pass
+        for fmt in ("%Y-%m-%d %H:%M:%S", "%Y/%m/%d %H:%M:%S", "%Y-%m-%d"):
+            try:
+                return datetime.strptime(raw, fmt).replace(tzinfo=timezone.utc)
+            except ValueError:
+                continue
+        return None
     except (ValueError, TypeError, OverflowError):
         return None
 
@@ -100,6 +119,7 @@ class FeedGuard:
         self._domain_locks: dict[str, threading.Lock] = {}
         self._domain_last: dict[str, float] = {}
         self.sources: dict[str, dict[str, Any]] = {}
+        self._extra_meta: dict[str, Any] = {}
         self._dirty = False
         if self.meta_path and self.meta_path.exists():
             self._load()
@@ -108,12 +128,17 @@ class FeedGuard:
         assert self.meta_path is not None
         try:
             raw = json.loads(self.meta_path.read_text(encoding="utf-8"))
-            if isinstance(raw, dict) and isinstance(raw.get("sources"), dict):
-                self.sources = {
-                    str(k): dict(v) for k, v in raw["sources"].items() if isinstance(v, dict)
+            if isinstance(raw, dict):
+                if isinstance(raw.get("sources"), dict):
+                    self.sources = {
+                        str(k): dict(v) for k, v in raw["sources"].items() if isinstance(v, dict)
+                    }
+                self._extra_meta = {
+                    k: v for k, v in raw.items() if k not in ("updated_at", "sources")
                 }
         except Exception:
             self.sources = {}
+            self._extra_meta = {}
 
     def is_cooling_down(self, url: str) -> Optional[datetime]:
         with self._lock:
@@ -196,10 +221,21 @@ class FeedGuard:
         if not self.meta_path or not self._dirty:
             return
         self.meta_path.parent.mkdir(parents=True, exist_ok=True)
-        payload = {
+        existing_extra: dict[str, Any] = dict(self._extra_meta)
+        if self.meta_path.exists():
+            try:
+                disk = json.loads(self.meta_path.read_text(encoding="utf-8"))
+                if isinstance(disk, dict):
+                    for k, v in disk.items():
+                        if k not in ("updated_at", "sources"):
+                            existing_extra[k] = v
+            except Exception:
+                pass
+        payload: dict[str, Any] = {
             "updated_at": self._now().isoformat().replace("+00:00", "Z"),
             "sources": dict(sorted(self.sources.items())),
         }
+        payload.update(existing_extra)
         self.meta_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         self._dirty = False
 

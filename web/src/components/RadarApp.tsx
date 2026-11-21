@@ -7,6 +7,7 @@ import { CATEGORY_ORDER } from "@/lib/categories";
 import {
   editorialLayout,
   editorialOrder,
+  formatLastCollected,
   hotFeed,
   HOT_LIMIT,
   matchesQuery,
@@ -65,7 +66,17 @@ function useNow(initialIso: string): number {
   return now;
 }
 
-function FeedHeader({ view, total, children }: { view: "feed" | "past"; total: number; children: React.ReactNode }) {
+function FeedHeader({
+  view,
+  total,
+  lastCollectedLabel,
+  children,
+}: {
+  view: "feed" | "past";
+  total: number;
+  lastCollectedLabel?: string | null;
+  children: React.ReactNode;
+}) {
   const isFeed = view === "feed";
   return (
     <header className="flex min-w-0 flex-col gap-3 @3xl:flex-row @3xl:items-center @3xl:gap-6">
@@ -82,6 +93,12 @@ function FeedHeader({ view, total, children }: { view: "feed" | "past"; total: n
           )}
           <span aria-hidden>·</span>
           <span className="tnum">{total}건</span>
+          {isFeed && lastCollectedLabel && (
+            <span className="inline-flex items-center gap-1.5 lg:hidden">
+              <span aria-hidden>·</span>
+              <span className="tnum">마지막 자동 수집: {lastCollectedLabel}</span>
+            </span>
+          )}
         </span>
       </div>
       <div className="min-w-0 flex-1">{children}</div>
@@ -451,6 +468,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const visibleSelection: Selection = layout === "wide" || sheetOpen ? selection : null;
   // 필터·보기가 바뀌면 '더보기' 페이지 수를 처음으로 되돌린다
   const listKey = `${view}:${category}:${query}`;
+  const lastCollectedLabel = useMemo(() => formatLastCollected(data.lastCollectedAt, now), [data.lastCollectedAt, now]);
 
   return (
     // 1024~1359: 사이드바(220) + 피드 2단 / >=1360: + 우측 고정 패널 3단. 모든 열은 min-w-0 로 좌우 밀림 방지
@@ -466,6 +484,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
           viewCounts={viewCounts}
           source={data.source}
           platformCount={data.platforms.length}
+          lastCollectedAt={data.lastCollectedAt}
+          now={now}
         />
       </div>
 
@@ -499,7 +519,11 @@ export default function RadarApp({ data }: { data: RadarData }) {
           />
         ) : (
           <div className="flex flex-col gap-6">
-            <FeedHeader view={view} total={view === "feed" ? hotItems.length : pastItems.length}>
+            <FeedHeader
+              view={view}
+              total={view === "feed" ? hotItems.length : pastItems.length}
+              lastCollectedLabel={lastCollectedLabel}
+            >
               <SearchBox value={query} onChange={setQuery} total={view === "feed" ? hotItems.length : pastItems.length} />
             </FeedHeader>
             <FeedList
