@@ -11,6 +11,7 @@ import { SAMPLE_FEED } from "@/data/sample-feed";
 import { getSupabaseEnv } from "./data";
 import { buildEasyOriginalUserMessage, EASY_ORIGINAL_PROMPT_VERSION, EASY_ORIGINAL_SYSTEM } from "./easy-original-prompt";
 import { synthesizeEasyOriginal, type SynthInput } from "./easy-synth";
+import { loadLiveSnapshot } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginal, EasyOriginalResponse, Entity, Term } from "./types";
 
 /**
@@ -326,6 +327,18 @@ function synthInputFromRow(row: DbRow, summary: SummaryRow | undefined): SynthIn
 }
 
 function fromSample(id: string): EasyResult {
+  // 1) 최신 스냅샷(live-feed.json) 기사 우선 조회
+  const snap = loadLiveSnapshot();
+  const liveItem = snap.items.find((i) => i.id === id);
+  if (liveItem) {
+    const liveEasy = snap.easyOriginals[id];
+    if (liveEasy) return { httpStatus: 200, body: { status: "ready", easy_original: liveEasy, cached: true, source: "sample" } };
+    return {
+      httpStatus: 200,
+      body: { status: "ready", easy_original: synthesizeEasyOriginal(liveItem), cached: true, source: "sample", synthesized: true },
+    };
+  }
+  // 2) 기본 내장 엄선 기사 조회
   const item = SAMPLE_FEED.find((i) => i.id === id);
   if (!item) return unavailable(404, "not_found", "기사를 찾을 수 없어요.");
   const easy = SAMPLE_EASY_ORIGINAL[id];

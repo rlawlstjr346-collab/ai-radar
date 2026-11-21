@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 
 import { highlightSegments, stripHighlightMarks } from "@/lib/highlight";
 import { splitByTerms } from "@/lib/terms";
-import type { Term } from "@/lib/types";
+import type { Entity, Term } from "@/lib/types";
 
 const POPOVER_WIDTH = 280;
 const GAP = 8;
@@ -132,13 +132,15 @@ export default function TermText({
   terms,
   className,
   highlight = false,
+  entities = [],
 }: {
   text: string;
   terms: Term[];
   className?: string;
   highlight?: boolean;
+  entities?: Entity[];
 }) {
-  const segments = highlight ? highlightSegments(text, terms) : splitByTerms(stripHighlightMarks(text), terms);
+  const segments = highlight ? highlightSegments(text, terms, true, entities) : splitByTerms(stripHighlightMarks(text), terms);
   return (
     <p className={className}>
       {segments.map((s, i) =>
@@ -150,6 +152,10 @@ export default function TermText({
           <mark key={i} className="hl-mark">
             {s.text}
           </mark>
+        ) : "entity" in s && s.entity ? (
+          <span key={i} className="hl-entity">
+            {s.text}
+          </span>
         ) : (
           <span key={i}>{s.text}</span>
         ),

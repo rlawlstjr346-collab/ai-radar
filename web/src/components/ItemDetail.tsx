@@ -137,12 +137,12 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               <>
                 {item.context_ko && (
                   <Section step="01" title="원래는요" tone="context">
-                    <TermText text={item.context_ko} terms={item.terms} className={body} highlight />
+                    <TermText text={item.context_ko} terms={item.terms} entities={item.entities} className={body} highlight />
                   </Section>
                 )}
                 {item.what_ko && (
                   <Section step="02" title="무슨 일이냐면요" tone="what">
-                    <TermText text={item.what_ko} terms={item.terms} className={body} highlight />
+                    <TermText text={item.what_ko} terms={item.terms} entities={item.entities} className={body} highlight />
                     {item.analogy_ko && (
                       <aside className="mt-2 flex flex-col gap-1 rounded-r-lg border-l-[3px] border-amber-500/70 bg-amber-500/[0.08] py-3.5 pl-4 pr-4">
                         <p className="text-[13px] font-semibold text-amber-700 [:root[data-theme=dark]_&]:text-amber-300">
@@ -155,7 +155,7 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
                 )}
                 {item.why_ko && (
                   <Section step="03" title="왜 중요할까요?" tone="why">
-                    <TermText text={item.why_ko} terms={item.terms} className={body} highlight />
+                    <TermText text={item.why_ko} terms={item.terms} entities={item.entities} className={body} highlight />
                   </Section>
                 )}
                 {item.caveats_ko && (

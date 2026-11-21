@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import samplePlatforms from "@/data/platforms.sample.json";
 import { buildSampleFeed, SAMPLE_FEED, SAMPLE_REFERENCE_TIME } from "@/data/sample-feed";
 import { getSupabaseEnv, loadRadarData, normalizeFeedRow } from "@/lib/data";
+import { mergeWithLiveSnapshot } from "@/lib/live-snapshot";
 import { CATEGORY_ORDER } from "@/lib/categories";
 import { filterItems, freshness, groupPlatforms, hotFeed, hotRankScore, HOT_LIMIT, isSpotlightEligible, matchesQuery, pastFeed, pickSpotlight, recentForPlatform } from "@/lib/filter";
 import { splitByTerms } from "@/lib/terms";
@@ -147,16 +148,23 @@ describe("data loading", () => {
     vi.unstubAllEnvs();
   });
 
-  it("falls back to sample data when Supabase env vars are empty", async () => {
+  it("falls back to live snapshot + sample data when Supabase env vars are empty", async () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "");
     expect(getSupabaseEnv()).toBeNull();
     const data = await loadRadarData();
     expect(data.source).toBe("sample");
     expect(data.platforms).toHaveLength(141);
-    expect(data.items).toHaveLength(SAMPLE_FEED.length);
+    expect(data.items.length).toBeGreaterThanOrEqual(SAMPLE_FEED.length);
     expect(Number.isNaN(Date.parse(data.generatedAt))).toBe(false);
     expect(data.notice).toBeTruthy();
+  });
+
+  it("merges live snapshot items ahead of sample items without duplicate URLs or IDs", () => {
+    const dup = { ...SAMPLE_FEED[0], id: "live-dup-url", hook_title: "최신 덮어쓰기" };
+    const fresh = { ...SAMPLE_FEED[0], id: "live-brand-new", canonical_url: "https://deepmind.google/blog/brand-new" };
+    const merged = mergeWithLiveSnapshot(SAMPLE_FEED.slice(0, 3), [dup, fresh]);
+    expect(merged.map((i) => i.id)).toEqual(["live-dup-url", "live-brand-new", SAMPLE_FEED[1].id, SAMPLE_FEED[2].id]);
   });
 
   it("falls back to sample data when Supabase is unreachable", async () => {

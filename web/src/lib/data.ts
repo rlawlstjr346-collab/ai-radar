@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import samplePlatforms from "@/data/platforms.sample.json";
 import { buildSampleFeed } from "@/data/sample-feed";
+import { loadLiveSnapshot, mergeWithLiveSnapshot } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginalMode, Entity, FeedItem, Lifecycle, Platform, RadarData, Term } from "./types";
 
 /** hot 은 최근 유입분을 넉넉히 받아 화면에서 신선도 정렬 후 최대 60개 노출, warm 은 중요도 상위 60개 */
@@ -29,10 +30,12 @@ export function easyModeForDb(): EasyOriginalMode {
 
 export function sampleData(notice: string): RadarData {
   const now = Date.now();
+  const base = buildSampleFeed(now);
+  const snapshot = loadLiveSnapshot();
+  const items = mergeWithLiveSnapshot(base, snapshot.items);
   return {
     platforms: samplePlatforms as Platform[],
-    // 샘플 수집 시각은 '지금' 기준으로 20분~3일 전에 고르게 분포 (라이브 피드 체감용)
-    items: buildSampleFeed(now),
+    items,
     source: "sample",
     generatedAt: new Date(now).toISOString(),
     easyMode: "sample",
@@ -42,9 +45,9 @@ export function sampleData(notice: string): RadarData {
 
 /**
  * 화면에 필요한 데이터 전체.
- * - Supabase 환경변수가 비어 있으면 → 샘플(시드 22개 플랫폼 + 카드 8장)
- * - 연결/쿼리 실패해도 → 샘플 + 안내 문구 (화면이 깨지지 않게)
- * - 환경변수만 채우면 코드 수정 없이 실데이터로 전환
+ * - 1순위: Supabase DB (환경변수 연결 시)
+ * - 2순위: web/public/live-feed.json 최신 스냅샷 + 기본 내장 피드(118건) 병합
+ * - 3순위: 기본 내장 피드(118건) — 어떤 장애에서도 화면이 깨지지 않게
  */
 export async function loadRadarData(): Promise<RadarData> {
   const env = getSupabaseEnv();

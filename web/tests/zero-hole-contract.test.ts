@@ -11,9 +11,11 @@ import samplePlatforms from "@/data/platforms.sample.json";
 import { SAMPLE_EASY_ORIGINAL } from "@/data/sample-easy-original";
 import { SAMPLE_FEED, SAMPLE_REFERENCE_TIME } from "@/data/sample-feed";
 import { CATEGORY_ORDER } from "@/lib/categories";
+import { loadRadarData } from "@/lib/data";
 import { getEasyOriginal } from "@/lib/easy-original";
 import { synthesizeEasyOriginal } from "@/lib/easy-synth";
 import { hotFeed, pastFeed } from "@/lib/filter";
+import { loadLiveSnapshot } from "@/lib/live-snapshot";
 import { matchesPlatformFilter, type PlatformFilter } from "@/lib/platform-traits";
 import { buildProjectGuide } from "@/lib/project-guide";
 import { matchesRegion, REGION_ORDER } from "@/lib/regions";
@@ -158,6 +160,44 @@ describe("4. 어떤 필터·태그를 눌러도 결과가 1건 이상", () => {
     const ids = new Set(SAMPLE_FEED.map((i) => i.id));
     for (const p of platforms) {
       for (const i of SAMPLE_FEED.filter((x) => x.platform_id === p.id)) expect(ids.has(i.id)).toBe(true);
+    }
+  });
+});
+
+describe("5. live-feed.json 스냅샷 + 기본 피드 병합 데이터 전수 계약", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("병합 피드의 모든 기사(live-feed.json 포함)가 4단 요약·유효 https 링크·금지어 0건·완독 해설 ready 를 만족한다", async () => {
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "");
+    const snap = loadLiveSnapshot();
+    const data = await loadRadarData();
+    const bad = (u: string) => !/^https:\/\/[^/\s]+\.[^/\s]+/.test(u) || /example\.(com|org)|localhost|127\.0\.0\.1/.test(u);
+    const platformIds = new Set(platforms.map((p) => p.id));
+
+    expect(new Set(data.items.map((i) => i.id)).size).toBe(data.items.length);
+    expect(new Set(data.items.map((i) => i.canonical_url)).size).toBe(data.items.length);
+
+    for (const item of snap.items) {
+      expect(bad(item.canonical_url), item.id).toBe(false);
+      expect(platformIds.has(item.platform_id), `${item.id}: ${item.platform_id}`).toBe(true);
+      for (const field of [item.hook_title, item.context_ko, item.what_ko, item.why_ko]) {
+        expect(field?.trim().length ?? 0, item.id).toBeGreaterThan(0);
+      }
+      const res = await getEasyOriginal(item.id);
+      expect(res.httpStatus, item.id).toBe(200);
+      expect(res.body.status, item.id).toBe("ready");
+      if (res.body.status === "ready") {
+        expect(res.body.easy_original.sections.length, item.id).toBeGreaterThanOrEqual(3);
+      }
+      const blob = JSON.stringify([item, res.body, buildProjectGuide(item, names.get(item.platform_id))]);
+      for (const phrase of BANNED_UI_PHRASES) expect(blob.includes(phrase), `${item.id}: ${phrase}`).toBe(false);
+    }
+
+    const mergedNow = Date.parse(data.generatedAt);
+    for (const c of ["all", ...CATEGORY_ORDER] as const) {
+      expect(hotFeed(data.items, c, mergedNow).length, `merged live ${c}`).toBeGreaterThan(0);
+      expect(pastFeed(data.items, c).length, `merged past ${c}`).toBeGreaterThan(0);
     }
   });
 });

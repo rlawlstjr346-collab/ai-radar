@@ -198,6 +198,39 @@ kbd,
   text-decoration-color: color-mix(in srgb, #5eead4 55%, transparent);
 }
 
+/* ── AI 모델명·주요 인물명 인디고 칩 (듀얼 하이라이트) ──────────────────────────── */
+.hl-entity {
+  background: rgba(99, 102, 241, 0.1);
+  color: #312e81;
+  padding: 1px 5px;
+  border-radius: 5px;
+  font-weight: 600;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+:root[data-theme="dark"] .hl-entity {
+  background: rgba(129, 140, 248, 0.16);
+  color: #c7d2fe;
+}
+
+/* ── 상대 시간 마이크로 알약 (3시간 이내 최신 기사) + 24시간 이내 또렷한 명도 ─────── */
+.time-pill-fresh {
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  color: #0f766e;
+}
+:root[data-theme="dark"] .time-pill-fresh {
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.24);
+  color: #5eead4;
+}
+.time-recent {
+  color: #44403c;
+}
+:root[data-theme="dark"] .time-recent {
+  color: #d6d3d1;
+}
+
 /* 얇은 스크롤바 */
 .thin-scroll {
   scrollbar-width: thin;

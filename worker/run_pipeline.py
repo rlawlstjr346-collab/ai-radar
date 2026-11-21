@@ -1,8 +1,9 @@
 """AI Radar 수집·요약 워커 진입점.
 
-    python worker/run_pipeline.py                 # 운영: Supabase 저장 + 상위 N 요약 + TTL 정리
-    python worker/run_pipeline.py --dry-run       # 키 없이: 실제 공개 API 수집 → 정규화·중복제거·점수 → 콘솔 출력
-    python worker/run_pipeline.py --no-summarize  # 수집만
+    python worker/run_pipeline.py                                    # 운영: Supabase 저장 + 상위 N 요약 + TTL 정리
+    python worker/run_pipeline.py --snapshot-json web/public/live-feed.json  # 방생형 무서버: JSON 스냅샷 저장
+    python worker/run_pipeline.py --dry-run                          # 키 없이: 실제 공개 API 수집 → 정규화·중복제거·점수 → 콘솔 출력
+    python worker/run_pipeline.py --no-summarize                     # 수집만
 
 환경변수 (운영): SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY(없으면 요약 생략)
 선택: SUMMARY_TOP_N(실행당 신규 요약 상한, 기본 4), DAILY_SUMMARY_CAP(하루 상한, 기본 96)
@@ -20,7 +21,9 @@ from pathlib import Path
 WORKER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(WORKER_DIR))
 
+from adapters.base import FeedGuard  # noqa: E402
 from pipeline.runner import DEFAULT_DAILY_CAP, DEFAULT_TOP_N, PipelineReport, run_pipeline  # noqa: E402
+from pipeline.snapshot import build_and_save_snapshot  # noqa: E402
 from pipeline.store import MemoryStore, SupabaseStore  # noqa: E402
 
 
@@ -38,10 +41,15 @@ def print_report(report: PipelineReport, show: int, dry_run: bool) -> None:
     now = datetime.now(timezone.utc)
     print("\n=== 1) 소스별 수집 결과 ===")
     for run in report.sources:
-        status = f"✗ {run.error}" if run.error else f"✓ {len(run.items):>3}건"
+        if run.error:
+            status = f"✗ {run.error}"
+        elif run.skipped_reason:
+            status = f"↷ {run.skipped_reason}"
+        else:
+            status = f"✓ {len(run.items):>3}건"
         print(f"  {run.source.platform_id:<16} {run.source.name:<30} {status}")
         for note in run.notes:
-            print(f"  {'':<16} └ 건너뜀: {note}")
+            print(f"  {'':<16} └ 참고: {note}")
 
     raw_total = sum(len(r.items) for r in report.sources)
     multi = [c for c in report.candidates if c.source_count > 1]
@@ -75,6 +83,8 @@ def print_report(report: PipelineReport, show: int, dry_run: bool) -> None:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="AI Radar collector & summarizer")
     ap.add_argument("--dry-run", action="store_true", help="DB/LLM 없이 실제 수집·정규화·점수까지만")
+    ap.add_argument("--snapshot-json", type=Path, default=None, help="방생형 무서버 JSON 스냅샷 출력 경로 (예: web/public/live-feed.json)")
+    ap.add_argument("--meta-json", type=Path, default=None, help="ETag/Last-Modified/Circuit Breaker 메타 파일 경로")
     ap.add_argument("--no-summarize", action="store_true")
     ap.add_argument("--show", type=int, default=20, help="콘솔에 보여줄 상위 후보 수")
     args = ap.parse_args(argv)
@@ -87,13 +97,22 @@ def main(argv: list[str] | None = None) -> int:
     top_n = int(os.getenv("SUMMARY_TOP_N", DEFAULT_TOP_N))
     daily_cap = int(os.getenv("DAILY_SUMMARY_CAP", DEFAULT_DAILY_CAP))
 
-    if args.dry_run:
+    snapshot_mode = args.snapshot_json is not None
+    meta_path = args.meta_json
+    if meta_path is None and snapshot_mode:
+        meta_path = args.snapshot_json.parent / "live-feed-meta.json"
+    guard = FeedGuard(meta_path=meta_path) if (meta_path is not None or snapshot_mode) else FeedGuard()
+
+    if args.dry_run or snapshot_mode:
         store = MemoryStore()
         summarizer = None
+        if snapshot_mode and not args.no_summarize and os.getenv("ANTHROPIC_API_KEY"):
+            from summarizer import Summarizer
+            summarizer = Summarizer()
     else:
         missing = [k for k in ("SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY") if not os.getenv(k)]
         if missing:
-            print(f"환경변수 {', '.join(missing)} 가 없어요. 키 없이 확인하려면 --dry-run 으로 실행하세요.")
+            print(f"환경변수 {', '.join(missing)} 가 없어요. 키 없이 확인하려면 --dry-run 또는 --snapshot-json 으로 실행하세요.")
             return 2
         store = SupabaseStore.from_env()
         summarizer = None
@@ -101,12 +120,27 @@ def main(argv: list[str] | None = None) -> int:
             from summarizer import Summarizer
             summarizer = Summarizer()
 
-    report = run_pipeline(store, summarizer=summarizer, top_n=top_n, daily_cap=daily_cap,
-                          run_lifecycle=not args.dry_run)
+    report = run_pipeline(store, summarizer=summarizer, guard=guard, top_n=top_n, daily_cap=daily_cap,
+                          run_lifecycle=not (args.dry_run or snapshot_mode))
     print_report(report, args.show, args.dry_run)
 
-    ok_sources = sum(1 for r in report.sources if not r.error)
-    if ok_sources == 0:
+    if snapshot_mode:
+        summaries_by_dedup: dict[str, dict] = {}
+        if isinstance(store, MemoryStore) and store.summaries:
+            id_to_dedup = {row["id"]: dk for dk, row in store.items.items()}
+            for item_id, srow in store.summaries.items():
+                dk = id_to_dedup.get(item_id)
+                if dk:
+                    summaries_by_dedup[dk] = srow
+        payload, changed = build_and_save_snapshot(
+            args.snapshot_json,
+            report.candidates,
+            summaries_by_dedup=summaries_by_dedup,
+        )
+        print(f"\n=== 6) 스냅샷 저장: {args.snapshot_json} ({payload['item_count']}건, changed={changed}) ===")
+
+    ok_or_skipped = sum(1 for r in report.sources if not r.error)
+    if ok_or_skipped == 0:
         print("\n모든 소스가 실패했어요.")
         return 1
     return 0

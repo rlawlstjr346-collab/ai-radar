@@ -19,7 +19,7 @@ from typing import Any, Optional
 import httpx
 
 from adapters import resolve_adapter
-from adapters.base import make_http_client
+from adapters.base import CooldownError, FeedGuard, NotModifiedError, SourceSkippedError, make_http_client
 from collector.models import RawItem, SourceConfig
 from collector.scoring import hot_rank_score
 from pipeline.merge import Candidate, group_raw_items
@@ -63,6 +63,7 @@ class SourceRun:
     items: list[RawItem] = field(default_factory=list)
     error: Optional[str] = None
     notes: list[str] = field(default_factory=list)
+    skipped_reason: Optional[str] = None
 
 
 @dataclass
@@ -76,14 +77,35 @@ class PipelineReport:
     lifecycle: dict = field(default_factory=dict)
 
 
-def collect(sources: list[SourceConfig], client: httpx.Client, max_workers: int = 16) -> list[SourceRun]:
-    """모든 소스를 동시에 병렬 수집 (I/O 대기형이라 스레드로 충분 — 1시간 주기 5분 타임아웃 안에 끝나도록)."""
+def collect(
+    sources: list[SourceConfig],
+    client: httpx.Client,
+    max_workers: int = 16,
+    guard: Optional[FeedGuard] = None,
+) -> list[SourceRun]:
+    """모든 소스를 동시에 병렬 수집 (I/O 대기형이라 스레드로 충분 — 1시간 주기 타임아웃 안에 끝나도록)."""
     def run_one(src: SourceConfig) -> SourceRun:
         run = SourceRun(source=src)
         try:
-            adapter = resolve_adapter(src, client)
+            if guard is not None:
+                until = guard.is_cooling_down(src.endpoint)
+                if until is not None:
+                    msg = f"cooldown until {until.isoformat().replace('+00:00', 'Z')}"
+                    run.skipped_reason = "cooldown"
+                    run.notes.append(msg)
+                    return run
+            adapter = resolve_adapter(src, client, guard=guard)
             run.items = adapter.fetch()
             run.notes.extend(getattr(adapter, "skipped", []))
+        except NotModifiedError as e:
+            run.skipped_reason = "not_modified"
+            run.notes.append(str(e))
+        except CooldownError as e:
+            run.skipped_reason = "cooldown"
+            run.notes.append(str(e))
+        except SourceSkippedError as e:
+            run.skipped_reason = "skipped"
+            run.notes.append(str(e))
         except Exception as e:                                # 소스 하나의 장애가 전체를 멈추지 않게
             run.error = f"{type(e).__name__}: {e}"[:300]
             log.warning("source failed: %s — %s", src.name, run.error)
@@ -94,6 +116,7 @@ def collect(sources: list[SourceConfig], client: httpx.Client, max_workers: int 
 
 
 def run_pipeline(store: Any, *, summarizer: Any = None, client: Optional[httpx.Client] = None,
+                 guard: Optional[FeedGuard] = None,
                  top_n: int = DEFAULT_TOP_N, daily_cap: int = DEFAULT_DAILY_CAP,
                  run_lifecycle: bool = True) -> PipelineReport:
     report = PipelineReport()
@@ -101,11 +124,11 @@ def run_pipeline(store: Any, *, summarizer: Any = None, client: Optional[httpx.C
     client = client or make_http_client()
     try:
         # 1. 수집
-        report.sources = collect(store.load_sources(), client)
+        report.sources = collect(store.load_sources(), client, guard=guard)
         for run in report.sources:
             if run.error:
                 store.record_failure(run.source)
-            else:
+            elif run.skipped_reason != "cooldown":
                 store.record_success(run.source)
 
         # 2. 병합
@@ -128,6 +151,8 @@ def run_pipeline(store: Any, *, summarizer: Any = None, client: Optional[httpx.C
         if run_lifecycle:
             report.lifecycle = store.apply_lifecycle()
     finally:
+        if guard is not None:
+            guard.save()
         if own_client:
             client.close()
     return report

@@ -123,7 +123,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
               <span className="tnum shrink-0 rounded-md bg-accent/12 px-1.5 py-0.5 text-[12.5px] font-bold leading-none text-accent">{i + 1}</span>
               {s.heading}
             </h3>
-            <TermText text={s.body} terms={item.terms} className={body} highlight />
+            <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} highlight />
             {s.quote && (
               <blockquote className="rounded-r-lg border-l-2 border-accent/60 bg-accent/[0.05] py-2.5 pl-4 pr-3 text-[14px] italic leading-relaxed text-fg-2">
                 <span>

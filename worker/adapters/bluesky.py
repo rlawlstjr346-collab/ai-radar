@@ -26,8 +26,8 @@ def load_config(path: Path = CONFIG_PATH) -> dict:
 class BlueskyAdapter(BaseAdapter):
     endpoint_markers = ("bsky.app/xrpc",)
 
-    def __init__(self, source, client, config: dict | None = None) -> None:
-        super().__init__(source, client)
+    def __init__(self, source, client, config: dict | None = None, guard=None) -> None:
+        super().__init__(source, client, guard=guard)
         self.config = config or load_config()
         self.skipped: list[str] = []
 

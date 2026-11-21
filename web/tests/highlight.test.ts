@@ -2,12 +2,17 @@ import { describe, expect, it } from "vitest";
 
 import { SAMPLE_EASY_ORIGINAL } from "@/data/sample-easy-original";
 import { SAMPLE_FEED } from "@/data/sample-feed";
-import { autoHighlights, highlightSegments, MAX_HIGHLIGHTS, parseHighlightMarks, stripHighlightMarks } from "@/lib/highlight";
-import type { Term } from "@/lib/types";
+import { autoHighlights, entityHighlights, highlightSegments, MAX_ENTITY_CHIPS, MAX_HIGHLIGHTS, parseHighlightMarks, stripHighlightMarks } from "@/lib/highlight";
+import type { Entity, Term } from "@/lib/types";
 
-const hl = (text: string, terms: Term[] = []) =>
-  highlightSegments(text, terms)
+const hl = (text: string, terms: Term[] = [], entities: Entity[] = []) =>
+  highlightSegments(text, terms, true, entities)
     .filter((s) => s.hl)
+    .map((s) => s.text);
+
+const ent = (text: string, terms: Term[] = [], entities: Entity[] = []) =>
+  highlightSegments(text, terms, true, entities)
+    .filter((s) => s.entity)
     .map((s) => s.text);
 
 describe("형광펜 마커 ==…==", () => {
@@ -62,5 +67,32 @@ describe("자동 감지 (마커 없는 문단)", () => {
     expect(summaryHits.length).toBeGreaterThan(5);
     const easyHits = Object.values(SAMPLE_EASY_ORIGINAL).filter((e) => e.sections.some((s) => hl(s.body).length > 0));
     expect(easyHits.length).toBeGreaterThan(3);
+  });
+});
+
+describe("듀얼 하이라이트: AI 모델명·주요 인물명 인디고 칩", () => {
+  it("모델명과 인물명을 감지하고, 긴 이름 우선 + 동일 고유명사는 문단 첫 등장만 칩으로 표시한다", () => {
+    const text = "Gemini 4 Neon은 Carbon보다 32% 싸요. 샘 올트먼과 Andrej Karpathy도 주목했고, Gemini 4 Neon은 다시 언급됐어요.";
+    expect(hl(text)).toEqual(["32%"]);
+    expect(ent(text)).toEqual(["Gemini 4 Neon", "Carbon", "샘 올트먼", "Andrej Karpathy"]);
+    expect(highlightSegments(text, []).map((s) => s.text).join("")).toBe(text);
+  });
+
+  it("기사의 entities 항목(모델·인물·도구)도 동적으로 감지한다", () => {
+    const entities: Entity[] = [{ name: "Tideway MoE", kind: "model", tags: ["moe"] }];
+    expect(ent("새 오픈소스 모델 Tideway MoE가 추론 속도를 2배 높였어요.", [], entities)).toEqual(["Tideway MoE"]);
+  });
+
+  it("용어 툴팁(점선) > 형광펜 밑줄 > 인디고 칩 우선순위로 겹치지 않는다", () => {
+    const terms: Term[] = [{ term: "Gemini", easy: "구글 AI 모델" }];
+    const segs = highlightSegments("Gemini와 ==Claude 32%== 그리고 DeepSeek, vLLM", terms);
+    expect(segs.find((s) => s.term)?.text).toBe("Gemini");
+    expect(segs.filter((s) => s.hl).map((s) => s.text)).toEqual(["Claude 32%"]);
+    expect(segs.filter((s) => s.entity).map((s) => s.text)).toEqual(["DeepSeek", "vLLM"]);
+  });
+
+  it("문단당 인디고 칩 상한(MAX_ENTITY_CHIPS)을 지킨다", () => {
+    const text = "GPT-6, Claude, Gemini, DeepSeek, Qwen, Llama, EXAONE, HyperCLOVA X";
+    expect(entityHighlights(text)).toHaveLength(MAX_ENTITY_CHIPS);
   });
 });

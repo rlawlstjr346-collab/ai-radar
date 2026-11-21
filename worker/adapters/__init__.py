@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from adapters.anthropic_sitemap import AnthropicSitemapAdapter
-from adapters.base import BaseAdapter
+from adapters.base import BaseAdapter, FeedGuard
 from adapters.bluesky import BlueskyAdapter
 from adapters.civitai import CivitaiAdapter
 from adapters.hacker_news import HackerNewsAdapter
@@ -32,8 +32,8 @@ class NoAdapterError(LookupError):
     pass
 
 
-def resolve_adapter(source: SourceConfig, client: httpx.Client) -> BaseAdapter:
+def resolve_adapter(source: SourceConfig, client: httpx.Client, guard: FeedGuard | None = None) -> BaseAdapter:
     for cls in REGISTRY:
         if cls.matches(source):
-            return cls(source, client)
+            return cls(source, client, guard=guard)
     raise NoAdapterError(f"no adapter for source '{source.name}' ({source.endpoint})")

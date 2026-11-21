@@ -1,7 +1,7 @@
 "use client";
 
 import { CATEGORY_META } from "@/lib/categories";
-import { freshness } from "@/lib/filter";
+import { ageHours, freshness } from "@/lib/filter";
 import { editionMark } from "@/lib/regions";
 import { stripHighlightMarks } from "@/lib/highlight";
 import type { FeedItem, Platform } from "@/lib/types";
@@ -28,22 +28,35 @@ interface Props {
   onEntity: (name: string) => void;
 }
 
-/** 상대 시간 — 3시간 이내면 앞에 LIVE 점(--live) 하나만, 글자는 언제나 조용한 tertiary */
+/** 상대 시간 — 3시간 이내면 슬림 마이크로 알약(+ LIVE 점), 3~24시간은 명도 보강 텍스트, 그 외는 조용한 tertiary */
 function Freshness({ iso, now }: { iso: string; now: number }) {
   const f = freshness(iso, now);
   if (!f.label) return null;
+  const title = new Date(iso).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
+  if (f.fresh) {
+    return (
+      <time
+        dateTime={iso}
+        title={title}
+        className="time-pill-fresh inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 font-semibold tabular-nums"
+      >
+        <span className="live-ping" aria-hidden />
+        <span className="sr-only">방금 들어온 소식, </span>
+        {f.label}
+      </time>
+    );
+  }
+  const within24h = ageHours(iso, now) < 24;
   return (
     <time
       dateTime={iso}
-      title={new Date(iso).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })}
-      className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap"
+      title={title}
+      className={
+        within24h
+          ? "time-recent inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-medium tabular-nums"
+          : "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap"
+      }
     >
-      {f.fresh && (
-        <>
-          <span className="live-ping" aria-hidden />
-          <span className="sr-only">방금 들어온 소식, </span>
-        </>
-      )}
       {f.label}
     </time>
   );
