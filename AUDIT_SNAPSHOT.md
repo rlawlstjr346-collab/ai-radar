@@ -1,18 +1,18 @@
 # AI Radar — Audit Snapshot
 
 > 외부 총괄 아키텍트 검수용 스냅샷. `web/scripts/gen-audit-snapshot.mjs` 가 실제 소스 파일을 읽어 자동 생성했다.
-> 생성 시각: 2026-11-21T00:04:13.373Z · 기준 커밋: `70b8546` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
+> 생성 시각: 2026-11-21T00:15:00.580Z · 기준 커밋: `d528b23` (+ 작업 트리) · 다시 만들기: `cd web && npm run audit:snapshot`
 
 ## 요약 수치
 
 | 항목 | 값 |
 |---|---|
-| 로컬 샘플 기사 | 118개 (hot 93 / warm 25) |
+| 로컬 샘플 기사 | 118개 (hot 92 / warm 26) |
 | [원본 쉽게 읽기] 준비된 기사 | 11개 — `sample-anthropic-ipo`, `sample-gemini-4-neon`, `sample-google-ai-answers-traffic`, `sample-windows-agent-telemetry`, `sample-claude-black-hole-physics`, `sample-haru-4b`, `sample-toss-agent-platform`, `sample-toss-taste`, `sample-vllm-0-34`, `sample-gpters-claude-code-mode`, `sample-tideway-moe` |
 | 실전 이득 칩(benefit_tag) | 28개 기사에만 |
 | 원문 난이도 분포 | 🌱1: 48 · ⚡2: 53 · 🔥3: 17 |
 | 플랫폼 도감 | 141곳 (자동 수집 52 · 도감 전용 89) |
-| 추적 파일 수 | 110 |
+| 추적 파일 수 | 116 |
 
 ## ① 전체 파일 트리
 
@@ -48,6 +48,8 @@ ai-radar/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── api/
+│   │   │   │   ├── health/
+│   │   │   │   │   └── route.ts
 │   │   │   │   └── items/
 │   │   │   │       └── [id]/
 │   │   │   │           └── easy-original/
@@ -65,6 +67,7 @@ ai-radar/
 │   │   │   ├── ItemCard.tsx
 │   │   │   ├── ItemDetail.tsx
 │   │   │   ├── PlatformProfile.tsx
+│   │   │   ├── ProjectGuide.tsx
 │   │   │   ├── RadarApp.tsx
 │   │   │   ├── SegmentedControl.tsx
 │   │   │   ├── Sidebar.tsx
@@ -81,12 +84,15 @@ ai-radar/
 │   │   │   └── sample-feed.ts
 │   │   └── lib/
 │   │       ├── categories.ts
+│   │       ├── clipboard.ts
 │   │       ├── data.ts
 │   │       ├── easy-original-prompt.ts
 │   │       ├── easy-original.ts
+│   │       ├── easy-synth.ts
 │   │       ├── filter.ts
 │   │       ├── highlight.ts
 │   │       ├── platform-traits.ts
+│   │       ├── project-guide.ts
 │   │       ├── regions.ts
 │   │       ├── terms.ts
 │   │       ├── theme.ts
@@ -97,7 +103,8 @@ ai-radar/
 │   │   ├── easy-original.test.ts
 │   │   ├── highlight.test.ts
 │   │   ├── lib.test.ts
-│   │   └── theme.test.ts
+│   │   ├── theme.test.ts
+│   │   └── zero-hole-contract.test.ts
 │   ├── .env.local.example
 │   ├── .gitignore
 │   ├── eslint.config.mjs
