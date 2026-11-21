@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, BookOpenText, Radio, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpenText, Radio, Zap } from "lucide-react";
 import { useState } from "react";
 
 import { formatDate } from "@/lib/filter";
@@ -8,6 +8,7 @@ import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitChip, CategoryLine, CategoryTag, DifficultyBadge, PlatformBadge } from "./Badges";
 import EasyOriginalView from "./EasyOriginalView";
+import ProjectGuide from "./ProjectGuide";
 import SegmentedControl from "./SegmentedControl";
 import TermText from "./TermText";
 
@@ -195,16 +196,7 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               ) : (
                 <OriginalLink url={item.canonical_url} variant="primary" />
               )}
-              <button
-                type="button"
-                disabled
-                aria-disabled
-                className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-lg px-4 py-2 text-[13px] text-fg-3"
-              >
-                <Sparkles className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
-                내 프로젝트에 이 기술 써볼까?
-                <span className="rounded bg-elevated px-1.5 py-px text-[11px] text-fg-3">준비 중</span>
-              </button>
+              <ProjectGuide item={item} platformName={platform?.name} />
             </div>
           </div>
         )}

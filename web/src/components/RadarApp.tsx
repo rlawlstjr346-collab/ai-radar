@@ -465,6 +465,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
           counts={counts}
           viewCounts={viewCounts}
           source={data.source}
+          platformCount={data.platforms.length}
         />
       </div>
 
@@ -474,7 +475,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
           <Logo />
           <div className="flex shrink-0 items-center gap-2">
             {data.source === "sample" && (
-              <span className="whitespace-nowrap rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2">샘플 데이터</span>
+              <span className="whitespace-nowrap rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2">엄선 에디션</span>
             )}
             <ThemeToggle compact />
           </div>
@@ -484,7 +485,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       </header>
 
       {/* 중앙 */}
-      {/* 샘플 데이터 안내는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
+      {/* 데이터 출처 표시는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
       <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-8 lg:py-8">
         <div className="mx-auto w-full min-w-0 max-w-[920px]">
 

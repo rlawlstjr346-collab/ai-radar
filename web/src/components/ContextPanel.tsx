@@ -4,6 +4,7 @@ import { Check, Link2, Radar, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { copyText } from "@/lib/clipboard";
 import type { EasyOriginalMode, FeedItem, Platform } from "@/lib/types";
 
 import ItemDetail from "./ItemDetail";
@@ -28,25 +29,6 @@ const ICON_BTN =
 /** 현재 선택을 공유 URL(?item= / ?platform=)로 */
 export function shareUrlFor(selection: NonNullable<Selection>, location: Pick<Location, "origin" | "pathname">): string {
   return `${location.origin}${location.pathname}?${selection.type}=${encodeURIComponent(selection.id)}`;
-}
-
-async function copyText(text: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    // 클립보드 API 가 막힌 환경(비보안 컨텍스트 등) 대비
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand("copy");
-    ta.remove();
-    return ok;
-  }
 }
 
 /** 우상단 [링크 복사] [닫기] — 복사하면 아이콘이 체크로 바뀌고 토스트가 뜬다 */
@@ -89,7 +71,7 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
   );
 }
 
-function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatform, easyMode }: Omit<Props, "onClose">) {
+function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatform }: Omit<Props, "onClose">) {
   const byId = new Map(platforms.map((p) => [p.id, p]));
   if (selection?.type === "item") {
     const item = items.find((i) => i.id === selection.id);
@@ -99,7 +81,7 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
           item={item}
           platform={byId.get(item.platform_id)}
           onSelectPlatform={onSelectPlatform}
-          canReadEasy={item.easy_original_ready || easyMode === "on_demand"}
+          canReadEasy // 모든 기사: 손으로 쓴 해설 · DB 캐시 · 생성 · 요약 기반 합성 중 하나로 반드시 열린다
         />
       );
   }

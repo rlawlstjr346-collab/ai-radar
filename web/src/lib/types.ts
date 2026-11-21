@@ -83,7 +83,7 @@ export interface EasyOriginal {
 }
 
 export type EasyOriginalResponse =
-  | { status: "ready"; easy_original: EasyOriginal; cached: boolean; source: DataSource }
+  | { status: "ready"; easy_original: EasyOriginal; cached: boolean; source: DataSource; synthesized?: boolean }
   | { status: "unavailable"; reason: "not_prepared" | "generator_unavailable" | "not_found" | "failed"; message: string };
 
 export type DataSource = "supabase" | "sample";

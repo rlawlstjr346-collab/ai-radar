@@ -28,6 +28,17 @@ interface Props extends FilterState {
   counts: Record<CategoryFilter, number>;
   viewCounts: Record<View, number>;
   source: DataSource;
+  /** 도감 플랫폼 수 (하단 상태 줄) */
+  platformCount?: number;
+}
+
+/**
+ * 하단 운영 상태 줄. DB(실시간 수집)가 연결됐을 때만 '가동 중'이라고 말하고, 엄선한 수집본을 보여 줄 땐 '엄선 에디션'.
+ * 연결 여부 같은 개발자용 정보는 /api/health 에서만 확인한다.
+ */
+export function statusLine(source: DataSource, platformCount?: number): string {
+  const n = platformCount ? ` · ${platformCount}개 플랫폼${source === "supabase" ? " 연동" : ""}` : "";
+  return source === "supabase" ? `글로벌 AI 레이더 가동 중${n}` : `글로벌 AI 레이더${n} · 엄선 에디션`;
 }
 
 const VIEWS: Array<{ id: View; label: string; short: string; Icon: LucideIcon }> = [
@@ -177,8 +188,8 @@ export default function Sidebar(p: Props) {
       </section>
       <div className="mt-auto flex flex-col gap-3 px-2">
         <p className="flex items-center gap-2 text-[12px] leading-relaxed text-fg-3">
-          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-fg-3" : "bg-live"}`} aria-hidden />
-          {p.source === "sample" ? "샘플 데이터 모드" : "실시간 데이터 연결됨"}
+          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-accent" : "bg-live"}`} aria-hidden />
+          {statusLine(p.source, p.platformCount)}
         </p>
         <ThemeToggle />
       </div>

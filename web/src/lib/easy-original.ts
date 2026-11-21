@@ -10,17 +10,20 @@ import { SAMPLE_FEED } from "@/data/sample-feed";
 
 import { getSupabaseEnv } from "./data";
 import { buildEasyOriginalUserMessage, EASY_ORIGINAL_PROMPT_VERSION, EASY_ORIGINAL_SYSTEM } from "./easy-original-prompt";
-import type { EasyOriginal, EasyOriginalResponse } from "./types";
+import { synthesizeEasyOriginal, type SynthInput } from "./easy-synth";
+import type { Category, Difficulty, EasyOriginal, EasyOriginalResponse, Entity, Term } from "./types";
 
 /**
  * [원본 쉽게 읽기] — 비용 절감형 On-Demand 생성 + DB 영구 캐싱
  *
- * 샘플 모드(Supabase 환경변수 없음): 로컬 샘플 해설을 돌려준다.
+ * 샘플 모드(Supabase 환경변수 없음): 손으로 쓴 샘플 해설 → 없으면 요약 기반 합성 가이드.
  * DB 모드:
  *   1) summaries.easy_original_json 이 있으면 즉시 반환 (LLM 호출 0회)
- *   2) 없으면 → 원문 가져오기 → Claude 1회 호출로 해설 생성 → easy_original_json 에 저장 → 반환
- *      (같은 아이템 동시 요청은 하나의 생성 작업을 공유)
- *   생성에는 서버 전용 ANTHROPIC_API_KEY, SUPABASE_SERVICE_ROLE_KEY 가 필요. 없으면 'generator_unavailable'.
+ *   2) 없으면 → 원문 가져오기(① 원문 페이지 ② arXiv HTML 전문 ③ r.jina.ai 리더 ④ raw_body ⑤ 발췌)
+ *      → Claude 1회 호출로 해설 생성 → easy_original_json 에 저장 → 반환 (동시 요청은 하나의 작업을 공유)
+ *   3) 생성기 키가 없거나, 원문을 하나도 못 가져왔거나, 생성이 실패하면 → 그 기사의 요약 필드로
+ *      결정론적 완독 가이드를 합성해 돌려준다 (lib/easy-synth.ts). 사용자에게 실패 화면을 보여 주지 않는다.
+ * 'unavailable' 은 잘못된 ID(400)·없는 기사(404)·DB 조회 오류(502)에만 쓴다.
  */
 
 export const EASY_MODEL = process.env.EASY_ORIGINAL_MODEL?.trim() || "claude-haiku-5-5";
@@ -126,11 +129,19 @@ export function htmlToText(html: string): string {
     .join("\n");
 }
 
+/** 원문 페이지가 403·404·시간 초과로 막힐 때 쓰는 공개 리더(클린 텍스트 추출) 우회 주소 */
+export const READER_PREFIX = "https://r.jina.ai/";
+
+export function readerUrl(url: string): string | null {
+  return isFetchableUrl(url) ? `${READER_PREFIX}${url}` : null;
+}
+
 export async function fetchSourceText(
   url: string,
   fetchImpl: typeof fetch = fetch,
 ): Promise<{ text: string; truncated: boolean } | null> {
-  for (const candidate of candidateUrls(url)) {
+  const reader = readerUrl(url);
+  for (const candidate of [...candidateUrls(url), ...(reader ? [reader] : [])]) {
     if (!isFetchableUrl(candidate)) continue;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
@@ -199,32 +210,29 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
   const anon = deps.anon ?? createClient(env!.url, env!.anonKey, { auth: { persistSession: false } });
   const { data, error } = await anon
     .from("items")
-    .select("id,original_title,canonical_url,metrics_json,raw_body,summaries!inner(hook_title,easy_original_json)")
+    .select(
+      "id,platform_id,category,original_title,canonical_url,metrics_json,raw_body," +
+        "summaries!inner(hook_title,benefit_tag,context_ko,what_ko,analogy_ko,why_ko,caveats_ko,difficulty,terms_json,extracted_entities,easy_original_json)",
+    )
     .eq("id", id)
     .maybeSingle();
   if (error) return unavailable(502, "failed", "기사 정보를 불러오지 못했어요. 잠시 후 다시 시도해 주세요.");
   if (!data) return unavailable(404, "not_found", "기사를 찾을 수 없어요.");
 
-  const row = data as unknown as {
-    original_title: string;
-    canonical_url: string;
-    metrics_json: Record<string, unknown> | null;
-    raw_body?: string | null;
-    summaries: { hook_title: string; easy_original_json: unknown } | Array<{ hook_title: string; easy_original_json: unknown }>;
-  };
+  const row = data as unknown as DbRow;
   const summary = Array.isArray(row.summaries) ? row.summaries[0] : row.summaries;
   const cached = coerceEasyOriginal(summary?.easy_original_json);
   if (cached) return { httpStatus: 200, body: { status: "ready", easy_original: cached, cached: true, source: "supabase" } };
 
+  // 생성기를 못 쓰는 환경(키 없음)에서도 실패 대신 요약 기반 완독 가이드
+  const synthesized = (): EasyResult => ({
+    httpStatus: 200,
+    body: { status: "ready", easy_original: synthesizeEasyOriginal(synthInputFromRow(row, summary)), cached: false, source: "supabase", synthesized: true },
+  });
+
   const service = deps.service !== undefined ? deps.service : serviceClient(env);
   const hasLlmKey = deps.hasLlmKey ?? Boolean(process.env.ANTHROPIC_API_KEY?.trim());
-  if (!service || !hasLlmKey) {
-    return unavailable(
-      503,
-      "generator_unavailable",
-      "원본 해설 생성기가 아직 연결되지 않았어요. 서버에 ANTHROPIC_API_KEY 와 SUPABASE_SERVICE_ROLE_KEY 를 넣으면 처음 누를 때 자동으로 만들어져요.",
-    );
-  }
+  if (!service || !hasLlmKey) return synthesized();
 
   const running = inflight.get(id);
   if (running) return running;
@@ -234,7 +242,7 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
       const fetched = await (deps.fetchText ?? fetchSourceText)(row.canonical_url);
       const excerpt = typeof row.metrics_json?._excerpt === "string" ? row.metrics_json._excerpt : "";
       const source = chooseSourceText(fetched, row.raw_body, excerpt);
-      if (!source) return unavailable(422, "failed", "원문을 가져오지 못해서 해설을 만들 수 없었어요. 원문 링크로 직접 확인해 주세요.");
+      if (!source) return synthesized();                // 원문을 하나도 못 가져왔으면 요약 기반 가이드
 
       const easy = await (deps.generate ?? generateEasyOriginal)({
         title: row.original_title,
@@ -249,7 +257,7 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
       return { httpStatus: 200, body: { status: "ready", easy_original: easy, cached: false, source: "supabase" } };
     } catch (e) {
       console.error("[ai-radar] easy_original generation failed:", e);
-      return unavailable(502, "failed", "원본 해설을 만드는 중에 문제가 생겼어요. 잠시 후 다시 시도해 주세요.");
+      return synthesized();                             // 생성 실패도 사용자에겐 요약 기반 가이드로
     } finally {
       inflight.delete(id);
     }
@@ -264,15 +272,64 @@ function serviceClient(env: ReturnType<typeof getSupabaseEnv>): SupabaseClient |
   return createClient(env.url, key, { auth: { persistSession: false } });
 }
 
+type SummaryRow = {
+  hook_title: string;
+  benefit_tag?: string | null;
+  context_ko?: string | null;
+  what_ko?: string | null;
+  analogy_ko?: string | null;
+  why_ko?: string | null;
+  caveats_ko?: string | null;
+  difficulty?: number | null;
+  terms_json?: unknown;
+  extracted_entities?: unknown;
+  easy_original_json: unknown;
+};
+type DbRow = {
+  platform_id?: string;
+  category?: string;
+  original_title: string;
+  canonical_url: string;
+  metrics_json: Record<string, unknown> | null;
+  raw_body?: string | null;
+  summaries: SummaryRow | SummaryRow[];
+};
+
+const CATEGORIES = new Set(["llm_chat", "dev", "image_design", "video_audio", "research", "industry", "social"]);
+
+function synthInputFromRow(row: DbRow, summary: SummaryRow | undefined): SynthInput {
+  const terms = Array.isArray(summary?.terms_json)
+    ? (summary!.terms_json as Array<Record<string, unknown>>)
+        .filter((t) => typeof t?.term === "string" && typeof t?.easy === "string")
+        .map((t) => ({ term: String(t.term), easy: String(t.easy) }) satisfies Term)
+    : [];
+  const entities = Array.isArray(summary?.extracted_entities)
+    ? (summary!.extracted_entities as Array<Record<string, unknown>>)
+        .filter((e) => typeof e?.name === "string")
+        .map((e) => ({ name: String(e.name), kind: String(e.kind ?? ""), tags: Array.isArray(e.tags) ? e.tags.map(String) : [] }) satisfies Entity)
+    : [];
+  const d = Number(summary?.difficulty);
+  return {
+    platform_id: row.platform_id ?? "",
+    category: (CATEGORIES.has(String(row.category)) ? row.category : "industry") as Category,
+    hook_title: summary?.hook_title || row.original_title,
+    benefit_tag: summary?.benefit_tag,
+    context_ko: summary?.context_ko,
+    what_ko: summary?.what_ko,
+    analogy_ko: summary?.analogy_ko,
+    why_ko: summary?.why_ko,
+    caveats_ko: summary?.caveats_ko,
+    difficulty: (d === 2 || d === 3 ? d : 1) as Difficulty,
+    terms,
+    entities,
+  };
+}
+
 function fromSample(id: string): EasyResult {
-  if (!SAMPLE_FEED.some((i) => i.id === id)) return unavailable(404, "not_found", "기사를 찾을 수 없어요.");
+  const item = SAMPLE_FEED.find((i) => i.id === id);
+  if (!item) return unavailable(404, "not_found", "기사를 찾을 수 없어요.");
   const easy = SAMPLE_EASY_ORIGINAL[id];
-  if (!easy) {
-    return unavailable(
-      200,
-      "not_prepared",
-      "이 샘플 기사는 아직 원본 해설을 준비하지 않았어요. 데이터베이스와 AI 키를 연결하면 처음 누를 때 자동으로 만들어져요.",
-    );
-  }
-  return { httpStatus: 200, body: { status: "ready", easy_original: easy, cached: true, source: "sample" } };
+  if (easy) return { httpStatus: 200, body: { status: "ready", easy_original: easy, cached: true, source: "sample" } };
+  // 손으로 쓴 원문 전문 해설이 없는 기사는 검증된 요약으로 완독 가이드를 합성한다
+  return { httpStatus: 200, body: { status: "ready", easy_original: synthesizeEasyOriginal(item), cached: true, source: "sample", synthesized: true } };
 }

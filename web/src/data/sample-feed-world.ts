@@ -432,7 +432,7 @@ export const WORLD_CARDS: FeedItem[] = [
   card({
     id: "x-fable-one-shot-game",
     platform: "x",
-    category: "dev",
+    category: "social",
     url: "https://x.com/felixrieseberg/status/2119925633564463609",
     score: 11,
     at: "2026-11-09T00:00:00Z",
@@ -973,7 +973,7 @@ export const WORLD_COLLECTED_AGO: Record<string, number> = {
   "ms-swift-4-6-1": 4 * DAY + 2 * HOUR,
   // 𝕏
   "x-mistral-vibe-free": 1 * DAY + 10 * HOUR,
-  "x-fable-one-shot-game": 3 * DAY + 6 * HOUR,
+  "x-fable-one-shot-game": 11 * DAY, // 11-09 게시물 — 지난 주요 소식의 커뮤니티·화제 칸
   "x-cursor-gemini-neon": 1 * DAY + 1 * HOUR,
   "x-github-copilot-neon": 1 * DAY + 2 * HOUR,
   "x-arena-gemini-cadence": 1 * DAY + 3 * HOUR,

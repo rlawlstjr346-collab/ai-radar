@@ -74,15 +74,17 @@ describe("sample easy-original data", () => {
 describe("getEasyOriginal — sample mode (no Supabase env)", () => {
   afterEach(() => vi.unstubAllEnvs());
 
-  it("returns the prepared walkthrough, 'not_prepared' for others, 404 for unknown, 400 for bad ids", async () => {
+  it("returns the prepared walkthrough, a summary-based guide for others, 404 for unknown, 400 for bad ids", async () => {
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");
     vi.stubEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "");
     const ready = await getEasyOriginal("sample-vllm-0-34");
     expect(ready.httpStatus).toBe(200);
     expect(ready.body.status).toBe("ready");
 
-    const notPrepared = await getEasyOriginal("sample-slack-moji");
-    expect(notPrepared.body).toMatchObject({ status: "unavailable", reason: "not_prepared" });
+    // 손으로 쓴 해설이 없는 기사도 실패 대신 요약 기반 완독 가이드가 열린다
+    const synth = await getEasyOriginal("sample-slack-moji");
+    expect(synth.httpStatus).toBe(200);
+    expect(synth.body).toMatchObject({ status: "ready", synthesized: true, source: "sample" });
 
     expect((await getEasyOriginal("sample-nope")).httpStatus).toBe(404);
     expect((await getEasyOriginal("../../etc/passwd")).httpStatus).toBe(400);
@@ -135,10 +137,12 @@ describe("getEasyOriginal — database mode", () => {
     expect(generate).not.toHaveBeenCalled();
   });
 
-  it("explains how to enable generation when keys are missing", async () => {
-    const r = await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: null, hasLlmKey: true });
-    expect(r.httpStatus).toBe(503);
-    expect(r.body).toMatchObject({ status: "unavailable", reason: "generator_unavailable" });
+  it("without generator keys it still answers with a summary-based guide (never a failure screen)", async () => {
+    const generate = vi.fn();
+    const r = await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: null, generate, hasLlmKey: true });
+    expect(r.httpStatus).toBe(200);
+    expect(r.body).toMatchObject({ status: "ready", synthesized: true, cached: false });
+    expect(generate).not.toHaveBeenCalled();
   });
 
   it("generates once on first request, caches to summaries, and shares concurrent requests", async () => {
@@ -177,7 +181,8 @@ describe("getEasyOriginal — database mode", () => {
 
     const g3 = vi.fn(async () => EASY);
     const none = await getEasyOriginal("abc", { anon: fakeAnon(row(null)), service: client, generate: g3, fetchText: blocked, hasLlmKey: true });
-    expect(none.httpStatus).toBe(422);
+    expect(none.httpStatus).toBe(200);                                   // 원문이 전부 막혀도 요약 기반 가이드
+    expect(none.body).toMatchObject({ status: "ready", synthesized: true });
     expect(g3).not.toHaveBeenCalled();
   });
 
@@ -189,7 +194,7 @@ describe("getEasyOriginal — database mode", () => {
     expect(chooseSourceText(null, null, "short")).toBeNull();
   });
 
-  it("reports a friendly failure if generation throws, and 404 for unknown items", async () => {
+  it("falls back to a summary-based guide if generation throws, and 404 for unknown items", async () => {
     const { client } = fakeService();
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     const failing = await getEasyOriginal("abc", {
@@ -201,7 +206,7 @@ describe("getEasyOriginal — database mode", () => {
       fetchText: async () => ({ text: "x".repeat(500), truncated: false }),
       hasLlmKey: true,
     });
-    expect(failing.body).toMatchObject({ status: "unavailable", reason: "failed" });
+    expect(failing.body).toMatchObject({ status: "ready", synthesized: true });
     spy.mockRestore();
     expect((await getEasyOriginal("zzz", { anon: fakeAnon(null) })).httpStatus).toBe(404);
   });
@@ -261,5 +266,20 @@ describe("source fetching safety", () => {
     expect(calls).toEqual(["https://arxiv.org/html/2611.14848", "https://arxiv.org/abs/2611.14848"]);
     expect(r?.text.startsWith("Real abstract text.")).toBe(true);
     expect(await fetchSourceText("http://localhost/x", fake)).toBeNull();
+  });
+
+  it("when the page itself is blocked it tries the public reader (r.jina.ai) last, never for private hosts", async () => {
+    const calls: string[] = [];
+    const fake = (async (url: string) => {
+      calls.push(url);
+      if (url.startsWith("https://r.jina.ai/")) return new Response("Clean markdown body. ".repeat(20), { status: 200, headers: { "content-type": "text/plain" } });
+      return new Response("forbidden", { status: 403 });
+    }) as unknown as typeof fetch;
+    const r = await fetchSourceText("https://blog.example.org/post", fake);
+    expect(calls).toEqual(["https://blog.example.org/post", "https://r.jina.ai/https://blog.example.org/post"]);
+    expect(r?.text.startsWith("Clean markdown body.")).toBe(true);
+    calls.length = 0;
+    expect(await fetchSourceText("http://10.0.0.5/secret", fake)).toBeNull();
+    expect(calls).toEqual([]);
   });
 });

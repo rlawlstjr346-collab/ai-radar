@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowUpRight, BookOpenText, LoaderCircle, TriangleAlert } from "lucide-react";
+import { ArrowUpRight, BookOpenText, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { synthesizeEasyOriginal } from "@/lib/easy-synth";
 import type { EasyOriginalResponse, FeedItem } from "@/lib/types";
 
 import TermText from "./TermText";
@@ -87,34 +88,10 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
     );
   }
 
-  const failure =
-    state.phase === "error"
-      ? "원본 해설을 불러오지 못했어요. 잠시 후 다시 시도해 주세요."
-      : state.data.status === "unavailable"
-        ? state.data.message
-        : null;
-  if (
-    failure !== null ||
-    state.phase !== "done" ||
-    state.data.status !== "ready"
-  ) {
-    const message = failure ?? "원본 해설을 불러오지 못했어요.";
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-3 rounded-lg bg-elevated p-4">
-          <TriangleAlert
-            className="mt-0.5 h-4 w-4 shrink-0 text-fg-2"
-            strokeWidth={1.8}
-            aria-hidden
-          />
-          <p className="text-[15px] leading-relaxed text-fg-2">{message}</p>
-        </div>
-        <OriginalLink url={item.canonical_url} />
-      </div>
-    );
-  }
-
-  const easy = state.data.easy_original;
+  // 요청이 실패하거나(오프라인·서버 오류) 해설이 없다는 응답이 와도 실패 화면 대신
+  // 그 기사의 검증된 요약으로 완독 가이드를 바로 합성해 보여 준다 (lib/easy-synth.ts)
+  const easy =
+    state.phase === "done" && state.data.status === "ready" ? state.data.easy_original : synthesizeEasyOriginal(item);
   // 분량 가이드: 한국어 평균 읽기 속도 약 500자/분
   const chars = easy.sections.reduce((n, s) => n + s.heading.length + s.body.length, 0);
   const minutes = Math.max(1, Math.round(chars / 500));
@@ -128,7 +105,11 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       {easy.source_note && (
         <p className="t-meta -mt-4 leading-relaxed">
           {easy.source_note}
-          {state.data.source === "supabase" && !state.data.cached
+          {state.phase === "done" &&
+          state.data.status === "ready" &&
+          state.data.source === "supabase" &&
+          !state.data.cached &&
+          !state.data.synthesized
             ? " · 방금 생성됨"
             : ""}
         </p>

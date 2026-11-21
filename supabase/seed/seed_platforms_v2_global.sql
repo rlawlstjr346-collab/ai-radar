@@ -102,7 +102,7 @@ values
 ('liner', 'Liner (라이너)', 'llm_chat',
  '출처를 달아 주는 AI 검색과 리서치 도우미를 만드는 국내 스타트업이에요.',
  '답 옆에 근거 문서를 붙여 주는 방식이라, 과제·조사할 때 "이거 어디서 나온 말이야?"를 바로 확인하기 좋아요.',
- 'https://getliner.com', '#00C7AE',
+ 'https://liner.com', '#00C7AE',
  '무료 플랜이 있고, 고급 기능은 유료예요.',
  'directory_only', 'kr'),
 
@@ -565,7 +565,7 @@ values
 ('rinna', 'rinna', 'llm_chat',
  '일본어 대화 AI와 음성 AI를 만들어 온 일본 회사예요.',
  '일본어 공개 모델을 일찍부터 많이 내놓아서 일본 AI 커뮤니티에서 자주 쓰여요.',
- 'https://rinna.co.jp', '#F472B6',
+ 'https://huggingface.co/rinna', '#F472B6',
  '공개 모델은 허깅페이스에서 받을 수 있어요.',
  'directory_only', 'jp'),
 
