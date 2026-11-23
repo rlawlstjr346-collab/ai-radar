@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Link2, Radar, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { copyText } from "@/lib/clipboard";
@@ -24,11 +24,82 @@ interface Props {
 }
 
 const ICON_BTN =
-  "press grid h-8 w-8 place-items-center rounded-md bg-surface text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "press grid h-8 w-8 place-items-center rounded-md bg-surface/80 text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 /** 현재 선택을 공유 URL(?item= / ?platform=)로 */
 export function shareUrlFor(selection: NonNullable<Selection>, location: Pick<Location, "origin" | "pathname">): string {
   return `${location.origin}${location.pathname}?${selection.type}=${encodeURIComponent(selection.id)}`;
+}
+
+function selectedHeading(selection: Selection, items: FeedItem[], platforms: Platform[]): string {
+  if (!selection) return "";
+  if (selection.type === "item") return items.find((i) => i.id === selection.id)?.hook_title ?? "";
+  return platforms.find((p) => p.id === selection.id)?.name ?? "";
+}
+
+/** 우측 패널 스크롤 진행률(0~100) + 프로스티드 바 활성화 상태 추적 */
+function useReadingProgress(scrollRef: React.RefObject<HTMLDivElement | null>, resetKey: string) {
+  const [progress, setProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const top = el.scrollTop;
+    const max = Math.max(1, el.scrollHeight - el.clientHeight);
+    setScrolled(top > 12);
+    setProgress(Math.min(100, Math.max(0, (top / max) * 100)));
+  }, [scrollRef]);
+
+  useEffect(() => {
+    setProgress(0);
+    setScrolled(false);
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [resetKey, scrollRef]);
+
+  return { progress, scrolled, onScroll };
+}
+
+/** Apple Newsroom 스타일 프로스티드 상단 바 + 2px 읽기 진행 바 */
+function ReadingChrome({
+  title,
+  scrolled,
+  progress,
+  selection,
+  onClose,
+}: {
+  title: string;
+  scrolled: boolean;
+  progress: number;
+  selection: Selection;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      data-scrolled={scrolled ? "true" : "false"}
+      className="reading-sticky-bar sticky top-0 z-20 flex h-12 shrink-0 items-center justify-between gap-3 border-b border-transparent px-4 sm:px-6"
+    >
+      <p
+        className={`min-w-0 flex-1 truncate text-[13.5px] font-semibold text-fg transition-opacity duration-200 ${
+          scrolled && title ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!scrolled}
+      >
+        {title}
+      </p>
+      <PanelActions selection={selection} onClose={onClose} />
+      {/* 2px Reading Progress Bar */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-transparent"
+      >
+        <div
+          className="h-full bg-accent transition-[width] duration-75 ease-out"
+          style={{ width: `${scrolled ? progress : 0}%` }}
+        />
+      </div>
+    </div>
+  );
 }
 
 /** 우상단 [링크 복사] [닫기] — 복사하면 아이콘이 체크로 바뀌고 토스트가 뜬다 */
@@ -42,7 +113,7 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
   if (!selection) return null;
   return (
     <>
-      <div className="flex items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-1.5">
         <button
           type="button"
           onClick={async () => setCopied((await copyText(shareUrlFor(selection, window.location))) ? "ok" : "fail")}
@@ -81,7 +152,7 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
           item={item}
           platform={byId.get(item.platform_id)}
           onSelectPlatform={onSelectPlatform}
-          canReadEasy // 모든 기사: 손으로 쓴 해설 · DB 캐시 · 생성 · 요약 기반 합성 중 하나로 반드시 열린다
+          canReadEasy
         />
       );
   }
@@ -101,7 +172,7 @@ function EmptyPanel() {
       <div className="flex flex-col gap-1.5">
         <p className="text-[16px] font-semibold text-fg">레이더 요원 대기 중이에요</p>
         <p className="text-[14.5px] leading-relaxed text-fg-2">
-          가운데 카드를 누르면 여기서 4단계로 쉽게 풀어드리고,
+          가운데 카드를 누르면 여기서 1분 핵심 요약과 실전 활용 팁을 풀어드리고,
           <br />
           플랫폼 배지를 누르면 그곳이 어떤 사이트인지 소개해 드려요!
         </p>
@@ -114,17 +185,16 @@ function EmptyPanel() {
 export function DesktopPanel(props: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0 });
-  }, [key]);
+  const { progress, scrolled, onScroll } = useReadingProgress(scrollRef, key);
+  const title = selectedHeading(props.selection, props.items, props.platforms);
 
   return (
-    <aside aria-label="상세 보기" className="relative flex h-full flex-col bg-surface">
-      <div className="absolute right-3 top-3 z-20">
-        <PanelActions selection={props.selection} onClose={props.onClose} />
-      </div>
-      <div ref={scrollRef} className="thin-scroll h-full overflow-y-auto" key={key}>
-        <div className="animate-fade-in">
+    <aside aria-label="상세 보기" className="relative flex h-full flex-col border-l border-line bg-surface">
+      <div ref={scrollRef} onScroll={onScroll} className="thin-scroll h-full overflow-y-auto">
+        {props.selection && (
+          <ReadingChrome title={title} scrolled={scrolled} progress={progress} selection={props.selection} onClose={props.onClose} />
+        )}
+        <div key={key} className="animate-article-enter -mt-2">
           <PanelContent {...props} />
         </div>
       </div>
@@ -132,7 +202,7 @@ export function DesktopPanel(props: Props) {
   );
 }
 
-/** 모바일(<768px) 바텀시트. 핸들을 아래로 끌거나, 바깥을 누르거나, ESC 로 닫힌다. (모바일에서만 렌더링됨) */
+/** 모바일(<768px) 바텀시트. 핸들을 아래로 끌거나, 바깥을 누르거나, ESC 로 닫힌다. */
 export function BottomSheet(props: Props) {
   const open = props.selection !== null;
   const [dragY, setDragY] = useState(0);
@@ -142,6 +212,7 @@ export function BottomSheet(props: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { onClose } = props;
   const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
+  const { progress, scrolled, onScroll } = useReadingProgress(scrollRef, key);
 
   useEffect(() => {
     if (!open) return;
@@ -157,14 +228,13 @@ export function BottomSheet(props: Props) {
   }, [open, onClose]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0 });
     setDragY(0);
   }, [key]);
 
   if (!open) return null;
 
   const onPointerDown = (e: React.PointerEvent) => {
-    if ((e.target as HTMLElement).closest("button")) return; // 닫기 버튼은 드래그 대상 아님
+    if ((e.target as HTMLElement).closest("button")) return;
     startY.current = e.clientY;
     setDragging(true);
     e.currentTarget.setPointerCapture?.(e.pointerId);
@@ -200,7 +270,8 @@ export function BottomSheet(props: Props) {
         className="animate-sheet-up absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col overflow-hidden rounded-t-2xl bg-surface focus:outline-none"
       >
         <div
-          className="flex shrink-0 touch-none items-center justify-between px-4 pb-1 pt-2.5"
+          data-scrolled={scrolled ? "true" : "false"}
+          className="reading-sticky-bar relative flex shrink-0 touch-none items-center justify-between border-b border-transparent px-4 pb-1.5 pt-2.5"
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
@@ -209,9 +280,18 @@ export function BottomSheet(props: Props) {
           <span className="w-[4.5rem]" />
           <span className="h-1 w-10 cursor-grab rounded-full bg-line-strong active:cursor-grabbing" aria-hidden />
           <PanelActions selection={props.selection} onClose={onClose} />
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-transparent">
+            <div className="h-full bg-accent transition-[width] duration-75 ease-out" style={{ width: `${scrolled ? progress : 0}%` }} />
+          </div>
         </div>
-        <div ref={scrollRef} key={key} className="thin-scroll overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">
-          <PanelContent {...props} />
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className="thin-scroll overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]"
+        >
+          <div key={key} className="animate-article-enter">
+            <PanelContent {...props} />
+          </div>
         </div>
       </div>
     </div>
@@ -220,7 +300,6 @@ export function BottomSheet(props: Props) {
 
 /**
  * 분할 창·노트북(768~1359px) 오른쪽 슬라이드 오버 드로어.
- * 상시 공간을 차지하지 않고, 반투명 딤 위로 열린다. X·바깥 클릭·Esc 로 닫힌다.
  */
 export function SideDrawer(props: Props) {
   const open = props.selection !== null;
@@ -228,6 +307,8 @@ export function SideDrawer(props: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { onClose } = props;
   const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
+  const { progress, scrolled, onScroll } = useReadingProgress(scrollRef, key);
+  const title = selectedHeading(props.selection, props.items, props.platforms);
 
   useEffect(() => {
     if (!open) return;
@@ -241,10 +322,6 @@ export function SideDrawer(props: Props) {
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({ top: 0 });
-  }, [key]);
 
   if (!open) return null;
   return (
@@ -262,13 +339,13 @@ export function SideDrawer(props: Props) {
         aria-modal="true"
         aria-label="상세 보기"
         tabIndex={-1}
-        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(520px,92vw)] min-w-0 flex-col bg-surface focus:outline-none"
+        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(560px,92vw)] min-w-0 flex-col bg-surface focus:outline-none"
       >
-        <div className="absolute right-3 top-3 z-20">
-          <PanelActions selection={props.selection} onClose={onClose} />
-        </div>
-        <div ref={scrollRef} key={key} className="thin-scroll h-full overflow-y-auto overscroll-contain">
-          <PanelContent {...props} />
+        <div ref={scrollRef} onScroll={onScroll} className="thin-scroll h-full overflow-y-auto overscroll-contain">
+          <ReadingChrome title={title} scrolled={scrolled} progress={progress} selection={props.selection} onClose={onClose} />
+          <div key={key} className="animate-article-enter -mt-2">
+            <PanelContent {...props} />
+          </div>
         </div>
       </div>
     </div>

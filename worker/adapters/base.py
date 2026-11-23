@@ -140,9 +140,34 @@ class FeedGuard:
             self.sources = {}
             self._extra_meta = {}
 
-    def is_cooling_down(self, url: str) -> Optional[datetime]:
+    def get_extra(self, key: str, default: Any = None) -> Any:
         with self._lock:
-            entry = self.sources.get(url)
+            return self._extra_meta.get(key, default)
+
+    def set_extra(self, key: str, value: Any) -> None:
+        with self._lock:
+            self._extra_meta[key] = value
+            self._dirty = True
+
+    @staticmethod
+    def _normalize_source_key(url: str) -> str:
+        """동적 타임스탬프 쿼리(created_at_i>...)로 live-feed-meta.json 이 무한 비대해지는 것을 방지."""
+        if "hn.algolia.com" in url and "created_at_i" in url:
+            parts = urlsplit(url)
+            q = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k != "numericFilters"]
+            return urlunsplit((parts.scheme, parts.netloc, parts.path, urlencode(q), ""))
+        return url
+
+    def _prune_stale_sources(self) -> None:
+        """과거 동적 HN 쿼리 URL 등 불필요한 잔재 키 정리."""
+        stale = [k for k in self.sources if "hn.algolia.com" in k and "created_at_i" in k]
+        for k in stale:
+            self.sources.pop(k, None)
+
+    def is_cooling_down(self, url: str) -> Optional[datetime]:
+        key = self._normalize_source_key(url)
+        with self._lock:
+            entry = self.sources.get(key) or self.sources.get(url)
             until_raw = entry.get("cooldown_until") if entry else None
         until = parse_dt(until_raw)
         if until and self._now() < until:
@@ -150,8 +175,9 @@ class FeedGuard:
         return None
 
     def conditional_headers(self, url: str) -> dict[str, str]:
+        key = self._normalize_source_key(url)
         with self._lock:
-            entry = self.sources.get(url) or {}
+            entry = self.sources.get(key) or self.sources.get(url) or {}
             etag = entry.get("etag")
             last_mod = entry.get("last_modified")
         headers: dict[str, str] = {}
@@ -190,8 +216,9 @@ class FeedGuard:
     ) -> None:
         now = self._now()
         now_iso = now.isoformat().replace("+00:00", "Z")
+        key = self._normalize_source_key(url)
         with self._lock:
-            entry = dict(self.sources.get(url) or {})
+            entry = dict(self.sources.get(key) or {})
             if source_id:
                 entry["source_id"] = source_id
             if platform_id:
@@ -214,14 +241,14 @@ class FeedGuard:
                     entry["etag"] = resp.headers["etag"]
                 if resp.headers.get("last-modified"):
                     entry["last_modified"] = resp.headers["last-modified"]
-            self.sources[url] = entry
+            self.sources[key] = entry
             self._dirty = True
 
     def save(self) -> None:
         if not self.meta_path or not self._dirty:
             return
         self.meta_path.parent.mkdir(parents=True, exist_ok=True)
-        existing_extra: dict[str, Any] = dict(self._extra_meta)
+        existing_extra: dict[str, Any] = {}
         if self.meta_path.exists():
             try:
                 disk = json.loads(self.meta_path.read_text(encoding="utf-8"))
@@ -231,9 +258,13 @@ class FeedGuard:
                             existing_extra[k] = v
             except Exception:
                 pass
+        with self._lock:
+            self._prune_stale_sources()
+            existing_extra.update(self._extra_meta)
+            sources_sorted = dict(sorted(self.sources.items()))
         payload: dict[str, Any] = {
             "updated_at": self._now().isoformat().replace("+00:00", "Z"),
-            "sources": dict(sorted(self.sources.items())),
+            "sources": sources_sorted,
         }
         payload.update(existing_extra)
         self.meta_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

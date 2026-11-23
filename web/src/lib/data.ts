@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import samplePlatforms from "@/data/platforms.sample.json";
 import { SAMPLE_FEED } from "@/data/sample-feed";
-import { loadLiveSnapshot, mergeWithLiveSnapshot } from "./live-snapshot";
+import { loadLiveSnapshot, loadLiveSnapshotAsync, mergeWithLiveSnapshot, type LiveSnapshot } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginalMode, Entity, FeedItem, Lifecycle, Platform, RadarData, Term } from "./types";
 
 /** hot 은 최근 유입분을 넉넉히 받아 화면에서 신선도 정렬 후 최대 60개 노출, warm 은 중요도 상위 60개 */
@@ -28,14 +28,13 @@ export function easyModeForDb(): EasyOriginalMode {
   return process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() && process.env.ANTHROPIC_API_KEY?.trim() ? "on_demand" : "cache_only";
 }
 
-export function sampleData(notice: string): RadarData {
+function buildSampleRadarData(notice: string, snapshot: LiveSnapshot): RadarData {
   const nowIso = new Date().toISOString();
   // 기존 샘플 기사의 시간을 Date.now()로 인위적으로 덮어쓰지 않고 실제 원문 발행 시각(published_at) 그대로 유지한다
   const base = SAMPLE_FEED.map((item) => ({
     ...item,
     created_at: item.published_at ?? item.created_at,
   }));
-  const snapshot = loadLiveSnapshot();
   const items = mergeWithLiveSnapshot(base, snapshot.items);
   return {
     platforms: samplePlatforms as Platform[],
@@ -48,15 +47,22 @@ export function sampleData(notice: string): RadarData {
   };
 }
 
+export function sampleData(notice: string): RadarData {
+  return buildSampleRadarData(notice, loadLiveSnapshot());
+}
+
 /**
  * 화면에 필요한 데이터 전체.
  * - 1순위: Supabase DB (환경변수 연결 시)
- * - 2순위: web/public/live-feed.json 최신 스냅샷 + 기본 내장 피드(118건) 병합
+ * - 2순위: 원격 최신 GitHub Raw live-feed.json (60초 ISR) + 로컬 번들 폴백 + 기본 내장 피드(118건) 병합
  * - 3순위: 기본 내장 피드(118건) — 어떤 장애에서도 화면이 깨지지 않게
  */
 export async function loadRadarData(): Promise<RadarData> {
   const env = getSupabaseEnv();
-  if (!env) return sampleData("아직 데이터베이스가 연결되지 않아서 샘플 소식으로 보여드리고 있어요.");
+  if (!env) {
+    const snapshot = await loadLiveSnapshotAsync();
+    return buildSampleRadarData("아직 데이터베이스가 연결되지 않아서 샘플 소식으로 보여드리고 있어요.", snapshot);
+  }
 
   try {
     const sb = createClient(env.url, env.anonKey, { auth: { persistSession: false } });
@@ -80,14 +86,18 @@ export async function loadRadarData(): Promise<RadarData> {
     if (warmRes.error) throw warmRes.error;
 
     const platforms = (platformsRes.data ?? []) as Platform[];
-    if (platforms.length === 0) return sampleData("데이터베이스에 플랫폼 시드가 아직 없어서 샘플로 보여드려요.");
+    if (platforms.length === 0) {
+      const snapshot = await loadLiveSnapshotAsync();
+      return buildSampleRadarData("데이터베이스에 플랫폼 시드가 아직 없어서 샘플로 보여드려요.", snapshot);
+    }
     const items = ([...(hotRes.data ?? []), ...(warmRes.data ?? [])] as unknown as Record<string, unknown>[])
       .map(normalizeFeedRow)
       .filter((x): x is FeedItem => x !== null);
     return { platforms, items, source: "supabase", generatedAt: new Date().toISOString(), easyMode: easyModeForDb() };
   } catch (e) {
     console.error("[ai-radar] Supabase load failed, falling back to sample data:", e);
-    return sampleData("데이터베이스 연결에 잠깐 문제가 있어서 샘플 소식으로 보여드리고 있어요.");
+    const snapshot = await loadLiveSnapshotAsync();
+    return buildSampleRadarData("데이터베이스 연결에 잠깐 문제가 있어서 샘플 소식으로 보여드리고 있어요.", snapshot);
   }
 }
 

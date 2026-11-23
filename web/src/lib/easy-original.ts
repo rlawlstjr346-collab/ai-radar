@@ -11,7 +11,7 @@ import { SAMPLE_FEED } from "@/data/sample-feed";
 import { getSupabaseEnv } from "./data";
 import { buildEasyOriginalUserMessage, EASY_ORIGINAL_PROMPT_VERSION, EASY_ORIGINAL_SYSTEM } from "./easy-original-prompt";
 import { synthesizeEasyOriginal, type SynthInput } from "./easy-synth";
-import { loadLiveSnapshot } from "./live-snapshot";
+import { loadLiveSnapshotAsync } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginal, EasyOriginalResponse, Entity, Term } from "./types";
 
 /**
@@ -206,7 +206,7 @@ export async function getEasyOriginal(id: string, deps: EasyDeps = {}): Promise<
   if (!ID_RE.test(id)) return unavailable(400, "not_found", "잘못된 기사 ID예요.");
 
   const env = getSupabaseEnv();
-  if (!env && !deps.anon) return fromSample(id);
+  if (!env && !deps.anon) return await fromSample(id);
 
   const anon = deps.anon ?? createClient(env!.url, env!.anonKey, { auth: { persistSession: false } });
   const { data, error } = await anon
@@ -326,9 +326,9 @@ function synthInputFromRow(row: DbRow, summary: SummaryRow | undefined): SynthIn
   };
 }
 
-function fromSample(id: string): EasyResult {
-  // 1) 최신 스냅샷(live-feed.json) 기사 우선 조회
-  const snap = loadLiveSnapshot();
+async function fromSample(id: string): Promise<EasyResult> {
+  // 1) 최신 스냅샷(원격 GitHub Raw 우선 + 로컬 번들 폴백) 기사 우선 조회
+  const snap = await loadLiveSnapshotAsync();
   const liveItem = snap.items.find((i) => i.id === id);
   if (liveItem) {
     const liveEasy = snap.easyOriginals[id];

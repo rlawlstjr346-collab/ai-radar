@@ -1020,10 +1020,15 @@ values
    'https://www.reddit.com/r/singularity/.rss',
    'rss', 'social', true),
 
-  -- X(트위터) 무과금 수집기: 커뮤니티에 공유된 트윗 링크 → 공식 무료 oEmbed (adapters/x_oembed.py)
+  -- X(트위터) 무과금 다중 폴백 수집기 (매 20분): Syndication + Nitter/RSS 브리지 + 커뮤니티 역추적 oEmbed
   ('x', 'X oEmbed (community-shared posts)',
    'https://publish.twitter.com/oembed',
-   'api', 'social', true)
+   'api', 'social', true),
+
+  -- GitHub 핫 AI 오픈소스 & 신규 릴리즈 고유 수집기 (매 1시간 게이트, 빈손/중복 방어)
+  ('github', 'GitHub Hot AI Repos & Releases',
+   'https://api.github.com/search/repositories?ai_radar_hot=1',
+   'api', 'dev', true)
 
 on conflict (platform_id, name) do update set
   endpoint         = excluded.endpoint,

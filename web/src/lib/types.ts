@@ -31,6 +31,21 @@ export interface Entity {
   tags: string[];
 }
 
+/** 우측 읽기 탭 — '어디에 써먹을까요? · 실전 효용 & 활용 팁' */
+export interface UtilityTip {
+  when_needed: string;
+  work_utility: string;
+  practical_tip: string;
+}
+
+/** 하위 AI 기획팀 에이전트용 구조화 시그널 메타 */
+export interface PlanningMeta {
+  signal_type: string;
+  product_domain: string;
+  benchmark_point: string;
+  actionable_idea: string;
+}
+
 /** items + summaries 를 화면용으로 합친 카드 1장 */
 export interface FeedItem {
   id: string;
@@ -42,6 +57,8 @@ export interface FeedItem {
   source_count: number;
   /** 이 소식을 포착한 플랫폼들 (출처 스택 표시용). 최소 [platform_id] */
   source_platforms: string[];
+  /** X(트위터) 작성자 계정명 (예: @OpenAI, @vercel) */
+  author_handle?: string | null;
   /** hot: 0~7일 메인 피드 / warm: 8~30일 지난 주요 소식 / archived: 31일+ */
   lifecycle_status: Lifecycle;
   published_at: string | null;
@@ -61,6 +78,12 @@ export interface FeedItem {
   analogy_ko: string | null;
   why_ko: string | null;
   caveats_ko: string | null;
+  /** 형광펜 핵심 요약 (1~2문장, ==하이라이트== 마커 포함 가능) */
+  highlight_summary?: string | null;
+  /** 실전 효용 & 활용 팁 */
+  utility_tip?: UtilityTip | null;
+  /** AI 기획팀 에이전트 연동 메타 */
+  planning_meta?: PlanningMeta | null;
   difficulty: Difficulty;
   terms: Term[];
   entities: Entity[];

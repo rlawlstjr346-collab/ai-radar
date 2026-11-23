@@ -1,18 +1,22 @@
 name: collect
 
-# 매시 정각 수집:
-# - Supabase 시크릿(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)이 있으면 → DB 적재 + 요약 + TTL 정리
-# - 시크릿이 없는 0원 방생 환경이면 → --snapshot-json web/public/live-feed.json 으로 실제 최신 기사 수집 후
-#   변경이 1건 이상 있을 때만 web/public/live-feed.json + web/public/live-feed-meta.json 자동 커밋 & main 푸시
-#   (Vercel 자동 재배포 트리거 — [skip ci] 미포함, 변경 0건이면 커밋 생략)
-# - 수동 실행(workflow_dispatch)에서 dry_run 을 켜면 DB/커밋 없이 수집·점수만 확인
+# 매 20분 자동 수집 (X 실시간 연동 매 20분 + GitHub 핫 오픈소스·릴리즈 매 1시간 게이트 + 글로벌 AI 뉴스):
+# - Public 저장소 + 무부하 구조:
+#   1) 새 기사/실질 변경이 0건이면 커밋을 스킵(No-op)
+#   2) web/vercel.json 의 ignoreCommand 로 피드 JSON 만 바뀐 커밋은 Vercel 전체 재빌드를 건너뛰어
+#      일일 배포 한도(100회)를 0% 소모하고, Next.js ISR(revalidate: 60) + Raw JSON 원격 fetch 로
+#      최대 60초 안에 최신 피드를 즉시 서빙한다.
 on:
   schedule:
-    - cron: "0 * * * *"         # 1시간마다
+    - cron: "*/20 * * * *"      # 20분마다 (하루 72회)
   workflow_dispatch:
     inputs:
       dry_run:
         description: "DB/LLM/커밋 없이 수집·점수만 확인"
+        type: boolean
+        default: false
+      force_github:
+        description: "GitHub 1시간 주기 게이트를 무시하고 즉시 수집"
         type: boolean
         default: false
 
@@ -48,7 +52,7 @@ jobs:
             fi
           else
             echo "mode=snapshot" >> "$GITHUB_OUTPUT"
-            echo "::notice title=serverless snapshot mode::Supabase 시크릿이 없어 방생형 스냅샷 모드(live-feed.json)로 실행합니다."
+            echo "::notice title=serverless snapshot mode::Supabase 시크릿이 없어 무부하 스냅샷 모드(live-feed.json + planning-feed.json)로 실행합니다."
           fi
 
       - uses: actions/checkout@v4
@@ -75,6 +79,8 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_GITHUB_COLLECT: ${{ inputs.force_github == true && '1' || '0' }}
           SUMMARY_TOP_N: ${{ vars.SUMMARY_TOP_N || '4' }}
           DAILY_SUMMARY_CAP: ${{ vars.DAILY_SUMMARY_CAP || '96' }}
         run: |
@@ -85,14 +91,15 @@ jobs:
           else
             python worker/run_pipeline.py \
               --snapshot-json web/public/live-feed.json \
-              --meta-json web/public/live-feed-meta.json
+              --meta-json web/public/live-feed-meta.json \
+              --planning-json web/public/data/planning-feed.json
           fi
 
-      - name: Commit and push live snapshot (only when live-feed.json changed)
+      - name: Commit and push live snapshot (No-op when 0 new items)
         if: steps.gate.outputs.mode == 'snapshot'
         run: |
-          if git diff --quiet -- web/public/live-feed.json && [ -z "$(git ls-files --others --exclude-standard -- web/public/live-feed.json)" ]; then
-            echo "변경된 기사가 없어 커밋을 생략합니다."
+          if git diff --quiet -- web/public/live-feed.json web/public/data/planning-feed.json && [ -z "$(git ls-files --others --exclude-standard -- web/public/live-feed.json web/public/data/planning-feed.json)" ]; then
+            echo "변경된 기사가 0건이라 커밋을 생략합니다 (No-op)."
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -101,5 +108,9 @@ jobs:
           if [ -f web/public/live-feed-meta.json ]; then
             git add web/public/live-feed-meta.json
           fi
-          git commit -m "chore(feed): update live-feed snapshot"
+          if [ -f web/public/data/planning-feed.json ]; then
+            git add web/public/data/planning-feed.json
+          fi
+          git commit -m "chore(feed): update live-feed snapshot [skip ci]"
+          git pull --rebase --autostash origin main || true
           git push origin main

@@ -85,9 +85,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true", help="DB/LLM 없이 실제 수집·정규화·점수까지만")
     ap.add_argument("--snapshot-json", type=Path, default=None, help="방생형 무서버 JSON 스냅샷 출력 경로 (예: web/public/live-feed.json)")
     ap.add_argument("--meta-json", type=Path, default=None, help="ETag/Last-Modified/Circuit Breaker 메타 파일 경로")
+    ap.add_argument("--planning-json", type=Path, default=None, help="하위 AI 기획팀 에이전트용 피드 JSON 출력 경로 (예: web/public/data/planning-feed.json)")
+    ap.add_argument("--force-github", action="store_true", help="GitHub 1시간 주기 게이트를 무시하고 즉시 수집")
     ap.add_argument("--no-summarize", action="store_true")
     ap.add_argument("--show", type=int, default=20, help="콘솔에 보여줄 상위 후보 수")
     args = ap.parse_args(argv)
+
+    if args.force_github:
+        os.environ["FORCE_GITHUB_COLLECT"] = "1"
 
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -132,13 +137,16 @@ def main(argv: list[str] | None = None) -> int:
                 dk = id_to_dedup.get(item_id)
                 if dk:
                     summaries_by_dedup[dk] = srow
+        planning_path = args.planning_json or (args.snapshot_json.parent / "data" / "planning-feed.json")
         payload, changed = build_and_save_snapshot(
             args.snapshot_json,
             report.candidates,
             summaries_by_dedup=summaries_by_dedup,
             meta_path=meta_path,
+            planning_path=planning_path,
         )
         print(f"\n=== 6) 스냅샷 저장: {args.snapshot_json} ({payload['item_count']}건, changed={changed}) ===")
+        print(f"       기획팀 피드: {planning_path}")
 
     ok_or_skipped = sum(1 for r in report.sources if not r.error)
     if ok_or_skipped == 0:

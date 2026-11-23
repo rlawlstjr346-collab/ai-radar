@@ -1,7 +1,56 @@
 {
-  "_comment": "X(트위터) 무과금 수집기: 아래 공개 커뮤니티 피드에서 공유된 x.com/.../status/... 링크를 찾아 publish.twitter.com/oembed 로 본문을 가져온다. 피드 하나가 실패해도 나머지는 계속.",
-  "max_tweets": 40,
+  "_comment": "X(트위터) 0원 다중 폴백 실시간 수집기: ① X Syndication 공개 타임라인 ② 가용 Nitter/RSS 브리지 자동 순회 ③ HN·GeekNews·Product Hunt 등 커뮤니티 x.com 링크 역추적 + publish.twitter.com/oembed 를 병렬(timeout 5초, 개별 격리)로 결합한다.",
+  "max_tweets": 45,
+  "per_request_timeout": 5.0,
+  "lookback_hours": 72,
+  "require_ai": true,
+  "target_accounts": [
+    "OpenAI",
+    "AnthropicAI",
+    "GoogleDeepMind",
+    "xAI",
+    "cursor_ai",
+    "vercel",
+    "v0",
+    "supabase",
+    "huggingface",
+    "perplexity_ai",
+    "LangChainAI",
+    "ollama",
+    "MistralAI",
+    "deepseek_ai",
+    "Alibaba_Qwen",
+    "karpathy",
+    "simonw",
+    "levelsio",
+    "rauchg",
+    "swyx"
+  ],
+  "nitter_instances": [
+    "https://xcancel.com/{handle}/rss",
+    "https://nitter.poast.org/{handle}/rss",
+    "https://nitter.privacydev.net/{handle}/rss",
+    "https://nitter.net/{handle}/rss"
+  ],
   "discovery_feeds": [
+    {
+      "name": "Hacker News (x.com)",
+      "kind": "hn_algolia",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=x.com%20status&hitsPerPage=50"
+    },
+    {
+      "name": "Hacker News (twitter.com)",
+      "kind": "hn_algolia",
+      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=twitter.com%20status%20AI&hitsPerPage=40"
+    },
+    {
+      "name": "GeekNews",
+      "url": "https://news.hada.io/rss/news"
+    },
+    {
+      "name": "Product Hunt",
+      "url": "https://www.producthunt.com/feed"
+    },
     {
       "name": "r/LocalLLaMA",
       "url": "https://www.reddit.com/r/LocalLLaMA/.rss"
@@ -15,17 +64,8 @@
       "url": "https://www.reddit.com/r/singularity/.rss"
     },
     {
-      "name": "Hacker News",
-      "kind": "hn_algolia",
-      "url": "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=x.com%20status&hitsPerPage=50"
-    },
-    {
       "name": "Hatena IT",
       "url": "https://b.hatena.ne.jp/hotentry/it.rss"
-    },
-    {
-      "name": "GeekNews",
-      "url": "https://news.hada.io/rss/news"
     },
     {
       "name": "PyTorch KR",
@@ -43,6 +83,5 @@
       "name": "Import AI",
       "url": "https://importai.substack.com/feed"
     }
-  ],
-  "require_ai": true
+  ]
 }

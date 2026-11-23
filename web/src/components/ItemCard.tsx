@@ -150,7 +150,10 @@ function Meta({
       {edition && (
         <>
           <span aria-hidden>·</span>
-          <span className="whitespace-nowrap">{edition.label}</span>
+          <span className="whitespace-nowrap">
+            {edition.label}
+            {item.platform_id === "x" && item.author_handle ? ` ${item.author_handle}` : ""}
+          </span>
         </>
       )}
       <span aria-hidden>·</span>

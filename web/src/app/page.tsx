@@ -1,8 +1,8 @@
 import RadarApp from "@/components/RadarApp";
 import { loadRadarData } from "@/lib/data";
 
-// 워커가 6시간마다 수집하므로 10분 캐시면 충분
-export const revalidate = 600;
+// 20분 자동 수집 스냅샷을 재빌드 없이 60초 ISR + Raw JSON 원격 fetch 로 가볍게 서빙
+export const revalidate = 60;
 
 export default async function Home() {
   const data = await loadRadarData();

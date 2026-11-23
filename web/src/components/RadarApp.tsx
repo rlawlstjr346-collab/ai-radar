@@ -20,6 +20,7 @@ import type { FeedItem, Platform, RadarData } from "@/lib/types";
 
 import { BottomSheet, DesktopPanel, SideDrawer, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
+import FontSizeToggle from "./FontSizeToggle";
 import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
 import Sidebar, { CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
 import ThemeToggle from "./ThemeToggle";
@@ -81,12 +82,12 @@ function FeedHeader({
   return (
     <header className="flex min-w-0 flex-col gap-3 @3xl:flex-row @3xl:items-center @3xl:gap-6">
       <div className="flex min-w-0 shrink-0 flex-wrap items-baseline gap-x-3 gap-y-1">
-        <h1 className="text-[22px] font-bold tracking-[-0.02em] text-fg">{isFeed ? "실시간 레이더" : "지난 주요 소식"}</h1>
+        <h1 className="text-[clamp(21px,1.3vw+5px,26px)] font-bold tracking-[-0.02em] text-fg">{isFeed ? "실시간 레이더" : "지난 주요 소식"}</h1>
         <span className="t-meta inline-flex items-center gap-1.5">
           {isFeed ? (
             <>
               <span className="live-ping" aria-hidden />
-              <span>Live · 매시 정각 스캔</span>
+              <span>Live · 20분 자동 스캔</span>
             </>
           ) : (
             <span>8~30일 전 · 중요도 순</span>
@@ -471,8 +472,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const lastCollectedLabel = useMemo(() => formatLastCollected(data.lastCollectedAt, now), [data.lastCollectedAt, now]);
 
   return (
-    // 1024~1359: 사이드바(220) + 피드 2단 / >=1360: + 우측 고정 패널 3단. 모든 열은 min-w-0 로 좌우 밀림 방지
-    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[220px_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[228px_minmax(0,1fr)_clamp(420px,32vw,520px)]">
+    // 리눅스·고해상도 와이드 화면 3단 비율 최적화 (모바일·분할창 반응형 유지)
+    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[clamp(232px,15vw,272px)_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[clamp(236px,15vw,276px)_minmax(0,1fr)_clamp(460px,36vw,640px)]">
       {/* 좌측: 데스크톱 사이드바 */}
       <div className="hidden min-w-0 overflow-hidden bg-surface lg:block">
         <Sidebar
@@ -495,8 +496,9 @@ export default function RadarApp({ data }: { data: RadarData }) {
           <Logo />
           <div className="flex shrink-0 items-center gap-2">
             {data.source === "sample" && (
-              <span className="whitespace-nowrap rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2">엄선 에디션</span>
+              <span className="whitespace-nowrap rounded bg-elevated px-2 py-0.5 text-[13px] font-medium text-fg-2">엄선 에디션</span>
             )}
+            <FontSizeToggle compact />
             <ThemeToggle compact />
           </div>
         </div>
@@ -507,7 +509,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       {/* 중앙 */}
       {/* 데이터 출처 표시는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
       <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-8 lg:py-8">
-        <div className="mx-auto w-full min-w-0 max-w-[920px]">
+        <div className="mx-auto w-full min-w-0 max-w-[1040px]">
 
         {view === "directory" ? (
           <DirectoryView

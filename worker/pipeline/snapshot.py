@@ -17,6 +17,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
+from pipeline.curator import build_curated_fields, is_blocked_noise
 from pipeline.merge import Candidate
 from pipeline.store import load_seed_platform_names
 from pipeline.translator import (
@@ -31,8 +32,10 @@ PLATFORMS_SAMPLE_JSON = REPO_ROOT / "web" / "src" / "data" / "platforms.sample.j
 
 RETENTION_DAYS = 30
 HOT_DAYS = 7
-MAX_SNAPSHOT_ITEMS = 80
-PER_PLATFORM_MAX = 5
+MAX_SNAPSHOT_ITEMS = 100
+MAX_HOT_ITEMS = 70
+MAX_WARM_ITEMS = 30
+PER_PLATFORM_MAX = 6
 
 VALID_HTTPS_RE = re.compile(r"^https://[^/\s]+\.[^/\s]+")
 BAD_HOST_RE = re.compile(r"(?:^|//)(?:[^/]*\.)?(?:example\.(?:com|org)|localhost|127\.0\.0\.1)(?:[:/]|$)", re.I)
@@ -218,6 +221,9 @@ def _difficulty_for(c: Candidate) -> int:
 
 def _benefit_tag_for(c: Candidate) -> Optional[str]:
     hay = f"{c.title} {c.body[:400]}".lower()
+    if c.metrics.get("feed") == "github_trending":
+        stars = c.metrics.get("stars")
+        return f"GitHub 급상승 ★{stars}"[:16] if stars else "급상승 AI 오픈소스"
     if c.metrics.get("feed") == "github_release":
         return "새 정식 버전 릴리스"
     if any(k in hay for k in ("apache 2.0", "mit license", "open-source", "open source", "open weights", "오픈소스")):
@@ -387,6 +393,8 @@ def candidate_to_snapshot_item(
     raw_title = sanitize_text(c.title, strip_emoji=True)
     if not raw_title or PROFANITY_RE.search(raw_title):
         return None
+    if is_blocked_noise(raw_title, c.body or "", c.canonical_url):
+        return None
     if c.platform_id in {"bluesky", "x"} and len(raw_title) < 12:
         return None
     if c.platform_id == "aitimes" and not KR_AI_NEWS_RE.search(f"{raw_title} {c.body[:300]}"):
@@ -395,6 +403,15 @@ def candidate_to_snapshot_item(
     was_translated = False
     body_for_easy = _clean_excerpt(c.body, 750)
     title_ko = raw_title
+    author_handle = str(c.metrics.get("author_handle") or "").strip() or None
+    if not author_handle and c.platform_id == "x":
+        m_handle = re.match(r"^(@[A-Za-z0-9_]{1,15}):", raw_title)
+        if m_handle:
+            author_handle = m_handle.group(1)
+
+    highlight_summary: str = ""
+    utility_tip: dict[str, str] = {}
+    planning_meta: dict[str, str] = {}
 
     if llm_summary:
         hook_title = sanitize_text(str(llm_summary.get("hook_title") or raw_title), strip_emoji=True)
@@ -421,6 +438,24 @@ def candidate_to_snapshot_item(
         ] or _extract_entities(c, platform_name)
         was_translated = needs_translation(raw_title)
         body_for_easy = what_ko
+        curated = build_curated_fields(
+            title_ko=title_ko,
+            original_title=raw_title,
+            body_ko=what_ko,
+            raw_body=c.body or "",
+            platform_id=c.platform_id,
+            platform_name=platform_name,
+            category=c.category,
+            cat_label=CATEGORY_LABELS.get(c.category, "AI"),
+            seen_platforms=seen_plats,
+            metrics=c.metrics,
+            entities=entities,
+            benefit_tag=benefit_tag,
+            llm_why=why_ko,
+        )
+        highlight_summary = sanitize_text(curated["highlight_summary"])
+        utility_tip = {k: sanitize_text(v) for k, v in curated["utility_tip"].items()}
+        planning_meta = {k: sanitize_text(v) for k, v in curated["planning_meta"].items()}
     else:
         tr = translator.translate_article(url=c.canonical_url, title=raw_title, body=c.body) if translator else None
         if tr is not None:
@@ -440,26 +475,39 @@ def candidate_to_snapshot_item(
         hook_title = title_ko if len(title_ko) <= 78 else title_ko[:77].rstrip() + "…"
         benefit_tag = _benefit_tag_for(c)
         cat_label = CATEGORY_LABELS.get(c.category, "AI")
-        multi_note = f" (총 {len(seen_plats)}개 출처에서 동시 포착)" if len(seen_plats) > 1 else ""
-        context_ko = f"{platform_name} 공식 피드에서 포착된 {cat_label} 분야 최신 소식이에요{multi_note}."
-        excerpt_ko = _clean_excerpt(body_ko, 300) if body_ko else ""
-        if excerpt_ko and excerpt_ko.lower() != title_ko.lower() and not needs_translation(excerpt_ko):
-            what_ko = f"'{hook_title}'에 관한 소식이에요. 핵심 내용: {excerpt_ko}"
-        else:
-            what_ko = f"{platform_name}에서 '{hook_title}' 소식을 공개했어요. 자세한 배경과 상세 내용은 원문에서 바로 확인할 수 있어요."
+        entities = _extract_entities(c, platform_name)
+        curated = build_curated_fields(
+            title_ko=title_ko,
+            original_title=raw_title,
+            body_ko=body_ko,
+            raw_body=c.body or "",
+            platform_id=c.platform_id,
+            platform_name=platform_name,
+            category=c.category,
+            cat_label=cat_label,
+            seen_platforms=seen_plats,
+            metrics=c.metrics,
+            entities=entities,
+            benefit_tag=benefit_tag,
+            llm_why=llm_why if (llm_why and not needs_translation(llm_why)) else "",
+        )
+        context_ko = sanitize_text(curated["context_ko"])
+        what_ko = sanitize_text(curated["what_ko"])
+        why_ko = sanitize_text(curated["why_ko"])
+        highlight_summary = sanitize_text(curated["highlight_summary"])
+        utility_tip = {k: sanitize_text(v) for k, v in curated["utility_tip"].items()}
+        planning_meta = {k: sanitize_text(v) for k, v in curated["planning_meta"].items()}
         analogy_ko = None
-        why_ko = llm_why if (llm_why and not needs_translation(llm_why)) else CATEGORY_WHY.get(c.category, CATEGORY_WHY["industry"])
         caveats_ko = _detect_language_note(raw_title, c.body, region, translated=was_translated)
         difficulty = _difficulty_for(c)
         summary_blob = " ".join(x for x in (context_ko, what_ko, why_ko, caveats_ko) if x)
         terms = _extract_terms(summary_blob)
-        entities = _extract_entities(c, platform_name)
         body_for_easy = body_ko
 
     if not context_ko:
         context_ko = f"{platform_name}에서 새로 포착된 AI 소식이에요."
     if not what_ko:
-        what_ko = f"'{hook_title}' 소식이 공개됐어요."
+        what_ko = f"{platform_name}에서 '{hook_title}' 업데이트를 공개했어요."
     if not why_ko:
         why_ko = CATEGORY_WHY.get(c.category, CATEGORY_WHY["industry"])
 
@@ -486,6 +534,7 @@ def candidate_to_snapshot_item(
         "importance_score": round(float(c.score(now)), 2),
         "source_count": len(seen_plats),
         "source_platforms": seen_plats,
+        "author_handle": author_handle,
         "lifecycle_status": lifecycle,
         "published_at": pub_iso,
         "fetched_at": fetched_iso,
@@ -499,6 +548,9 @@ def candidate_to_snapshot_item(
         "analogy_ko": analogy_ko,
         "why_ko": why_ko,
         "caveats_ko": caveats_ko,
+        "highlight_summary": highlight_summary,
+        "utility_tip": utility_tip,
+        "planning_meta": planning_meta,
         "difficulty": difficulty,
         "terms": terms,
         "entities": entities,
@@ -552,6 +604,16 @@ def _extract_raw_body_from_existing(item: dict[str, Any]) -> str:
     return ""
 
 
+def _item_needs_curation_upgrade(item: dict[str, Any]) -> bool:
+    """이전 버전 스냅샷의 기계적 문구('에 관한 소식이에요')나 신규 필드 누락 여부."""
+    what = str(item.get("what_ko") or "")
+    if "에 관한 소식이에요" in what:
+        return True
+    if not item.get("highlight_summary") or not isinstance(item.get("utility_tip"), dict) or not isinstance(item.get("planning_meta"), dict):
+        return True
+    return False
+
+
 def _upgrade_existing_item_translation(
     item: dict[str, Any],
     platforms: dict[str, dict[str, Any]],
@@ -559,8 +621,9 @@ def _upgrade_existing_item_translation(
     now_iso: str,
     *,
     raw_body_override: Optional[str] = None,
+    metrics_override: Optional[dict[str, Any]] = None,
 ) -> dict[str, Any]:
-    """기존 스냅샷의 미번역 외국어 기사를 제자리에서 한국어로 정돈한다."""
+    """기존 스냅샷의 미번역 외국어 기사나 구버전 기계적 요약을 제자리에서 자연스러운 한국어로 정돈한다."""
     pid = str(item.get("platform_id") or "")
     platform = platforms.get(pid) or {}
     platform_name = str(platform.get("name") or pid)
@@ -570,35 +633,64 @@ def _upgrade_existing_item_translation(
 
     raw_title = sanitize_text(str(item.get("original_title") or item.get("hook_title") or ""), strip_emoji=True)
     raw_body = raw_body_override if raw_body_override is not None else _extract_raw_body_from_existing(item)
-    tr = translator.translate_article(url=url, title=raw_title, body=raw_body)
 
-    title_ko = sanitize_text(tr.title_ko, strip_emoji=True) or raw_title
+    existing_title_ko = sanitize_text(str(item.get("title_ko") or item.get("hook_title") or ""), strip_emoji=True)
+    if existing_title_ko and not needs_translation(existing_title_ko) and (not raw_body or not needs_translation(raw_body)):
+        title_ko = existing_title_ko
+        body_ko = sanitize_text(raw_body) if raw_body and not needs_translation(raw_body) else ""
+        llm_why = ""
+        was_translated = needs_translation(raw_title)
+    else:
+        tr = translator.translate_article(url=url, title=raw_title, body=raw_body)
+        title_ko = sanitize_text(tr.title_ko, strip_emoji=True) or raw_title
+        body_ko = sanitize_text(tr.body_ko)
+        if needs_translation(body_ko):
+            body_ko = ""
+        llm_why = sanitize_text(tr.why_ko or "") if (tr.why_ko and not needs_translation(tr.why_ko)) else ""
+        was_translated = tr.translated
+
     hook_title = title_ko if len(title_ko) <= 78 else title_ko[:77].rstrip() + "…"
-    body_ko = sanitize_text(tr.body_ko)
-    if needs_translation(body_ko):
-        body_ko = ""
 
     updated = dict(item)
     updated["original_title"] = raw_title
     updated["title_ko"] = title_ko
     updated["hook_title"] = hook_title
 
-    context_ko = str(updated.get("context_ko") or f"{platform_name}에서 새로 포착된 AI 소식이에요.")
-    excerpt_ko = _clean_excerpt(body_ko, 300) if body_ko else ""
-    if excerpt_ko and excerpt_ko.lower() != title_ko.lower() and not needs_translation(excerpt_ko):
-        what_ko = f"'{hook_title}'에 관한 소식이에요. 핵심 내용: {excerpt_ko}"
-    else:
-        what_ko = f"{platform_name}에서 '{hook_title}' 소식을 공개했어요. 자세한 배경과 상세 내용은 원문에서 바로 확인할 수 있어요."
+    metrics = dict(metrics_override or {})
+    if updated.get("author_handle") and not metrics.get("author_handle"):
+        metrics["author_handle"] = updated["author_handle"]
+    seen_plats = list(updated.get("source_platforms") or [pid])
+    entities = updated.get("entities") if isinstance(updated.get("entities"), list) else []
+    benefit_tag = updated.get("benefit_tag") if isinstance(updated.get("benefit_tag"), str) else None
 
-    why_ko = sanitize_text(tr.why_ko or "") if (tr.why_ko and not needs_translation(tr.why_ko)) else str(
-        updated.get("why_ko") or CATEGORY_WHY.get(category, CATEGORY_WHY["industry"])
+    curated = build_curated_fields(
+        title_ko=title_ko,
+        original_title=raw_title,
+        body_ko=body_ko,
+        raw_body=raw_body,
+        platform_id=pid,
+        platform_name=platform_name,
+        category=category,
+        cat_label=CATEGORY_LABELS.get(category, "AI"),
+        seen_platforms=seen_plats,
+        metrics=metrics,
+        entities=entities,
+        benefit_tag=benefit_tag,
+        llm_why=llm_why,
     )
-    caveats_ko = _detect_language_note(raw_title, raw_body, region, translated=tr.translated)
+
+    context_ko = sanitize_text(curated["context_ko"])
+    what_ko = sanitize_text(curated["what_ko"])
+    why_ko = sanitize_text(curated["why_ko"])
+    caveats_ko = _detect_language_note(raw_title, raw_body, region, translated=was_translated)
 
     updated["context_ko"] = context_ko
     updated["what_ko"] = what_ko
     updated["why_ko"] = why_ko
     updated["caveats_ko"] = caveats_ko
+    updated["highlight_summary"] = sanitize_text(curated["highlight_summary"])
+    updated["utility_tip"] = {k: sanitize_text(v) for k, v in curated["utility_tip"].items()}
+    updated["planning_meta"] = {k: sanitize_text(v) for k, v in curated["planning_meta"].items()}
     summary_blob = " ".join(x for x in (context_ko, what_ko, why_ko, caveats_ko) if x)
     updated["terms"] = _extract_terms(summary_blob)
     updated["easy_original_ready"] = True
@@ -612,13 +704,49 @@ def _upgrade_existing_item_translation(
         why_ko=why_ko,
         caveats_ko=caveats_ko,
         generated_iso=now_iso,
-        translated=tr.translated,
+        translated=was_translated,
     )
     return updated
 
 
+def build_planning_feed_payload(items: list[dict[str, Any]], generated_at: str) -> dict[str, Any]:
+    """하위 AI 기획팀 에이전트가 바로 읽어갈 경량 구조화 시그널 피드 생성."""
+    signals: list[dict[str, Any]] = []
+    for it in items:
+        pm = it.get("planning_meta") if isinstance(it.get("planning_meta"), dict) else {}
+        signals.append({
+            "id": it.get("id"),
+            "title_ko": it.get("title_ko") or it.get("hook_title"),
+            "original_title": it.get("original_title") or it.get("hook_title"),
+            "platform_id": it.get("platform_id"),
+            "author_handle": it.get("author_handle"),
+            "category": it.get("category"),
+            "lifecycle_status": it.get("lifecycle_status"),
+            "canonical_url": it.get("canonical_url"),
+            "published_at": it.get("published_at"),
+            "fetched_at": it.get("fetched_at"),
+            "importance_score": it.get("importance_score"),
+            "source_count": it.get("source_count"),
+            "benefit_tag": it.get("benefit_tag"),
+            "highlight_summary": it.get("highlight_summary"),
+            "planning_meta": {
+                "signal_type": pm.get("signal_type", "new_product"),
+                "product_domain": pm.get("product_domain", "ai-business-infra"),
+                "benchmark_point": pm.get("benchmark_point", ""),
+                "actionable_idea": pm.get("actionable_idea", ""),
+            },
+            "entities": [e.get("name") for e in (it.get("entities") or []) if isinstance(e, dict) and e.get("name")],
+        })
+    return {
+        "version": 1,
+        "generated_at": generated_at,
+        "item_count": len(signals),
+        "signals": signals,
+    }
+
+
 def _signature(items: list[dict[str, Any]]) -> list[tuple[Any, ...]]:
-    """커밋 여부 판단용 안정 시그니처 (미세한 점수 변화만으로 매시간 헛커밋하지 않도록)."""
+    """커밋 여부 판단용 안정 시그니처 (미세한 점수 변화만으로 매 20분 헛커밋하지 않도록)."""
     return [
         (
             it.get("id"),
@@ -629,6 +757,7 @@ def _signature(items: list[dict[str, Any]]) -> list[tuple[Any, ...]]:
             it.get("source_count"),
             it.get("lifecycle_status"),
             str(it.get("what_ko") or "")[:60],
+            str(it.get("highlight_summary") or "")[:50],
         )
         for it in items
     ]
@@ -644,9 +773,10 @@ def build_and_save_snapshot(
     max_items: int = MAX_SNAPSHOT_ITEMS,
     per_platform: int = PER_PLATFORM_MAX,
     meta_path: Optional[Path] = None,
+    planning_path: Optional[Path] = None,
     translator: Optional[ArticleTranslator] = None,
 ) -> tuple[dict[str, Any], bool]:
-    """기존 스냅샷과 신규 후보를 병합해 30일 TTL·자동 한국어 번역 적용 후 저장. 변경이 있을 때만 파일을 갱신한다."""
+    """기존 스냅샷과 신규 후보를 병합해 30일 자정(Auto-Prune)·스마트 승격·자동 한국어 큐레이션 후 저장."""
     now = now or datetime.now(timezone.utc)
     now_iso = now.isoformat().replace("+00:00", "Z")
     platforms = platforms if platforms is not None else load_valid_platforms()
@@ -677,11 +807,13 @@ def build_and_save_snapshot(
     by_url: dict[str, dict[str, Any]] = {}
     by_id: dict[str, dict[str, Any]] = {}
 
-    # 1) 기존 스냅샷 중 30일 이내 + 유효 항목 유지
+    # 1) 기존 스냅샷 중 30일 이내 + 유효 + 비노이즈 항목 유지 (30일 초과 자동 정리)
     for item in existing_items:
         url = str(item.get("canonical_url") or "")
         pid = str(item.get("platform_id") or "")
         if not is_valid_https_url(url) or pid not in platforms:
+            continue
+        if is_blocked_noise(str(item.get("hook_title") or item.get("original_title") or ""), str(item.get("what_ko") or ""), url):
             continue
         created_dt = _parse_iso(item.get("published_at")) or _parse_iso(item.get("created_at"))
         if not created_dt or created_dt < cutoff:
@@ -695,8 +827,9 @@ def build_and_save_snapshot(
         by_url[url] = kept
         by_id[str(kept.get("id"))] = kept
 
-    # 2) 이번 수집 후보 병합 (선별 전 번역 호출을 아끼기 위해 여기서는 구조화만 수행하고, 최종 선정 80건만 번역한다)
+    # 2) 이번 수집 후보 병합
     raw_body_by_url: dict[str, str] = {}
+    metrics_by_url: dict[str, dict[str, Any]] = {}
     llm_urls: set[str] = set()
     for c in candidates:
         llm_sum = summaries_by_dedup.get(c.dedup_key)
@@ -710,6 +843,7 @@ def build_and_save_snapshot(
         if built is None:
             continue
         raw_body_by_url[built["canonical_url"]] = c.body or ""
+        metrics_by_url[built["canonical_url"]] = dict(c.metrics or {})
         if llm_sum:
             llm_urls.add(built["canonical_url"])
         prev = by_url.get(built["canonical_url"]) or by_id.get(built["id"])
@@ -724,7 +858,8 @@ def build_and_save_snapshot(
             merged["importance_score"] = max(float(prev.get("importance_score") or 0), float(built["importance_score"]))
             if not merged.get("thumbnail_url") and built.get("thumbnail_url"):
                 merged["thumbnail_url"] = built["thumbnail_url"]
-            # 실제 원문 발행 시각이 새로 확보되었거나 이전 버전에서 생성 시각으로 덮여 있었다면 교정
+            if not merged.get("author_handle") and built.get("author_handle"):
+                merged["author_handle"] = built["author_handle"]
             prev_pub = prev.get("published_at")
             if built.get("published_at") and (not prev_pub or (old_generated_at and prev_pub == old_generated_at)):
                 merged["published_at"] = built["published_at"]
@@ -739,6 +874,9 @@ def build_and_save_snapshot(
                     "what_ko",
                     "why_ko",
                     "caveats_ko",
+                    "highlight_summary",
+                    "utility_tip",
+                    "planning_meta",
                     "terms",
                     "entities",
                     "easy_original_ready",
@@ -751,8 +889,8 @@ def build_and_save_snapshot(
             by_url[built["canonical_url"]] = built
             by_id[str(built["id"])] = built
 
-    # 3) 플랫폼 다양성 쿼터 적용 + 최신성·중요도 정렬 (발행일 확인된 최근 24~48시간 기사 최우선)
-    def sort_key(it: dict[str, Any]) -> tuple[int, float, str]:
+    # 3) 실시간 레이더(hot) + 지난 주요 소식(warm, 일별 주요 이슈 보존) 균형 선별
+    def hot_sort_key(it: dict[str, Any]) -> tuple[float, str]:
         pub_dt = _parse_iso(it.get("published_at"))
         created_dt = pub_dt or _parse_iso(it.get("created_at")) or now
         age_h = max(0.0, (now - created_dt).total_seconds() / 3600.0)
@@ -760,22 +898,89 @@ def build_and_save_snapshot(
         hot_rank = float(it.get("importance_score") or 0) / ((effective_age + 2.0) ** 1.5)
         if pub_dt is None:
             hot_rank *= 0.25
-        is_hot = 1 if it.get("lifecycle_status") == "hot" else 0
-        return (is_hot, hot_rank, str(it.get("published_at") or it.get("created_at") or ""))
+        return (hot_rank, str(it.get("published_at") or it.get("created_at") or ""))
 
-    ranked = sorted(by_url.values(), key=sort_key, reverse=True)
-    selected: list[dict[str, Any]] = []
+    def warm_sort_key(it: dict[str, Any]) -> tuple[float, str]:
+        score = float(it.get("importance_score") or 0) + max(0, int(it.get("source_count") or 1) - 1) * 4.0
+        return (score, str(it.get("published_at") or it.get("created_at") or ""))
+
+    hot_pool = [it for it in by_url.values() if it.get("lifecycle_status") == "hot"]
+    warm_pool = [it for it in by_url.values() if it.get("lifecycle_status") == "warm"]
+
+    hot_ranked = sorted(hot_pool, key=hot_sort_key, reverse=True)
+    warm_ranked = sorted(warm_pool, key=warm_sort_key, reverse=True)
+
+    hot_cap = min(max_items, MAX_HOT_ITEMS) if warm_ranked else max_items
+    selected_hot: list[dict[str, Any]] = []
+    picked_hot_urls: set[str] = set()
     per_plat: dict[str, int] = {}
-    for it in ranked:
+
+    # 최우선 실시간 소스(X 실시간, GitHub 핫 AI)가 다량 RSS 에 밀리지 않도록 우선 슬롯 보장
+    for priority_pid, reserve_cap in (("x", min(8, per_platform + 2)), ("github", min(6, per_platform))):
+        cnt = 0
+        for it in hot_ranked:
+            if str(it["platform_id"]) != priority_pid:
+                continue
+            url = str(it["canonical_url"])
+            if url in picked_hot_urls:
+                continue
+            selected_hot.append(it)
+            picked_hot_urls.add(url)
+            per_plat[priority_pid] = per_plat.get(priority_pid, 0) + 1
+            cnt += 1
+            if cnt >= reserve_cap or len(selected_hot) >= hot_cap:
+                break
+
+    for it in hot_ranked:
+        if len(selected_hot) >= hot_cap:
+            break
+        url = str(it["canonical_url"])
+        if url in picked_hot_urls:
+            continue
         pid = str(it["platform_id"])
         if per_plat.get(pid, 0) >= per_platform:
             continue
-        selected.append(it)
+        selected_hot.append(it)
+        picked_hot_urls.add(url)
         per_plat[pid] = per_plat.get(pid, 0) + 1
-        if len(selected) >= max_items:
-            break
 
-    # 4) 최종 선정된 기사(최대 80건) 중 외국어 기사만 선별 번역 + URL 캐시 재사용
+    # 최종 hot 목록은 신선도·중요도 순으로 자연스럽게 정렬
+    selected_hot.sort(key=hot_sort_key, reverse=True)
+
+    # 지난 주요 소식(8~30일): 플랫폼 다양성 쿼터 + 일별 최고 중요도 1건씩 우선 보존 후 중요도 순으로 채움
+    warm_cap = min(MAX_WARM_ITEMS, max(0, max_items - len(selected_hot)))
+    selected_warm: list[dict[str, Any]] = []
+    if warm_cap > 0 and warm_ranked:
+        seen_days: set[str] = set()
+        picked_warm_urls: set[str] = set()
+        warm_per_plat: dict[str, int] = {}
+        for it in warm_ranked:
+            pid = str(it["platform_id"])
+            if warm_per_plat.get(pid, 0) >= per_platform:
+                continue
+            day_key = str(it.get("published_at") or it.get("created_at") or "")[:10]
+            if day_key and day_key not in seen_days:
+                seen_days.add(day_key)
+                selected_warm.append(it)
+                picked_warm_urls.add(str(it["canonical_url"]))
+                warm_per_plat[pid] = warm_per_plat.get(pid, 0) + 1
+                if len(selected_warm) >= warm_cap:
+                    break
+        if len(selected_warm) < warm_cap:
+            for it in warm_ranked:
+                url = str(it["canonical_url"])
+                pid = str(it["platform_id"])
+                if url in picked_warm_urls or warm_per_plat.get(pid, 0) >= per_platform:
+                    continue
+                selected_warm.append(it)
+                picked_warm_urls.add(url)
+                warm_per_plat[pid] = warm_per_plat.get(pid, 0) + 1
+                if len(selected_warm) >= warm_cap:
+                    break
+
+    selected = [*selected_hot, *selected_warm]
+
+    # 4) 최종 선정된 기사 중 외국어 번역 + 구버전 큐레이션 업그레이드 (URL 캐시 재사용)
     translated_selected: list[dict[str, Any]] = []
     for it in selected:
         url = str(it.get("canonical_url") or "")
@@ -783,17 +988,21 @@ def build_and_save_snapshot(
             translated_selected.append(it)
             continue
         raw_body = raw_body_by_url.get(url) or _extract_raw_body_from_existing(it)
-        if _item_needs_translation(it) or (raw_body and needs_translation(raw_body) and not it.get("title_ko")):
+        if (
+            _item_needs_translation(it)
+            or _item_needs_curation_upgrade(it)
+            or (raw_body and needs_translation(raw_body) and not it.get("title_ko"))
+        ):
             upgraded = _upgrade_existing_item_translation(
                 it,
                 platforms,
                 translator,
                 now_iso,
                 raw_body_override=raw_body,
+                metrics_override=metrics_by_url.get(url),
             )
             translated_selected.append(upgraded)
         else:
-            # 이미 한국어(또는 이전 실행에서 번역 완료된 캐시 항목)
             if needs_translation(str(it.get("original_title") or "")) and translator.cache is not None:
                 translator.stats["cache_hits"] += 1
             translated_selected.append(it)
@@ -812,4 +1021,10 @@ def build_and_save_snapshot(
     if changed:
         snapshot_path.parent.mkdir(parents=True, exist_ok=True)
         snapshot_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    if planning_path is not None and (changed or not planning_path.exists()):
+        planning_payload = build_planning_feed_payload(selected, now_iso if changed else (old_generated_at or now_iso))
+        planning_path.parent.mkdir(parents=True, exist_ok=True)
+        planning_path.write_text(json.dumps(planning_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
     return payload, changed

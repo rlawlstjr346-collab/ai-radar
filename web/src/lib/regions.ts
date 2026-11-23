@@ -48,7 +48,7 @@ const EDITION_BY_REGION: Partial<Record<Region, string>> = {
  */
 export function editionMark(platform?: Platform): { flag: string | null; label: string } | null {
   if (!platform) return null;
-  if (platform.id === "x") return { flag: null, label: "실시간 속보" };
+  if (platform.id === "x") return { flag: null, label: "𝕏 실시간" };
   const region = regionOf(platform);
   const label = EDITION_BY_PLATFORM[platform.id] ?? EDITION_BY_REGION[region];
   if (!label) return null;

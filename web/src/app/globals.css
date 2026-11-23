@@ -2,21 +2,22 @@
 
 /*
  * AI Radar — 토큰은 저장소 루트 DESIGN.md 가 기준이다. 여기 값만 고치고, 컴포넌트에는 hex 를 쓰지 않는다.
- * 기본: Dark · Quiet Research Room   /   <html data-theme="paper">: Warm Paper Reading Mode
- * 유채색은 --accent 와 --live(LIVE 점) 둘뿐 (Palette Budget).
+ * 기본: Paper · Warm Paper Reading Mode   /   <html data-theme="dark">: Dark · Quiet Research Room
+ * 리눅스·고해상도 자동 적응 유동형 타이포그래피(clamp()) + 가+ 글자 크기 스케일(--font-scale).
  */
 :root {
   /* 기본(첫 방문) = Paper · Warm Paper Reading Mode — 첫 페인트부터 종이 토큰이라 다크 깜빡임이 없다 */
   --bg-base: #fcfcf9; /* 순백(완전한 흰색) 금지 */
   --bg-surface: #f3f3ee;
   --bg-elevated: #eaeae3;
-  --border-subtle: rgba(39, 37, 30, 0.1);
-  --border-strong: rgba(39, 37, 30, 0.2);
+  --border-subtle: rgba(39, 37, 30, 0.11);
+  --border-strong: rgba(39, 37, 30, 0.22);
   --text-primary: #27251e;
   --text-secondary: #5c5a52;
-  --text-tertiary: #8a877d;
+  --text-tertiary: #656259; /* WCAG AA 4.5:1+ 대비 확보 */
   --text-reading: #22201c; /* 상세 패널 읽기 본문 */
   --text-heading: #18181b; /* 원본 쉽게 읽기 문단 소제목 */
+  --brand-ink: #0f0f0f; /* 순수 흑백 S-커브 신문 로고 & 세리프 워드마크 */
   --accent: #016a71;
   --live: #22c55e;
   --scrim: rgba(39, 37, 30, 0.28);
@@ -25,9 +26,19 @@
   --sem-what: #0f766e;
   --sem-why: #047857;
   --sem-caveat: #b45309;
+  --sem-utility: #0f766e;
+  --hl-bg: rgba(254, 240, 138, 0.88); /* 라이트: 웜 옐로 #FEF08A 소프트 형광펜 */
+  --hl-underline: rgba(202, 138, 4, 0.34);
+  --frosted-bg: rgba(243, 243, 238, 0.78);
   --sheen: rgba(255, 255, 255, 0.24); /* solid 버튼 광택 */
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1); /* 시트·드로어 감속 곡선 */
+  --ease-apple: cubic-bezier(0.22, 1, 0.36, 1); /* Apple Newsroom 리딩 스프링 감속 */
+  --font-scale: 1;
   color-scheme: light;
+}
+
+:root[data-font-size="large"] {
+  --font-scale: 1.12;
 }
 
 :root[data-theme="dark"] {
@@ -35,13 +46,14 @@
   --bg-base: #0f0f10;
   --bg-surface: #19191a;
   --bg-elevated: #232325;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
   --text-primary: #f0f0f0;
   --text-secondary: #a1a1a6;
-  --text-tertiary: #6e6e73;
+  --text-tertiary: #94949b; /* WCAG AA 4.5:1+ 대비 확보 */
   --text-reading: #efefef;
   --text-heading: #f5f5f5;
+  --brand-ink: #f7f7f7; /* 다크 모드 순수 흑백 로고 자동 반전 */
   --accent: #20b8cd;
   --live: #22c55e;
   --scrim: rgba(0, 0, 0, 0.55);
@@ -49,12 +61,16 @@
   --sem-what: #5eead4;
   --sem-why: #6ee7b7;
   --sem-caveat: #fcd34d;
+  --sem-utility: #5eead4;
+  --hl-bg: rgba(250, 204, 21, 0.24); /* 다크: 반투명 루미너스 골드 */
+  --hl-underline: rgba(94, 234, 212, 0.42); /* 다크: 루미너스 민트 언더라인 */
+  --frosted-bg: rgba(25, 25, 26, 0.78);
   --sheen: rgba(32, 184, 205, 0.28);
   color-scheme: dark;
 }
 
 @theme inline {
-  /* DESIGN.md 토큰 → Tailwind 유틸리티 (bg-canvas, bg-surface, bg-elevated, border-line, text-fg, text-fg-2, text-fg-3, text-accent, bg-live) */
+  /* DESIGN.md 토큰 → Tailwind 유틸리티 */
   --color-canvas: var(--bg-base);
   --color-surface: var(--bg-surface);
   --color-elevated: var(--bg-elevated);
@@ -63,6 +79,7 @@
   --color-fg: var(--text-primary);
   --color-fg-2: var(--text-secondary);
   --color-fg-3: var(--text-tertiary);
+  --color-brand: var(--brand-ink);
   --color-accent: var(--accent);
   --color-reading: var(--text-reading);
   --color-heading: var(--text-heading);
@@ -70,9 +87,10 @@
   --color-sem-what: var(--sem-what);
   --color-sem-why: var(--sem-why);
   --color-sem-caveat: var(--sem-caveat);
+  --color-sem-utility: var(--sem-utility);
   --color-live: var(--live);
   --color-scrim: var(--scrim);
-  /* 예전 이름 호환 (bg-bg, bg-card, bg-card-2, text-ink, text-muted) */
+  /* 예전 이름 호환 */
   --color-bg: var(--bg-base);
   --color-card: var(--bg-surface);
   --color-card-2: var(--bg-elevated);
@@ -80,6 +98,7 @@
   --color-muted: var(--text-secondary);
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
     "Malgun Gothic", "Segoe UI", sans-serif;
+  --font-editorial: "Newsreader", "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
 /* 화면 폭 3단계: 모바일(<768) / 분할 창·노트북(768~1359, 상세는 드로어) / 와이드(≥1360, 3단 고정) */
@@ -112,90 +131,94 @@ kbd,
   font-variant-numeric: tabular-nums;
 }
 
-/* ── 타입 스케일 (DESIGN.md §3) ──────────────────────────────────────────── */
-.t-lead {
-  font-size: clamp(26px, 1.4rem + 0.9vw, 32px);
+/* 클래식 에디토리얼 세리프 워드마크 (AI Radar) */
+.font-editorial {
+  font-family: var(--font-editorial);
   font-weight: 700;
-  line-height: 1.28;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
+  color: var(--brand-ink);
+}
+
+/* ── 리눅스·고해상도 자동 적응 유동형 타입 스케일 (clamp() × --font-scale) ─────────────── */
+.t-lead {
+  font-size: calc(clamp(21px, 1.4vw + 5px, 28px) * var(--font-scale, 1));
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.024em;
   color: var(--text-primary);
 }
 .t-feature {
-  font-size: 20px;
+  font-size: calc(clamp(16.5px, 1.05vw + 4px, 20.5px) * var(--font-scale, 1));
   font-weight: 680;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  line-height: 1.38;
+  letter-spacing: -0.018em;
   color: var(--text-primary);
 }
-@media (min-width: 1024px) {
-  .t-feature {
-    font-size: 21px;
-  }
-}
 .t-stream {
-  font-size: 18.5px;
-  font-weight: 600;
+  font-size: calc(clamp(16.5px, 1.05vw + 4px, 20.5px) * var(--font-scale, 1));
+  font-weight: 620;
   line-height: 1.42;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.016em;
   color: var(--text-primary);
 }
 .t-panel-title {
-  font-size: 22.5px;
+  font-size: calc(clamp(21px, 1.4vw + 5px, 28px) * var(--font-scale, 1));
   font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
+  line-height: 1.32;
+  letter-spacing: -0.022em;
   color: var(--text-primary);
 }
-@media (min-width: 640px) {
-  .t-panel-title {
-    font-size: 23.5px;
-  }
-}
 .t-body {
-  font-size: 16px;
+  font-size: calc(clamp(15px, 0.9vw + 4.5px, 17.5px) * var(--font-scale, 1));
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.7;
   color: var(--text-reading);
-  max-width: 64ch;
-}
-@media (min-width: 640px) {
-  .t-body {
-    font-size: 16.5px;
-  }
+  max-width: 66ch;
 }
 .t-meta {
-  font-size: 12.5px;
-  line-height: 1.4;
+  font-size: calc(clamp(13px, 0.72vw + 3px, 14.5px) * var(--font-scale, 1));
+  line-height: 1.45;
   color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
 }
-@media (min-width: 1024px) {
-  .t-meta {
-    font-size: 13px;
-  }
+.t-nav {
+  font-size: calc(clamp(13.5px, 0.76vw + 3px, 14.5px) * var(--font-scale, 1));
+  line-height: 1.4;
 }
 
 /* 긴 한국어 본문 읽기 리듬 (예전 이름 호환) */
 .prose-ko p {
-  line-height: 1.8;
+  line-height: 1.7;
 }
 
-/* ── 핵심 구절 형광펜 밑줄 (Readwise Reader) — 용어 툴팁의 점선 밑줄과 헷갈리지 않게 아래 38% 형광 + 실선 ── */
+/* ── 핵심 구절 소프트 형광펜 스윕 (라이트: 웜 옐로 #FEF08A / 다크: 루미너스 골드·민트) ── */
+@keyframes hl-sweep {
+  from {
+    background-size: 0% 85%;
+  }
+  to {
+    background-size: 100% 85%;
+  }
+}
+
 .hl-mark {
   background-color: transparent;
-  background-image: linear-gradient(to top, color-mix(in srgb, #20b8cd 22%, transparent) 38%, transparent 38%);
-  text-decoration-line: underline;
-  text-decoration-color: color-mix(in srgb, #0f766e 45%, transparent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-  border-radius: 1px;
+  background-image: linear-gradient(120deg, var(--hl-bg) 0%, var(--hl-bg) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 100% 85%;
+  padding: 0.04em 0.16em;
+  border-radius: 3px;
+  box-shadow: inset 0 -1.5px 0 var(--hl-underline);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   color: inherit;
+  animation: hl-sweep 620ms var(--ease-apple) both;
+  animation-delay: 140ms;
 }
+
 :root[data-theme="dark"] .hl-mark {
-  background-image: linear-gradient(to top, color-mix(in srgb, #20b8cd 26%, transparent) 38%, transparent 38%);
-  text-decoration-color: color-mix(in srgb, #5eead4 55%, transparent);
+  background-image: linear-gradient(120deg, rgba(250, 204, 21, 0.24) 0%, rgba(94, 234, 212, 0.22) 100%);
 }
 
 /* ── AI 모델명·주요 인물명 인디고 칩 (듀얼 하이라이트) ──────────────────────────── */
@@ -229,6 +252,20 @@ kbd,
 }
 :root[data-theme="dark"] .time-recent {
   color: #d6d3d1;
+}
+
+/* ── Apple Newsroom 프로스티드 읽기 상단 바 + 2px 읽기 진행 바 ───────────────────── */
+.reading-sticky-bar {
+  transition:
+    background-color 220ms var(--ease-apple),
+    border-color 220ms var(--ease-apple),
+    box-shadow 220ms var(--ease-apple);
+}
+.reading-sticky-bar[data-scrolled="true"] {
+  background-color: var(--frosted-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom-color: var(--border-subtle);
 }
 
 /* 얇은 스크롤바 */
@@ -295,7 +332,25 @@ kbd,
   animation: shimmer 1.6s linear infinite;
 }
 
-/* ── 등장 모션 (사용자 행동에 대한 응답에만) ────────────────────────────────── */
+/* ── Apple Newsroom 리딩 호흡 등장 모션 (사용자 행동에 대한 응답에만) ──────────────── */
+@keyframes article-lift-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-article-enter {
+  animation: article-lift-in 360ms var(--ease-apple) both;
+}
+.reading-stagger {
+  animation: article-lift-in 380ms var(--ease-apple) both;
+  animation-delay: calc(var(--stagger, 0) * 40ms);
+}
+
 @keyframes sheet-up {
   from {
     transform: translateY(100%);
@@ -344,8 +399,6 @@ kbd,
 }
 
 /* ── 지속형(Sustained) 모션 3종 — prefers-reduced-motion 이면 모두 정지 ───────────── */
-
-/* ① 선택된 기사: 둥근 외곽선 1.5px 를 따라 틸→시안 광원이 7초에 한 바퀴 유영 (Raycast·Magic UI Border Beam) */
 @property --beam-angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -397,7 +450,6 @@ kbd,
   animation: beam-spin 7s linear infinite;
 }
 
-/* ② LIVE·3시간 이내 점: 코어 점 + 2.4초마다 퍼지는 레이더 파동 (Vercel) */
 @keyframes live-ripple {
   0% {
     transform: scale(1);
@@ -427,7 +479,6 @@ kbd,
   animation: live-ripple 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
-/* ③ 메인 solid 버튼: 5.5초마다 한 번 대각선 광택이 스친다 (Stripe Sheen) */
 @keyframes sheen-sweep {
   0% {
     transform: translateX(-120%) skewX(-20deg);
@@ -452,8 +503,14 @@ kbd,
   .beam[data-active="true"],
   .beam[data-active="true"]::before,
   .live-ping::after,
-  .sheen::after {
+  .sheen::after,
+  .hl-mark,
+  .animate-article-enter,
+  .reading-stagger {
     animation: none;
+  }
+  .hl-mark {
+    background-size: 100% 85%;
   }
   .animate-sheet-up,
   .animate-drawer-in,
@@ -466,7 +523,8 @@ kbd,
   .sliding-pill,
   .press,
   .row-hover,
-  .surface {
+  .surface,
+  .reading-sticky-bar {
     transition: none;
   }
 }

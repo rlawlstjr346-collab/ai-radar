@@ -1,8 +1,10 @@
-/** 듀얼 리딩 테마 (DESIGN.md §2). 값은 globals.css 의 :root(종이, 기본) / [data-theme="dark"] 와 같아야 한다. */
+/** 듀얼 리딩 테마 (DESIGN.md §2) + 유동 글자 크기 스케일. 값은 globals.css 와 같아야 한다. */
 export type Theme = "dark" | "paper";
+export type FontSizeScale = "standard" | "large";
 
 // v2: 기본값이 다크 → 종이로 바뀌어서, 예전 키에 남은 '다크' 선택을 무시하고 모두 종이로 새로 시작한다
 export const THEME_STORAGE_KEY = "ai-radar-theme-v2";
+export const FONT_SIZE_STORAGE_KEY = "ai-radar-font-scale-v1";
 
 export const THEME_TOKENS = {
   dark: {
@@ -11,7 +13,7 @@ export const THEME_TOKENS = {
     "--bg-elevated": "#232325",
     "--text-primary": "#F0F0F0",
     "--text-secondary": "#A1A1A6",
-    "--text-tertiary": "#6E6E73",
+    "--text-tertiary": "#94949B",
     "--accent": "#20B8CD",
   },
   paper: {
@@ -20,7 +22,7 @@ export const THEME_TOKENS = {
     "--bg-elevated": "#EAEAE3",
     "--text-primary": "#27251E",
     "--text-secondary": "#5C5A52",
-    "--text-tertiary": "#8A877D",
+    "--text-tertiary": "#656259",
     "--accent": "#016A71",
   },
 } as const satisfies Record<Theme, Record<string, string>>;
@@ -30,12 +32,17 @@ export function parseTheme(v: string | null | undefined): Theme {
   return v === "dark" ? "dark" : "paper";
 }
 
+/** 저장값이 'large' 일 때만 크게, 그 외는 표준 */
+export function parseFontSize(v: string | null | undefined): FontSizeScale {
+  return v === "large" ? "large" : "standard";
+}
+
 /**
- * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마를 바로 적용해 깜빡임을 없앤다.
- * 기본 CSS 가 이미 종이라서, 다크를 고른 사람만 data-theme="dark" 를 붙인다.
- * localStorage 가 막힌 환경(사생활 보호 창 등)에서도 조용히 기본 종이로.
+ * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마와 글자 크기를 바로 적용해 깜빡임을 없앤다.
+ * 기본 CSS 가 이미 종이/표준이라, 다크·크게를 고른 사람만 data 속성을 붙인다.
+ * localStorage 가 막힌 환경(사생활 보호 창 등)에서도 조용히 기본값으로.
  */
-export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
+export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark";if(localStorage.getItem("${FONT_SIZE_STORAGE_KEY}")==="large")document.documentElement.dataset.fontSize="large"}catch(e){}`;
 
 /** WCAG 상대 휘도 */
 function luminance(hex: string): number {

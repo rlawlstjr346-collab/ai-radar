@@ -80,8 +80,8 @@ export function PlatformMark({
 export function DifficultyBadge({ level, variant = "full" }: { level: Difficulty; variant?: "full" | "short" }) {
   const m = DIFFICULTY_META[level];
   return (
-    <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${m.className}`} title={m.label}>
-      <m.Icon className={`h-3 w-3 shrink-0 ${m.iconClass}`} strokeWidth={2.2} aria-hidden />
+    <span className={`inline-flex items-center gap-1.5 text-[13px] font-medium ${m.className}`} title={m.label}>
+      <m.Icon className={`h-3.5 w-3.5 shrink-0 ${m.iconClass}`} strokeWidth={2.2} aria-hidden />
       {variant === "full" ? (
         m.label
       ) : (
@@ -135,7 +135,7 @@ export function BenefitTakeaway({ tag, className = "" }: { tag: string | null | 
 /** 메타 줄의 조용한 텍스트 배지 (완독해설 · 논문 · N곳 포착) */
 export function QuietTag({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
-    <span className="inline-flex shrink-0 items-center rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2" title={title}>
+    <span className="inline-flex shrink-0 items-center rounded bg-elevated px-2 py-0.5 text-[12.5px] font-medium text-fg-2" title={title}>
       {children}
     </span>
   );
@@ -144,8 +144,8 @@ export function QuietTag({ children, title }: { children: React.ReactNode; title
 export function CategoryTag({ category }: { category: Category }) {
   const m = CATEGORY_META[category];
   return (
-    <span className={`inline-flex items-center gap-1 text-[11px] font-medium ${m.text}`}>
-      <m.Icon className="h-3 w-3" strokeWidth={2.2} aria-hidden />
+    <span className={`inline-flex items-center gap-1 text-[13px] font-medium ${m.text}`}>
+      <m.Icon className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden />
       {m.label}
     </span>
   );
@@ -154,7 +154,7 @@ export function CategoryTag({ category }: { category: Category }) {
 export function StatusBadge({ status }: { status: CollectStatus }) {
   const m = STATUS_META[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded px-1.5 py-0.5 text-[11.5px] font-medium ${m.className}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-[12.5px] font-medium ${m.className}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${m.dot}`} aria-hidden />
       {m.label}
     </span>
@@ -178,7 +178,7 @@ export function PlatformBadge({
       <span className="truncate">{name}</span>
     </>
   );
-  const base = "relative z-10 inline-flex max-w-[11rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[12.5px] font-medium text-fg-2";
+  const base = "relative z-10 inline-flex max-w-[12rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[13.5px] font-medium text-fg-2";
   if (!onSelect) return <span className={base}>{content}</span>;
   return (
     <button

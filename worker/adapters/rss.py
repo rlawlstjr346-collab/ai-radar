@@ -16,6 +16,7 @@ from adapters.base import BaseAdapter, parse_dt
 from collector.classify import classify_news
 from collector.models import RawItem
 from collector.normalize import strip_html
+from pipeline.curator import is_blocked_noise
 
 LOOKBACK_DAYS = 14
 MAX_ENTRIES = 20
@@ -91,7 +92,10 @@ class RSSAdapter(BaseAdapter):
             if not link or not title:
                 continue
             content = (e.get("content") or [{}])[0].get("value") or e.get("summary") or ""
-            if needs_filter and not ai_relevant(title, strip_html(content, 2000)):
+            plain_preview = strip_html(content, 2000)
+            if is_blocked_noise(title, plain_preview, link):
+                continue                                   # 독서 모임·채용·모객 홍보글 차단
+            if needs_filter and not ai_relevant(title, plain_preview):
                 continue                                   # 종합 피드의 비 AI 글은 제외
             if gh:
                 tag = link.rstrip("/").rsplit("/", 1)[-1]

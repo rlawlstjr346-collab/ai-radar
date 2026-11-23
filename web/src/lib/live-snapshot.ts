@@ -5,7 +5,10 @@ import { join } from "node:path";
 
 import samplePlatforms from "@/data/platforms.sample.json";
 
-import type { Category, Difficulty, EasyOriginal, Entity, FeedItem, Lifecycle, Platform, Term } from "./types";
+import type { Category, Difficulty, EasyOriginal, Entity, FeedItem, Lifecycle, PlanningMeta, Platform, Term, UtilityTip } from "./types";
+
+const DEFAULT_REMOTE_SNAPSHOT_URL = "https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json";
+const REMOTE_FETCH_TIMEOUT_MS = 3500;
 
 const VALID_CATEGORIES = new Set<Category>(["llm_chat", "dev", "image_design", "video_audio", "research", "industry", "social"]);
 const VALID_PLATFORM_IDS = new Set((samplePlatforms as Platform[]).map((p) => p.id));
@@ -49,6 +52,27 @@ function coerceEasy(raw: unknown): EasyOriginal | null {
     generated_at: typeof v.generated_at === "string" ? v.generated_at : null,
     model: typeof v.model === "string" ? v.model : null,
   };
+}
+
+function coerceUtilityTip(raw: unknown): UtilityTip | null {
+  if (!raw || typeof raw !== "object") return null;
+  const v = raw as Record<string, unknown>;
+  const when_needed = typeof v.when_needed === "string" ? v.when_needed.trim() : "";
+  const work_utility = typeof v.work_utility === "string" ? v.work_utility.trim() : "";
+  const practical_tip = typeof v.practical_tip === "string" ? v.practical_tip.trim() : "";
+  if (!when_needed || !work_utility || !practical_tip) return null;
+  return { when_needed, work_utility, practical_tip };
+}
+
+function coercePlanningMeta(raw: unknown): PlanningMeta | null {
+  if (!raw || typeof raw !== "object") return null;
+  const v = raw as Record<string, unknown>;
+  const signal_type = typeof v.signal_type === "string" ? v.signal_type.trim() : "";
+  const product_domain = typeof v.product_domain === "string" ? v.product_domain.trim() : "";
+  const benchmark_point = typeof v.benchmark_point === "string" ? v.benchmark_point.trim() : "";
+  const actionable_idea = typeof v.actionable_idea === "string" ? v.actionable_idea.trim() : "";
+  if (!signal_type || !product_domain) return null;
+  return { signal_type, product_domain, benchmark_point, actionable_idea };
 }
 
 function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null } | null {
@@ -105,6 +129,7 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
     importance_score: Number.isFinite(Number(r.importance_score)) ? Number(r.importance_score) : 10,
     source_count: sourcePlatforms.length,
     source_platforms: sourcePlatforms,
+    author_handle: typeof r.author_handle === "string" && r.author_handle.trim() ? r.author_handle.trim() : null,
     lifecycle_status: lifecycle,
     published_at: publishedAt,
     fetched_at: fetchedAt,
@@ -118,6 +143,9 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
     analogy_ko: typeof r.analogy_ko === "string" && r.analogy_ko.trim() ? r.analogy_ko.trim() : null,
     why_ko: typeof r.why_ko === "string" && r.why_ko.trim() ? r.why_ko.trim() : null,
     caveats_ko: typeof r.caveats_ko === "string" && r.caveats_ko.trim() ? r.caveats_ko.trim() : null,
+    highlight_summary: typeof r.highlight_summary === "string" && r.highlight_summary.trim() ? r.highlight_summary.trim() : null,
+    utility_tip: coerceUtilityTip(r.utility_tip),
+    planning_meta: coercePlanningMeta(r.planning_meta),
     difficulty,
     terms,
     entities,
@@ -127,8 +155,27 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
   return { item, easy };
 }
 
+function parseSnapshotObject(raw: Record<string, unknown>): LiveSnapshot {
+  const list = Array.isArray(raw?.items) ? raw.items : [];
+  const items: FeedItem[] = [];
+  const easyOriginals: Record<string, EasyOriginal> = {};
+  const seenIds = new Set<string>();
+  const seenUrls = new Set<string>();
+  for (const entry of list) {
+    const coerced = coerceItem(entry);
+    if (!coerced) continue;
+    if (seenIds.has(coerced.item.id) || seenUrls.has(coerced.item.canonical_url)) continue;
+    seenIds.add(coerced.item.id);
+    seenUrls.add(coerced.item.canonical_url);
+    items.push(coerced.item);
+    if (coerced.easy) easyOriginals[coerced.item.id] = coerced.easy;
+  }
+  const generatedAt = typeof raw?.generated_at === "string" && !Number.isNaN(Date.parse(raw.generated_at)) ? raw.generated_at : null;
+  return { generatedAt, items, easyOriginals };
+}
+
 /**
- * web/public/live-feed.json 최신 스냅샷 로드.
+ * web/public/live-feed.json 로컬 번들 스냅샷 로드.
  * 파일이 없거나 비어 있거나 손상돼도 예외 없이 빈 스냅샷을 반환한다.
  */
 export function loadLiveSnapshot(explicitPath?: string): LiveSnapshot {
@@ -136,24 +183,41 @@ export function loadLiveSnapshot(explicitPath?: string): LiveSnapshot {
   if (!path || !existsSync(path)) return { generatedAt: null, items: [], easyOriginals: {} };
   try {
     const raw = JSON.parse(readFileSync(path, "utf8")) as Record<string, unknown>;
-    const list = Array.isArray(raw?.items) ? raw.items : [];
-    const items: FeedItem[] = [];
-    const easyOriginals: Record<string, EasyOriginal> = {};
-    const seenIds = new Set<string>();
-    const seenUrls = new Set<string>();
-    for (const entry of list) {
-      const coerced = coerceItem(entry);
-      if (!coerced) continue;
-      if (seenIds.has(coerced.item.id) || seenUrls.has(coerced.item.canonical_url)) continue;
-      seenIds.add(coerced.item.id);
-      seenUrls.add(coerced.item.canonical_url);
-      items.push(coerced.item);
-      if (coerced.easy) easyOriginals[coerced.item.id] = coerced.easy;
-    }
-    const generatedAt = typeof raw?.generated_at === "string" && !Number.isNaN(Date.parse(raw.generated_at)) ? raw.generated_at : null;
-    return { generatedAt, items, easyOriginals };
+    return parseSnapshotObject(raw);
   } catch {
     return { generatedAt: null, items: [], easyOriginals: {} };
+  }
+}
+
+/**
+ * 무부하 실시간 서빙: GitHub Raw 최신 live-feed.json (60초 ISR 캐시)을 우선 가져오고,
+ * 네트워크 오류·타임아웃·테스트 환경에서는 로컬 번들 스냅샷으로 안전 폴백한다.
+ */
+export async function loadLiveSnapshotAsync(): Promise<LiveSnapshot> {
+  const local = loadLiveSnapshot();
+  if (process.env.NODE_ENV === "test" || process.env.VITEST || process.env.DISABLE_REMOTE_LIVE_FEED === "1") {
+    return local;
+  }
+  const remoteUrl = process.env.LIVE_FEED_REMOTE_URL?.trim() || DEFAULT_REMOTE_SNAPSHOT_URL;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), REMOTE_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(remoteUrl, {
+      signal: ctrl.signal,
+      next: { revalidate: 60 },
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return local;
+    const raw = (await res.json()) as Record<string, unknown>;
+    const remote = parseSnapshotObject(raw);
+    if (remote.items.length === 0) return local;
+    const remoteTs = remote.generatedAt ? Date.parse(remote.generatedAt) : 0;
+    const localTs = local.generatedAt ? Date.parse(local.generatedAt) : 0;
+    return remoteTs >= localTs ? remote : local;
+  } catch {
+    return local;
+  } finally {
+    clearTimeout(timer);
   }
 }
 

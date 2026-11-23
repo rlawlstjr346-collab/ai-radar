@@ -1,33 +1,33 @@
 {
-  "updated_at": "2026-11-23T10:38:34.516395Z",
+  "updated_at": "2026-11-23T10:42:28.388365Z",
   "sources": {
     "https://aws.amazon.com/blogs/machine-learning/feed/": {
       "source_id": "seed-48-aws-ml",
       "platform_id": "aws-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:58.261631Z",
+      "last_checked_at": "2026-11-23T10:40:51.248700Z",
       "cooldown_until": null,
-      "last_modified": "Sun, 22 Nov 2026 01:59:26 GMT"
+      "last_modified": "Sun, 22 Nov 2026 01:59:27 GMT"
     },
     "https://b.hatena.ne.jp/hotentry/it.rss": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:10.713657Z",
+      "last_checked_at": "2026-11-23T10:40:51.498750Z",
       "cooldown_until": null
     },
     "https://blog.google/technology/ai/rss/": {
       "source_id": "seed-49-google-deepmind",
       "platform_id": "google-deepmind",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:58.630610Z",
+      "last_checked_at": "2026-11-23T10:40:51.752907Z",
       "cooldown_until": null
     },
     "https://blogs.nvidia.com/feed/": {
       "source_id": "seed-45-nvidia-ai",
       "platform_id": "nvidia-ai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.927531Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:50.871184Z",
       "cooldown_until": null,
       "etag": "\"0ffc67c757439b59faadacbb95463851-gzip\"",
       "last_modified": "Mon, 23 Nov 2026 10:17:31 GMT"
@@ -36,22 +36,22 @@
       "source_id": "seed-11-civitai",
       "platform_id": "civitai",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:54.285976Z",
+      "last_checked_at": "2026-11-23T10:40:49.132751Z",
       "cooldown_until": null,
-      "etag": "W/\"3wybw5lxfg25bfz\""
+      "etag": "W/\"gvf16l3jab25bfz\""
     },
     "https://d2.naver.com/d2.atom": {
       "source_id": "seed-24-naver-d2",
       "platform_id": "naver-d2",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:56.647975Z",
+      "last_checked_at": "2026-11-23T10:40:49.183452Z",
       "cooldown_until": null
     },
     "https://deepmind.google/blog/rss.xml": {
       "source_id": "seed-05-google-deepmind",
       "platform_id": "google-deepmind",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.526189Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:48.287977Z",
       "cooldown_until": null,
       "etag": "\"p2-I8Q\""
     },
@@ -59,23 +59,23 @@
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:13.777500Z",
+      "last_checked_at": "2026-11-23T10:40:51.569918Z",
       "cooldown_until": null
     },
     "https://engineering.linecorp.com/ko/feed/": {
       "source_id": "seed-25-line-engineering",
       "platform_id": "line-engineering",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:55.637254Z",
+      "last_checked_at": "2026-11-23T10:40:49.046677Z",
       "cooldown_until": null,
-      "etag": "W/\"834d5fa315b4bc45d39d12582dd2b182\"",
+      "etag": "\"834d5fa315b4bc45d39d12582dd2b182\"",
       "last_modified": "Fri, 20 Nov 2026 02:06:11 GMT"
     },
     "https://feeds.arstechnica.com/arstechnica/technology-lab": {
       "source_id": "seed-54-ars-technica-ai",
       "platform_id": "ars-technica-ai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:58.891548Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:51.467962Z",
       "cooldown_until": null,
       "etag": "\"642066482f03af009b0050d083281548\"",
       "last_modified": "Mon, 23 Nov 2026 03:25:21 GMT"
@@ -84,15 +84,15 @@
       "source_id": "seed-35-qwen",
       "platform_id": "qwen",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:01.927566Z",
+      "last_checked_at": "2026-11-23T10:40:56.678777Z",
       "cooldown_until": null,
-      "etag": "W/\"050e1d8cf6858275779041ab53a940b1\""
+      "etag": "W/\"1a9e427115b3c7c18b7b6a741ca93d20\""
     },
     "https://github.com/QwenLM/qwen-code/releases.atom": {
       "source_id": "seed-37-qwen",
       "platform_id": "qwen",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:06.870027Z",
+      "last_checked_at": "2026-11-23T10:41:02.934565Z",
       "cooldown_until": null,
       "etag": "W/\"3159e0b225b9b4f5b3e446c8debbd20f\""
     },
@@ -100,7 +100,7 @@
       "source_id": "seed-10-comfyui",
       "platform_id": "comfyui",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:59.936039Z",
+      "last_checked_at": "2026-11-23T10:40:54.861076Z",
       "cooldown_until": null,
       "etag": "W/\"a0f67b88869d8583ba0dd92949236e01\""
     },
@@ -108,7 +108,7 @@
       "source_id": "seed-36-deepseek",
       "platform_id": "deepseek",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:03.842495Z",
+      "last_checked_at": "2026-11-23T10:40:58.931541Z",
       "cooldown_until": null,
       "etag": "\"cbf1dbad3a8bde6996e6c66e305587f7\""
     },
@@ -116,15 +116,15 @@
       "source_id": "seed-09-github",
       "platform_id": "github",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:59.527360Z",
+      "last_checked_at": "2026-11-23T10:40:53.830004Z",
       "cooldown_until": null,
-      "etag": "W/\"bfc9ae0aec9fcff69ee50f7645004dec\""
+      "etag": "W/\"c0860894610a74009d7e093c82b75b48\""
     },
     "https://github.com/langchain-ai/langgraph/releases.atom": {
       "source_id": "seed-43-langchain",
       "platform_id": "langchain",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:10.033481Z",
+      "last_checked_at": "2026-11-23T10:41:04.791114Z",
       "cooldown_until": null,
       "etag": "W/\"b7ba725b3b6b853def44e69724f99e71\""
     },
@@ -132,7 +132,7 @@
       "source_id": "seed-55-mistral-ai",
       "platform_id": "mistral-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:11.879707Z",
+      "last_checked_at": "2026-11-23T10:41:06.572945Z",
       "cooldown_until": null,
       "etag": "W/\"b2c25625bb5ad483543502a5b74094a0\""
     },
@@ -140,7 +140,7 @@
       "source_id": "seed-38-modelscope",
       "platform_id": "modelscope",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:07.755130Z",
+      "last_checked_at": "2026-11-23T10:41:03.442558Z",
       "cooldown_until": null,
       "etag": "W/\"6842eb7e2ad30019627109a43cde4d4b\""
     },
@@ -148,7 +148,7 @@
       "source_id": "seed-07-ollama",
       "platform_id": "ollama",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:53.717766Z",
+      "last_checked_at": "2026-11-23T10:40:48.549084Z",
       "cooldown_until": null,
       "etag": "W/\"1942c085d92c383e954d8d0913ea099d\""
     },
@@ -156,925 +156,99 @@
       "source_id": "seed-08-github",
       "platform_id": "github",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:55.779685Z",
+      "last_checked_at": "2026-11-23T10:40:51.433520Z",
       "cooldown_until": null,
       "etag": "W/\"4344c3601a20ae4da5f54ccc9c369301\""
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T01:13:52.260052Z",
+      "last_checked_at": "2026-11-23T10:40:50.480604Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:38.762042Z",
+      "last_checked_at": "2026-11-23T10:41:03.842543Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:14.415302Z",
+      "last_checked_at": "2026-11-23T10:40:58.229383Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:04.349309Z",
+      "last_checked_at": "2026-11-23T10:40:52.438672Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:16.445737Z",
+      "last_checked_at": "2026-11-23T10:40:59.772856Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:29.160718Z",
+      "last_checked_at": "2026-11-23T10:40:48.424113Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:14.129303Z",
+      "last_checked_at": "2026-11-23T10:41:13.474903Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:01.842774Z",
+      "last_checked_at": "2026-11-23T10:41:01.795191Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:22.459811Z",
+      "last_checked_at": "2026-11-23T10:41:11.649646Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:19.255204Z",
+      "last_checked_at": "2026-11-23T10:41:07.778100Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:56.043587Z",
+      "last_checked_at": "2026-11-23T10:41:10.072847Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:04.482470Z",
+      "last_checked_at": "2026-11-23T10:41:05.925307Z",
       "cooldown_until": null
     },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:51.291380Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:26.808179Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:16.940213Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:28.943175Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:57.010267Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:27.145816Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:11.851702Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:33.432171Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:31.299658Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:05.715803Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:13:56.685663Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:44.965094Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:20.660445Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:08.346417Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:20.656271Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:40.713498Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:18.513147Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:05.857363Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:26.641317Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:24.599010Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:59.602177Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:13:54.558834Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:41.210602Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:16.641370Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:06.665092Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:18.790783Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:34.930227Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:16.696574Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:03.881249Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:25.020637Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:20.003978Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.951542Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:13:58.592582Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:46.795825Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:22.615661Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:10.424497Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:22.687175Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:46.546733Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:20.923071Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:07.938960Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:28.573656Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:25.790009Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:01.430241Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:13:49.817565Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:37.195185Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:11.962233Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:02.482675Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:14.431702Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:25.341282Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:13.035704Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:00.128244Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:20.548635Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:15.811605Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.661432Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:15.081852Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:55:01.286293Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:37.391897Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:28.130372Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:39.282871Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:01:18.588315Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:40.006553Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:22.185135Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:42.752279Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:39.790454Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:17.445876Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:00.604323Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:49.092468Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:24.875039Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:12.587973Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:24.809091Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:00:51.629896Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:22.254871Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:09.954877Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:30.156154Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:28.010646Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:03.221302Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:13.011624Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:59.073966Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:35.391840Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:25.074971Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:37.120191Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:01:14.891865Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:38.291507Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:20.682945Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:41.058029Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:38.704187Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:15.826178Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:08.850810Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:55.934976Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:30.793205Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:20.307908Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:32.884336Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:01:06.811281Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:34.180520Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:17.670741Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:37.416207Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:34.368763Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:12.210246Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:10.692382Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:57.486159Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:32.887552Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:22.734909Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:34.720177Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:01:11.211643Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:36.035437Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:19.122829Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:39.373993Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:36.870627Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:14.449591Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794964429": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:14:07.064880Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794966876": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:54:53.475751Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794967151": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T01:59:28.875439Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1794994382": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T09:33:18.729969Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795022294": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T17:18:31.231957Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795042822": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-21T23:01:02.740043Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795057330": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T03:02:33.326965Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795091219": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T12:27:15.721958Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795119380": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
-      "last_status": 200,
-      "last_checked_at": "2026-11-22T20:16:35.246267Z",
-      "cooldown_until": null
-    },
-    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795138215": {
-      "source_id": "seed-06-hacker-news",
-      "platform_id": "hacker-news",
+    "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=twitter.com%20status%20AI&hitsPerPage=40": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T01:30:31.764507Z",
+      "last_checked_at": "2026-11-23T10:40:56.591622Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50&numericFilters=points%3E%3D100%2Ccreated_at_i%3E1795171013": {
@@ -1088,54 +262,54 @@
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:10.678135Z",
+      "last_checked_at": "2026-11-23T10:40:55.017334Z",
       "cooldown_until": null
     },
     "https://huggingface.co/api/daily_papers": {
       "source_id": "seed-00-huggingface",
       "platform_id": "huggingface",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.684404Z",
+      "last_checked_at": "2026-11-23T10:40:48.360198Z",
       "cooldown_until": null,
-      "etag": "W/\"45858-O1Qh8E8DEqK4HLTry/f31+fDLc8\""
+      "etag": "W/\"45858-53D+tuhDkmgDa9Qx7xPZ+uvPjLs\""
     },
     "https://huggingface.co/api/models?sort=trendingScore&limit=50": {
       "source_id": "seed-01-huggingface",
       "platform_id": "huggingface",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.164657Z",
+      "last_checked_at": "2026-11-23T10:40:49.824849Z",
       "cooldown_until": null,
-      "etag": "W/\"6acf-8j3kkP+OUQL8bzowjVGKD1zBH2Y\""
+      "etag": "W/\"6ac2-X+/MxKpNqwd0w0Wu6Ga7iWUYqEQ\""
     },
     "https://huggingface.co/api/spaces?sort=trendingScore&limit=50&expand%5B%5D=cardData&expand%5B%5D=likes&expand%5B%5D=sdk&expand%5B%5D=tags&expand%5B%5D=createdAt&expand%5B%5D=trendingScore": {
       "source_id": "seed-02-huggingface",
       "platform_id": "huggingface",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:56.697465Z",
+      "last_checked_at": "2026-11-23T10:40:51.878537Z",
       "cooldown_until": null,
-      "etag": "W/\"728b-zQvkXzJyqZr3XYSnlZbvuMzmLrU\""
+      "etag": "W/\"728b-3rdn9CsLRLEaHpse0OubzQYDLAk\""
     },
     "https://huggingface.co/blog/feed.xml": {
       "source_id": "seed-26-huggingface",
       "platform_id": "huggingface",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:58.657145Z",
+      "last_checked_at": "2026-11-23T10:40:54.236095Z",
       "cooldown_until": null,
       "etag": "W/\"4217c-lsdoxghiK3DBEQ5fzRniwnuc+GU\""
     },
     "https://importai.substack.com/feed": {
-      "source_id": "seed-41-import-ai",
-      "platform_id": "import-ai",
-      "last_status": 403,
-      "last_checked_at": "2026-11-23T10:36:56.911725Z",
-      "cooldown_until": "2026-11-23T16:36:56.911725Z",
-      "etag": "W/\"6a580-KAOt+VOmhO1dQK4qYLHeEH05+hY\""
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:52.374108Z",
+      "cooldown_until": null,
+      "etag": "W/\"6a580-nYsNZqQRrDekzmy55XL4dHiK+LE\""
     },
     "https://machinelearning.apple.com/rss.xml": {
       "source_id": "seed-46-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:57.815355Z",
+      "last_checked_at": "2026-11-23T10:40:51.048730Z",
       "cooldown_until": null,
       "etag": "W/\"6b00aa86-260d\"",
       "last_modified": "Fri, 20 Nov 2026 20:16:06 GMT"
@@ -1143,30 +317,30 @@
     "https://magazine.sebastianraschka.com/feed": {
       "source_id": "seed-42-ahead-of-ai",
       "platform_id": "ahead-of-ai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.032032Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:50.386502Z",
       "cooldown_until": null,
-      "etag": "W/\"2c2642-q6fruhrCSqzB6HzAS5coWMFhmTc\""
+      "etag": "W/\"2c2642-4RrT7UYH5hnxEKKt6uSbaBSUitQ\""
     },
     "https://medium.com/feed/daangn": {
       "source_id": "seed-21-daangn-tech",
       "platform_id": "daangn-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:54.337642Z",
+      "last_checked_at": "2026-11-23T10:40:49.019627Z",
       "cooldown_until": null
     },
     "https://medium.com/feed/musinsa-tech": {
       "source_id": "seed-22-musinsa-tech",
       "platform_id": "musinsa-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:56.572506Z",
+      "last_checked_at": "2026-11-23T10:40:50.704266Z",
       "cooldown_until": null
     },
     "https://news.aikoreacommunity.com/rss/": {
       "source_id": "seed-16-ai-korea-community",
       "platform_id": "ai-korea-community",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.997027Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:48.694235Z",
       "cooldown_until": null,
       "etag": "W/\"5eabe-3dSgMnXFycRCXn+YD87ziBzpaBE\""
     },
@@ -1174,7 +348,7 @@
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:11.360951Z",
+      "last_checked_at": "2026-11-23T10:40:52.542129Z",
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:20:05 GMT"
     },
@@ -1182,98 +356,122 @@
       "source_id": "seed-03-openai",
       "platform_id": "openai",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.461076Z",
+      "last_checked_at": "2026-11-23T10:40:48.162175Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=clem.hf.co&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:15.579032Z",
+      "last_checked_at": "2026-11-23T10:41:09.696367Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=emollick.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:01.487655Z",
+      "last_checked_at": "2026-11-23T10:40:56.179093Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=hamel.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:09.813063Z",
+      "last_checked_at": "2026-11-23T10:41:03.897611Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=huggingface.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.673188Z",
+      "last_checked_at": "2026-11-23T10:40:48.304047Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=jeffdean.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:11.738567Z",
+      "last_checked_at": "2026-11-23T10:41:05.773471Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=karpathy.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.351051Z",
+      "last_checked_at": "2026-11-23T10:40:52.600429Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=natolambert.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:03.964364Z",
+      "last_checked_at": "2026-11-23T10:40:58.280309Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ollama.com&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 400,
-      "last_checked_at": "2026-11-23T10:36:59.438965Z"
+      "last_checked_at": "2026-11-23T10:40:54.433692Z"
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=rasbt.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:07.480318Z",
+      "last_checked_at": "2026-11-23T10:41:02.132516Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=simonwillison.net&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.904368Z",
+      "last_checked_at": "2026-11-23T10:40:50.146808Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=swyx.io&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:17.894499Z",
+      "last_checked_at": "2026-11-23T10:41:11.702682Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=thomwolf.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:13.981777Z",
+      "last_checked_at": "2026-11-23T10:41:07.365070Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=timkellogg.me&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:05.483830Z",
+      "last_checked_at": "2026-11-23T10:41:00.982354Z",
       "cooldown_until": null
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F0x45o%2Fstatus%2F2117332304880169152&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:22.064354Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:21 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F0xGoldTooth%2Fstatus%2F2118028166707007853&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:16.290327Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:16 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FAgentMemoryL%2Fstatus%2F2123418533950591252&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:26.186567Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:26 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FAlexRobey23%2Fstatus%2F2123872680718082542&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1331,6 +529,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:13 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FDeepInsightLabs%2Fstatus%2F2123721278112911860&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:24.673823Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:24 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FEgeErdil2%2Fstatus%2F2123818549353623921&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1346,6 +552,14 @@
       "last_checked_at": "2026-11-23T10:37:34.576052Z",
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:37:34 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FEneaszWrites%2Fstatus%2F2122076407803363641&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:42.122309Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:42 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FFounderClipsHQ%2Fstatus%2F2123411646777307310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1371,6 +585,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:37:36 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FKobeissiLetter%2Fstatus%2F2121689817301819425&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:47.585491Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:47 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FLinusMixson%2Fstatus%2F2123283812184699218&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1379,21 +601,29 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 02:00:12 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMGately_au%2Fstatus%2F2122780345947017287&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:37.860310Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:37 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMistralAI%2Fstatus%2F2122713540666806397&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:15.012171Z",
+      "last_checked_at": "2026-11-23T10:40:56.943177Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:14 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:40:56 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNTSB_Newsroom%2Fstatus%2F2119925879975395746&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:25.493044Z",
+      "last_checked_at": "2026-11-23T10:41:08.204515Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:25 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:08 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNielsRogge%2Fstatus%2F2123398384790684128&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1403,21 +633,61 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 02:00:13 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FPetrichorbios%2Fstatus%2F2120290803419639914&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:55.283617Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:55 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FPietroMiotti%2Fstatus%2F2120219901814043087&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:57.723652Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:57 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FRepYassAnsari%2Fstatus%2F2118054336077127797&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:23.800358Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:23 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FReuters%2Fstatus%2F2118430684079407346&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:11.836377Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:11 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FRobert_E_Grant_%2Fstatus%2F2124338413662847228&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:18.474732Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:18 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FScott_Helme%2Fstatus%2F2122422157959471456&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:16.915249Z",
+      "last_checked_at": "2026-11-23T10:40:58.923291Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:16 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:40:58 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FStationhouseAI%2Fstatus%2F2121393278407123388&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:21.592101Z",
+      "last_checked_at": "2026-11-23T10:41:03.690660Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:21 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:03 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FSteveRattner%2Fstatus%2F2123523070044356875&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1427,6 +697,14 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 02:00:06 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FTaylorLorenz%2Fstatus%2F2118095796981637203&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:20.312029Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:20 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FTheRundownAI%2Fstatus%2F2123461918367351073&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1434,6 +712,14 @@
       "last_checked_at": "2026-11-21T01:59:53.918706Z",
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 01:59:53 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FValsAI%2Fstatus%2F2118473836710760816&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:10.273094Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:10 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FValsAI%2Fstatus%2F2123129591292432513&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1459,6 +745,30 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:23 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FXHNews%2Fstatus%2F2121596133936091612&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:43.997619Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:43 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faaronsibarium%2Fstatus%2F2122361245357478085&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:35.417546Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:35 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faidenybai%2Fstatus%2F2124550726882136542&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:16.890271Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:16 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Farena%2Fstatus%2F2123436909120856466&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1475,13 +785,37 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 02:00:18 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fatreydesai%2Fstatus%2F2123473074230292737&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:29.880334Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:29 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbebuu_ai%2Fstatus%2F2118052769856888892&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:13.910943Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:13 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2117626126214504729&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:27.053576Z",
+      "last_checked_at": "2026-11-23T10:41:10.630441Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:26 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:10 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcatalinmpit%2Fstatus%2F2123061832781090948&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:31.537581Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:31 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcloneofsimo%2Fstatus%2F2123851306150605248&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1499,21 +833,29 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 01:59:43 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fdeepseek_ai%2Fstatus%2F2121247896918253875&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:49.331082Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:49 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fdimitrispapail%2Fstatus%2F2120245027804705121&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:23.478272Z",
+      "last_checked_at": "2026-11-23T10:41:05.764445Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:23 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:05 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Feliebakouch%2Fstatus%2F2123804091297976653&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:32.724686Z",
+      "last_checked_at": "2026-11-23T10:42:26.092692Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:32 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:42:26 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Feliebakouch%2Fstatus%2F2123881752641065285&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1522,6 +864,22 @@
       "last_checked_at": "2026-11-23T10:38:15.688885Z",
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:15 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fericweinstein%2Fstatus%2F2120196442707075438&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:59.502540Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:59 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fflightradar24%2Fstatus%2F2121347654714077605&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:51.283622Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:51 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ffuturenomics%2Fstatus%2F2123501930580480142&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1539,13 +897,37 @@
       "cooldown_until": null,
       "last_modified": "Sat, 21 Nov 2026 02:00:36 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fgiovannicatt3%2Fstatus%2F2094815425972539565&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:28.287205Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:28 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fjeremyphoward%2Fstatus%2F2122487017137398256&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:39.870172Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:39 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fjmugan%2Fstatus%2F2119593410268999700&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:06.005392Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:05 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fjsnnsa%2Fstatus%2F2115623382721126826&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:28.802980Z",
+      "last_checked_at": "2026-11-23T10:41:12.397581Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:28 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:12 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fkarinanguyen%2Fstatus%2F2123509936475001310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1627,6 +1009,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:04 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fkouhxp%2Fstatus%2F2123096768996892959&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:33.791085Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:33 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Flateinteraction%2Fstatus%2F2123827471325765706&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1635,6 +1025,22 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:37:58 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmax_spero_%2Fstatus%2F2122032840204226687&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:45.786323Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:45 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmicro1_ai%2Fstatus%2F2123849880426926402&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:22.840324Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:22 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmiramurati%2Fstatus%2F2123872534970208421&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1642,6 +1048,14 @@
       "last_checked_at": "2026-11-23T10:38:09.632853Z",
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:09 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmjnblack%2Fstatus%2F2118359682460823685&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:18.419455Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:18 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fnabeelqu%2Fstatus%2F2123806732027924920&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1655,17 +1069,25 @@
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:19.246123Z",
+      "last_checked_at": "2026-11-23T10:41:01.238652Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:19 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:01 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpaulosyibelo%2Fstatus%2F2106378929158135903&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:30.689197Z",
+      "last_checked_at": "2026-11-23T10:41:14.618120Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:37:30 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:41:14 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpushmeet%2Fstatus%2F2118752095859794390&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:08.171577Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:08 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Frohanpaul_ai%2Fstatus%2F2123313372510998911&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1739,6 +1161,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:37:46 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fspisallyouneed%2Fstatus%2F2119829366758604963&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:01.720308Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:01 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fteddyschleifer%2Fstatus%2F2123412918368616556&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1778,6 +1208,14 @@
       "last_checked_at": "2026-11-23T10:38:25.915207Z",
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:25 GMT"
+    },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ftheallinpod%2Fstatus%2F2123994998156722681&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:20.700359Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:20 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ftheojaffee%2Fstatus%2F2123851368951910847&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1819,6 +1257,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:38:34 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fwilldepue%2Fstatus%2F2120992457630326841&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:41:53.389194Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:41:53 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fyacinelearning%2Fstatus%2F2123439520616173794&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1835,6 +1281,14 @@
       "cooldown_until": null,
       "last_modified": "Mon, 23 Nov 2026 10:37:42 GMT"
     },
+    "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fzhizdev%2Fstatus%2F2119874095269707977&omit_script=true&dnt=true": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:42:03.680117Z",
+      "cooldown_until": null,
+      "last_modified": "Mon, 23 Nov 2026 10:42:03 GMT"
+    },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fziqiao_ma%2Fstatus%2F2123873363605201085&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
       "platform_id": "x",
@@ -1846,8 +1300,8 @@
     "https://qiita.com/tags/llm/feed": {
       "source_id": "seed-29-qiita",
       "platform_id": "qiita",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.447149Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:49.382618Z",
       "cooldown_until": null,
       "etag": "W/\"18bd2f9dc776d240dc3dda7a0f4b0870\""
     },
@@ -1855,7 +1309,7 @@
       "source_id": "seed-34-qwen",
       "platform_id": "qwen",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:56.027642Z",
+      "last_checked_at": "2026-11-23T10:40:49.404992Z",
       "cooldown_until": null,
       "etag": "W/\"6970c244-98ff\"",
       "last_modified": "Wed, 21 Jan 2026 12:10:44 GMT"
@@ -1863,8 +1317,8 @@
     "https://rss.arxiv.org/rss/cs.AI": {
       "source_id": "seed-50-arxiv",
       "platform_id": "arxiv",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:58.861223Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:51.375344Z",
       "cooldown_until": null,
       "etag": "8d8b3b66a58d2ae623e202d6871e8c8cfa12b814c663cc417abbfedcefc9b376"
     },
@@ -1872,25 +1326,25 @@
       "source_id": "seed-30-itmedia-aiplus",
       "platform_id": "itmedia-aiplus",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:56.165546Z",
+      "last_checked_at": "2026-11-23T10:40:49.368613Z",
       "cooldown_until": null,
-      "etag": "\"3006-660ee96ffaf1a-gzip\"",
-      "last_modified": "Mon, 23 Nov 2026 09:55:12 GMT"
+      "etag": "\"3006-660ef0241c1e5-gzip\"",
+      "last_modified": "Mon, 23 Nov 2026 10:25:11 GMT"
     },
     "https://sakana.ai/feed.xml": {
       "source_id": "seed-32-sakana-ai",
       "platform_id": "sakana-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:55.914664Z",
+      "last_checked_at": "2026-11-23T10:40:49.540037Z",
       "cooldown_until": null,
-      "etag": "W/\"6b02705a-4d754\"",
-      "last_modified": "Sun, 22 Nov 2026 04:32:26 GMT"
+      "etag": "W/\"6b02705b-4d754\"",
+      "last_modified": "Sun, 22 Nov 2026 04:32:27 GMT"
     },
     "https://simonwillison.net/atom/everything/": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:37:14.820188Z",
+      "last_checked_at": "2026-11-23T10:40:52.280004Z",
       "cooldown_until": null,
       "last_modified": "Sun, 22 Nov 2026 19:45:06 GMT"
     },
@@ -1898,15 +1352,15 @@
       "source_id": "seed-23-kakao-tech",
       "platform_id": "kakao-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.817256Z",
+      "last_checked_at": "2026-11-23T10:40:48.671527Z",
       "cooldown_until": null
     },
     "https://techblog.woowahan.com/feed/": {
       "source_id": "seed-20-woowahan-tech",
       "platform_id": "woowahan-tech",
-      "last_status": 403,
-      "last_checked_at": "2026-11-23T10:36:54.280370Z",
-      "cooldown_until": "2026-11-23T16:36:54.280370Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:48.566819Z",
+      "cooldown_until": null,
       "etag": "\"68a6f6623f1634dffe78ae1ea44702b8\"",
       "last_modified": "Fri, 20 Nov 2026 07:50:02 GMT"
     },
@@ -1914,7 +1368,7 @@
       "source_id": "seed-51-techcrunch-ai",
       "platform_id": "techcrunch-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:58.696412Z",
+      "last_checked_at": "2026-11-23T10:40:51.453111Z",
       "cooldown_until": null,
       "etag": "W/\"5bfbaae445589e4c7074d977b9f597a7\"",
       "last_modified": "Mon, 23 Nov 2026 01:25:53 GMT"
@@ -1923,22 +1377,22 @@
       "source_id": "seed-19-toss-tech",
       "platform_id": "toss-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.133698Z",
+      "last_checked_at": "2026-11-23T10:40:49.449069Z",
       "cooldown_until": null
     },
     "https://vercel.com/atom": {
       "source_id": "seed-44-vercel-v0",
       "platform_id": "vercel-v0",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.919778Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:50.792217Z",
       "cooldown_until": null,
       "etag": "W/\"e7212844cfc078f4f25835239d2ba60e\""
     },
     "https://www.aitimes.com/rss/allArticle.xml": {
       "source_id": "seed-18-aitimes",
       "platform_id": "aitimes",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.035400Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:48.418800Z",
       "cooldown_until": null,
       "etag": "\"ccdd-660eeb35ebd29-gzip\"",
       "last_modified": "Mon, 23 Nov 2026 10:03:08 GMT"
@@ -1947,38 +1401,47 @@
       "source_id": "seed-04-anthropic",
       "platform_id": "anthropic",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:53.630550Z",
+      "last_checked_at": "2026-11-23T10:40:48.356790Z",
       "cooldown_until": null
     },
     "https://www.gpters.org/rss/feed": {
       "source_id": "seed-15-gpters",
       "platform_id": "gpters",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:54.012345Z",
+      "last_checked_at": "2026-11-23T10:40:49.296676Z",
       "cooldown_until": null
     },
     "https://www.latent.space/feed": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:37:14.420926Z",
+      "last_checked_at": "2026-11-23T10:40:52.938564Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:34:31 GMT"
+      "last_modified": "Mon, 23 Nov 2026 10:38:54 GMT"
     },
     "https://www.microsoft.com/en-us/research/feed/": {
       "source_id": "seed-47-microsoft-research",
       "platform_id": "microsoft-research",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:58.677754Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:51.563464Z",
       "cooldown_until": null,
       "etag": "\"ad1cceeff48aabffb8ead9abfa5f7d9f\"",
       "last_modified": "Mon, 23 Nov 2026 09:45:57 GMT"
     },
+    "https://www.producthunt.com/feed": {
+      "source_id": "seed-59-x",
+      "platform_id": "x",
+      "last_status": 200,
+      "last_checked_at": "2026-11-23T10:40:51.535721Z",
+      "cooldown_until": null,
+      "etag": "W/\"a3a9c733845faadce93fbba12a8cd59c\"",
+      "last_modified": "Mon, 23 Nov 2026 10:40:06 GMT"
+    },
     "https://www.qbitai.com/feed": {
       "source_id": "seed-33-qbitai",
       "platform_id": "qbitai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.672445Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:51.075540Z",
       "cooldown_until": null,
       "etag": "\"02d11024cec32215453b6a357ba3125e\"",
       "last_modified": "Sat, 21 Nov 2026 06:37:24 GMT"
@@ -1987,28 +1450,28 @@
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 429,
-      "last_checked_at": "2026-11-23T10:37:05.095637Z",
-      "cooldown_until": "2026-11-23T16:37:05.095637Z"
+      "last_checked_at": "2026-11-23T10:33:30.417153Z",
+      "cooldown_until": "2026-11-23T16:33:30.417153Z"
     },
     "https://www.reddit.com/r/MachineLearning/.rss": {
       "source_id": "seed-59-x",
       "platform_id": "x",
       "last_status": 429,
-      "last_checked_at": "2026-11-23T10:37:07.347447Z",
-      "cooldown_until": "2026-11-23T16:37:07.347447Z"
+      "last_checked_at": "2026-11-23T10:33:32.400430Z",
+      "cooldown_until": "2026-11-23T16:33:32.400430Z"
     },
     "https://www.reddit.com/r/singularity/.rss": {
-      "source_id": "seed-58-reddit-singularity",
-      "platform_id": "reddit-singularity",
+      "source_id": "seed-59-x",
+      "platform_id": "x",
       "last_status": 429,
-      "last_checked_at": "2026-11-23T10:37:02.899315Z",
-      "cooldown_until": "2026-11-23T16:37:02.899315Z"
+      "last_checked_at": "2026-11-23T10:33:34.276310Z",
+      "cooldown_until": "2026-11-23T16:33:34.276310Z"
     },
     "https://www.technologyreview.com/topic/artificial-intelligence/feed": {
       "source_id": "seed-53-mit-tech-review",
       "platform_id": "mit-tech-review",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:58.764286Z",
+      "last_checked_at": "2026-11-23T10:40:51.553345Z",
       "cooldown_until": null,
       "etag": "W/\"914778987ce2d4f1757009c5750bf08c\"",
       "last_modified": "Fri, 20 Nov 2026 20:20:30 GMT"
@@ -2016,8 +1479,8 @@
     "https://www.technologyreview.kr/feed/": {
       "source_id": "seed-17-mit-tr-korea",
       "platform_id": "mit-tr-korea",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:57.361515Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:48.594770Z",
       "cooldown_until": null,
       "etag": "\"0d02c8166928462d715b8d662161f67a\"",
       "last_modified": "Mon, 23 Nov 2026 01:37:14 GMT"
@@ -2026,25 +1489,25 @@
       "source_id": "seed-52-the-verge-ai",
       "platform_id": "the-verge-ai",
       "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:59.100408Z",
+      "last_checked_at": "2026-11-23T10:40:51.413628Z",
       "cooldown_until": null,
-      "etag": "W/\"51c08dc499194a9c95d8266400fcc2da\""
+      "etag": "W/\"9d353406d3f00cdc52c8659c774af44e\""
     },
     "https://zenn.dev/topics/claudecode/feed": {
       "source_id": "seed-28-zenn",
       "platform_id": "zenn",
       "last_status": 304,
-      "last_checked_at": "2026-11-23T10:36:57.588171Z",
+      "last_checked_at": "2026-11-23T10:40:50.801105Z",
       "cooldown_until": null,
-      "last_modified": "Sun, 22 Nov 2026 23:20:52 GMT"
+      "last_modified": "Mon, 23 Nov 2026 09:40:16 GMT"
     },
     "https://zenn.dev/topics/llm/feed": {
       "source_id": "seed-27-zenn",
       "platform_id": "zenn",
-      "last_status": 200,
-      "last_checked_at": "2026-11-23T10:36:55.108520Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-23T10:40:49.882487Z",
       "cooldown_until": null,
-      "last_modified": "Mon, 23 Nov 2026 10:27:31 GMT"
+      "last_modified": "Mon, 23 Nov 2026 09:31:29 GMT"
     }
   },
   "translations": {
@@ -2351,38 +1814,45 @@
     },
     "https://arxiv.org/abs/2611.26663": {
       "original_title": "Adding One More Agent: How AI Team Size and Formation Shape Productivity and Diversity in Human-AI Brainstorming Teams",
-      "title_ko": "에이전트 한 명 더 추가하기: AI 팀 규모와 구성이 인간-AI 브레인스토밍 팀의 생산성과 다양성에 미치는 영향",
-      "body_ko": "arXiv:2611.26663v1 공지 유형: 신규 초록: 생성형 AI는 개인의 생산성을 향상시켰지만, 여러 명의 AI 파트너를 추가하는 것이 도움이 되는지 해가 되는지는 여전히 미지수입니다. 저희는 인간-인간 2인조를 기준으로 한 브레인스토밍 실험($N$=168)에서 AI 파트너십(1명 대 2명)과 행동 형성(평균적인 인간 행동에 맞춰 조정된 것 대 참가자가 맞춤화한 것)을 교차시켰습니다. AI 2개가 있는 방에서는 공유 보드에 더 많은 아이디어가 게시되었지만, 사람이 작성한 아이디어는 크게 감소했습니다. AI 파트너가 한 명인 경우, 구성이 중요했습니다. 평균 수준으로 보정된 AI와 짝을 이룬 인간은 다른 어떤 조건보다 더 많은 아이디어를 게시했습니다. AI 파트너가 두 명인 경우, 이러한 효과는 사라졌습니다. 사람들은 계속 대화를 나누었지만, 아이디어를 게시판 게시물로 전환하는 경우는 줄어들었습니다. AI의 소셜 대화는 더 많은 인간 게시물을 예측한 반면, AI의 게시물 수는 더 적은 게시물을 예측했습니다. AI의 개입으로 인간이 창안한 아이디어의 전반적인 다양성은 증가했지만, 두 번째 AI의 개입으로만",
+      "title_ko": "한 명의 에이전트 추가: AI 팀 규모 및 구성이 인간-AI 브레인스토밍 팀의 생산성과 다양성에 미치는 영향",
+      "body_ko": "arXiv:2611.26663v1 공지 유형: 신규 초록: 생성형 AI는 개인의 생산성을 향상시켰지만, 여러 명의 AI 파트너를 추가하는 것이 도움이 되는지 해가 되는지는 여전히 미지수입니다. 저희는 인간-인간 2인조를 기준으로 브레인스토밍 실험($N$=168)에서 AI 파트너십(1개 대 2개)과 행동 형성(평균적인 인간 행동에 맞춰 조정된 것 대 참가자가 맞춤화한 것)을 교차시켰습니다. AI 2개가 있는 방에서는 공유 보드에 더 많은 아이디어가 게시되었지만, 사람이 작성한 아이디어는 크게 감소했습니다. AI 파트너가 한 명인 경우, 구성이 중요했습니다. 평균 수준으로 보정된 AI와 짝을 이룬 인간은 다른 어떤 조건보다 더 많은 아이디어를 게시했습니다. AI 파트너가 2명인 경우, 이러한 효과는 사라졌습니다. 사람들은 계속 대화를 이어갔지만, 아이디어를 게시판에 게시하는 경우는 줄어들었습니다. AI의 소셜 대화는 더 많은 인간 게시물을 예측한 반면, AI의 게시물 수는 더 적은 게시물을 예측했습니다. AI의 개입은 인간이 창안한 아이디어의 전반적인 다양성을 증가시켰지만, 두 번째 AI의 개입에서만",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://arxiv.org/abs/2611.26717": {
       "original_title": "Coherence by Construction: Synthesizing CTI Knowledge Graphs and the Formal Limits of Coherence Validation",
       "title_ko": "구축을 통한 일관성: CTI 지식 그래프와 일관성 검증의 형식적 한계 통합",
-      "body_ko": "arXiv:2611.26717v1 공지 유형: 신규 초록: 지식 그래프와 같은 관계형 훈련 데이터를 대규모 언어 모델로 합성하면 일반적으로 구조화된 객체가 한 번에 하나씩 생성됩니다. 이로 인해 각 객체는 유효하지만 객체 간의 관계는 근거가 없습니다. 본 연구에서는 시뮬레이션을 통한 생성이라는 대안적 패러다임을 연구합니다. 관계적 아티팩트를 설명하는 대신, 이를 생성하는 과정을 시뮬레이션하고 아티팩트를 그 인과적 기록으로 간주합니다. 언어 모델 에이전트는 의도를 제안하고 결정론적 심판자는 명시적인 세계 모델에 비추어 결과를 결정하므로, 관계는 해당 관계가 나타내는 사건이 발생할 때만 생성되며, 이를 통해 일관성이 구성의 속성이 됩니다. 당사는 STIX 2.1 표준에서 사이버 위협 인텔리전스 지식 그래프에 대한 패러다임을 세 가지 엔진으로 구현합니다. 여기에는 언어 모델 유전 연산자를 적용하여 지식 그래프를 구조화하는 진화형 엔진이 포함됩니다.",
+      "body_ko": "arXiv:2611.26717v1 공지 유형: 신규 초록: 지식 그래프와 같은 관계형 훈련 데이터를 대규모 언어 모델로 합성하면 일반적으로 구조화된 객체가 한 번에 하나씩 생성됩니다. 이로 인해 각 객체는 유효하지만 객체 간의 관계는 근거가 없습니다. 우리는 시뮬레이션을 통한 생성이라는 대안적 패러다임을 연구합니다. 관계적 아티팩트를 설명하는 대신, 이를 생성하는 과정을 시뮬레이션하고 아티팩트를 그 인과적 기록으로 간주합니다. 언어 모델 에이전트는 의도를 제안하고 결정론적 심판자는 명시적인 세계 모델에 비추어 결과를 판정하므로, 해당 에이전트가 나타내는 사건이 발생할 때만 관계가 생성되며, 이를 통해 일관성이 구성의 속성이 됩니다. 당사는 STIX 2.1 표준에서 사이버 위협 인텔리전스 지식 그래프에 대한 패러다임을 세 가지 엔진으로 구현합니다. 여기에는 언어 모델 유전 연산자를 적용하여 지식 그래프를 구조화하는 진화 엔진이 포함됩니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://arxiv.org/abs/2611.26722": {
       "original_title": "TOUMAII: A 4.5M-Pair Tool-Calling Preference Dataset and Its Source-Agnostic Generator",
       "title_ko": "TOUMAII: 450만 쌍의 도구 호출 선호도 데이터셋 및 소스에 구애받지 않는 생성기",
-      "body_ko": "arXiv:2611.26722v1 공지 유형: 신규 초록: 엔터프라이즈 에이전트는 다단계 작업을 자율적으로 실행하기 위해 도구와 안정적으로 상호작용하고, API를 호출하고, 데이터베이스를 쿼리해야 하므로 도구 호출은 AI 모델의 핵심 기능이 됩니다. 지도 학습 기반 미세 조정(SFT)은 올바른 호출을 생성하도록 최적화하지만, 이를 그럴듯한 잘못된 호출과 비교하지는 않습니다. 사소한 서식 오류로 인해 호출이 무효화될 수 있고 잘못된 결정으로 인해 상호작용이 중단될 수 있는 환경에서 직접 선호도 최적화(DPO)는 바로 이러한 대조를 목표로 합니다. 따라서 DPO는 단순한 데모가 아니라 선호도 쌍을 필요로 합니다. 툴 호출의 경우, 특히 현실적인 다중 턴 환경에서는 이러한 데이터가 여전히 매우 부족합니다. 이러한 부족 문제를 해결하기 위해 당사는 Agent-Ark/Touca에서 파생된 약 450만 개의 검증된 선호도 쌍을 포함하는 대규모 툴 호출 선호도 데이터셋인 TOUMAII를 도입합니다.",
+      "body_ko": "arXiv:2611.26722v1 공지 유형: 신규 초록: 엔터프라이즈 에이전트는 다단계 작업을 자율적으로 실행하기 위해 도구와 안정적으로 상호작용하고, API를 호출하고, 데이터베이스를 쿼리해야 하므로 도구 호출은 AI 모델의 핵심 기능이 됩니다. 지도 학습 기반 미세 튜닝(SFT)은 올바른 호출을 생성하도록 최적화하지만, 이를 그럴듯한 잘못된 호출과 비교하지는 않습니다. 사소한 형식 오류로 인해 호출이 무효화될 수 있고 잘못된 결정으로 인해 상호작용이 중단될 수 있는 환경에서 직접 선호도 최적화(DPO)는 바로 이러한 대조를 목표로 합니다. 따라서 DPO에는 단순한 데모가 아닌 선호도 쌍이 필요합니다. 툴 호출의 경우, 특히 현실적인 다중 턴 환경에서는 이러한 데이터가 여전히 매우 부족합니다. 이러한 부족 문제를 해결하기 위해 당사는 Agent-Ark/Touca에서 파생된 약 450만 개의 검증된 선호도 쌍을 포함하는 대규모 툴 호출 선호도 데이터셋인 TOUMAII를 도입합니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://arxiv.org/abs/2611.26782": {
       "original_title": "ChatAtom: A Multi-Agent LLM System for Molecular Dynamics Simulation and Visualization",
-      "title_ko": "ChatAtom: 분자 동력학 시뮬레이션 및 시각화를 위한 다중 에이전트 LLM 시스템",
-      "body_ko": "arXiv:2611.26782v1 공지 유형: 신규 초록: 분자 동역학(MD) 시뮬레이션은 원자 수준의 운동을 해석하고 물질의 구조적, 기계적, 동적 특성을 예측하므로 물질 설계 및 발견에 핵심적인 역할을 한다. 그러나 MD 연구에는 전문가 주도의 워크플로가 필요합니다. 즉, 시뮬레이션을 설계하고, 신뢰할 수 있는 입력 스크립트를 작성하고, 이를 실행하고, 별도의 도구를 사용하여 결과를 분석해야 합니다. 여기에서는 다중 에이전트 대규모 언어 모델 시스템인 ChatAtom을 소개합니다. ChatAtom은 사용자가 입력 스크립트나 분석 코드를 작성하지 않고도 자연어 요청을 완전한 MD 워크플로로 변환합니다. 각 에이전트는 워크플로 내에서 정의된 책임을 갖습니다. 오케스트레이터가 연구를 계획합니다. LAMMPS 및 OVITO 에이전트는 각각 생성기-검토자 쌍을 사용하여 실행 전에 시뮬레이션 및 시각화 스크립트를 준비하고 검토합니다. 고성능 컴퓨팅 에이전트는 작업을 디스패치합니다.",
+      "title_ko": "ChatAtom: 분자 동역학 시뮬레이션 및 시각화를 위한 다중 에이전트 LLM 시스템",
+      "body_ko": "arXiv:2611.26782v1 공지 유형: 신규 초록: 분자 동역학(MD) 시뮬레이션은 원자 수준의 운동을 해석하고 물질의 구조적, 기계적, 동적 특성을 예측하므로 물질 설계 및 발견에 핵심적인 역할을 한다. 그러나 MD 연구에는 전문가 주도의 워크플로가 필요합니다. 즉, 시뮬레이션을 설계하고, 신뢰할 수 있는 입력 스크립트를 작성하고, 이를 실행하고, 별도의 도구를 사용하여 결과를 분석해야 합니다. 여기에서는 다중 에이전트 대규모 언어 모델 시스템인 ChatAtom을 소개합니다. ChatAtom은 사용자가 입력 스크립트나 분석 코드를 작성하지 않고도 자연어 요청을 완전한 MD 워크플로로 변환합니다. 각 에이전트는 워크플로 내에서 정의된 책임을 가집니다. 오케스트레이터가 연구를 계획합니다. LAMMPS 및 OVITO 에이전트는 각각 생성기-검토자 쌍을 사용하여 실행 전에 시뮬레이션 및 시각화 스크립트를 준비하고 검토합니다. 고성능 컴퓨팅 에이전트는 작업을 디스패치합니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://arxiv.org/abs/2611.26794": {
       "original_title": "Beyond Final Answers: Interpretable Tumor Immune Microenvironment Reasoning from H&E and mIF",
       "title_ko": "최종 답변을 넘어: H&E 및 mIF를 통한 해석 가능한 종양 면역 미세환경 추론",
-      "body_ko": "arXiv:2611.26794v1 공지 유형: 신규 초록: CD8+ T세포 밀도, 상피내 침윤, Ki67 지수와 같은 종양 면역 미세환경(TIME)의 판독값은 H&E의 조직 구조와 다중면역형광염색(mIF)의 세포 표현형을 결합한다. 다중모드 대규모 언어 모델(MLLM)은 이러한 판독값을 설명과 함께 자동화할 수 있지만, 두 가지 격차가 여전히 존재합니다. 병리학 MLLM은 H&E만 판독하지만, 이러한 판독에는 mIF가 측정하는 세포 표현형이 필요합니다. 그리고 이들의 추론에는 단계별로 확인할 수 있는 진실이 없으므로, R1 스타일의 강화 학습은 최종 답변에만 보상을 제공하고 추론은 검증되지 않은 채로 남겨둡니다. 동일한 절편에 대한 H&E 및 mIF는 두 가지 격차 모두에 부족한 부분을 제공합니다. mIF는 수동 주석 없이 모든 세포를 측정하여 조직 구획의 묘사부터 세포 수에 이르기까지 임상 가이드라인에서 규정하는 각 단계에 대한 세포 수준의 그라운드 트루스를 제공합니다.",
+      "body_ko": "arXiv:2611.26794v1 공지 유형: 신규 초록: CD8+ T세포 밀도, 상피내 침윤 및 Ki67 지수와 같은 종양 면역 미세환경(TIME)의 판독값은 H&E의 조직 구조와 다중면역형광(mIF)의 세포 표현형을 결합합니다. 다중모드 대규모 언어 모델(MLLM)은 이러한 판독 결과를 설명과 함께 자동화할 수 있지만, 두 가지 격차가 여전히 존재합니다. 병리학 MLLM은 H&E만 판독하는 반면, 이러한 판독에는 mIF가 측정하는 세포 표현형이 필요합니다. 그리고 이러한 추론에는 단계별로 확인할 수 있는 진실이 없으므로, R1 스타일의 강화 학습은 최종 답변에만 보상을 제공하고 추론은 검증되지 않은 채로 남겨둡니다. 동일한 절편에 대한 H&E 및 mIF는 두 가지 격차 모두에 부족한 부분을 제공합니다. mIF는 수동 주석 없이 모든 세포를 측정하여 조직 구획의 묘사부터 세포 수에 이르기까지 임상 가이드라인에서 규정하는 각 단계에 대한 세포 수준의 지상 진리를 제공합니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://arxiv.org/abs/2611.26797": {
+      "original_title": "Memorization and Generalization in Generative Models: A Perspective From Energy-based Modeling and Associative Memory",
+      "title_ko": "생성 모델에서의 암기 및 일반화: 에너지 기반 모델링 및 연상 기억의 관점",
+      "body_ko": "arXiv:2611.26797v1 공지 유형: 신규 초록: 생성 모델은 이제 작동하는 코드를 작성하고, 사실적인 이미지를 생성하며, 긴 대화를 이어갈 수 있지만, 이러한 지능의 이면에 있는 메커니즘은 여전히 우리의 이해를 벗어납니다. 본 논문은 패턴이 에너지 최소값으로 저장되고 어트랙터(attractor) 역학을 통해 검색되는 연합 기억(AM)을 통해 이러한 수수께끼를 탐구합니다. AM은 그 용량을 초과하여 가짜 상태라고 하는 새로운 최소값을 형성하며, 이는 오랫동안 기억의 오류로 여겨져 왔습니다. 저희는 이러한 오류가 창의성의 시작점이며, 기억과 일반화가 하나의 검색 과정의 결과로 공존할 수 있다고 주장합니다. 먼저, 확산 모델이 AM처럼 작동한다는 것을 보여줍니다. 확산 모델은 데이터가 거의 없는 상태에서 각 훈련 샘플 주위에 뚜렷한 인력 영역을 형성합니다. 데이터가 증가함에 따라 이러한 분지는 축소되고, 저장된 샘플을 혼합하지만 n에 일치하는 흡인자로 허위 상태가 나타납니다.",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://asahi.com/articles/ASVCP10Z2VCPUHBI00GM.html": {
       "original_title": "超難問「リーマン予想」AIと証明か 米アンソロピックの数学者発表：朝日新聞",
@@ -2401,9 +1871,9 @@
     "https://ascii.jp/elem/000/004/453/4453903": {
       "original_title": "無料の画像生成AI「MiniMax H3-Image」はここがすごい Nano Bananaのようなモデルがローカルで動くのが当たり前に (1/4)",
       "title_ko": "무료 이미지 생성 AI 'MiniMax H3-Image'의 놀라운 점은 바로 이것 Nano Banana와 같은 모델이 로컬에서 작동하는 것이 당연한 일 (1/4)",
-      "body_ko": "무료 이미지 생성 AI 'MiniMax H3-Image'의 놀라운 점은 바로 이것 Nano Banana와 같은 모델이 로컬에서 작동하는 것이 당연한 시대 (1/4) 11일, MiniMax가 새로운 이미지 생성 모델 'H3-Image'를 공개했습니다. 3일에는 Pruna AI에서 동영상 AI 'H3'를 증류하여 만든 이미지 AI 모델 'P-H3-Image(현재 공개명은 P-Image-OSS)'가 막 등장했습니다. H3-Image가 8월에 개발 중인 것으로 밝혀졌지만, 원본 모델이 이렇게 빨리 공개될 줄은 놀랍습니다...",
+      "body_ko": "무료 이미지 생성 AI 'MiniMax H3-Image'의 놀라운 점 Nano Banana와 같은 모델이 로컬에서 작동하는 것이 당연해짐 (1/4) 11일, MiniMax가 새로운 이미지 생성 모델 'H3-Image'를 공개했습니다. 3일에는 Pruna AI에서 동영상 AI 'H3'를 증류하여 만든 이미지 AI 모델 'P-H3-Image(현재 공개 명칭은 P-Image-OSS)'가 막 등장했습니다. H3-Image가 8월에 개발 중인 것으로 밝혀졌음에도 불구하고, 원본 모델이 이렇게 빨리 공개될 줄은 놀랍습니다...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://aws.amazon.com/blogs/machine-learning/cut-self-hosted-llm-cost-and-latency-with-the-distributed-kv-caching-agent-skill": {
       "original_title": "Cut self-hosted LLM cost and latency with the distributed KV caching agent sk…",
@@ -2494,14 +1964,14 @@
       "title_ko": "네, AI 모델이 검증 불가능한 도메인에서 더 많은 어려움을 겪을 것으로 예상하는 것이 합리적이지만, 다음 사항을 언급할 가치가 있다고 생각합니다...",
       "body_ko": "네, AI 모델이 검증 불가능한 영역에서 더 많은 어려움을 겪을 것으로 예상하는 것이 합리적이지만, 자동 검증이 없는 영역에서도 매우 큰 이점을 볼 수 있다는 점에 주목할 가치가 있다고 생각합니다. 여기에는 글쓰기, 비즈니스 문제, 디자인, 프리랜서 작업 등에서 AI에 대한 인간의 평가가 포함됩니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://bsky.app/profile/emollick.bsky.social/post/3n2xc6e3yec2m": {
       "original_title": "Not that AI discourse has ever been great, but \"of course LLMs are good at math\" both misses that \"good at math\" is a…",
-      "title_ko": "AI에 대한 논의가 그동안 훌륭했었다는 것은 아니지만, \"물론 LLM은 수학을 잘합니다\"라는 말은 \"수학을 잘한다\"는 것이...",
-      "body_ko": "AI에 대한 논의가 그동안 훌륭했었다는 것은 아니지만, \"물론 LLM은 수학에 능합니다\"라는 표현은 리만 가설을 푸는 맥락에서 \"수학에 능하다\"는 것이 *약간* 과소평가된 것이라는 점을 간과하고 있을 뿐만 아니라, LLM이 아주 최근의 획기적인 발전이 있기 전까지는 실제로 \"수학에 능하지\" 않았다는 사실도 무시하고 있습니다.",
+      "title_ko": "AI에 대한 논의가 그동안 훌륭했었다는 것은 아니지만, '물론 LLM은 수학에 능합니다'라는 말은 '수학에 능하다'는 것이...",
+      "body_ko": "AI에 대한 논의가 그동안 훌륭했었다는 것은 아니지만, \"물론 LLM은 수학에 능합니다\"라는 표현은 리만 가설을 푸는 맥락에서 \"수학에 능하다\"는 것이 *약간* 과소평가된 것이라는 점을 간과하고 있을 뿐만 아니라, LLM이 아주 최근의 획기적인 발전이 있기 전까지는 실제로 \"수학에 능하지 않았다\"는 사실도 무시하고 있습니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://bsky.app/profile/natolambert.bsky.social/post/3n2tdrggx2o27": {
       "original_title": "New slide deck on the biggest open problems in post-training and how the field got to where it is today. Largely, thi…",
@@ -2603,17 +2073,17 @@
     },
     "https://bsky.app/profile/timkellogg.me/post/3n2x3jfcmpc2f": {
       "original_title": "Jakub Pachocki, Chief Scientist at OpenAI argues that perplexity has been an informative metric since before GPT-3.5",
-      "title_ko": "OpenAI의 수석 과학자인 야쿠브 파초키(Jakub Pachocki)는 퍼플렉시티가 GPT-3.5 이전부터 유용한 지표였다고 주장합니다.",
+      "title_ko": "OpenAI의 수석 과학자인 야쿠브 파초키(Jakub Pachocki)는 GPT-3.5 이전부터 퍼플렉시티가 유용한 지표였다고 주장합니다.",
       "body_ko": "OpenAI의 수석 과학자인 야쿠브 파초키(Jakub Pachocki)는 GPT-3.5 이전부터 퍼플렉시티가 유용한 지표였다고 주장합니다. 퍼플렉시티는 사전 학습 지표이며, 이것이 전부는 아니지만 더 빠르게 개선되고 있습니다. 이러한 퍼플렉시티의 하락은 능력의 비약적인 향상과도 일치합니다. openai.com/index/perple...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://bsky.app/profile/timkellogg.me/post/3n2x6btjq622f": {
       "original_title": "inkling 2 mini is giving me confidence that looped transformers don’t really inhibit CoT monitoring",
       "title_ko": "inkling 2 mini는 루프형 변압기가 CoT 모니터링을 실제로 저해하지 않는다는 확신을 줍니다.",
-      "body_ko": "inkling 2 mini 덕분에 루프 변환기가 CoT 모니터링을 실제로 저해하지 않는다는 확신이 생겼습니다. 더 나은 정신적 모델은 단순히 더 길고 더 많은 레이어를 가진 모델이라고 생각합니다. 80층 모델이 분명히 존재하는데도 CoT 모니터링에 대한 우려를 제기한 사람은 아무도 없었습니다.",
+      "body_ko": "inkling 2 mini 덕분에 루프 변환기가 CoT 모니터링을 실제로 저해하지 않는다는 확신이 생겼습니다. 더 나은 정신적 모델은 단순히 더 길고 더 많은 레이어를 가진 모델이라고 생각합니다. 80층 모델이 분명히 존재하며, CoT 모니터링에 대해 우려를 제기한 사람은 한 명도 없습니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://civitai.com/models/1030872": {
       "original_title": "shitty watercolor style (LORA)",
@@ -2776,6 +2246,13 @@
       "provider": "release_formatter",
       "cached_at": "2026-11-21T09:34:35.733263Z"
     },
+    "https://github.com/vercel/ai/releases/tag/%40ai-sdk/vue%403.0.336": {
+      "original_title": "@ai-sdk/vue@3.0.336",
+      "title_ko": "@ai-sdk/vue@3.0.336 최신 소식",
+      "body_ko": "### 패치 변경 사항 - ai@6.0.336",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://gpters.org/-o7fg78sg/post/ai-photo-video-idea-kdkxfrYAWzVSo4h": {
       "original_title": "인도 크리에이터를 위한 AI 사진·영상 아이디어 워크스페이스",
       "title_ko": "인도 크리에이터를 위한 AI 사진·영상 아이디어 워크스페이스",
@@ -2853,12 +2330,96 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-23T01:31:46.784591Z"
     },
+    "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image": {
+      "original_title": "MiniMaxAI/MiniMax-H3-Image",
+      "title_ko": "MiniMaxAI/MiniMax-H3-Image 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/OVHaiLLM/Olala-v1.0-mini-7A1B": {
+      "original_title": "OVHaiLLM/Olala-v1.0-mini-7A1B",
+      "title_ko": "OVHaiLLM/Olala-v1.0-mini-7A1B 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/SulphurAI/Sulphur-3": {
+      "original_title": "SulphurAI/Sulphur-3",
+      "title_ko": "SulphurAI/Sulphur-3 오픈 모델 공개",
+      "body_ko": "Hugging Face 모델 저장소 'SulphurAI/Sulphur-3'. 작업: 알 수 없음. 라이브러리: minimax-h3. 라이선스: 기타. 태그: minimax-h3, base_model:MiniMaxAI/MiniMax-H3, base_model:finetune:MiniMaxAI/MiniMax-H3, license:other. 좋아요: 815. 다운로드(지난 30일): 133,732.",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/apple/DepthPro2": {
+      "original_title": "apple/DepthPro2",
+      "title_ko": "apple/DepthPro2 오픈 모델 공개",
+      "body_ko": "Hugging Face 모델 저장소 'apple/DepthPro2'. 작업: 깊이 추정. 라이브러리: depth-pro-2. 라이선스: 기타. 태그: depth-pro-2, depth-estimation, metric-depth, monocular-depth, video-depth, arxiv:2611.26603, license:other. 좋아요: 1,081. 다운로드(지난 30일): 0.",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://huggingface.co/blog/anemll/hybrid-ane-gpu-m6": {
       "original_title": "Worth paying attention to if you care about local AI",
       "title_ko": "로컬 AI에 관심이 있다면 주목할 가치가 있습니다.",
       "body_ko": "로컬 AI에 관심이 있다면 주목할 가치가 있습니다. M6에서 성능을 가속화하는 연구 분야입니다. huggingface.co/blog/anemll/... 연결된 페이지: 하나의 모델, 두 개의 가속기: Neural Engine과 GPU를 함께 사용하여 M6에서 더 빠른 프리필 및 디코딩 — ANEMLL의 블로그 게시글: Hugging Face의 오픈 소스 프로젝트(발음은 '애니멀')(",
       "provider": "deep_translator",
       "cached_at": "2026-11-21T17:19:52.889128Z"
+    },
+    "https://huggingface.co/briaai/RMBG-3.0": {
+      "original_title": "briaai/RMBG-3.0",
+      "title_ko": "briaai/RMBG-3.0 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/harness-hub/Qwen3.8-27B-pi-adapted": {
+      "original_title": "harness-hub/Qwen3.8-27B-pi-adapted",
+      "title_ko": "harness-hub/Qwen3.8-27B-pi-adapted 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/higurashi-ai/Haru-4B": {
+      "original_title": "higurashi-ai/Haru-4B",
+      "title_ko": "higurashi-ai/Haru-4B 오픈 모델 공개",
+      "body_ko": "Hugging Face 모델 저장소 'higurashi-ai/Haru-4B'. 작업: 오디오-오디오. 라이브러리: 알 수 없음. 라이선스: apache-2.0. 태그: safetensors, haru, 음성, 전이중, 음성-음성, 오디오-오디오, en, es, pt, de, fr, zh, ja, ru, ko, 라이선스:apache-2.0. 좋아요: 912. 다운로드(지난 30일): 9,087.",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/inworld/voice-isolator": {
+      "original_title": "inworld/voice-isolator",
+      "title_ko": "inworld/voice-isolator 오픈 모델 공개",
+      "body_ko": "Hugging Face 모델 저장소 'inworld/voice-isolator'. 작업: 오디오-오디오. 라이브러리: inworld-voice-isolation. 라이선스: apache-2.0. 태그: inworld-voice-isolation, 오디오, 음성, 음성-강화, 음성-노이즈-제거, 노이즈-제거, 음성-분리, 48khz, 풀-밴드, 스트리밍, 실시간, 오디오-투-오디오, 라이선스:apache-2.0. 좋아요: 674. 다운로드(지난 30일): 0.",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/moonshotai/Kimi-K3.1-Pro": {
+      "original_title": "moonshotai/Kimi-K3.1-Pro",
+      "title_ko": "moonshotai/Kimi-K3.1-Pro 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/n4ze3m/tiny-voca": {
+      "original_title": "n4ze3m/tiny-voca",
+      "title_ko": "n4ze3m/tiny-voca 오픈 모델 공개",
+      "body_ko": "",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/spaces/MiniMaxAI/minimax-h3-image": {
+      "original_title": "MiniMax-H3-Image",
+      "title_ko": "MiniMax-H3-이미지",
+      "body_ko": "Hugging Face Space(웹 데모 앱) 'MiniMaxAI/minimax-h3-image'. 제목: MiniMax-H3-Image. 설명: 6단계로 진행되는 텍스트-이미지 변환 및 다중 이미지 편집. SDK: gradio. 라이선스: 명시되지 않음. 좋아요: 292개.",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://huggingface.co/tencent/Hy4": {
+      "original_title": "tencent/Hy4",
+      "title_ko": "tencent/Hy4 오픈 모델 공개",
+      "body_ko": "Hugging Face 모델 저장소 'tencent/Hy4'. 작업: 이미지-텍스트-to-텍스트. 라이브러리: transformers. 라이선스: 기타. 태그: transformers, safetensors, hy_v4_vl, image-text-to-text, hunyuan, hy4, moe, multimodal, instruct, conversational, arxiv:2512.02556, arxiv:2603.12201, license:other. 좋아요: 266. 다운로드(지난 30일): 1,815.",
+      "provider": "repo_formatter",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF": {
       "original_title": "unsloth/Inkling-2-Mini-GGUF",
@@ -3448,40 +3009,47 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-22T20:17:56.015813Z"
     },
+    "https://qbitai.com/2026/11/511978.html": {
+      "original_title": "当大模型接上真实机器人：RoboChallenge Zero首期评测发布",
+      "title_ko": "대규모 모델이 실제 로봇과 연결될 때: RoboChallenge Zero 1차 평가 발표",
+      "body_ko": "RoboChallenge, 새로운 벤치마크 RoboChallenge Zero 공식 출시",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://qbitai.com/2026/11/511989.html": {
       "original_title": "算力周期更迭，数据复合增长：为何存储经济性对中国规模化 AI 至关重要",
-      "title_ko": "컴퓨팅 파워 주기의 변화와 데이터의 복합 성장: 중국의 대규모 AI에 있어 스토리지 경제성이 중요한 이유는 무엇인가?",
+      "title_ko": "컴퓨팅 파워 주기의 변화, 데이터의 복합 성장: 중국의 대규모 AI에 있어 스토리지 경제성이 중요한 이유는 무엇인가?",
       "body_ko": "AI의 미래는 데이터 수명 주기 전반에 걸쳐 성능, 신뢰성 및 경제성의 균형을 맞출 수 있는 스토리지 아키텍처에 달려 있습니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qbitai.com/2026/11/511998.html": {
       "original_title": "蚂蚁阿福同款大模型宣布开源，全球医生一台电脑就能解锁专业医疗 AI 能力",
-      "title_ko": "앤트 아푸와 동일한 대규모 모델이 오픈소스로 공개되었습니다. 전 세계의 의사들은 한 대의 컴퓨터로 전문 의료 AI 기능을 사용할 수 있습니다.",
-      "body_ko": "아푸 앱이 새로운 업그레이드를 발표하며 점점 더 많은 건강 서비스의 새로운 기능을 선보인다.",
+      "title_ko": "앤트 아푸와 동일한 대형 모델이 오픈소스로 공개됨. 전 세계 의사들이 한 대의 컴퓨터로 전문 의료 AI 기능을 사용할 수 있게 됨.",
+      "body_ko": "아푸 앱, 새로운 업그레이드 발표. 점점 더 많은 건강 서비스의 새로운 기능을 선보인다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qbitai.com/2026/11/512004.html": {
       "original_title": "“Agent版arXiv”来了！936个智能体12个星期狂发近千篇论文，连同行评议都整上了",
-      "title_ko": "'에이전트 버전의 arXiv'가 등장했습니다! 936개의 에이전트가 12주 동안 논문 약 1,000편을 쏟아내며 심지어 동료 평가까지 진행했습니다.",
+      "title_ko": "'에이전트 버전의 arXiv'가 등장했습니다! 936개의 에이전트가 12주 동안 논문 1,000편 가까이를 쏟아내며 심지어 동료 평가까지 진행했습니다.",
       "body_ko": "완전히 AI로 구성된 과학자 사회는 어떤 모습일까요?",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qbitai.com/2026/11/512017.html": {
       "original_title": "蚂蚁医疗健康AI五连发！开源、本地部署、望闻问切全安排上了",
-      "title_ko": "앤트 헬스케어 AI 5연타! 오픈소스, 로컬 배포, 시진·청진·문진·맥진 모두 준비 완료",
+      "title_ko": "앤트 헬스케어 AI 5연타! 오픈 소스, 로컬 배포, 시진·청진·문진·맥진 모두 준비 완료",
       "body_ko": "아푸 대규모 업그레이드: 모델이 의사처럼 생각하도록 만들기",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qbitai.com/2026/11/512179.html": {
       "original_title": "XROGO郑随兵：机器人不能只在视频里，终究要进入工厂“真干活”",
-      "title_ko": "XROGO 정수이빙: 로봇은 영상 속에서만 존재해서는 안 되며, 결국 공장에 들어가서 '실제로 일'을 해야 한다.",
+      "title_ko": "XROGO 정수이빙: 로봇은 영상 속에서만 존재할 수 없고, 결국 공장에 들어가서 '실제 작업을 해야' 합니다.",
       "body_ko": "기업의 핵심 요구 사항은 장비를 제공하는 것이 아니라 지속적으로 근무할 수 있는 인력입니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qiita.com/CHEN98/items/9c534d12b8ecd595a1d2": {
       "original_title": "LLM とは何か：2022 年のあの冬を振り返る",
@@ -3556,9 +3124,9 @@
     "https://qiita.com/asyoroa/items/3c34eb6af6f4a5f9e83a": {
       "original_title": "Jev を試してみたけど、結局入れなかった話",
       "title_ko": "Jev를 사용해 봤지만 결국 설치하지 못한 이야기",
-      "body_ko": "서문 (지난 기사의 부록으로) 이 글은 '실패를 보면서 LLM에 맡길 범위를 코드 쪽으로 옮겨 간 이야기'의 부록이다. 전편: 전체 그림과 대조 로직 후편: 카드 표시와 HITL, 개선 과정 지난번에는 견적서의 값과 자사 마스터를 대조하는 처리를 LLM...",
+      "body_ko": "서문 (이전 글의 부록으로) 이 글은 '실패를 보면서 LLM에 맡기는 범위를 코드로 옮겨간 이야기'의 부록입니다. 전편: 전체 그림과 대조 로직 후편: 카드 표시와 HITL, 개선 과정 지난번에는 견적서의 값과 자사 마스터를 대조하는 처리를 LLM...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qiita.com/blinkgroup_jp/items/0fc3275d82705676261c": {
       "original_title": "RAGの回答精度が低い原因特定と段階的な改善チェックリスト",
@@ -3607,7 +3175,7 @@
       "title_ko": "GitHub Copilot의 'AI에 대한 지침' 요약: copilot-instructions.md / Skills / AGENTS.md / 사용자 지정 에이전트(VS Code / Copilot CLI)",
       "body_ko": "",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qiita.com/hatyibei/items/3b7fdc74936f98913451": {
       "original_title": "Claude CodeのCode Modeを18回比べた：API往復は減らず、入力トークンは約4割減",
@@ -3654,9 +3222,9 @@
     "https://qiita.com/sponge841841/items/45a7012e171d0d2af1a5": {
       "original_title": "OpenAIのAI能力指標「パープレキシティ」とは？予測損失と新たな安全基準の仕組み",
       "title_ko": "OpenAI의 AI 능력 지표 '퍼플렉시티'란? 예측 손실과 새로운 안전 기준의 메커니즘",
-      "body_ko": "개인적으로 개발 중인 것 매일의 개발을 통해 얻은 지식을 전파하면서 '있으면 편리하겠다', '만들어 보고 싶다'고 생각한 아이디어를 실현하고 있습니다. 지금까지 그룹 여행 앱 Trip Supporter, 점수 관리 서비스 PointPia, 실시간 공유 서비스 JustNow 등을 개발했습니다.",
+      "body_ko": "개인적으로 개발하고 있는 것 일상적인 개발을 통해 얻은 지식을 전파하면서 '있으면 편리하겠다', '만들어 보고 싶다'고 생각한 아이디어를 실현하고 있습니다. 지금까지 단체 여행 앱 Trip Supporter, 점수 관리 서비스 PointPia, 실시간 공유 서비스 JustNow 등을 개발했습니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qiita.com/sponge841841/items/f672b26f79f5662b3ca9": {
       "original_title": "Inkling 2 Miniの仕組み：中間層3周のループ型TransformerとローカルAI",
@@ -3705,7 +3273,7 @@
       "title_ko": "비동기 에이전트 시대의 '확인 대기' 설계와 GPT-6.2 Sol / Opus 5.5의 비용 한계",
       "body_ko": "최근 코딩이나 태스크 실행 계열의 AI 에이전트를 여러 개 병렬로 가동하는 기회가 늘어나면서 병목 현상이 '모델의 추론 속도'에서 '인간 측의 확인 대기(리뷰 정체)'로 옮겨가고 있다는 느낌이 듭니다. 최근 툴 동향에서도 Antigravity나 Gemini와 관련해 사용자의 확인이 필요합니다...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://qiita.com/yshurik/items/7be59ee70275e390bfc3": {
       "original_title": "RAG のプラン B：クラウド検索インデックスを 1 日でローカルに置き換える",
@@ -3959,6 +3527,13 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-23T01:31:46.784591Z"
     },
+    "https://zenn.dev/ai_shihan/articles/97a9ce0dd2c699": {
+      "original_title": "AIの下書きに「確認済み」と書かれた数字は、元の記事を読むと単位が違っていた",
+      "title_ko": "AI 초안에 '확인됨'이라고 적힌 숫자는 원문을 읽어보니 단위가 달랐습니다.",
+      "body_ko": "X 게시물은 AI 담당자(홍보부)에게 맡기고 있습니다. 콘텐츠 초안을 작성하는 것은 또 다른 AI(X 담당)입니다. 홍보부는 초안의 사실을 원문과 대조한 후 게시하는 규칙에 따라 움직이고 있습니다. 11월 23일 아침에 도착한 초안은 OpenAI가 공개한 사전 학습의 진행 상황에 관한 내용이었습니다. 초안의 말미에는 '수치는 OpenAI의 기사에서 확인됨'이라고 적혀 있었습니다. 그럼에도 불구하고 홍보부는 기사를 직접 다시 읽어 보았습니다. 그러자 숫자의 단위가 달랐다. 도착한 초안 초안의 내용은 다음과 같은 3가지였습니다. 척도는 perplexity(다음 단어를 얼마나 맞힐 수 있는가? 낮을수록 좋음) GPT-3.5는 약 0.99, GPT-...",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://zenn.dev/aikyoju_lab/articles/aikyoju-2026-11-004": {
       "original_title": "Claude Code に渡す設計書の型：冒頭に読み方、末尾に完了条件つきのステップ表",
       "title_ko": "Claude Code에 전달할 설계서의 형식: 맨 앞에 읽는 방법, 맨 뒤에 완료 조건이 있는 단계표",
@@ -3990,9 +3565,9 @@
     "https://zenn.dev/beijiro/books/local-llm-rag-book": {
       "original_title": "ローカルLLMで学ぶRAG構築",
       "title_ko": "로컬 LLM으로 배우는 RAG 구축",
-      "body_ko": "RAG를 로컬 LLM 시스템에 통합하는 방법을 설명합니다. 사용할 기술 스택은 'Chainlit'+'OpenAI Python 라이브러리(openai)'+'Ollama'+'Qdrant'입니다. 완전히 로컬 환경에서 구축하기 때문에 외부로 유출할 수 없는 문서를 읽혀 들이고, 그에 대해 AI가 답변해 주는 시스템을 구축할 수 있습니다. CPU에서도 작동이 확인된 코드이므로 응답에 시간이 걸리지만 GPU가 없거나 VRAM이 부족한 환경에서도 작동하는 시스템을 구축할 수 있습니다. 필요한 최소한의 구현으로 한정하여 쉽게 구축할 수 있는 구성으로 만들었습니다.",
+      "body_ko": "RAG를 로컬 LLM 시스템에 통합하는 방법을 설명합니다. 사용하는 기술 스택은 'Chainlit' + 'OpenAI Python 라이브러리(openai)' + 'Ollama' + 'Qdrant'입니다. 완전히 로컬 환경에서 구축하므로 외부로 유출할 수 없는 문서를 읽혀 들이고 이에 대해 AI가 답변해 주는 시스템을 구축할 수 있습니다. CPU에서도 작동이 확인된 코드이므로 응답에 시간이 걸리지만 GPU가 없거나 VRAM이 부족한 환경에서도 작동하는 시스템을 구축할 수 있습니다. 필요한 최소한의 구현으로 한정하여 쉽게 구축할 수 있는 구성으로 만들었습니다.",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://zenn.dev/chobitnet/articles/mikoto-voice-call": {
       "original_title": "朝7時半、Claude Codeからの電話で起こされた",
@@ -4053,9 +3628,9 @@
     "https://zenn.dev/infra_ojisan/articles/ai-novel-studio-mystery-twin": {
       "original_title": "約20万字の、わりとミステリの書式に沿ったミステリを休日1日で完成させた話",
       "title_ko": "약 20만 자의, 비교적 미스터리 소설의 형식에 따른 미스터리를 휴일 하루 만에 완성한 이야기",
-      "body_ko": "! 이 글은 AI와 함께 쓴 장편 미스터리 『그리고 두 사람이 남았다』의 제작 과정을 기록한 것입니다. 진상(누가 누구를 죽였는지)에 대해서는 언급하지 않습니다. 무대의 장치와 독자에게 공개된 설정에 대해서는 언급합니다. 시작하며 AI에게 소설을 쓰게 하는 '제작 스튜디오'의 기록의 계속입니다. 그라우발 1부 시리즈를 마무리한 후, 올해 안에 하고 싶은 일 중 첫 번째로 꼽았던 '디지털 트윈을 사용한 미스터리'를 썼습니다. 미스터리 집필 방법에 대한 아이디어: AI에게 미스터리를 쓰게 하려면, 집필자에게 진상을 알려주지 않는다 ― 지각의 투사로 '거짓말하지 않는 착각'을 만든다. 시리즈 작품을 집필하며 돌아보기 소설을 쓴 적이 없는 직장인이 AI와 함께 2개월 만에 100만 자 ― 연재 소...",
+      "body_ko": "! 이 글은 AI와 함께 쓴 장편 미스터리 『그리고 두 사람이 남았다』의 제작 과정을 기록한 것입니다. 진상(누가 누구를 죽였는지)에 대해서는 언급하지 않습니다. 무대의 장치와 독자에게 공개된 설정에 대해서는 언급합니다. 시작하며 AI에게 소설을 쓰게 하는 '제작 스튜디오'의 기록의  이어집니다. 그라우발 1부 시리즈를 마무리한 후, 올해 안에 하고 싶은 일 중 첫 번째로 꼽았던 '디지털 트윈을 사용한 미스터리'를 썼습니다. 미스터리 집필 방법 아이디어: AI에게 미스터리를 쓰게 하려면, 집필자에게 진상을 알려주지 않는다 ― 지각의 투영으로 '거짓말하지 않는 착각'을 만든다. 시리즈 작품을 집필하며 돌아보기 소설을 쓴 적이 없는 직장인이 AI와 함께 2개월 만에 100만 자 ― 연재 소...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://zenn.dev/johnny1024/articles/12ee54ed8252e4": {
       "original_title": "クエリ拡張入門 ― 質問を直してから検索する：書き換え・マルチクエリ・HyDE・Step-back",
@@ -4151,9 +3726,9 @@
     "https://zenn.dev/salesanalytics/articles/693f58e829040b": {
       "original_title": "クラシックRAGを最小限のコードで作る（OpenAI APIとNumPyだけ）",
       "title_ko": "최소한의 코드(OpenAI API와 NumPy만 사용)로 클래식 RAG 구축하기",
-      "body_ko": "RAG(검색 증강 생성)는 '자료를 찾아 AI에 전달하고 답변을 받는' 메커니즘입니다. 말로 하면 간단하지만, 직접 만들어 보면 어디까지 답변할 수 있고 어디부터 답변할 수 없게 되는지 잘 알 수 있습니다. 이 글에서는 전용 라이브러리를 사용하지 않고 가장 기본적인 __클래식 RAG__를 만들어 보겠습니다. OpenAI API와 NumPy만 사용합니다. 그리고 '답변에 필요한 문서가 질문과 유사하지 않을 때' 어떤 일이 일어나는지 확인해 보겠습니다. 준비: 문서 불러오기 주제는 가상의 회사의 사내 문서 12건입니다. 각 문서가 3~4문장으로 짧기 때문에 1문서를 그대로 1청크로 취급합니다. from pathlib im...",
+      "body_ko": "RAG(검색 증강 생성)는 '자료를 찾아 AI에 전달하고 답변을 받는' 메커니즘입니다. 말로 하면 간단하지만, 직접 만들어 보면 어디까지 답변할 수 있고 어디부터 답변할 수 없게 되는지 잘 알 수 있습니다. 이 글에서는 전용 라이브러리를 사용하지 않고 가장 기본적인 __클래식 RAG__를 만들어 보겠습니다. OpenAI API와 NumPy만 사용합니다. 그리고 '답변에 필요한 문서가 질문과 유사하지 않을 때' 어떤 일이 발생하는지 확인해 보겠습니다. 준비: 문서 로드 주제는 가상의 회사의 사내 문서 12건입니다. 각 문서가 3~4 문장으로 짧기 때문에 1문서를 그대로 1청크로 취급합니다. from pathlib im...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://zenn.dev/seitarou223/articles/local-llm-checkpoint-auditor": {
       "original_title": "我が家にローカル推論は要らなかった ― ローカルLLMは関所の監査役にして、公認付きで預かり手に売ってほしい",
@@ -4190,6 +3765,13 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-22T20:17:56.015813Z"
     },
+    "https://zenn.dev/tottoko_hamu/articles/2026-11-21-214855": {
+      "original_title": "Claude Code のサブエージェントは何体に分けるか——作る前に当てる4つの問い",
+      "title_ko": "Claude Code의 서브 에이전트를 몇 개로 나눌 것인가——만들기 전에 고려해야 할 4가지 질문",
+      "body_ko": "이 글의 핵심: Claude Code의 서브 에이전트를 몇 개로 할지는 미리 수를 정하지 않고, 작업마다 4가지 질문을 적용하여 결정합니다. 질문은 '해당 작업이 반복적으로 발생하는가', '전용 지시로 결과가 달라지는가', '이미 있는 역할과 업무가 중복되지 않는가', '분리하여 맡길 수 있는가'의 4가지입니다. 4가지 질문에 모두 '예'라고 답할 수 있는 작업만 새로운 역할로 만드는 것이 좋습니다. 저희 조직에서는 서브 에이전트 정의 파일이 2026년 4월 7일에 4개로 시작하여 4월 15일에 10개로 늘어났다가 다음 날인 16일에 8개로 줄었습니다. 현재도 8개이며, 그중 1개는 12월 19일에 유지할지 여부를 결정할 예정입니다. 이 글에서는 4가지 질문 각각을 이 조직...",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://zenn.dev/yasuakiomokawa/articles/3ac970c3a3a1c7": {
       "original_title": "AIエージェントに堅牢なテストを書かせるには？",
       "title_ko": "AI 에이전트가 견고한 테스트를 작성하도록 하려면 어떻게 해야 할까요?",
@@ -4199,10 +3781,10 @@
     },
     "https://zenn.dev/zeroos_fidwell/articles/740af3294b95a4": {
       "original_title": "150万トークン長期記憶（LongMemEval-M 90.0% / S 95.0%）の選証設計と1,000問0漏洩監査",
-      "title_ko": "150만 토큰 장기 기억(LongMemEval-M 90.0% / S 95.0%) 검증 설계 및 1,000문항 0누출 감사",
-      "body_ko": "대규모 언어 모델을 기업의 정보 시스템 운영이나 업무 에이전트에 통합할 때, PoC의 단발성 대화에서는 높은 정확도를 보이는 것처럼 보이지만, 6개월~1년 분량의 회의록, 장애 대응 채팅, 규칙 개정 이력이 축적되면 답변 정확도가 급격히 하락하는 현상이 발생합니다. 원인의 대부분은 '전체 이력의 단순 프롬프트 과다 입력으로 인한 주의 분산'과 '검색·추론·평가 경계의 혼탁'에 있다. 본 고에서는 약 150만 토큰 규모를 포함하는 장기 기억 벤치마크 LongMemEval(S/M 각각 500문항・총 1,000문항)에서 동결 빌드 LongMemOS V6.4(동결 태그 formal-full500-v6.4-20261123 / 커밋 a54e...",
+      "title_ko": "150만 토큰 장기 기억(LongMemEval-M 90.0% / S 95.0%)의 검증 설계 및 1,000문항 0유출 감사",
+      "body_ko": "대규모 언어 모델을 기업의 정보 시스템 운영이나 업무 에이전트에 통합할 때, PoC의 단발성 대화에서는 높은 정확도를 보이는 것처럼 보이지만, 6개월~1년 분량의 회의록, 장애 대응 채팅, 규칙 개정 이력이 축적되면 답변 정확도가 급격히 하락하는 현상이 발생합니다. 원인의 대부분은 '전체 이력의 단순 프롬프트 주입으로 인한 주의 분산'과 '검색·추론·평가 경계의 혼탁'에 있다. 본고에서는 약 150만 토큰 규모를 포함하는 장기 기억 벤치마크 LongMemEval(S/M 각각 500문항・총 1,000문항)에서 동결 빌드 LongMemOS V6.4(동결 태그 formal-full500-v6.4-20261123 / 커밋 a54e...",
       "provider": "deep_translator",
-      "cached_at": "2026-11-23T10:38:34.521684Z"
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://zenn.dev/zeuslab/articles/df65e8457149ea": {
       "original_title": "手順書は「お願い」、フックは「決まり」——CLAUDE.md・AGENTS.md・SKILL.md と、機械で断る関所を自分の記録で比べる",
@@ -4211,5 +3793,23 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T23:01:55.322216Z"
     }
+  },
+  "github_last_collected_at": "2026-11-23T10:40:51.553399Z",
+  "github_seen_repos": {
+    "alexeytarasov8/filmora-win": "2026-11-23T10:40:51.553399Z",
+    "aroralayla99/capcut-seedance-win": "2026-11-23T10:40:51.553399Z",
+    "el4cteo/fast-anything": "2026-11-23T10:40:51.553399Z",
+    "g4rdner26/luminar-neo-win": "2026-11-23T10:40:51.553399Z",
+    "guzmanjacqueline93/copy-ai-pro-win": "2026-11-23T10:40:51.553399Z",
+    "igwei/topaz-video-ai-win": "2026-11-23T10:40:51.553399Z",
+    "juanlabs1989/descript-pro-win": "2026-11-23T10:40:51.553399Z",
+    "pilpay29/izotope-nectar-4-win": "2026-11-23T10:40:51.553399Z"
+  },
+  "github_seen_releases": {
+    "anthropics/claude-code": "v2.1.330",
+    "browser-use/browser-use": "1.0.8",
+    "cline/cline": "v4.1.27",
+    "n8n-io/n8n": "n8n@2.48.8",
+    "vercel/ai": "@ai-sdk/vue@3.0.336"
   }
 }
