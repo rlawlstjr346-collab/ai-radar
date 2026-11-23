@@ -17,7 +17,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-from pipeline.curator import build_curated_fields, extract_relevant_core_sentences, is_anecdote_chatter, is_blocked_noise
+from pipeline.curator import (
+    build_curated_fields,
+    extract_relevant_core_sentences,
+    is_anecdote_chatter,
+    is_blocked_noise,
+    polish_korean_headline,
+)
 from pipeline.merge import Candidate
 from pipeline.store import load_seed_platform_names
 from pipeline.translator import (
@@ -578,7 +584,15 @@ def candidate_to_snapshot_item(
                 body_ko = ""
             llm_why = ""
 
-        hook_title = title_ko if len(title_ko) <= 78 else title_ko[:77].rstrip() + "…"
+        hook_title = polish_korean_headline(
+            title_ko,
+            raw_title,
+            platform_id=c.platform_id,
+            author_handle=author_handle,
+            category=c.category,
+            metrics=c.metrics,
+        )
+        title_ko = hook_title
         benefit_tag = _benefit_tag_for(c)
         cat_label = CATEGORY_LABELS.get(c.category, "AI")
         entities = _extract_entities(c, platform_name)
@@ -716,10 +730,17 @@ def _extract_raw_body_from_existing(item: dict[str, Any]) -> str:
 
 
 def _item_needs_curation_upgrade(item: dict[str, Any]) -> bool:
-    """이전 버전 스냅샷의 기계적 문구·도입부 잡담 오추출·짧은 원본 쉽게 읽기 업그레이드 필요 여부."""
+    """이전 버전 스냅샷의 기계적 문구·미번역 제목·도입부 잡담 오추출·짧은 원본 쉽게 읽기 업그레이드 필요 여부."""
     what = str(item.get("what_ko") or "")
     hl = str(item.get("highlight_summary") or "")
-    if "에 관한 소식이에요" in what:
+    hook = str(item.get("hook_title") or "")
+    if (
+        "에 관한 소식이에요" in what
+        or "핵심 비교·기능 변화와 적용 결과를 정리해 공개했어요" in what
+        or "소식과 데모 맥락을 실시간으로 공유했어요" in what
+    ):
+        return True
+    if needs_translation(hook):
         return True
     if is_anecdote_chatter(what) or is_anecdote_chatter(hl):
         return True
@@ -781,7 +802,15 @@ def _upgrade_existing_item_translation(
         llm_why = sanitize_text(tr.why_ko or "") if (tr.why_ko and not needs_translation(tr.why_ko)) else ""
         was_translated = tr.translated
 
-    hook_title = title_ko if len(title_ko) <= 78 else title_ko[:77].rstrip() + "…"
+    hook_title = polish_korean_headline(
+        title_ko,
+        raw_title,
+        platform_id=pid,
+        author_handle=str(item.get("author_handle") or "").strip() or None,
+        category=category,
+        metrics=metrics_override,
+    )
+    title_ko = hook_title
 
     updated = dict(item)
     updated["original_title"] = raw_title

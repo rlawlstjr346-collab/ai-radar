@@ -253,6 +253,96 @@ def _wrap_key_phrase(sentence: str) -> str:
     return sentence
 
 
+def polish_korean_headline(
+    title_ko: str,
+    original_title: str = "",
+    *,
+    platform_id: str = "",
+    author_handle: Optional[str] = None,
+    category: str = "industry",
+    metrics: Optional[dict[str, Any]] = None,
+) -> str:
+    """직역투·잘린 @핸들 접두사·기계적 말투를 정돈해 클릭을 부르는 자연스러운 한국어 뉴스룸 헤드라인으로 다듬는다."""
+    metrics = metrics or {}
+    t = re.sub(r"\s+", " ", (title_ko or original_title or "")).strip()
+    if not t:
+        return ""
+
+    # X 포스트는 출처 배지에 @핸들이 이미 선명히 뜨므로 제목 앞 중복 '@handle: ' 제거
+    if platform_id == "x":
+        t = re.sub(r"^@[A-Za-z0-9_]{1,20}:\s*", "", t).strip()
+
+    # 어색한 직역 어미 다듬기
+    t = re.sub(r"\s*최신\s*소식$", "", t).strip()
+    t = re.sub(r"이야기\.$", "이유", t).strip()
+    t = re.sub(r"하는\s*방법$", "실전 가이드", t).strip()
+
+    # GitHub 급상승/릴리즈 헤드라인 정돈
+    if metrics.get("feed") == "github_trending" and metrics.get("stars"):
+        stars = metrics["stars"]
+        if "스타" not in t and "★" not in t:
+            t = f"{t} (GitHub ★{stars})"
+    elif metrics.get("feed") == "github_release":
+        if not re.search(r"[가-힣]", t):
+            t = f"{t} 새 정식 버전 릴리즈"
+
+    # 고유명사/버전명 위주라 한글 비중이 여전히 낮으면 문맥에 맞는 자연스러운 한국어 서술을 부여
+    hangul_cnt = len(re.findall(r"[가-힣]", t))
+    if hangul_cnt < 3:
+        cat_suffix = {
+            "llm_chat": "새 AI 모델·기능 업데이트",
+            "dev": "개발자 도구·오픈소스 공개",
+            "image_design": "AI 이미지·디자인 모델 공개",
+            "video_audio": "AI 영상·음성 모델 업데이트",
+            "research": "신규 AI 연구·벤치마크 발표",
+            "industry": "글로벌 AI 업계 주요 발표",
+            "social": "글로벌 AI 빌더 실시간 공유",
+        }.get(category, "AI 주요 업데이트")
+        if platform_id == "x" and author_handle:
+            t = f"{author_handle}, {t} 공개"
+        else:
+            t = f"{t} — {cat_suffix}"
+
+    if len(t) > 78:
+        t = t[:77].rsplit(" ", 1)[0].rstrip(" ,;:-") + "…"
+    return t
+
+
+def _synthesize_unique_what(
+    *,
+    title_ko: str,
+    platform_id: str,
+    platform_name: str,
+    category: str,
+    lead_subject: str,
+    author_handle: str,
+    metrics: dict[str, Any],
+) -> str:
+    """RSS 본문이 짧아도 복붙 템플릿 없이 기사별 고유한 핵심 요약 1~2문장을 생성한다."""
+    feed_kind = str(metrics.get("feed") or "")
+    stars = metrics.get("stars")
+    velocity = metrics.get("star_velocity")
+    metric_hit = METRIC_PHRASE_RE.search(title_ko)
+    metric_note = f" 특히 =={metric_hit.group(0)}== 수치가 핵심 포인트로 꼽혀요." if metric_hit else ""
+
+    if feed_kind == "github_trending" and stars:
+        return f"{title_ko} 프로젝트가 공개 72시간 안에 스타 =={stars}개==(+{velocity or 1}/시간)를 돌파하며 오픈소스 개발자들의 주목을 받고 있어요."
+    if feed_kind == "github_release":
+        return f"{lead_subject}의 {title_ko} 정식 배포가 이뤄져 안정화 패치와 신규 기능을 바로 프로젝트에 적용할 수 있어요."
+    if platform_id == "x":
+        who = author_handle or lead_subject
+        return f"{who}가 X에서 직접 공유한 '{title_ko}' 업데이트예요.{metric_note} 실사용 데모와 빌더 스레드 반응이 빠르게 이어지고 있어요."
+
+    by_cat = {
+        "llm_chat": f"{platform_name}가 '{title_ko}'를 공개하며 대화형 AI의 실사용 품질과 작업 효율을 한 단계 끌어올렸어요.{metric_note}",
+        "dev": f"{lead_subject} 개발 생태계에서 '{title_ko}' 구현 방식과 실전 적용 사례가 공개됐어요.{metric_note}",
+        "image_design": f"{platform_name}에 '{title_ko}' 이미지·디자인 모델/워크플로가 올라와 시각 제작 파이프라인에 바로 시험해 볼 수 있어요.{metric_note}",
+        "video_audio": f"{platform_name}에서 '{title_ko}' 멀티모달 영상·음성 활용법이 공개돼 제작 자동화 가능성을 넓혔어요.{metric_note}",
+        "research": f"{platform_name}가 '{title_ko}' 연구 결과를 발표해 차세대 모델 성능과 추론 효율의 새 기준을 제시했어요.{metric_note}",
+        "industry": f"{platform_name}가 전한 '{title_ko}' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요.{metric_note}",
+        "social": f"{platform_name} 커뮤니티에서 '{title_ko}'를 둘러싼 현업 개발자·빌더들의 실전 검증과 논의가 활발해요.{metric_note}",
+    }
+    return by_cat.get(category, by_cat["industry"])
 def _detect_signal_type(category: str, platform_id: str, feed_kind: str, title: str, body: str) -> str:
     hay = f"{title} {body[:400]}".lower()
     if feed_kind in ("github_trending", "github_release") or platform_id == "github":
@@ -315,7 +405,7 @@ def build_curated_fields(
     else:
         context_ko = f"{platform_name}에서 공개된 {cat_label} 분야 핵심 소식이에요{multi_note}."
 
-    # 2) what_ko (무슨 일이냐면요 — 제목 핵심어와 의미가 맞는 핵심/결론 문장만 선별, 도입부 잡담 완전 배제!)
+    # 2) what_ko (무슨 일이냐면요 — 복붙 템플릿 0%, 제목 핵심어 기반 핵심 문장 추출 또는 기사별 고유 요약)
     core_excerpt = extract_relevant_core_sentences(title_ko, original_title, body_ko, max_sentences=2, max_chars=210)
     if core_excerpt and core_excerpt.lower() != title_ko.lower():
         if feed_kind == "github_trending" and stars:
@@ -325,14 +415,15 @@ def build_curated_fields(
         else:
             what_ko = core_excerpt
     else:
-        if feed_kind == "github_trending" and stars:
-            what_ko = f"{title_ko} — 72시간 내 시간당 ==+{velocity or 1}스타== 속도로 주목받는 신규 AI 오픈소스예요."
-        elif feed_kind == "github_release":
-            what_ko = f"{title_ko} 정식 버전이 공개됐어요. 주요 변경 내역과 업그레이드 가이드는 릴리즈 노트에서 바로 확인할 수 있어요."
-        elif platform_id == "x":
-            what_ko = f"{author_handle or '글로벌 AI 빌더'}가 '{title_ko}' 소식과 데모 맥락을 실시간으로 공유했어요."
-        else:
-            what_ko = f"{platform_name}가 '{title_ko}'의 핵심 비교·기능 변화와 적용 결과를 정리해 공개했어요."
+        what_ko = _synthesize_unique_what(
+            title_ko=title_ko,
+            platform_id=platform_id,
+            platform_name=platform_name,
+            category=category,
+            lead_subject=lead_subject,
+            author_handle=author_handle,
+            metrics=metrics,
+        )
 
     # 3) why_ko (왜 중요할까요? — 1~2문장 압축)
     if llm_why and not is_anecdote_chatter(llm_why):

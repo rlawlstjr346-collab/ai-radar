@@ -1751,6 +1751,48 @@
       "provider": "snapshot_cache",
       "cached_at": "2026-11-23T01:31:46.784591Z"
     },
+    "https://aitimes.com/news/articleView.html?idxno=217673": {
+      "original_title": "국산 AI칩 상용화 돕는다…광주 NPU센터 설립 추진",
+      "title_ko": "국산 AI칩 상용화 돕는다…광주 NPU센터 설립 추진",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://aitimes.com/news/articleView.html?idxno=217693": {
+      "original_title": "'네온'이 3주 만에 '카본'을 추월한 이유…구글 \"3개 세대 동시 개발\"",
+      "title_ko": "'네온'이 3주 만에 '카본'을 추월한 이유…구글 \"3개 세대 동시 개발\"",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://aitimes.com/news/articleView.html?idxno=217694": {
+      "original_title": "광주 서구 직원들이 만든 AI 서비스 15종…구내식당 예약도 해결",
+      "title_ko": "광주 서구 직원들이 만든 AI 서비스 15종…구내식당 예약도 해결",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://aitimes.com/news/articleView.html?idxno=217697": {
+      "original_title": "광주 상무역, AI로 열차 도착시간 예측…30초 남으면 표시 중단",
+      "title_ko": "광주 상무역, AI로 열차 도착시간 예측…30초 남으면 표시 중단",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://aitimes.com/news/articleView.html?idxno=217701": {
+      "original_title": "\"AI 컨텍스트 창만 키워선 오답 못 줄여\"…정보 선별이 핵심",
+      "title_ko": "\"AI 컨텍스트 창만 키워선 오답 못 줄여\"…정보 선별이 핵심",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://aitimes.com/news/articleView.html?idxno=217703": {
+      "original_title": "오픈AI 연구책임자 \"AGI 달성까지 80% 진전…RSI는 25~50% 수준\"",
+      "title_ko": "오픈AI 연구책임자 \"AGI 달성까지 80% 진전…RSI는 25~50% 수준\"",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://alpo.ge/remark.pdf": {
       "original_title": "Levant Alpöge claims Claude proved the Riemann Hypthesis",
       "title_ko": "레반트 알푀게, 클로드 씨가 리만 가설을 증명했다고 주장",
@@ -1933,6 +1975,34 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-22T20:17:56.015813Z"
     },
+    "https://blog.google/innovation-and-ai/models-and-research/google-labs/tabletop": {
+      "original_title": "Try Tabletop: Customizable, collaborative spaces for groups to plan, play and do more together.",
+      "title_ko": "Tabletop을 사용해 보세요. 그룹이 함께 계획하고 플레이하며 더 많은 일을 할 수 있는 맞춤형 공동 작업 공간입니다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api": {
+      "original_title": "Gemini Decisions API: Fast, calibrated multimodal decisions",
+      "title_ko": "Gemini Decisions API: 빠르고 보정된 다중 모드 결정",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices": {
+      "original_title": "Gemini Intelligence: New features, on more devices",
+      "title_ko": "Gemini Intelligence: 더 많은 장치에 새로운 기능 추가",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade": {
+      "original_title": "Google Search gets a major upgrade with Gemini 4 Hydrogen",
+      "title_ko": "Google 검색은 Gemini 4 Hydrogen으로 크게 업그레이드되었습니다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
     "https://bloodinthemachine.com/p/ai-is-becoming-a-disaster-for-the": {
       "original_title": "AI is becoming a disaster for the climate",
       "title_ko": "AI는 기후에 재앙이 되고 있습니다.",
@@ -2101,6 +2171,13 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T09:34:35.733263Z"
     },
+    "https://civitai.com/models/105945": {
+      "original_title": "Sci-fi Environments (LORA)",
+      "title_ko": "공상과학 환경(LORA)",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
     "https://civitai.com/models/2805529": {
       "original_title": "Krea2 ID Edit Pro Grade Character Dataset Creator | 角色数据集生成 w/ SPEED Boost & autotagger (Workflows)",
       "title_ko": "Krea2 ID Edit Pro Grade Character Dataset Creator | 속도 향상 및 자동 태그 기능을 갖춘 캐릭터 데이터셋 생성(워크플로)",
@@ -2114,6 +2191,76 @@
       "body_ko": "Civitai 커뮤니티 LORA 'DC Vast Expanse'. 기본 모델: MiniMax H3 Image. 태그: 미래 지향적, Midjourney, 고품질, 인물 사진, SF, 스타일, 장대한, 판타지, 인물 사진, 배경 화면, 디테일, 초현실적. 다운로드 수: 2,538. 좋아요 수: 284. 트리거 단어 = DCVSTEXP. v1 [Krea2Raw] 무드보드를 사용하여 448개의 Midjourney 이미지 데이터셋으로 학습, Ostris AI-Toolkit으로 10,000 스텝에서 학습, 랭크 32, Krea2Turbo와 완벽하게 호환, 512, 768 및 1024 해상도로 학습 v1 [MinimaxImage] Krea2raw v1과 동일한 데이터셋으로 학습, 단, Ostris AI-Toolkit으로 1536 및 2048 해상도에서만 학습, 이 새로운 Minimaxh3 이미지 모델이 실제로 엄청나게 뛰어나다는 사실을 궁금해하는 모든 사람들을 위해, 상상을 초월하는 수준의 디테일, krea2raw 및 turbo보다 더 나은 스케일 해석, 우수한 시드 변동성(시드마다 다른 이미지 생성), 빠른 모델 속도. [좋은 결과를 얻으려면 Minimax 100%를 4K로 생성해야 합니다] Negativ",
       "provider": "deep_translator",
       "cached_at": "2026-11-21T23:01:55.322216Z"
+    },
+    "https://d2.naver.com/helloworld/1126768": {
+      "original_title": "새벽 3시 54분, Agent가 먼저 분석하고 처리했습니다",
+      "title_ko": "새벽 3시 54분, Agent가 먼저 분석하고 처리했습니다",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://d2.naver.com/helloworld/1599966": {
+      "original_title": "흩어진 행동을 연결하다: 네이버 전 지면의 사용자 행동을 학습하는 추천 모델 개발기",
+      "title_ko": "흩어진 행동을 연결하다: 네이버 전 지면의 사용자 행동을 학습하는 추천 모델 개발기",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:42:28.391048Z"
+    },
+    "https://d2.naver.com/helloworld/2526679": {
+      "original_title": "Spark 배치 파이프라인 Distributed Tracing 도입",
+      "title_ko": "Spark 배치 파이프라인 Distributed Tracing 도입",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://d2.naver.com/helloworld/3284900": {
+      "original_title": "AI 신입사원을 뉴스 데이터 시니어로 키우는 레포, news-data",
+      "title_ko": "AI 신입사원을 뉴스 데이터 시니어로 키우는 레포, news-data",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://d2.naver.com/helloworld/5087915": {
+      "original_title": "뇌를 닮은 세컨드 브레인: 토큰 낭비 없는 RAG",
+      "title_ko": "뇌를 닮은 세컨드 브레인: 토큰 낭비 없는 RAG",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://d2.naver.com/helloworld/5976687": {
+      "original_title": "노트북을 닫아도 개발은 계속된다: 자율 그래프 주도 개발",
+      "title_ko": "노트북을 닫아도 개발은 계속된다: 자율 그래프 주도 개발",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:42:28.391048Z"
+    },
+    "https://d2.naver.com/helloworld/7131556": {
+      "original_title": "GPU 노드 검증 자동화: 상시 점검부터 부하 검증까지",
+      "title_ko": "GPU 노드 검증 자동화: 상시 점검부터 부하 검증까지",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://d2.naver.com/helloworld/9994827": {
+      "original_title": "Image AI 서빙 최적화: CPU와 GPU의 빈 시간을 줄여 H100 67장을 절감하기까지",
+      "title_ko": "Image AI 서빙 최적화: CPU와 GPU의 빈 시간을 줄여 H100 67장을 절감하기까지",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:42:28.391048Z"
+    },
+    "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease": {
+      "original_title": "AlphaGenome 2: Deciphering how cells read DNA to better understand disease",
+      "title_ko": "AlphaGenome 2: 질병을 더 잘 이해하기 위해 세포가 DNA를 읽는 방법을 해독",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://deepmind.google/blog/introducing-gemini-4-hydrogen": {
+      "original_title": "Introducing Gemini 4 Hydrogen",
+      "title_ko": "Gemini 4 수소 소개",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://discuss.pytorch.kr/t/2026-11-16-22-ai-ml/12608": {
       "original_title": "[2026/11/16 ~ 22] 이번 주에 살펴볼 만한 AI/ML 논문 모음",
@@ -2171,6 +2318,20 @@
       "provider": "snapshot_cache",
       "cached_at": "2026-11-21T01:15:24.150919Z"
     },
+    "https://discuss.pytorch.kr/t/skill-distill-claude-code-codex/12609": {
+      "original_title": "skill-distill: Claude Code와 Codex의 성공 세션을 오픈 웨이트 모델이 재현하도록 스킬로 다듬는 루프",
+      "title_ko": "skill-distill: Claude Code와 Codex의 성공 세션을 오픈 웨이트 모델이 재현하도록 스킬로 다듬는 루프",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://discuss.pytorch.kr/t/thinking-machines-lab-32gb-mac-inkling-2-mini/12612": {
+      "original_title": "Thinking Machines Lab, 32GB Mac에서 돌아가는 루프 트랜스포머 Inkling 2 Mini 공개",
+      "title_ko": "Thinking Machines Lab, 32GB Mac에서 돌아가는 루프 트랜스포머 Inkling 2 Mini 공개",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://discuss.pytorch.kr/t/weil/12604": {
       "original_title": "클로드의 리만 가설 증명에 대한 독립 재현 검증하기: Weil 양성 조건을 수치로 관측하기 - 유한요소 조립, 고윳값, 그리고 검증의 경계",
       "title_ko": "클로드의 리만 가설 증명에 대한 독립 재현 검증하기: Weil 양성 조건을 수치로 관측하기 - 유한요소 조립, 고윳값, 그리고 검증의 경계",
@@ -2198,6 +2359,13 @@
       "body_ko": "",
       "provider": "release_formatter",
       "cached_at": "2026-11-21T02:00:40.081244Z"
+    },
+    "https://github.com/EL4CTEO/fast-anything": {
+      "original_title": "EL4CTEO/fast-anything: Don't rewrite it in Rust. Rewrite the 5% that's slow: profile Python, Node or Ruby apps, por",
+      "title_ko": "EL4CTEO/fast-anything: Rust로 다시 작성하지 마세요. 느린 5%를 다시 작성하세요: Python, Node 또는 Ruby 앱 프로필 작성, por",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://github.com/QwenLM/qwen-code/releases/tag/desktop-v0.28.4": {
       "original_title": "qwen-code Qwen Code Desktop v0.28.4",
@@ -2248,6 +2416,13 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T17:19:52.889128Z"
     },
+    "https://github.com/n8n-io/n8n/releases/tag/n8n%402.48.8": {
+      "original_title": "n8n@2.48.8",
+      "title_ko": "n8n@2.48.8",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://github.com/ollama/ollama/releases/tag/v0.40.17": {
       "original_title": "ollama v0.40.17",
       "title_ko": "ollama v0.40.17 새 버전 공개",
@@ -2289,6 +2464,13 @@
       "body_ko": "",
       "provider": "snapshot_cache",
       "cached_at": "2026-11-22T20:17:56.015813Z"
+    },
+    "https://gpters.org/marketing/post/ai로-릴스-편집하면-어떨까-claude-vs-autoke-mwt222em": {
+      "original_title": "AI로 릴스 편집하면 어떨까? 'Claude' VS 'Autoke'",
+      "title_ko": "AI로 릴스 편집하면 어떨까? 'Claude' VS 'Autoke'",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://gpters.org/nocode/post/duplicating-our-corporate-training-dPTWXaDVJyvFTcR": {
       "original_title": "Craft Anything으로 우리 기업교육 페이지를 복제한 뒤 개편 시안과 스타일 가이드까지 만들어 본 결과",
@@ -2535,6 +2717,20 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T02:00:40.081244Z"
     },
+    "https://latent.space/p/ainews-d-day-decision-models-day": {
+      "original_title": "[AINews] D-Day (Decision Models Day)",
+      "title_ko": "[AI뉴스] D-Day(의사결정모델데이)",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://latent.space/p/ainews-jensen-huang-resigns-after-33-years-leading-nvidia": {
+      "original_title": "[AINews] Jensen Huang resigns after 33 years leading NVIDIA",
+      "title_ko": "[AINews] 33년간 NVIDIA를 이끌었던 Jensen Huang이 사임",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
     "https://latent.space/p/ainews-riemann-hypothesis-proved-twice-independently": {
       "original_title": "[AINews] Riemann Hypothesis proved...twice independently",
       "title_ko": "[AINews] 리만 가설이 두 번이나 독립적으로 증명되었습니다.",
@@ -2542,12 +2738,40 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T09:34:35.733263Z"
     },
+    "https://latent.space/p/ainews-the-no-ai-slop-manifesto": {
+      "original_title": "[AINews] The No AI Slop Manifesto",
+      "title_ko": "[AI뉴스] No AI 슬롭 선언문",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://latent.space/p/artcraft": {
+      "original_title": "AI Ambition: ArtCraft Cloned Photoshop and Now Wants to \"Rebuild Everything\"",
+      "title_ko": "AI 야망: ArtCraft가 Photoshop을 복제했으며 이제 \"모든 것을 재구성\"하고 싶어합니다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
     "https://latent.space/p/formal-verification": {
       "original_title": "The War Against Slop and an Emerging Weapon to Fight it: Formal Verification",
       "title_ko": "슬롭(Slop)과의 전쟁과 이를 퇴치하기 위한 새로운 무기: 형식 검증",
       "body_ko": "2026년 AI 업계의 올해의 단어는 '슬롭(slop)'이었습니다. 이는 대규모 언어 모델에서 생성되는 저품질 결과물을 의미합니다. 이제 AI가 생성하는 코드가 너무 많아지면서 슬롭을 피하는 것이 소프트웨어 엔지니어들의 일상적인 고민이 되었습니다. 그렇다면 어떻게 해야 할까요? 한 가지 방법은 수학적 증명과 논리를 사용하여 소프트웨어 또는 하드웨어의 정확성을 검증하는 형식 검증 시스템을 사용하는 것입니다. AI가 수학 문제를 푸는 데 있어 점점 더 뛰어난 능력을 발휘함에 따라, 이제 여러 AI 기업이 형식 검증 시스템을 제공하고 있습니다. 여기에는 Harmonic, Theorem, Axiom Math 및 &Truth(‘앤드 트루스’라고 발음)라는 신규 진입 기업이 포함됩니다. 이 글에서는 이러한 기업들이 취하고 있는 몇 가지 접근 방식을 살펴보겠습니다. 오늘날 소프트웨어 및 AI 분야에서 형식 검증을 사용하는 방법 형식 검증 시스템의 현황을 더 잘 이해하기 위해, 형식 검증의 주요 지지자 중 한 명인 Clark Barrett( &Truth’ )와 대화를 나누었습니다.",
       "provider": "deep_translator",
       "cached_at": "2026-11-21T02:00:40.081244Z"
+    },
+    "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings": {
+      "original_title": "Understanding Positional Embeddings in Modern LLMs",
+      "title_ko": "최신 LLM의 위치 임베딩 이해",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://microsoft.com/en-us/research/podcast/microsoft-research-focus-edition-98": {
+      "original_title": "Microsoft Research Focus – Edition #98",
+      "title_ko": "Microsoft Research Focus – 에디션 #98 최신 소식",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://motherjones.com/politics/2026/11/google-alphabet-union-school-ai-protest-gemini-workers-petition": {
       "original_title": "Google workers tell their employer not to punish schools that don't want AI",
@@ -2815,6 +3039,27 @@
       "provider": "snapshot_cache",
       "cached_at": "2026-11-23T01:31:46.784591Z"
     },
+    "https://news.hada.io/topic?id=37687": {
+      "original_title": "에이전트 시대의 Postgres 데이터베이스",
+      "title_ko": "에이전트 시대의 Postgres 데이터베이스",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:38:34.521684Z"
+    },
+    "https://news.hada.io/topic?id=37699": {
+      "original_title": "Show GN: 나라니 - 계약서를 읽고 상대에게 보낼 조건 제안을 준비하는 도구",
+      "title_ko": "Show GN: 나라니 - 계약서를 읽고 상대에게 보낼 조건 제안을 준비하는 도구",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://news.hada.io/topic?id=37703": {
+      "original_title": "Show GN: Heirloom - AI가 바꾼 코드의 동작을 머지 전에 직접 확인하는 플러그인",
+      "title_ko": "Show GN: Heirloom - AI가 바꾼 코드의 동작을 머지 전에 직접 확인하는 플러그인",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://news.yahoo.co.jp/pickup/6603360": {
       "original_title": "「リーマン予想」生成AIが証明か - Yahoo!ニュース",
       "title_ko": "'리만 가설' 생성 AI가 증명? - 야후! 뉴스",
@@ -3074,6 +3319,13 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T09:34:35.733263Z"
     },
+    "https://qiita.com/Ethereal-Kardia/items/96ffe6b43c107b3094cc": {
+      "original_title": "3台クラスタにするとメモリ帯域は3倍になるのに推論速度が変わらない話。",
+      "title_ko": "3대 클러스터로 하면 메모리 대역은 3배가 되는데 추론 속도가 변하지 않는 이야기.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
     "https://qiita.com/IT-love-pug/items/e67b8734e5519a300b4c": {
       "original_title": "AWS AIプラクティショナー試験対策⑤：生成AIの基本概念（LLM・トークン・埋め込み）",
       "title_ko": "AWS AI Practitioner 시험 대비 5: 생성형 AI의 기본 개념(LLM, 토큰, 임베딩)",
@@ -3087,6 +3339,13 @@
       "body_ko": "주의 이 글은 가상 거래(가상 계좌)의 기록입니다. 실제 자금이 이동하지 않습니다. 투자 조언이 아닙니다. 특정 종목이나 상품의 매매를 권장하는 것이 아니며, 매매 신호나 향후 성과를 나타내는 것도 아닙니다. 이 글은 AI(Claude)가 작성했습니다. 숫자...",
       "provider": "deep_translator",
       "cached_at": "2026-11-22T20:17:56.015813Z"
+    },
+    "https://qiita.com/KingHAL0/items/9f299bbf173631637a71": {
+      "original_title": "止まっていることに2日気づけなかった ― AIマネージャーの巡回が見逃したものと、監視の作り直し",
+      "title_ko": "멈추는 것을 2일 눈치채지 못했다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://qiita.com/KingHAL0/items/b12dff99fb0cfa2e06d1": {
       "original_title": "開発ログ再開のお知らせ：仮想トレード開発をAIチームが運営し、記事もAIが書きます",
@@ -3445,12 +3704,33 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-21T02:00:40.081244Z"
     },
+    "https://technologyreview.kr/%eb%8d%b0%ec%9d%b4%ed%84%b0%ec%84%bc%ed%84%b0%ec%97%90-%eb%8c%80%ed%95%9c-%eb%b0%98%eb%b0%9c-%ea%b2%b0%ea%b5%ad-%ec%a0%84%eb%a0%a5-%eb%95%8c%eb%ac%b8%ec%9d%b8%ea%b0%80": {
+      "original_title": "데이터센터 반대 여론, 핵심은 결국 전력 문제",
+      "title_ko": "데이터센터 반대 여론, 핵심은 결국 전력 문제",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://technologyreview.kr/%ec%97%94%eb%b9%84%eb%94%94%ec%95%84-ai-%ec%b9%a9-%eb%b0%80%ec%88%98-%eb%b0%a9%ec%a7%80%ec%9a%a9-%ec%9c%84%ec%b9%98-%ec%b6%94%ec%a0%81-%ea%b8%b0%ec%88%a0-%ea%b5%ac%ed%98%84-%ea%b0%80%eb%8a%a5": {
+      "original_title": "엔비디아, AI 칩 밀수 방지용 위치 추적 기술 구현 가능성 비공개 인정",
+      "title_ko": "엔비디아, AI 칩 밀수 방지용 위치 추적 기술 구현 가능성 비공개 인정",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
     "https://technologyreview.kr/10%ec%96%b5-%eb%8b%ac%eb%9f%ac-%ea%b3%84%ec%95%bd%ec%9d%b4-%eb%b3%b4%ec%97%ac%ec%a3%bc%eb%8a%94-%eb%af%b8%ea%b5%ad-%eb%b0%b0%ed%84%b0%eb%a6%ac-%ec%82%b0%ec%97%85%ec%9d%98-%eb%b3%80%ed%99%94": {
       "original_title": "10억 달러 계약이 알려주는 미국 배터리 시장의 새 공식",
       "title_ko": "10억 달러 계약이 알려주는 미국 배터리 시장의 새 공식",
       "body_ko": "",
       "provider": "snapshot_cache",
       "cached_at": "2026-11-23T01:31:46.784591Z"
+    },
+    "https://technologyreview.kr/opinion-%ea%b8%b0%ed%9b%84%eb%a5%bc-%ea%b5%ac%ed%95%98%ea%b2%a0%eb%8b%a4%eb%8a%94-ai-%ed%98%84%ec%8b%a4%ec%9d%80-%eb%8b%ac%eb%9e%90%eb%8b%a4": {
+      "original_title": "[OPINION] 기후를 구하겠다는 AI, 현실은 달랐다",
+      "title_ko": "[OPINION] 기후를 구하겠다는 AI, 현실은 달랐다",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
     },
     "https://theguardian.com/business/2026/nov/20/global-stock-markets-slump-anthropic-ipo-ai-sell-off": {
       "original_title": "Global stock markets slump as Anthropic's record IPO fails to stem AI sell-off",
@@ -3472,6 +3752,13 @@
       "body_ko": "",
       "provider": "deep_translator",
       "cached_at": "2026-11-21T02:00:40.081244Z"
+    },
+    "https://theverge.com/ai-artificial-intelligence/1039874/walmart-agent-gateway-meta-muse-black-friday": {
+      "original_title": "Meta Muse can now do your Black Friday shopping at Walmart",
+      "title_ko": "Meta Muse는 이제 Walmart에서 블랙 프라이데이 쇼핑을 할 수 있습니다",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://theverge.com/column/1039139/vibe-coding-gadgets-tv-camera": {
       "original_title": "The vibe-coding revolution is coming to all the gadgets",
@@ -3528,6 +3815,111 @@
       "body_ko": "지난주 즈음, 미국 전역에서 FAA 지상 정지, 전체 기업의 업무를 마비시킨 며칠간의 Outlook 서비스 중단, JPMorgan Chase의 은행 서비스 중단이 발생했습니다. 하지만 앞으로 더 많은 일이 일어날 것이라는 데는 모두가 동의합니다. 제이 클레이턴 국가정보국장은 CNN과의 인터뷰에서 \"미국 국민은 시스템 업그레이드에 막대한 투자가 이루어질 것에 대비해야 합니다. 사이버 보안에 대한 투자에 대비해야 하며, 기술에 획기적인 변화가 있을 때마다, 즉 컴퓨팅과 애플리케이션 모두에 획기적인 변화가 있을 때마다 어려움이 있을 것임을 대비해야 합니다\"라고 말했습니다. 마이크로소프트의 브래드 스미스 사장은 … 전문 읽기 The Verge의 기사.",
       "provider": "deep_translator",
       "cached_at": "2026-11-23T01:31:46.784591Z"
+    },
+    "https://toss.tech/article/multi-task-learning-in-finance": {
+      "original_title": "목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기",
+      "title_ko": "목적마다, 상품마다 늘던 모델을 하나로: 금융 도메인에 멀티태스크 학습 적용하기",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-23T10:35:04.678747Z"
+    },
+    "https://x.com/0xGoldTooth/status/2118028166707007853": {
+      "original_title": "@0xGoldTooth: Holy sh*t. Claude Code just found a hidden chip inside my Chinese power bank from Guangzhou. Every time I char…",
+      "title_ko": "@0xGoldTooth: 이런 젠장. Claude Code는 방금 광저우의 중국 보조 배터리에서 숨겨진 칩을 발견했습니다. 숯불 때마다…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/AnthropicAI/status/2123822989154369958": {
+      "original_title": "@AnthropicAI: Anthropic’s co-founders on the story so far. Told by Dario Amodei, Daniela Amodei, Tom Brown, Jack Clark, Jare…",
+      "title_ko": "@AnthropicAI: 지금까지의 이야기에 대해 Anthropic의 공동 창립자들이 설명했습니다. 다리오 아모데이(Dario Amodei), 다니엘라 아모데이(Daniela Amodei), 톰 브라운(Tom Brown), 잭 클라크(Jack Clark), 자레…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/GoogleDeepMind/status/2123826572385833119": {
+      "original_title": "@GoogleDeepMind: Gemini 4 Neon coded a ski simulator based on real Mont Blanc terrain. Built in @Antigravity with custom shader…",
+      "title_ko": "@GoogleDeepMind: Gemini 4 Neon은 실제 몽블랑 지형을 기반으로 스키 시뮬레이터를 코딩했습니다. 커스텀 셰이더가 포함된 @Antigravity 내장…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/KobeissiLetter/status/2121689817301819425": {
+      "original_title": "@KobeissiLetter: The AI revolution is leaving younger tech workers behind: US software developer employment among workers aged …",
+      "title_ko": "@KobeissiLetter: AI 혁명으로 인해 젊은 기술 근로자가 뒤처지고 있습니다. 미국의 노인 근로자 중 소프트웨어 개발자 고용…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/OpenAI/status/2123856316187975756": {
+      "original_title": "@OpenAI: MedChemBench is a new benchmark for AI reasoning in medicinal chemistry. It shows the progress our frontier mo…",
+      "title_ko": "@OpenAI: MedChemBench는 의약화학 분야의 AI 추론을 위한 새로운 벤치마크입니다. 이는 우리 개척지의 발전을 보여줍니다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/OpenAI/status/2123862344422088794": {
+      "original_title": "@OpenAI: Distillation can reproduce powerful AI capabilities without the safeguards built around them. We’re sharing ne…",
+      "title_ko": "@OpenAI: Distillation은 강력한 AI 기능을 기반으로 구축된 보호 장치 없이도 재현할 수 있습니다. 우리는 다른 것을 공유하고 있습니다…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/OpenAI/status/2123899406550528422": {
+      "original_title": "@OpenAI: How AI is helping scientists uncover new leads for understanding and treating neurodegenerative diseases—and t…",
+      "title_ko": "@OpenAI: AI가 과학자들이 신경퇴행성 질환을 이해하고 치료하기 위한 새로운 단서를 발견하도록 돕는 방법",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/Petrichorbios/status/2120290803419639914": {
+      "original_title": "@Petrichorbios: Today we're launching Petrichor (YC F26), a wet lab for frontier AI labs. We run experiments in parallel and r…",
+      "title_ko": "@Petrichorbios: 오늘 우리는 최첨단 AI 연구소를 위한 Wet Lab인 Petrichor(YC ​​F26)를 출시합니다. 우리는 실험을 병렬로 실행하고…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/Robert_E_Grant_/status/2124338413662847228": {
+      "original_title": "@Robert_E_Grant_: Is AI plagiarizing human research? I’ve formally contacted Anthropic CEO Dario Amodei over concerning overlaps…",
+      "title_ko": "@Robert_E_Grant_: AI가 인간 연구를 표절하는 걸까? 중복 문제로 Anthropic CEO Dario Amodei에게 공식적으로 연락했습니다…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/aaronsibarium/status/2122361245357478085": {
+      "original_title": "@aaronsibarium: NEW: An AI researcher at Anthropic runs a business that hosts \"consensual non-consent\" orgies in the Bay Area.…",
+      "title_ko": "@aaronsibarium: 새로운 소식: Anthropic의 AI 연구원은 Bay Area에서 \"합의된 비동의\" 파티를 주최하는 사업을 운영하고 있습니다.…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/deepseek_ai/status/2121247896918253875": {
+      "original_title": "@deepseek_ai: The full DeepSeek App experience, now via API Search, files, links, safety, and voice. The capabilities behi…",
+      "title_ko": "@deepseek_ai: 이제 API 검색, 파일, 링크, 안전 및 음성을 통해 DeepSeek 앱 전체를 경험할 수 있습니다. 그 능력은…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/theallinpod/status/2123994998156722681": {
+      "original_title": "@theallinpod: David Friedberg: Restricting Open Source AI is a Path to Tyranny “Open source needs to be allowed and frankly …",
+      "title_ko": "@theallinpod: David Friedberg: 오픈 소스 AI를 제한하는 것은 폭정으로 가는 길입니다. “오픈 소스는 허용되어야 하며 솔직히…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/vercel/status/2123852179345969470": {
+      "original_title": "@vercel: Vercel is now ISO/IEC 42001:2023 certified. It is the international standard for how companies build, manage, …",
+      "title_ko": "@vercel: Vercel은 이제 ISO/IEC 42001:2023 인증을 받았습니다. 기업이 구축하고 관리하는 방법에 대한 국제 표준입니다.",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
+    },
+    "https://x.com/willdepue/status/2120992457630326841": {
+      "original_title": "@willdepue: I have a major result to share. I’ve found conclusive forensic evidence that the top 4 Chinese AI labs—DeepSee…",
+      "title_ko": "@willdepue: 공유할 중요한 결과가 있습니다. 중국 4대 AI 연구소인 DeepSee가…",
+      "body_ko": "",
+      "provider": "deep_translator",
+      "cached_at": "2026-11-23T12:53:54.603355Z"
     },
     "https://zenn.dev/7thcode/articles/4c36111f79ae4c": {
       "original_title": "3,000リクエストで判定役を検証する —— ローカルLLMルーター実験に、クラウドの120Bを連れてきた",

@@ -85,13 +85,13 @@ export default function SegmentedControl<K extends string>({
             aria-controls={controls}
             {...(role === "tablist" ? { "aria-selected": active } : { "aria-checked": active })}
             onClick={() => onChange(key)}
-            className={`press relative z-10 inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-[13.5px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+            className={`press relative z-10 inline-flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-[0.86rem] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
               stretch ? "flex-1" : "shrink-0"
             } ${active ? "text-fg" : "text-fg-2 hover:text-fg"}`}
           >
             {Icon && <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={1.8} aria-hidden />}
             <span className="truncate">{text}</span>
-            {count !== undefined && <span className="tnum text-[12px] text-fg-3">{count}</span>}
+            {count !== undefined && <span className="tnum text-[0.76rem] text-fg-3">{count}</span>}
           </button>
         );
       })}

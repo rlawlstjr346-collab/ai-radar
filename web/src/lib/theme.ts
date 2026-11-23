@@ -6,7 +6,7 @@ export const THEME_STORAGE_KEY = "ai-radar-theme-v2";
 export const FONT_SIZE_STORAGE_KEY = "ai-radar-font-scale-v1";
 export const FONT_SCALE_MIN = 85;
 export const FONT_SCALE_MAX = 200;
-export const FONT_SCALE_DEFAULT = 105;
+export const FONT_SCALE_DEFAULT = 100;
 
 export const THEME_TOKENS = {
   dark: {

@@ -61,10 +61,10 @@ export function PlatformMark({
   round?: boolean;
 }) {
   const dims = {
-    xs: "h-4 w-4 rounded-[4px] text-[8px]",
-    sm: "h-5 w-5 rounded-[5px] text-[9px]",
-    md: "h-8 w-8 rounded-lg text-[11px]",
-    lg: "h-11 w-11 rounded-xl text-sm",
+    xs: "h-4 w-4 rounded-[4px] text-[0.55rem]",
+    sm: "h-5 w-5 rounded-[5px] text-[0.6rem]",
+    md: "h-8 w-8 rounded-lg text-[0.72rem]",
+    lg: "h-11 w-11 rounded-xl text-[0.88rem]",
   }[size];
   return (
     <span
@@ -80,7 +80,7 @@ export function PlatformMark({
 export function DifficultyBadge({ level, variant = "full" }: { level: Difficulty; variant?: "full" | "short" }) {
   const m = DIFFICULTY_META[level];
   return (
-    <span className={`inline-flex items-center gap-1.5 text-[13px] font-medium ${m.className}`} title={m.label}>
+    <span className={`inline-flex items-center gap-1.5 text-[0.82rem] font-medium ${m.className}`} title={m.label}>
       <m.Icon className={`h-3.5 w-3.5 shrink-0 ${m.iconClass}`} strokeWidth={2.2} aria-hidden />
       {variant === "full" ? (
         m.label
@@ -111,7 +111,7 @@ export function BenefitChip({ tag, size = "sm" }: { tag: string | null | undefin
   return (
     <span
       className={`relative z-10 inline-flex max-w-full items-center gap-1.5 font-medium text-accent ${
-        size === "md" ? "text-[14px]" : "text-[13px]"
+        size === "md" ? "text-[0.88rem]" : "text-[0.82rem]"
       }`}
     >
       <Icon className={size === "md" ? "h-4 w-4" : "h-3.5 w-3.5"} strokeWidth={1.8} aria-hidden />
@@ -124,7 +124,7 @@ export function BenefitChip({ tag, size = "sm" }: { tag: string | null | undefin
 export function BenefitTakeaway({ tag, className = "" }: { tag: string | null | undefined; className?: string }) {
   if (!tag) return null;
   return (
-    <p className={`text-[14px] font-medium leading-snug text-accent ${className}`}>
+    <p className={`text-[0.88rem] font-medium leading-snug text-accent ${className}`}>
       <span aria-hidden>→ </span>
       <span className="sr-only">내게 생기는 이득: </span>
       {tag}
@@ -135,7 +135,7 @@ export function BenefitTakeaway({ tag, className = "" }: { tag: string | null | 
 /** 메타 줄의 조용한 텍스트 배지 (완독해설 · 논문 · N곳 포착) */
 export function QuietTag({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
-    <span className="inline-flex shrink-0 items-center rounded bg-elevated px-2 py-0.5 text-[12.5px] font-medium text-fg-2" title={title}>
+    <span className="inline-flex shrink-0 items-center rounded-md bg-elevated px-2 py-0.5 text-[0.78rem] font-medium text-fg-2" title={title}>
       {children}
     </span>
   );
@@ -144,7 +144,7 @@ export function QuietTag({ children, title }: { children: React.ReactNode; title
 export function CategoryTag({ category }: { category: Category }) {
   const m = CATEGORY_META[category];
   return (
-    <span className={`inline-flex items-center gap-1 text-[13px] font-medium ${m.text}`}>
+    <span className={`inline-flex items-center gap-1 text-[0.82rem] font-medium ${m.text}`}>
       <m.Icon className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden />
       {m.label}
     </span>
@@ -154,14 +154,14 @@ export function CategoryTag({ category }: { category: Category }) {
 export function StatusBadge({ status }: { status: CollectStatus }) {
   const m = STATUS_META[status];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded px-2 py-0.5 text-[12.5px] font-medium ${m.className}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-[0.78rem] font-medium ${m.className}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${m.dot}`} aria-hidden />
       {m.label}
     </span>
   );
 }
 
-/** 플랫폼 배지 — 클릭하면 우측 패널이 플랫폼 프로필로 바뀐다 */
+/** 플랫폼 배지 — 클릭하면 모달이 플랫폼 프로필로 바뀐다 */
 export function PlatformBadge({
   platform,
   fallbackId,
@@ -178,7 +178,7 @@ export function PlatformBadge({
       <span className="truncate">{name}</span>
     </>
   );
-  const base = "relative z-10 inline-flex max-w-[12rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[13.5px] font-medium text-fg-2";
+  const base = "relative z-10 inline-flex max-w-[12rem] items-center gap-1.5 rounded-md py-0.5 pl-0.5 pr-1.5 text-[0.85rem] font-medium text-fg-2";
   if (!onSelect) return <span className={base}>{content}</span>;
   return (
     <button
@@ -205,7 +205,7 @@ export function CategoryLine({ category }: { category: Category }) {
 export function EasyReadyMark() {
   return (
     <span
-      className="relative z-10 inline-flex items-center gap-1 rounded bg-elevated px-1.5 py-px text-[11.5px] font-medium text-fg-2"
+      className="relative z-10 inline-flex items-center gap-1 rounded bg-elevated px-1.5 py-px text-[0.75rem] font-medium text-fg-2"
       title="원문 전체를 문단별로 쉽게 풀어 쓴 완독 해설이 있어요"
     >
       <BookOpenText className="h-3 w-3" strokeWidth={1.8} aria-hidden />
@@ -232,7 +232,7 @@ export function SourceStack({
   const blanks = Math.max(0, Math.min(3, count) - ids.length);
   const names = ids.map((id) => platformsById.get(id)?.name ?? id).join(", ");
   return (
-    <span className="inline-flex items-center gap-1.5 text-[12px] text-fg-3" title={`${count}곳에서 포착: ${names}`}>
+    <span className="inline-flex items-center gap-1.5 text-[0.78rem] text-fg-3" title={`${count}곳에서 포착: ${names}`}>
       <span className="flex -space-x-1.5" aria-hidden>
         {ids.map((id) => (
           <span key={id} className="rounded-full ring-2 ring-canvas">

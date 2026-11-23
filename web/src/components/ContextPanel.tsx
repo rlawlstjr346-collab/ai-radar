@@ -86,7 +86,7 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
         createPortal(
           <div
             role="status"
-            className="animate-toast-in fixed bottom-6 left-1/2 z-[120] flex -translate-x-1/2 items-center gap-2 rounded-full bg-fg px-4 py-2 text-[13.5px] font-medium text-canvas shadow-lg"
+            className="animate-toast-in fixed bottom-6 left-1/2 z-[120] flex -translate-x-1/2 items-center gap-2 rounded-full bg-fg px-4 py-2 text-[0.86rem] font-medium text-canvas shadow-lg"
           >
             {copied === "ok" ? <Check className="h-4 w-4" aria-hidden /> : <X className="h-4 w-4" aria-hidden />}
             {copied === "ok" ? "공유 링크가 복사됐어요" : "복사하지 못했어요. 주소창의 링크를 복사해 주세요"}
@@ -178,7 +178,7 @@ export function LiquidGlassModal(props: Props) {
           className="reading-sticky-bar relative z-20 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-transparent px-5 sm:px-7"
         >
           <p
-            className={`min-w-0 flex-1 truncate text-[14px] font-semibold text-fg transition-opacity duration-200 ${
+            className={`min-w-0 flex-1 truncate text-[0.9rem] font-semibold text-fg transition-opacity duration-200 ${
               scrolled && title ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
             aria-hidden={!scrolled}

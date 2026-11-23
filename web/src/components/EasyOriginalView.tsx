@@ -49,7 +49,7 @@ function OriginalLink({ url }: { url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="press group inline-flex items-center justify-center gap-2 rounded-lg bg-fg px-4 py-3 text-[14.5px] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      className="press group inline-flex items-center justify-center gap-2 rounded-2xl bg-fg px-5 py-3.5 text-[0.95rem] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       원문 보러가기
       <ArrowUpRight
@@ -67,7 +67,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   if (state.phase === "loading") {
     return (
       <div className="flex flex-col gap-5" aria-busy="true" aria-live="polite">
-        <p className="inline-flex items-center gap-2 text-[13.5px] text-fg-2">
+        <p className="inline-flex items-center gap-2 text-[0.88rem] text-fg-2">
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
           원문을 처음부터 끝까지 쉽게 풀어 오는 중이에요…
         </p>
@@ -103,7 +103,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
           매거진 완독 해설 · 총 <span className="tnum font-semibold text-fg">{easy.sections.length}</span>문단 · 약{" "}
           <span className="tnum font-semibold text-fg">{minutes}</span>분 완독
         </p>
-        <span className="tnum text-[13px] font-medium text-fg-3">
+        <span className="tnum text-[0.84rem] font-medium text-fg-3">
           {chars.toLocaleString("ko-KR")}자
         </span>
       </div>
@@ -120,22 +120,22 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
         </p>
       )}
 
-      <ol className="flex flex-col divide-y divide-line">
+      <ol className="flex flex-col gap-3.5">
         {easy.sections.map((s, i) => (
           <li
             key={i}
-            className="reading-stagger flex flex-col gap-2.5 py-5 first:pt-1"
+            className="inset-health-card reading-stagger flex flex-col gap-2.5 p-5"
             style={{ "--stagger": i + 1 } as React.CSSProperties}
           >
-            <h3 className="flex items-baseline gap-2.5 text-[calc(clamp(17px,1vw+4px,19.5px)*var(--font-scale,1))] font-bold leading-snug text-heading">
-              <span className="tnum shrink-0 text-[13px] font-semibold text-fg-3">
+            <h3 className="flex items-baseline gap-2.5 text-[1.12rem] font-bold leading-snug text-heading">
+              <span className="tnum shrink-0 text-[0.82rem] font-semibold text-fg-3">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span>{s.heading}</span>
             </h3>
             <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} />
             {s.quote && (
-              <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[15px] italic leading-relaxed text-fg-2">
+              <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[0.94rem] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}
@@ -147,17 +147,17 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       </ol>
 
       {easy.watch_points.length > 0 && (
-        <section className="flex flex-col gap-2.5 rounded-r-lg border-l-2 border-accent bg-elevated py-4 pl-4 pr-4">
-          <h3 className="text-[13px] font-medium text-fg-3">
+        <section className="inset-health-card flex flex-col gap-2.5 p-5">
+          <h3 className="text-[0.85rem] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">
             실제 원문 링크 들어가실 때 관람 포인트
           </h3>
           <ul className="flex flex-col gap-1.5">
             {easy.watch_points.map((w, i) => (
               <li
                 key={i}
-                className="flex gap-2.5 text-[15px] leading-[1.7] text-fg"
+                className="flex gap-2.5 text-[0.95rem] leading-[1.7] text-fg"
               >
-                <span className="tnum text-[13px] leading-[1.95] text-fg-3">
+                <span className="tnum text-[0.84rem] leading-[1.95] text-fg-3">
                   {i + 1}
                 </span>
                 <span>{w}</span>

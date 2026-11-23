@@ -359,6 +359,45 @@ class ArticleTranslator:
             log.warning("MyMemoryTranslator failed (%d/%d): %s", self._consecutive_errors, MAX_CONSECUTIVE_ERRORS, exc)
             return None
 
+    def _translate_google_gtx(self, text: str) -> Optional[str]:
+        """무료 공개 Google Translate GTX JSON 엔드포인트 (deep-translator 보다 안정적이고 429 내성이 높음)."""
+        if not text or not text.strip():
+            return ""
+        try:
+            out_parts: list[str] = []
+            for chunk in _split_chunks(text, 1800):
+                if self._delay_sec > 0:
+                    time.sleep(min(self._delay_sec, 0.22))
+                resp = httpx.get(
+                    "https://translate.googleapis.com/translate_a/single",
+                    params={
+                        "client": "gtx",
+                        "sl": "auto",
+                        "tl": "ko",
+                        "dt": "t",
+                        "q": chunk,
+                    },
+                    headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"},
+                    timeout=10.0,
+                )
+                if resp.status_code == 429:
+                    self._google_blocked = True
+                    return None
+                resp.raise_for_status()
+                data = resp.json()
+                if isinstance(data, list) and data and isinstance(data[0], list):
+                    seg_txt = "".join(str(seg[0]) for seg in data[0] if isinstance(seg, list) and seg and seg[0])
+                    if seg_txt.strip():
+                        out_parts.append(seg_txt.strip())
+            joined = " ".join(out_parts).strip()
+            if joined:
+                self._consecutive_errors = 0
+                return joined
+            return None
+        except Exception as exc:
+            log.warning("Google GTX translation failed, trying fallback: %s", exc)
+            return None
+
     def _translate_google(self, text: str) -> Optional[str]:
         if not text or not text.strip():
             return ""
@@ -366,6 +405,9 @@ class ArticleTranslator:
             return self._translate_mymemory(text)
         if self._consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
             return None
+        gtx = self._translate_google_gtx(text)
+        if gtx:
+            return gtx
         try:
             tr = self._get_google_translator()
             out_parts: list[str] = []

@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /*
- * AI Radar — Apple Newsroom 무채색 에디토리얼 + iOS 26 / visionOS Liquid Glass 모달 + Vercel X 워터마크 카드.
+ * AI Radar — Apple Newsroom + iCloud.com + iOS Health + VisionOS Liquid Glass.
  * 라이트: 바탕 #F5F5F7, 카드 #FFFFFF, 잉크 #1D1D1F
  * 다크:   바탕 #09090B, 카드 #141417, 잉크 #F5F5F7
+ * 최상위 html 루트 font-size 를 var(--font-scale) 로 제어해 전 탭·도감·모달이 85%~200% 동일 비율 연동.
  */
 :root {
   --bg-base: #f5f5f7;
@@ -19,19 +20,15 @@
   --brand-ink: #0f0f0f;
   --accent: #016a71;
   --live: #22c55e;
-  --scrim: rgba(12, 12, 16, 0.28);
-  --sem-context: #1d1d1f;
-  --sem-what: #1d1d1f;
-  --sem-why: #1d1d1f;
-  --sem-caveat: #515154;
-  --sem-utility: #1d1d1f;
-  --hl-bg: rgba(254, 240, 138, 0.88); /* 오직 핵심 결론 문장 형광펜 */
+  --scrim: rgba(12, 12, 16, 0.34);
+  --hl-bg: rgba(254, 240, 138, 0.9);
   --hl-underline: rgba(202, 138, 4, 0.34);
-  --frosted-bg: rgba(255, 255, 255, 0.64);
+  --nav-glass: rgba(245, 245, 247, 0.8);
+  --frosted-bg: rgba(250, 250, 252, 0.88);
   --sheen: rgba(255, 255, 255, 0.24);
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
-  --font-scale: 1.05;
+  --font-scale: 1;
   color-scheme: light;
 }
 
@@ -49,15 +46,11 @@
   --brand-ink: #f7f7f7;
   --accent: #20b8cd;
   --live: #22c55e;
-  --scrim: rgba(0, 0, 0, 0.55);
-  --sem-context: #f5f5f7;
-  --sem-what: #f5f5f7;
-  --sem-why: #f5f5f7;
-  --sem-caveat: #a1a1a6;
-  --sem-utility: #f5f5f7;
-  --hl-bg: rgba(250, 204, 21, 0.24);
-  --hl-underline: rgba(94, 234, 212, 0.42);
-  --frosted-bg: rgba(24, 24, 28, 0.68);
+  --scrim: rgba(0, 0, 0, 0.6);
+  --hl-bg: rgba(250, 204, 21, 0.26);
+  --hl-underline: rgba(94, 234, 212, 0.44);
+  --nav-glass: rgba(9, 9, 11, 0.8);
+  --frosted-bg: rgba(24, 24, 28, 0.88);
   --sheen: rgba(32, 184, 205, 0.28);
   color-scheme: dark;
 }
@@ -75,11 +68,6 @@
   --color-accent: var(--accent);
   --color-reading: var(--text-reading);
   --color-heading: var(--text-heading);
-  --color-sem-context: var(--sem-context);
-  --color-sem-what: var(--sem-what);
-  --color-sem-why: var(--sem-why);
-  --color-sem-caveat: var(--sem-caveat);
-  --color-sem-utility: var(--sem-utility);
   --color-live: var(--live);
   --color-scrim: var(--scrim);
   --color-bg: var(--bg-base);
@@ -92,17 +80,16 @@
   --font-editorial: "Newsreader", "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
-@theme {
-  --breakpoint-wide: 85rem; /* 1360px */
-}
-
-html,
-body {
+/* 전 탭 100% 통합 글씨 크기 연동: html 루트 font-size 자체를 조절해 모든 rem 텍스트가 동일 비율로 확장 */
+html {
+  font-size: calc(16px * var(--font-scale, 1));
   background: var(--bg-base);
   color: var(--text-primary);
 }
 
 body {
+  background: var(--bg-base);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   word-break: keep-all;
@@ -120,7 +107,6 @@ kbd,
   font-variant-numeric: tabular-nums;
 }
 
-/* 클래식 에디토리얼 세리프 워드마크 (AI Radar) */
 .font-editorial {
   font-family: var(--font-editorial);
   font-weight: 700;
@@ -128,9 +114,9 @@ kbd,
   color: var(--brand-ink);
 }
 
-/* ── 유동형 타입 스케일 (85% ~ 200% --font-scale 완전 연동, 줄바꿈·높이 자동 확장) ── */
+/* ── 순수 rem 기반 에디토리얼 타입 스케일 (html root font-size 와 1:1 연동) ──────── */
 .t-lead {
-  font-size: calc(clamp(23px, 1.5vw + 5px, 30px) * var(--font-scale, 1));
+  font-size: clamp(1.45rem, 1.8vw + 0.6rem, 1.9rem);
   font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.024em;
@@ -138,54 +124,62 @@ kbd,
   overflow-wrap: anywhere;
 }
 .t-feature {
-  font-size: calc(clamp(18px, 1.05vw + 4px, 21px) * var(--font-scale, 1));
-  font-weight: 680;
+  font-size: 1.2rem;
+  font-weight: 700;
   line-height: 1.38;
   letter-spacing: -0.018em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-stream {
-  font-size: calc(clamp(17.5px, 1vw + 4px, 20.5px) * var(--font-scale, 1));
-  font-weight: 620;
+  font-size: 1.15rem;
+  font-weight: 680;
   line-height: 1.42;
   letter-spacing: -0.016em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-panel-title {
-  font-size: calc(clamp(22px, 1.4vw + 5px, 29px) * var(--font-scale, 1));
+  font-size: clamp(1.35rem, 1.3vw + 0.65rem, 1.7rem);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.32;
   letter-spacing: -0.022em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-body {
-  font-size: calc(clamp(15.5px, 0.9vw + 4px, 17.5px) * var(--font-scale, 1));
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 1.75;
+  line-height: 1.72;
   color: var(--text-reading);
   overflow-wrap: anywhere;
 }
 .t-meta {
-  font-size: calc(clamp(13px, 0.72vw + 3px, 14.5px) * var(--font-scale, 1));
+  font-size: 0.85rem;
   line-height: 1.45;
   color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 .t-nav {
-  font-size: calc(clamp(13.5px, 0.76vw + 3px, 14.5px) * var(--font-scale, 1));
+  font-size: 0.9rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
 .prose-ko p {
-  line-height: 1.75;
+  line-height: 1.72;
 }
 
-/* ── Apple Newsroom 순수 무채색 기사 카드 (컬러 배경 틴트·컬러 좌측 보더 0%) ──────── */
+/* ── 상단 Sticky Frosted-Glass Apple Newsroom 헤더 ───────────────────────────────── */
+.top-glass-nav {
+  background-color: var(--nav-glass);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ── Apple Newsroom 순수 무채색 기사·도감 카드 ───────────────────────────────────── */
 .newsroom-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -199,7 +193,7 @@ kbd,
 .newsroom-card:hover {
   border-color: var(--border-strong);
   box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.09);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 :root[data-theme="dark"] .newsroom-card {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
@@ -208,29 +202,30 @@ kbd,
   box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.55);
 }
 
-/* ── X(Twitter) 카드 전용 대형 반투명 배경 워터마크 (Vercel 워터마크 스타일) ───────── */
+/* ── X(Twitter) 카드 전용 대형 반투명 𝕏 배경 워터마크 (선명도 보정: 라이트 0.10 / 다크 0.16) ── */
 .x-watermark {
   position: absolute;
-  right: -12px;
-  bottom: -18px;
-  width: 164px;
-  height: 164px;
-  color: var(--text-primary);
-  opacity: 0.05;
+  right: -10px;
+  bottom: -16px;
+  width: 176px;
+  height: 176px;
+  color: #0f1419;
+  opacity: 0.1;
   pointer-events: none;
   user-select: none;
-  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.85) 100%);
-  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.85) 100%);
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.9) 100%);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.9) 100%);
 }
 :root[data-theme="dark"] .x-watermark {
-  opacity: 0.08;
+  color: #ffffff;
+  opacity: 0.16;
 }
 
-/* ── iOS 26 / visionOS Liquid Glass 정중앙 모달 (유리 굴절 + Specular Rim) ───────── */
+/* ── 고밀도 프로스티드 리퀴드 글라스 모달 (뒷글씨 비침 0% + Specular Rim 광택 테두리) ── */
 .liquid-backdrop {
   background: var(--scrim);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .liquid-glass-modal {
@@ -238,23 +233,36 @@ kbd,
   width: min(760px, 92vw);
   max-height: 86vh;
   border-radius: 28px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(246, 247, 250, 0.68) 100%);
-  -webkit-backdrop-filter: blur(36px) saturate(190%);
-  backdrop-filter: blur(36px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(250, 250, 252, 0.94);
+  -webkit-backdrop-filter: blur(48px) saturate(190%);
+  backdrop-filter: blur(48px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow:
-    inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.3),
-    0 32px 80px -12px rgba(0, 0, 0, 0.28);
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.96),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.35),
+    0 32px 80px -12px rgba(0, 0, 0, 0.3);
 }
 
 :root[data-theme="dark"] .liquid-glass-modal {
-  background: linear-gradient(145deg, rgba(32, 32, 38, 0.78) 0%, rgba(18, 18, 22, 0.66) 100%);
+  background: rgba(24, 24, 28, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.24);
   box-shadow:
     inset 0 1.5px 1px rgba(255, 255, 255, 0.32),
     inset 0 -1px 1px rgba(255, 255, 255, 0.1),
-    0 32px 80px -12px rgba(0, 0, 0, 0.68);
+    0 32px 80px -12px rgba(0, 0, 0, 0.72);
+}
+
+/* ── iOS 건강(Health) 앱 스타일 화이트 인셋 요약 카드 4종 ─────────────────────────── */
+.inset-health-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+:root[data-theme="dark"] .inset-health-card {
+  background-color: #1c1c21;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 @keyframes liquid-modal-in {
@@ -272,15 +280,15 @@ kbd,
   animation: liquid-modal-in 380ms var(--ease-apple) both;
 }
 
-/* ── iOS Control Center 스타일 가로 캡슐 볼륨 슬라이더 (85% ~ 200%) ──────────────── */
+/* ── iOS Control Center 스타일 가로 캡슐 글씨 크기 슬라이더 (85% ~ 200%) ─────────── */
 .ios-slider-track {
   background: rgba(0, 0, 0, 0.06);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .ios-slider-fill {
-  background: linear-gradient(90deg, rgba(29, 29, 31, 0.14) 0%, rgba(29, 29, 31, 0.24) 100%);
-  box-shadow: inset -1px 0 0 rgba(29, 29, 31, 0.18);
+  background: linear-gradient(90deg, rgba(29, 29, 31, 0.14) 0%, rgba(29, 29, 31, 0.25) 100%);
+  box-shadow: inset -1px 0 0 rgba(29, 29, 31, 0.2);
 }
 .ios-slider-glyph {
   color: var(--text-primary);
@@ -323,7 +331,6 @@ kbd,
   background-image: linear-gradient(120deg, rgba(250, 204, 21, 0.26) 0%, rgba(94, 234, 212, 0.22) 100%);
 }
 
-/* ── AI 모델명·주요 인물명 무채색 칩 ─────────────────────────────────────────────── */
 .hl-entity {
   background: rgba(0, 0, 0, 0.055);
   color: var(--text-primary);
@@ -338,22 +345,6 @@ kbd,
   color: #f5f5f7;
 }
 
-/* ── 상대 시간 마이크로 알약 (3시간 이내 최신 기사) ───────────────────────────────── */
-.time-pill-fresh {
-  background: rgba(1, 106, 113, 0.09);
-  border: 1px solid rgba(1, 106, 113, 0.18);
-  color: #016a71;
-}
-:root[data-theme="dark"] .time-pill-fresh {
-  background: rgba(32, 184, 205, 0.14);
-  border: 1px solid rgba(32, 184, 205, 0.26);
-  color: #5eead4;
-}
-.time-recent {
-  color: var(--text-secondary);
-}
-
-/* ── 프로스티드 읽기 상단 바 + 2px 읽기 진행 바 ──────────────────────────────────── */
 .reading-sticky-bar {
   transition:
     background-color 220ms var(--ease-apple),
@@ -467,8 +458,8 @@ kbd,
 .live-ping {
   position: relative;
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   flex-shrink: 0;
   border-radius: 9999px;
   background-color: var(--live);

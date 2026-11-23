@@ -46,8 +46,8 @@ function useFontPercent(): number {
 }
 
 /**
- * Apple iOS Control Center 볼륨/밝기 바 스타일 가로 캡슐형 글씨 크기 슬라이더 (85% ~ 200%).
- * 드래그·클릭·키보드 화살표 모두 실시간 반응하며 localStorage 에 영구 저장된다.
+ * Apple iOS Control Center 스타일 가로 글씨 크기 슬라이더 (85% ~ 200%).
+ * html 루트 font-size(--font-scale)를 실시간 조절해 전 탭·도감·모달 전체를 동일 비율로 스케일링한다.
  */
 export default function FontSizeToggle({ compact = false }: { compact?: boolean }) {
   const percent = useFontPercent();
@@ -63,39 +63,65 @@ export default function FontSizeToggle({ compact = false }: { compact?: boolean 
   };
 
   if (compact) {
-    const steps = [90, 105, 130, 160, 200];
-    const next = steps.find((s) => s > percent) ?? steps[0];
     return (
-      <button
-        type="button"
-        onClick={() => applyPercent(next)}
-        aria-label={`글자 크기 현재 ${percent}%, 눌러서 조절`}
-        title="글자 크기 조절 (85% ~ 200%)"
-        className={`press inline-flex shrink-0 items-center gap-1 rounded-full border border-line px-2.5 py-1 text-[13px] font-semibold tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-          percent !== FONT_SCALE_DEFAULT ? "bg-fg text-canvas" : "bg-elevated text-fg-2 hover:text-fg"
-        }`}
-      >
-        <span>가</span>
-        <span className="text-[11.5px] opacity-80">{percent}%</span>
-      </button>
+      <div className="inline-flex shrink-0 items-center gap-1.5" title={`글자 크기 ${percent}% (더블클릭 시 100% 초기화)`}>
+        <div
+          ref={trackRef}
+          onPointerDown={(e) => {
+            e.currentTarget.setPointerCapture?.(e.pointerId);
+            updateFromClientX(e.clientX);
+          }}
+          onPointerMove={(e) => {
+            if (e.buttons === 1 || e.pointerType === "touch") {
+              updateFromClientX(e.clientX);
+            }
+          }}
+          onDoubleClick={() => applyPercent(FONT_SCALE_DEFAULT)}
+          className="ios-slider-track relative flex h-8 w-[124px] cursor-ew-resize select-none items-center justify-between overflow-hidden rounded-full border border-line-strong/75 px-2.5 sm:w-[138px]"
+        >
+          <div
+            aria-hidden
+            className="ios-slider-fill pointer-events-none absolute inset-y-0 left-0 rounded-full transition-[width] duration-75 ease-out"
+            style={{ width: `${Math.max(8, ratio)}%` }}
+          />
+          <span className="ios-slider-glyph pointer-events-none relative z-10 text-[11px] font-semibold leading-none" aria-hidden>
+            가
+          </span>
+          <span className="ios-slider-glyph tnum pointer-events-none relative z-10 text-[11px] font-semibold opacity-75" aria-hidden>
+            {percent}%
+          </span>
+          <span className="ios-slider-glyph pointer-events-none relative z-10 text-[16px] font-bold leading-none" aria-hidden>
+            가
+          </span>
+          <input
+            type="range"
+            min={FONT_SCALE_MIN}
+            max={FONT_SCALE_MAX}
+            step={1}
+            value={percent}
+            aria-label="글자 크기 조절 슬라이더 (85%에서 200%)"
+            aria-valuetext={`${percent}%`}
+            onChange={(e) => applyPercent(Number(e.target.value))}
+            className="absolute inset-0 z-20 h-full w-full cursor-ew-resize opacity-0"
+          />
+        </div>
+      </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between px-0.5">
-        <span className="text-[13px] font-medium text-fg-2">글자 크기</span>
+        <span className="text-[0.82rem] font-medium text-fg-2">글자 크기</span>
         <button
           type="button"
           onClick={() => applyPercent(FONT_SCALE_DEFAULT)}
           title={`누르면 기본 크기(${FONT_SCALE_DEFAULT}%)로 초기화`}
-          className="tnum rounded px-1.5 py-0.5 text-[12.5px] font-semibold text-fg-2 transition-colors hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="tnum rounded px-1.5 py-0.5 text-[0.78rem] font-semibold text-fg-2 transition-colors hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {percent}%
         </button>
       </div>
-
-      {/* iOS Control Center 가로 캡슐 볼륨 바 (85% ~ 200%) */}
       <div
         ref={trackRef}
         onPointerDown={(e) => {
@@ -110,20 +136,17 @@ export default function FontSizeToggle({ compact = false }: { compact?: boolean 
         onDoubleClick={() => applyPercent(FONT_SCALE_DEFAULT)}
         className="ios-slider-track relative flex h-10 w-full cursor-ew-resize select-none items-center justify-between overflow-hidden rounded-full border border-line-strong/80 px-3.5"
       >
-        {/* 부드럽게 채워지는 필 바 (Fill Bar) */}
         <div
           aria-hidden
           className="ios-slider-fill pointer-events-none absolute inset-y-0 left-0 rounded-full transition-[width] duration-75 ease-out"
           style={{ width: `${Math.max(8, ratio)}%` }}
         />
-
         <span className="ios-slider-glyph pointer-events-none relative z-10 text-[12px] font-semibold leading-none" aria-hidden>
           가
         </span>
         <span className="ios-slider-glyph pointer-events-none relative z-10 text-[19px] font-bold leading-none" aria-hidden>
           가
         </span>
-
         <input
           type="range"
           min={FONT_SCALE_MIN}

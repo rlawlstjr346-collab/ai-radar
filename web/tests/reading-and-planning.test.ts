@@ -100,22 +100,40 @@ describe("iOS 슬라이더(85~200%) · 리퀴드 글라스 · 잘림 없는 흑�
     expect(xLogoTsx).toContain("M18.244 2.25h3.308l-7.227 8.26");
   });
 
-  it("globals.css 는 Apple Newsroom 무채색 + Liquid Glass 모달 + X 워터마크를 정의하고 컬러 틴트 카드를 제거했다", () => {
+  it("globals.css 는 루트 html rem 스케일링 + 상단 글래스 헤더 + 고밀도 Liquid Glass 모달 + Health 인셋 카드 + X 워터마크를 정의한다", () => {
     const css = readFileSync(join(__dirname, "../src/app/globals.css"), "utf8");
+    expect(css).toContain("font-size: calc(16px * var(--font-scale, 1));");
+    expect(css).toContain(".top-glass-nav");
     expect(css).toContain(".newsroom-card");
     expect(css).toContain(".liquid-glass-modal");
-    expect(css).toContain("blur(36px) saturate(190%)");
+    expect(css).toContain("rgba(250, 250, 252, 0.94)");
+    expect(css).toContain("blur(48px) saturate(190%)");
+    expect(css).toContain(".inset-health-card");
     expect(css).toContain(".x-watermark");
+    expect(css).toContain("opacity: 0.1;");
+    expect(css).toContain("opacity: 0.16;");
     expect(css).not.toContain(".source-card-global");
     expect(css).not.toContain(".summary-card-amber");
   });
 
-  it("live-feed.json 전 기사가 도입부 잡담 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {
+  it("live-feed.json 전 기사가 도입부 잡담·복붙 템플릿·미번역 외국어 제목 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {
     const snap = loadLiveSnapshot();
     expect(snap.items.length).toBeGreaterThan(20);
+    const stockBoilerplate = [
+      "이 글에서 다루는 핵심 변화를 쉽게 풀어서 정리했습니다",
+      "현업·개인 사용자 입장에서 바로 체감되는 변화를 짚어봅니다",
+      "공식 발표에서 새로 공개된 변경점과 활용 맥락을 정리했습니다",
+    ];
     for (const item of snap.items) {
       expect(item.what_ko ?? "", item.id).not.toContain("로이킴");
       expect(item.highlight_summary ?? "", item.id).not.toContain("로이킴");
+      for (const bp of stockBoilerplate) {
+        expect(item.what_ko ?? "", `${item.id} boilerplate what_ko`).not.toContain(bp);
+      }
+      // 일본어 히라가나/가타카나 잔존 0건 + 순수 영문 미번역 제목 0건 (한글 최소 1자 이상 포함)
+      expect(item.hook_title, `${item.id} Japanese title`).not.toMatch(/[ぁ-んァ-ヶ]/);
+      expect(item.hook_title, `${item.id} untranslated English title`).toMatch(/[가-힣]/);
+
       const easy = snap.easyOriginals[item.id];
       expect(easy, item.id).toBeDefined();
       const summaryLen = [item.highlight_summary, item.context_ko, item.what_ko, item.why_ko, item.caveats_ko]

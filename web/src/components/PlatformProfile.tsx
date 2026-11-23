@@ -34,27 +34,27 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={platform.collect_status} />
-            <span className="text-[12.5px] text-fg-3">
+            <span className="text-[0.82rem] text-fg-3">
               {REGION_META[regionOf(platform)].flag} {REGION_META[regionOf(platform)].filter}
             </span>
           </div>
-          <p className="text-[16px] leading-relaxed text-fg-2">{platform.one_liner_ko}</p>
+          <p className="text-[1rem] leading-relaxed text-fg-2">{platform.one_liner_ko}</p>
         </header>
 
-        <section className="flex flex-col gap-2">
-          <h3 className="text-[13px] font-medium text-fg-3">여기 왜 가봐야 할까요?</h3>
+        <section className="inset-health-card flex flex-col gap-2 p-5">
+          <h3 className="text-[0.85rem] font-bold text-fg-3">여기 왜 가봐야 할까요?</h3>
           <p className="t-body">{platform.why_visit_ko}</p>
         </section>
 
         {platform.access_note && (
-          <section className="flex flex-col gap-1 rounded-r-lg border-l-2 border-accent bg-elevated py-3.5 pl-4 pr-4">
-            <h3 className="text-[13px] font-medium text-fg-3">이용 팁</h3>
-            <p className="text-[15px] leading-[1.7] text-fg">{platform.access_note}</p>
+          <section className="inset-health-card flex flex-col gap-1.5 p-5">
+            <h3 className="text-[0.85rem] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">이용 팁</h3>
+            <p className="t-body text-fg">{platform.access_note}</p>
           </section>
         )}
 
         <section className="flex flex-col gap-3">
-          <h3 className="text-[13px] font-medium text-fg-3">여기서 최근 물어온 소식</h3>
+          <h3 className="text-[0.85rem] font-bold text-fg-3">여기서 최근 물어온 소식</h3>
           {recent.length > 0 ? (
             <ul className="-mx-3 flex flex-col">
               {recent.map((i) => (
@@ -62,10 +62,10 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
                   <button
                     type="button"
                     onClick={() => onSelectItem(i.id)}
-                    className="group flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors duration-100 hover:bg-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors duration-100 hover:bg-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <span className="min-w-0 flex-1">
-                      <span className="line-clamp-2 text-[15px] font-semibold leading-snug text-fg">{i.hook_title}</span>
+                      <span className="line-clamp-2 text-[0.95rem] font-semibold leading-snug text-fg">{i.hook_title}</span>
                       <span className="mt-1.5 flex items-center gap-3">
                         <DifficultyBadge level={i.difficulty} variant="short" />
                         <span className="t-meta">{formatDate(i.published_at ?? i.created_at)}</span>
@@ -77,7 +77,7 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
               ))}
             </ul>
           ) : (
-            <p className="rounded-lg bg-elevated px-4 py-3 text-[14.5px] leading-relaxed text-fg-2">
+            <p className="inset-health-card px-4 py-3 text-[0.92rem] leading-relaxed text-fg-2">
               {platform.collect_status === "directory_only"
                 ? "여긴 도감 추천 사이트라 소식을 자동으로 물어오진 않아요. 직접 구경 가보시는 걸 추천해요."
                 : "아직 여기서 물어온 소식이 없어요. 레이더 요원이 곧 다녀올게요."}
