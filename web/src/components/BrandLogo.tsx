@@ -1,68 +1,83 @@
 /**
- * AI Radar 브랜드 심볼 — 순수 흑백 'S자 곡선 웨이브 브로드시트 신문' 벡터 SVG.
- * viewBox="0 0 48 44" 내부에 넉넉한 안전 여백(4px+)을 확보해 어떤 해상도·줌에서도 1px 도 잘리지 않는다.
- * currentColor + --bg-base 로 라이트(#0F0F0F) / 다크(#F7F7F7) 자동 반전.
+ * AI Radar 브랜드 심볼 — 순수 흑백 Apple News 스타일 스쿼클 + 접힌 신문 에디토리얼 그리드 SVG.
+ * 라이트 모드: #1D1D1F 스쿼클 + #FFFFFF 신문 라인 / 다크 모드: #F5F5F7 스쿼클 + #141417 신문 라인.
  */
-export default function BrandLogo({ className = "h-10 w-11" }: { className?: string }) {
+export default function BrandLogo({ className = "h-9 w-9" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 48 44" fill="none" className={className} aria-hidden focusable="false">
-      <g transform="translate(4 4)">
-        {/* 좌측 하단 롤링 폴드 입체 음영 */}
-        <path
-          d="M4.2 24.4C2.4 26.3 2.5 29.7 4.8 31.3C6.9 32.8 10.1 32.5 11.9 30.7L14.2 28.5C11.4 29.4 8.4 28.6 7.0 26.8C6.2 25.7 5.4 24.9 4.2 24.4Z"
-          fill="currentColor"
-          fillOpacity="0.24"
-        />
-        {/* 메인 S자 곡선 브로드시트 지면 */}
-        <path
-          d="M6.6 28.7C4.2 27.1 4.1 23.0 6.1 18.2C8.0 13.3 10.5 9.1 14.9 6.4C19.5 3.6 26.2 3.1 33.9 4.5C35.4 4.8 36.4 6.2 36.0 7.7C34.4 14.1 32.9 19.7 30.4 25.3C28.5 29.5 25.2 31.5 20.4 31.3C15.7 31.1 11.9 29.6 8.5 29.6C7.6 29.6 7.1 29.1 6.6 28.7Z"
-          fill="var(--bg-surface)"
-          stroke="currentColor"
-          strokeWidth="2.3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* 좌측 하단 S-커브 롤링 립 */}
-        <path
-          d="M6.6 28.7C9.1 30.3 12.6 28.7 14.0 25.7C15.1 23.2 13.9 20.8 11.7 20.9C9.7 21.0 8.5 22.7 8.9 24.5"
-          stroke="currentColor"
-          strokeWidth="2.1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* 곡면을 따라 흐르는 상단 굵은 마스트헤드 바 */}
-        <path
-          d="M14.0 11.3C18.7 8.4 24.9 7.8 31.6 9.0"
-          stroke="currentColor"
-          strokeWidth="3.0"
-          strokeLinecap="round"
-        />
-        {/* 웨이브 리드 본문 라인 1 */}
-        <path
-          d="M12.4 16.0C17.3 13.6 23.4 13.1 30.0 14.1"
-          stroke="currentColor"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-        />
-        {/* 좌측 칼럼 웨이브 본문 라인 2·3 */}
-        <path
-          d="M16.4 20.0C18.7 19.2 21.0 18.8 23.1 19.0"
-          stroke="currentColor"
-          strokeWidth="1.65"
-          strokeLinecap="round"
-        />
-        <path
-          d="M16.0 23.8C18.1 23.2 20.1 23.0 22.0 23.1"
-          stroke="currentColor"
-          strokeWidth="1.65"
-          strokeLinecap="round"
-        />
-        {/* 우하단 칼럼 피처 블록 */}
-        <path
-          d="M25.0 18.3C26.8 18.4 28.6 18.7 30.1 19.1L28.0 25.4C26.5 25.2 24.9 25.0 23.4 25.0L25.0 18.3Z"
-          fill="currentColor"
-        />
-      </g>
+    <svg viewBox="0 0 36 36" fill="none" className={className} aria-hidden focusable="false">
+      {/* 매끄러운 애플 연속 곡률 스쿼클 배경 */}
+      <rect x="0.5" y="0.5" width="35" height="35" rx="8.5" fill="currentColor" />
+
+      {/* 접힌 신문 에디토리얼 그리드 (균일 스트로크 + 넉넉한 내부 여백) */}
+      {/* 좌측 접힌 신문 옆면 폴드 라인 */}
+      <path
+        d="M10.5 13.5H8.8C8.08 13.5 7.5 14.08 7.5 14.8V25.3C7.5 26.52 8.48 27.5 9.7 27.5H12.2"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* 본문 지면 프레임 */}
+      <rect
+        x="10.5"
+        y="8.5"
+        width="18"
+        height="19"
+        rx="2"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      {/* 상단 굵은 헤드라인 바 */}
+      <line
+        x1="13.5"
+        y1="12.2"
+        x2="25.5"
+        y2="12.2"
+        stroke="var(--bg-surface)"
+        strokeWidth="2.15"
+        strokeLinecap="round"
+      />
+      {/* 좌측 썸네일 사각 블록 */}
+      <rect x="13.5" y="14.9" width="4.8" height="4.8" rx="0.9" fill="var(--bg-surface)" />
+      {/* 우측 2줄 라인 */}
+      <line
+        x1="20.2"
+        y1="16.1"
+        x2="25.5"
+        y2="16.1"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+      />
+      <line
+        x1="20.2"
+        y1="19.0"
+        x2="25.5"
+        y2="19.0"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+      />
+      {/* 하단 2줄 본문 라인 */}
+      <line
+        x1="13.5"
+        y1="22.3"
+        x2="25.5"
+        y2="22.3"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+      />
+      <line
+        x1="13.5"
+        y1="24.9"
+        x2="22.2"
+        y2="24.9"
+        stroke="var(--bg-surface)"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

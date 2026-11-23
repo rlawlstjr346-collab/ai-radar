@@ -184,7 +184,7 @@ function FeedList({
 
       {/* 주요 피처 2열 카드 */}
       {features.length > 0 && (
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2" aria-label="주요 소식">
+        <ul className="grid grid-cols-1 gap-5 md:grid-cols-2" aria-label="주요 소식">
           {features.map((item) => (
             <li key={item.id} data-item-id={item.id} className="min-w-0">
               <FeatureStory {...rowProps(item)} />
@@ -195,7 +195,7 @@ function FeedList({
 
       {/* 정갈하고 큼직한 에디토리얼 아티클 스트림 */}
       {shown.length > 0 && (
-        <ul className="flex flex-col gap-4" aria-label={topCount > 0 ? "최신 에디토리얼 피드" : "소식 목록"}>
+        <ul className="flex flex-col gap-5" aria-label={topCount > 0 ? "최신 에디토리얼 피드" : "소식 목록"}>
           {shown.map((item) => (
             <li key={item.id} data-item-id={item.id} className="min-w-0">
               <StreamRow {...rowProps(item)} />
@@ -377,26 +377,26 @@ export default function RadarApp({ data }: { data: RadarData }) {
       {/* 모바일(<lg) 반응형 상단 로고 + 가로 탭/컬러도트 필터 */}
       <MobileHeader {...sidebarProps} />
 
-      {/* 데스크톱: 좌측 240px 여백 일체형 컬럼(무배경) + 우측 메인 아티클 스트림 */}
-      <div className="mx-auto w-full max-w-[1220px] px-4 sm:px-6 lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-12 lg:px-8">
+      {/* 데스크톱: 좌측 276px 여백 일체형 컬럼(무배경) + 우측 확장 메인 아티클 스트림 */}
+      <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6 lg:grid lg:grid-cols-[276px_minmax(0,1fr)] lg:gap-14 lg:px-10">
         <div className="hidden lg:block">
           <Sidebar {...sidebarProps} />
         </div>
 
-        <main className="@container min-w-0 pb-20 pt-6 lg:pt-8">
+        <main className="@container min-w-0 pb-24 pt-7 lg:pt-9">
           {/* Apple ML Research 'All publications' 스타일 1줄 섹션 타이틀 — 바로 아래부터 즉시 기사 시작 */}
-          <header className="mb-6 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-b border-line pb-3.5">
-            <div className="flex min-w-0 flex-wrap items-baseline gap-2.5">
-              <h1 className="text-[1.7rem] font-bold leading-tight tracking-[-0.024em] text-fg">
+          <header className="mb-7 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-b border-line pb-4">
+            <div className="flex min-w-0 flex-wrap items-baseline gap-3">
+              <h1 className="text-[clamp(26px,2vw,32px)] font-bold leading-tight tracking-[-0.026em] text-fg">
                 {sectionTitle}
               </h1>
               {activeCatLabel && (
-                <span className={`text-[0.95rem] font-semibold ${CATEGORY_META[category as Exclude<CategoryFilter, "all">].text}`}>
+                <span className={`text-[16px] font-semibold ${CATEGORY_META[category as Exclude<CategoryFilter, "all">].text}`}>
                   · {activeCatLabel}
                 </span>
               )}
             </div>
-            <span className="t-meta tnum">{totalLabel}</span>
+            <span className="t-meta tnum text-[14.5px]">{totalLabel}</span>
           </header>
 
           {view === "directory" ? (

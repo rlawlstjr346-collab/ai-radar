@@ -120,22 +120,22 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
         </p>
       )}
 
-      <ol className="flex flex-col gap-3.5">
+      <ol className="flex flex-col gap-4">
         {easy.sections.map((s, i) => (
           <li
             key={i}
-            className="inset-health-card reading-stagger flex flex-col gap-2.5 p-5"
+            className="inset-health-card reading-stagger flex flex-col gap-3 p-6"
             style={{ "--stagger": i + 1 } as React.CSSProperties}
           >
-            <h3 className="flex items-baseline gap-2.5 text-[1.12rem] font-bold leading-snug text-heading">
-              <span className="tnum shrink-0 text-[0.82rem] font-semibold text-fg-3">
+            <h3 className="flex items-baseline gap-2.5 text-[19px] font-bold leading-snug text-heading">
+              <span className="tnum shrink-0 text-[14.5px] font-semibold text-fg-3">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span>{s.heading}</span>
             </h3>
             <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} />
             {s.quote && (
-              <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[0.94rem] italic leading-relaxed text-fg-2">
+              <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[16px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}
@@ -147,17 +147,17 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       </ol>
 
       {easy.watch_points.length > 0 && (
-        <section className="inset-health-card flex flex-col gap-2.5 p-5">
-          <h3 className="text-[0.85rem] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">
+        <section className="inset-health-card flex flex-col gap-3 p-6">
+          <h3 className="text-[15px] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">
             실제 원문 링크 들어가실 때 관람 포인트
           </h3>
-          <ul className="flex flex-col gap-1.5">
+          <ul className="flex flex-col gap-2">
             {easy.watch_points.map((w, i) => (
               <li
                 key={i}
-                className="flex gap-2.5 text-[0.95rem] leading-[1.7] text-fg"
+                className="flex gap-2.5 text-[16.5px] leading-[1.7] text-fg"
               >
-                <span className="tnum text-[0.84rem] leading-[1.95] text-fg-3">
+                <span className="tnum text-[14.5px] leading-[1.95] text-fg-3">
                   {i + 1}
                 </span>
                 <span>{w}</span>

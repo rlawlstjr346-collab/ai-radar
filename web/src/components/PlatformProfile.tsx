@@ -21,7 +21,7 @@ export default function PlatformProfile({ platform, items, onSelectItem }: Props
   return (
     <article className="flex flex-col" aria-labelledby={`platform-${platform.id}`}>
       <CategoryLine category={platform.category} />
-      <div className="mx-auto flex w-full max-w-[64ch] flex-col gap-7 px-5 pb-10 pt-5 sm:px-7 sm:pt-6">
+      <div className="mx-auto flex w-full max-w-[74ch] flex-col gap-7 px-7 pb-12 pt-4 sm:px-10 sm:pt-5">
         <header className="flex flex-col gap-3">
           <div className="flex items-center gap-3 pr-20">
             <PlatformMark platform={platform} fallbackId={platform.id} size="lg" />

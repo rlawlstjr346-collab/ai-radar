@@ -128,14 +128,14 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
         const meta = CATEGORY_META[cat];
         return (
           <section key={cat} aria-labelledby={`dir-${cat}`} className="flex flex-col gap-4">
-            <div className="flex items-center gap-2.5 border-b border-line pb-2.5">
-              <span className={`h-2 w-2 shrink-0 rounded-full ${meta.dotClass}`} aria-hidden />
-              <h2 id={`dir-${cat}`} className="text-[1.08rem] font-bold tracking-[-0.015em] text-fg">
+            <div className="flex items-center gap-2.5 border-b border-line pb-3">
+              <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${meta.dotClass}`} aria-hidden />
+              <h2 id={`dir-${cat}`} className="text-[20px] font-bold tracking-[-0.018em] text-fg">
                 {meta.label}
               </h2>
               <span className="t-meta tnum">{fullCount}곳</span>
             </div>
-            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-5 md:grid-cols-2">
               {list.map((p) => {
                 const selected = selectedId === p.id;
                 return (
@@ -144,13 +144,13 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                       type="button"
                       onClick={() => onSelect(p.id)}
                       aria-pressed={selected}
-                      className={`newsroom-card group relative flex h-full w-full flex-col gap-3 p-5 text-left focus-visible:outline-none focus-visible:ring-2 ${meta.ring} ${
+                      className={`newsroom-card group relative flex h-full w-full flex-col gap-3.5 p-6 sm:p-7 text-left focus-visible:outline-none focus-visible:ring-2 ${meta.ring} ${
                         selected ? "ring-2 ring-fg" : ""
                       }`}
                     >
-                      <span className="flex items-center gap-2.5">
+                      <span className="flex items-center gap-3">
                         <PlatformMark platform={p} fallbackId={p.id} size="md" />
-                        <span className="min-w-0 flex-1 truncate text-[1.02rem] font-bold tracking-[-0.014em] text-fg">
+                        <span className="min-w-0 flex-1 truncate text-[18.5px] font-bold tracking-[-0.016em] text-fg">
                           {p.name}
                         </span>
                         <ArrowUpRight
@@ -159,11 +159,11 @@ export default function DirectoryView({ platforms, items, category, selectedId, 
                           aria-hidden
                         />
                       </span>
-                      <span className="text-[0.92rem] leading-relaxed text-fg-2">{p.one_liner_ko}</span>
-                      <span className="mt-auto flex flex-wrap items-center gap-2 pt-1">
+                      <span className="text-[15.5px] leading-[1.6] text-fg-2">{p.one_liner_ko}</span>
+                      <span className="mt-auto flex flex-wrap items-center gap-2 pt-1.5">
                         <StatusBadge status={p.collect_status} />
                         {regionOf(p) !== "global" && (
-                          <span className="text-[0.78rem] font-medium text-fg-3">
+                          <span className="text-[13.5px] font-medium text-fg-3">
                             {REGION_META[regionOf(p)].flag} {REGION_META[regionOf(p)].badge}
                           </span>
                         )}

@@ -25,15 +25,15 @@ interface Props {
 }
 
 export const BTN_PRIMARY =
-  "press group inline-flex items-center justify-center gap-2 rounded-2xl bg-fg px-5 py-3.5 text-[0.95rem] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
+  "press group inline-flex h-auto items-center justify-center gap-2.5 rounded-2xl bg-fg px-5 py-4 text-[16px] font-semibold leading-[1.35] text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
 export const BTN_SECONDARY =
-  "press group inline-flex items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/80 px-5 py-3 text-[0.92rem] font-medium text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "press group inline-flex h-auto items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/85 px-5 py-3.5 text-[15.5px] font-medium leading-[1.35] text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export function OriginalLink({ url, variant }: { url: string; variant: "primary" | "secondary" }) {
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className={variant === "primary" ? BTN_PRIMARY : BTN_SECONDARY}>
       원문 보러가기
-      <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-px group-hover:translate-x-px" aria-hidden />
+      <ArrowUpRight className="h-[18px] w-[18px] transition group-hover:-translate-y-px group-hover:translate-x-px" aria-hidden />
     </a>
   );
 }
@@ -58,11 +58,11 @@ function HealthInsetCard({
 }) {
   return (
     <section
-      className="inset-health-card reading-stagger flex flex-col gap-2.5 p-5"
+      className="inset-health-card reading-stagger flex flex-col gap-3 p-6"
       style={staggerStyle(staggerIndex)}
     >
-      <h3 className={`flex items-center gap-2 text-[0.88rem] font-bold tracking-[-0.01em] ${labelColorClass}`}>
-        <Icon className="h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
+      <h3 className={`flex items-center gap-2 text-[15px] font-bold tracking-[-0.01em] ${labelColorClass}`}>
+        <Icon className="h-[18px] w-[18px] shrink-0" strokeWidth={2.2} aria-hidden />
         <span>{label}</span>
       </h3>
       {children}
@@ -88,17 +88,17 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
   return (
     <article className="flex flex-col" aria-labelledby={`detail-${item.id}`}>
       <CategoryLine category={item.category} />
-      <div className="mx-auto flex w-full max-w-[66ch] flex-col gap-5 px-5 pb-10 pt-2 sm:px-8">
-        <header className="reading-stagger flex flex-col gap-3" style={staggerStyle(0)}>
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+      <div className="mx-auto flex w-full max-w-[74ch] flex-col gap-6 px-7 pb-12 pt-3 sm:px-10">
+        <header className="reading-stagger flex flex-col gap-3.5" style={staggerStyle(0)}>
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[15px]">
             <button
               type="button"
               onClick={() => onSelectPlatform(xCard ? "x" : item.platform_id)}
-              className="press inline-flex max-w-full items-center gap-1.5 rounded-full bg-elevated px-3 py-1 text-[0.82rem] font-bold text-fg transition-colors hover:bg-fg hover:text-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="press inline-flex max-w-full items-center gap-1.5 rounded-full bg-elevated px-3.5 py-1.5 text-[14.5px] font-bold text-fg transition-colors hover:bg-fg hover:text-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {xCard ? (
                 <>
-                  <XLogo className="h-3.5 w-3.5 shrink-0" />
+                  <XLogo className="h-4 w-4 shrink-0" />
                   <span className="truncate">𝕏 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
                 </>
               ) : (
@@ -109,10 +109,10 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               )}
             </button>
             <CategoryTag category={item.category} />
-            <span className="t-meta">· 원문 {formatDate(item.published_at ?? item.created_at)}</span>
+            <span className="text-[14.5px] text-fg-3">· 원문 {formatDate(item.published_at ?? item.created_at)}</span>
             {item.source_count > 1 && (
-              <span className="t-meta inline-flex items-center gap-1">
-                <Radio className="h-3.5 w-3.5" aria-hidden />
+              <span className="inline-flex items-center gap-1 text-[14.5px] text-fg-3">
+                <Radio className="h-4 w-4" aria-hidden />
                 <span className="tnum">{item.source_count}</span>곳 포착
               </span>
             )}
@@ -124,12 +124,12 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
 
           {/* 원문 제목은 모달 상단에 작게 병기 */}
           {hasAltOriginalTitle && (
-            <p className="t-meta -mt-1.5 leading-snug text-fg-3">
+            <p className="-mt-1 text-[15px] leading-snug text-fg-3">
               원문: {item.original_title}
             </p>
           )}
 
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5">
             <BenefitChip tag={item.benefit_tag} size="md" />
             <DifficultyBadge level={item.difficulty} />
           </div>
@@ -150,13 +150,13 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
             <EasyOriginalView item={item} />
           </div>
         ) : (
-          <div role="tabpanel" id={`${panelId}-panel-summary`} aria-labelledby={`${panelId}-tab-summary`} className="flex flex-col gap-3.5">
+          <div role="tabpanel" id={`${panelId}-panel-summary`} aria-labelledby={`${panelId}-tab-summary`} className="flex flex-col gap-4">
             {item.terms.length > 0 && !archived && (
-              <p className="px-1 text-[0.8rem] text-fg-3">점선 밑줄 단어에 마우스를 올리거나 누르면 쉽게 풀어드려요.</p>
+              <p className="px-1 text-[14px] text-fg-3">점선 밑줄 단어에 마우스를 올리거나 누르면 쉽게 풀어드려요.</p>
             )}
 
             {archived ? (
-              <p className="inset-health-card p-5 text-[0.95rem] leading-relaxed text-fg-2">
+              <p className="inset-health-card p-6 text-[16.5px] leading-relaxed text-fg-2">
                 30일이 지난 소식이라 자세한 풀이는 보관함으로 옮겨졌어요. 원문은 아래 링크에서 볼 수 있어요.
               </p>
             ) : (
@@ -187,7 +187,7 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
                   staggerIndex={2}
                 >
                   <p className={body}>{whereToUseText}</p>
-                  <p className="t-meta border-t border-line pt-2.5 leading-relaxed text-fg-2">
+                  <p className="border-t border-line pt-3 text-[15.5px] leading-[1.65] text-fg-2">
                     <span className="font-semibold text-fg">실전 팁:</span> {utility.practical_tip}
                   </p>
                 </HealthInsetCard>
@@ -202,7 +202,7 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
                   >
                     <TermText text={item.what_ko} terms={item.terms} entities={item.entities} className={body} />
                     {item.analogy_ko && (
-                      <blockquote className="mt-1 border-l-2 border-line-strong pl-3.5 text-[0.92rem] text-fg-2">
+                      <blockquote className="mt-1 border-l-2 border-line-strong pl-4 text-[16px] leading-[1.65] text-fg-2">
                         <span className="font-semibold text-fg">쉽게 비유하자면: </span>
                         {item.analogy_ko}
                       </blockquote>
@@ -230,22 +230,24 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               </p>
             )}
 
-            <div className="reading-stagger flex flex-col gap-2.5 pt-1" style={staggerStyle(6)}>
+            <div className="reading-stagger flex flex-col gap-3 pt-1" style={staggerStyle(6)}>
               {canReadEasy ? (
                 <>
                   <button
                     type="button"
                     onClick={() => setTab("easy")}
-                    className={`${BTN_PRIMARY} sheen relative overflow-hidden justify-between text-left`}
+                    className={`${BTN_PRIMARY} sheen relative h-auto w-full justify-between overflow-hidden px-5 py-4 text-left`}
                   >
-                    <span className="flex min-w-0 items-center gap-3">
+                    <span className="flex min-w-0 items-center gap-3.5">
                       <BookOpenText className="h-5 w-5 shrink-0" aria-hidden />
-                      <span className="flex min-w-0 flex-col">
-                        <span className="text-[0.78rem] font-medium opacity-75">원문 전체를 매거진처럼 깊이 읽고 싶다면?</span>
-                        <span>원본 전체 쉽게 읽기</span>
+                      <span className="flex min-w-0 flex-col gap-1 leading-[1.35]">
+                        <span className="text-[13.5px] font-medium leading-[1.35] opacity-80">
+                          원문 전체를 매거진처럼 깊이 읽고 싶다면?
+                        </span>
+                        <span className="text-[16.5px] font-bold leading-[1.35]">원본 전체 쉽게 읽기</span>
                       </span>
                     </span>
-                    <ArrowRight className="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
+                    <ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
                   </button>
                   <OriginalLink url={item.canonical_url} variant="secondary" />
                 </>

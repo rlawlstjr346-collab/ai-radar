@@ -113,55 +113,62 @@ kbd,
   color: var(--brand-ink);
 }
 
-/* ── Apple ML Research + Apple Newsroom 에디토리얼 타입 스케일 ─────────────────── */
+/* ── Apple ML Research + Apple Newsroom 비례 확대(+20%) 에디토리얼 타입 스케일 ─── */
 .t-lead {
-  font-size: clamp(1.5rem, 1.8vw + 0.55rem, 1.85rem);
+  font-size: clamp(24px, 1.9vw, 30px);
   font-weight: 700;
-  line-height: 1.28;
+  line-height: 1.35;
   letter-spacing: -0.025em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-feature {
-  font-size: 1.32rem;
+  font-size: clamp(20px, 1.45vw, 23.5px);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.38;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-stream {
-  font-size: 1.28rem;
+  font-size: clamp(20px, 1.45vw, 23.5px);
   font-weight: 700;
-  line-height: 1.36;
+  line-height: 1.38;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
+.t-card-summary {
+  font-size: clamp(16px, 1.1vw, 17.5px);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
 .t-panel-title {
-  font-size: clamp(1.38rem, 1.3vw + 0.65rem, 1.72rem);
+  font-size: clamp(23px, 1.8vw, 28px);
   font-weight: 700;
-  line-height: 1.32;
+  line-height: 1.35;
   letter-spacing: -0.022em;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
 .t-body {
-  font-size: 1rem;
+  font-size: clamp(17px, 1.15vw, 18.5px);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.72;
   color: var(--text-reading);
   overflow-wrap: anywhere;
 }
 .t-meta {
-  font-size: 0.86rem;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
 .t-nav {
-  font-size: 0.94rem;
+  font-size: 16px;
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
@@ -229,9 +236,9 @@ kbd,
 
 .liquid-glass-modal {
   position: relative;
-  width: min(760px, 92vw);
-  max-height: 86vh;
-  border-radius: 28px;
+  width: min(880px, 92vw);
+  max-height: 88vh;
+  border-radius: 30px;
   background: rgba(250, 250, 252, 0.94);
   -webkit-backdrop-filter: blur(48px) saturate(190%);
   backdrop-filter: blur(48px) saturate(190%);

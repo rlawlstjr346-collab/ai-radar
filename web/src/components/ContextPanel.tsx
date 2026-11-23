@@ -175,10 +175,10 @@ export function LiquidGlassModal(props: Props) {
         {/* 상단 프로스티드 컨트롤 바 + 2px 읽기 진행 바 */}
         <div
           data-scrolled={scrolled ? "true" : "false"}
-          className="reading-sticky-bar relative z-20 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-transparent px-5 sm:px-7"
+          className="reading-sticky-bar relative z-20 flex h-16 shrink-0 items-center justify-between gap-3 border-b border-transparent px-7 sm:px-10"
         >
           <p
-            className={`min-w-0 flex-1 truncate text-[0.9rem] font-semibold text-fg transition-opacity duration-200 ${
+            className={`min-w-0 flex-1 truncate text-[15.5px] font-semibold text-fg transition-opacity duration-200 ${
               scrolled && title ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
             aria-hidden={!scrolled}

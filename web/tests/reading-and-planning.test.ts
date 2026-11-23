@@ -82,24 +82,29 @@ describe("Apple ML Research 좌측 컬러 도트 · 무한 스크롤 · 고밀�
     }
   });
 
-  it("파비콘(icon.svg), BrandLogo, 공식 XLogo 는 잘림 없는 여백과 순수 흑백 벡터로 구성된다", () => {
+  it("파비콘(icon.svg), BrandLogo, 공식 XLogo 는 Apple News 스쿼클 흑백 벡터와 공식 X 로고로 구성된다", () => {
     const iconSvg = readFileSync(join(__dirname, "../src/app/icon.svg"), "utf8");
     const brandTsx = readFileSync(join(__dirname, "../src/components/BrandLogo.tsx"), "utf8");
     const xLogoTsx = readFileSync(join(__dirname, "../src/components/XLogo.tsx"), "utf8");
-    expect(iconSvg).toContain('viewBox="0 0 48 48"');
-    expect(iconSvg).toContain("#0F0F0F");
-    expect(iconSvg).toContain("#F7F7F7");
-    expect(brandTsx).toContain('viewBox="0 0 48 44"');
+    expect(iconSvg).toContain('viewBox="0 0 36 36"');
+    expect(iconSvg).toContain('rx="8.5"');
+    expect(iconSvg).toContain("#1D1D1F");
+    expect(iconSvg).toContain("#F5F5F7");
+    expect(brandTsx).toContain('viewBox="0 0 36 36"');
+    expect(brandTsx).toContain('rx="8.5"');
     expect(brandTsx).not.toContain("var(--accent)");
     expect(xLogoTsx).toContain('viewBox="0 0 24 24"');
     expect(xLogoTsx).toContain("M18.244 2.25h3.308l-7.227 8.26");
   });
 
-  it("globals.css 는 고정 16px 기본 스케일 + Apple Newsroom 20px 카드 + 고밀도 Liquid Glass 모달 + Health 인셋 카드 + X 워터마크를 정의한다", () => {
+  it("globals.css 는 비례 확대 타이포 + 880px 고밀도 Liquid Glass 모달 + Health 인셋 카드 + X 워터마크를 정의한다", () => {
     const css = readFileSync(join(__dirname, "../src/app/globals.css"), "utf8");
     expect(css).toContain("font-size: 16px;");
     expect(css).toContain(".newsroom-card");
     expect(css).toContain(".liquid-glass-modal");
+    expect(css).toContain("width: min(880px, 92vw);");
+    expect(css).toContain("max-height: 88vh;");
+    expect(css).toContain("border-radius: 30px;");
     expect(css).toContain("rgba(250, 250, 252, 0.94)");
     expect(css).toContain("blur(48px) saturate(190%)");
     expect(css).toContain(".inset-health-card");
@@ -108,6 +113,14 @@ describe("Apple ML Research 좌측 컬러 도트 · 무한 스크롤 · 고밀�
     expect(css).toContain("opacity: 0.16;");
     expect(css).not.toContain(".source-card-global");
     expect(css).not.toContain(".summary-card-amber");
+  });
+
+  it("ItemCard 는 전체 카드 박스 클릭 영역(role=button + 드래그 복사 방지)을 제공하고 중첩 button 을 쓰지 않는다", () => {
+    const cardTsx = readFileSync(join(__dirname, "../src/components/ItemCard.tsx"), "utf8");
+    expect(cardTsx).toContain('role="button"');
+    expect(cardTsx).toContain("window.getSelection()");
+    expect(cardTsx).toContain("cursor-pointer");
+    expect(cardTsx).not.toContain("<button");
   });
 
   it("RadarApp·Sidebar 는 검색창·글씨크기 슬라이더·수동 더보기 버튼을 제거하고 IntersectionObserver 무한 스크롤을 사용한다", () => {
