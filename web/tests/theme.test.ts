@@ -24,10 +24,12 @@ describe("DESIGN.md 토큰 ↔ globals.css", () => {
     }
   });
 
-  it("기본(:root)이 종이 테마라 첫 페인트부터 종이 — 순백 #FFFFFF 는 쓰지 않는다", () => {
+  it("기본(:root)이 Apple Newsroom 라이트 무채색(#F5F5F7 바탕 + #FFFFFF 카드)이고 다크는 #09090B 바탕이다", () => {
     expect(block(":root")).toContain("color-scheme: light");
-    expect(block(":root").toLowerCase()).not.toMatch(/#fff(fff)?\b/);
+    expect(block(":root").toLowerCase()).toContain("--bg-base: #f5f5f7;");
+    expect(block(":root").toLowerCase()).toContain("--bg-surface: #ffffff;");
     expect(block(':root[data-theme="dark"]')).toContain("color-scheme: dark");
+    expect(block(':root[data-theme="dark"]').toLowerCase()).toContain("--bg-base: #09090b;");
   });
 
   it("마우스 추적 글로우·필름 그레인 장식이 사라졌다", () => {

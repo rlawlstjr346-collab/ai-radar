@@ -97,18 +97,18 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const minutes = Math.max(1, Math.round(chars / 500));
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-canvas/85 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line pb-3.5">
         <p className="t-meta inline-flex items-center gap-2 font-medium text-fg-2">
-          <BookOpenText className="h-4 w-4 text-accent" strokeWidth={2} aria-hidden />
+          <BookOpenText className="h-4 w-4 text-fg" strokeWidth={2} aria-hidden />
           매거진 완독 해설 · 총 <span className="tnum font-semibold text-fg">{easy.sections.length}</span>문단 · 약{" "}
           <span className="tnum font-semibold text-fg">{minutes}</span>분 완독
         </p>
-        <span className="tnum rounded-full bg-elevated px-2.5 py-0.5 text-[12.5px] font-medium text-fg-3">
+        <span className="tnum text-[13px] font-medium text-fg-3">
           {chars.toLocaleString("ko-KR")}자
         </span>
       </div>
       {easy.source_note && (
-        <p className="t-meta -mt-3 px-1 leading-relaxed">
+        <p className="t-meta -mt-3 leading-relaxed">
           {easy.source_note}
           {state.phase === "done" &&
           state.data.status === "ready" &&
@@ -120,22 +120,22 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
         </p>
       )}
 
-      <ol className="flex flex-col gap-5">
+      <ol className="flex flex-col divide-y divide-line">
         {easy.sections.map((s, i) => (
           <li
             key={i}
-            className="summary-card-brief reading-stagger flex flex-col gap-3 rounded-2xl p-5"
+            className="reading-stagger flex flex-col gap-2.5 py-5 first:pt-1"
             style={{ "--stagger": i + 1 } as React.CSSProperties}
           >
-            <h3 className="flex items-baseline gap-2.5 text-[clamp(17.5px,1.05vw+4px,20px)] font-bold leading-snug text-heading">
-              <span className="tnum shrink-0 rounded-md bg-accent/14 px-2 py-0.5 text-[13px] font-bold leading-none text-accent">
+            <h3 className="flex items-baseline gap-2.5 text-[calc(clamp(17px,1vw+4px,19.5px)*var(--font-scale,1))] font-bold leading-snug text-heading">
+              <span className="tnum shrink-0 text-[13px] font-semibold text-fg-3">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              {s.heading}
+              <span>{s.heading}</span>
             </h3>
-            <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} highlight />
+            <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} />
             {s.quote && (
-              <blockquote className="rounded-r-xl border-l-[3px] border-accent/70 bg-accent/[0.06] py-3 pl-4 pr-3.5 text-[15px] italic leading-relaxed text-fg-2">
+              <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[15px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}

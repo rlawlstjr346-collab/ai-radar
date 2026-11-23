@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Link2, Radar, X } from "lucide-react";
+import { Check, Link2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -19,12 +19,11 @@ interface Props {
   onSelectItem: (id: string) => void;
   onSelectPlatform: (id: string) => void;
   onClose: () => void;
-  /** [원본 쉽게 읽기] 제공 방식 — 해설을 띄울 수 없는 기사에선 유도 배너를 숨긴다 */
   easyMode: EasyOriginalMode;
 }
 
 const ICON_BTN =
-  "press grid h-8 w-8 place-items-center rounded-md bg-surface/80 text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "press grid h-9 w-9 place-items-center rounded-full border border-line bg-surface/75 text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 /** 현재 선택을 공유 URL(?item= / ?platform=)로 */
 export function shareUrlFor(selection: NonNullable<Selection>, location: Pick<Location, "origin" | "pathname">): string {
@@ -37,7 +36,6 @@ function selectedHeading(selection: Selection, items: FeedItem[], platforms: Pla
   return platforms.find((p) => p.id === selection.id)?.name ?? "";
 }
 
-/** 우측 패널 스크롤 진행률(0~100) + 프로스티드 바 활성화 상태 추적 */
 function useReadingProgress(scrollRef: React.RefObject<HTMLDivElement | null>, resetKey: string) {
   const [progress, setProgress] = useState(0);
   const [scrolled, setScrolled] = useState(false);
@@ -60,49 +58,6 @@ function useReadingProgress(scrollRef: React.RefObject<HTMLDivElement | null>, r
   return { progress, scrolled, onScroll };
 }
 
-/** Apple Newsroom 스타일 프로스티드 상단 바 + 2px 읽기 진행 바 */
-function ReadingChrome({
-  title,
-  scrolled,
-  progress,
-  selection,
-  onClose,
-}: {
-  title: string;
-  scrolled: boolean;
-  progress: number;
-  selection: Selection;
-  onClose: () => void;
-}) {
-  return (
-    <div
-      data-scrolled={scrolled ? "true" : "false"}
-      className="reading-sticky-bar sticky top-0 z-20 flex h-12 shrink-0 items-center justify-between gap-3 border-b border-transparent px-4 sm:px-6"
-    >
-      <p
-        className={`min-w-0 flex-1 truncate text-[13.5px] font-semibold text-fg transition-opacity duration-200 ${
-          scrolled && title ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        aria-hidden={!scrolled}
-      >
-        {title}
-      </p>
-      <PanelActions selection={selection} onClose={onClose} />
-      {/* 2px Reading Progress Bar */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-transparent"
-      >
-        <div
-          className="h-full bg-accent transition-[width] duration-75 ease-out"
-          style={{ width: `${scrolled ? progress : 0}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-/** 우상단 [링크 복사] [닫기] — 복사하면 아이콘이 체크로 바뀌고 토스트가 뜬다 */
 function PanelActions({ selection, onClose }: { selection: Selection; onClose: () => void }) {
   const [copied, setCopied] = useState<"ok" | "fail" | null>(null);
   useEffect(() => {
@@ -113,7 +68,7 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
   if (!selection) return null;
   return (
     <>
-      <div className="flex shrink-0 items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-2">
         <button
           type="button"
           onClick={async () => setCopied((await copyText(shareUrlFor(selection, window.location))) ? "ok" : "fail")}
@@ -123,15 +78,15 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
         >
           {copied === "ok" ? <Check className="h-4 w-4 text-accent" aria-hidden /> : <Link2 className="h-4 w-4" strokeWidth={1.8} aria-hidden />}
         </button>
-        <button type="button" onClick={onClose} aria-label="상세 보기 닫기" className={ICON_BTN}>
-          <X className="h-4 w-4" strokeWidth={1.8} aria-hidden />
+        <button type="button" onClick={onClose} aria-label="상세 보기 닫기" title="닫기 (ESC)" className={ICON_BTN}>
+          <X className="h-4 w-4" strokeWidth={2} aria-hidden />
         </button>
       </div>
       {copied &&
         createPortal(
           <div
             role="status"
-            className="animate-toast-in fixed bottom-6 left-1/2 z-[90] flex -translate-x-1/2 items-center gap-2 rounded-lg bg-fg px-4 py-2 text-[13.5px] font-medium text-canvas"
+            className="animate-toast-in fixed bottom-6 left-1/2 z-[120] flex -translate-x-1/2 items-center gap-2 rounded-full bg-fg px-4 py-2 text-[13.5px] font-medium text-canvas shadow-lg"
           >
             {copied === "ok" ? <Check className="h-4 w-4" aria-hidden /> : <X className="h-4 w-4" aria-hidden />}
             {copied === "ok" ? "공유 링크가 복사됐어요" : "복사하지 못했어요. 주소창의 링크를 복사해 주세요"}
@@ -146,7 +101,7 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
   const byId = new Map(platforms.map((p) => [p.id, p]));
   if (selection?.type === "item") {
     const item = items.find((i) => i.id === selection.id);
-    if (item)
+    if (item) {
       return (
         <ItemDetail
           key={item.id}
@@ -156,155 +111,23 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
           canReadEasy
         />
       );
+    }
   }
   if (selection?.type === "platform") {
     const platform = byId.get(selection.id);
     if (platform) return <PlatformProfile key={platform.id} platform={platform} items={items} onSelectItem={onSelectItem} />;
   }
-  return <EmptyPanel />;
-}
-
-function EmptyPanel() {
-  return (
-    <div className="flex h-full flex-col items-center justify-center gap-4 px-8 py-16 text-center">
-      <span className="grid h-12 w-12 place-items-center rounded-full bg-elevated">
-        <Radar className="h-5 w-5 text-fg-2" strokeWidth={1.8} aria-hidden />
-      </span>
-      <div className="flex flex-col gap-1.5">
-        <p className="text-[16px] font-semibold text-fg">레이더 요원 대기 중이에요</p>
-        <p className="text-[14.5px] leading-relaxed text-fg-2">
-          가운데 카드를 누르면 여기서 1분 핵심 요약과 실전 활용 팁을 풀어드리고,
-          <br />
-          플랫폼 배지를 누르면 그곳이 어떤 사이트인지 소개해 드려요!
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/** 와이드(≥1360px) 우측 고정 패널 */
-export function DesktopPanel(props: Props) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
-  const { progress, scrolled, onScroll } = useReadingProgress(scrollRef, key);
-  const title = selectedHeading(props.selection, props.items, props.platforms);
-
-  return (
-    <aside aria-label="상세 보기" className="relative flex h-full flex-col border-l border-line bg-surface">
-      <div ref={scrollRef} onScroll={onScroll} className="thin-scroll h-full overflow-y-auto">
-        {props.selection && (
-          <ReadingChrome title={title} scrolled={scrolled} progress={progress} selection={props.selection} onClose={props.onClose} />
-        )}
-        <div key={key} className="animate-article-enter -mt-2">
-          <PanelContent {...props} />
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-/** 모바일(<768px) 바텀시트. 핸들을 아래로 끌거나, 바깥을 누르거나, ESC 로 닫힌다. */
-export function BottomSheet(props: Props) {
-  const open = props.selection !== null;
-  const [dragY, setDragY] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const startY = useRef<number | null>(null);
-  const sheetRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const { onClose } = props;
-  const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
-  const { progress, scrolled, onScroll } = useReadingProgress(scrollRef, key);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    sheetRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open, onClose]);
-
-  useEffect(() => {
-    setDragY(0);
-  }, [key]);
-
-  if (!open) return null;
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    if ((e.target as HTMLElement).closest("button")) return;
-    startY.current = e.clientY;
-    setDragging(true);
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (startY.current === null) return;
-    setDragY(Math.max(0, e.clientY - startY.current));
-  };
-  const onPointerUp = () => {
-    if (startY.current === null) return;
-    if (dragY > 110) onClose();
-    else setDragY(0);
-    startY.current = null;
-    setDragging(false);
-  };
-
-  return (
-    <div className="fixed inset-0 z-50">
-      <button
-        type="button"
-        aria-label="닫기"
-        tabIndex={-1}
-        onClick={onClose}
-        className="animate-fade-in absolute inset-0 bg-scrim"
-      />
-      <div
-        ref={sheetRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="상세 보기"
-        tabIndex={-1}
-        style={{ transform: `translateY(${dragY}px)`, transition: dragging ? "none" : "transform 180ms ease-out" }}
-        className="animate-sheet-up absolute inset-x-0 bottom-0 flex max-h-[88dvh] flex-col overflow-hidden rounded-t-2xl bg-surface focus:outline-none"
-      >
-        <div
-          data-scrolled={scrolled ? "true" : "false"}
-          className="reading-sticky-bar relative flex shrink-0 touch-none items-center justify-between border-b border-transparent px-4 pb-1.5 pt-2.5"
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={onPointerUp}
-        >
-          <span className="w-[4.5rem]" />
-          <span className="h-1 w-10 cursor-grab rounded-full bg-line-strong active:cursor-grabbing" aria-hidden />
-          <PanelActions selection={props.selection} onClose={onClose} />
-          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-transparent">
-            <div className="h-full bg-accent transition-[width] duration-75 ease-out" style={{ width: `${scrolled ? progress : 0}%` }} />
-          </div>
-        </div>
-        <div
-          ref={scrollRef}
-          onScroll={onScroll}
-          className="thin-scroll overflow-y-auto overscroll-contain pb-[env(safe-area-inset-bottom)]"
-        >
-          <div key={key} className="animate-article-enter">
-            <PanelContent {...props} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 }
 
 /**
- * 분할 창·노트북(768~1359px) 오른쪽 슬라이드 오버 드로어.
+ * iOS 26 / visionOS Liquid Glass 정중앙 플로팅 요약 모달.
+ * - 유리 굴절 블러(blur 36px saturate 190%) + Specular Rim 광택 테두리
+ * - ESC 키, 바깥 배경 클릭, 우상단 ✕ 버튼으로 닫기 + 오픈 시 바디 스크롤 잠금
  */
-export function SideDrawer(props: Props) {
+export function LiquidGlassModal(props: Props) {
   const open = props.selection !== null;
-  const panelRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { onClose } = props;
   const key = props.selection ? `${props.selection.type}:${props.selection.id}` : "empty";
@@ -313,38 +136,67 @@ export function SideDrawer(props: Props) {
 
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", onKey);
-    panelRef.current?.focus();
+    dialogRef.current?.focus();
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKey);
     };
   }, [open, onClose]);
 
   if (!open) return null;
+
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
+      {/* 딤드 블러 백드롭 (뒤쪽 뉴스룸이 은은하게 비침) */}
       <button
         type="button"
-        aria-label="닫기"
+        aria-label="모달 닫기"
         tabIndex={-1}
         onClick={onClose}
-        className="animate-fade-in absolute inset-0 bg-scrim"
+        className="liquid-backdrop animate-fade-in fixed inset-0 cursor-default"
       />
+
+      {/* 정중앙 리퀴드 글라스 본체 */}
       <div
-        ref={panelRef}
+        ref={dialogRef}
+        key={key}
         role="dialog"
         aria-modal="true"
-        aria-label="상세 보기"
+        aria-label={title || "기사 요약 상세 보기"}
         tabIndex={-1}
-        className="animate-drawer-in absolute inset-y-0 right-0 flex w-[min(560px,92vw)] min-w-0 flex-col bg-surface focus:outline-none"
+        className="liquid-glass-modal animate-liquid-modal z-10 flex flex-col overflow-hidden focus:outline-none"
       >
-        <div ref={scrollRef} onScroll={onScroll} className="thin-scroll h-full overflow-y-auto overscroll-contain">
-          <ReadingChrome title={title} scrolled={scrolled} progress={progress} selection={props.selection} onClose={onClose} />
-          <div key={key} className="animate-article-enter -mt-2">
+        {/* 상단 프로스티드 컨트롤 바 + 2px 읽기 진행 바 */}
+        <div
+          data-scrolled={scrolled ? "true" : "false"}
+          className="reading-sticky-bar relative z-20 flex h-14 shrink-0 items-center justify-between gap-3 border-b border-transparent px-5 sm:px-7"
+        >
+          <p
+            className={`min-w-0 flex-1 truncate text-[14px] font-semibold text-fg transition-opacity duration-200 ${
+              scrolled && title ? "opacity-100" : "pointer-events-none opacity-0"
+            }`}
+            aria-hidden={!scrolled}
+          >
+            {title}
+          </p>
+          <PanelActions selection={props.selection} onClose={onClose} />
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[2px] bg-transparent">
+            <div
+              className="h-full bg-fg/70 transition-[width] duration-75 ease-out"
+              style={{ width: `${scrolled ? progress : 0}%` }}
+            />
+          </div>
+        </div>
+
+        {/* 내부 부드러운 스크롤 본문 */}
+        <div ref={scrollRef} onScroll={onScroll} className="thin-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <div className="animate-article-enter">
             <PanelContent {...props} />
           </div>
         </div>
@@ -352,3 +204,8 @@ export function SideDrawer(props: Props) {
     </div>
   );
 }
+
+/** 기존 이름 호환 */
+export const DesktopPanel = LiquidGlassModal;
+export const SideDrawer = LiquidGlassModal;
+export const BottomSheet = LiquidGlassModal;

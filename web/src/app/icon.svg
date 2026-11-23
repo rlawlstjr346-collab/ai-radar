@@ -1,27 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
   <style>
-    .bg { fill: #FCFCF9; }
+    .bg { fill: #F5F5F7; }
     .ink { stroke: #0F0F0F; }
     .fill-ink { fill: #0F0F0F; }
-    .page { fill: #FCFCF9; stroke: #0F0F0F; }
-    .shadow { fill: #0F0F0F; fill-opacity: 0.2; }
+    .page { fill: #FFFFFF; stroke: #0F0F0F; }
+    .shadow { fill: #0F0F0F; fill-opacity: 0.22; }
     @media (prefers-color-scheme: dark) {
-      .bg { fill: #0F0F10; }
+      .bg { fill: #09090B; }
       .ink { stroke: #F7F7F7; }
       .fill-ink { fill: #F7F7F7; }
-      .page { fill: #0F0F10; stroke: #F7F7F7; }
-      .shadow { fill: #F7F7F7; fill-opacity: 0.22; }
+      .page { fill: #141417; stroke: #F7F7F7; }
+      .shadow { fill: #F7F7F7; fill-opacity: 0.24; }
     }
   </style>
-  <rect width="36" height="36" rx="9" class="bg"/>
-  <g transform="translate(0 2)">
-    <path class="shadow" d="M4.2 21.8C2.7 23.4 2.7 26.2 4.6 27.6C6.4 28.9 9.1 28.6 10.7 27.1L12.6 25.3C10.2 26.1 7.6 25.4 6.5 23.8C5.8 22.8 5.2 22.2 4.2 21.8Z"/>
-    <path class="page" d="M6.2 25.4C4.2 24.1 4.1 20.6 5.8 16.4C7.5 12.1 9.6 8.4 13.4 6.1C17.4 3.7 23.2 3.3 29.9 4.5C31.2 4.7 32.1 5.9 31.8 7.2C30.4 12.7 29.1 17.6 26.9 22.5C25.3 26.1 22.4 27.9 18.2 27.7C14.1 27.5 10.8 26.2 7.8 26.2C7.1 26.2 6.6 25.8 6.2 25.4Z" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
-    <path class="ink" d="M6.2 25.4C8.4 26.8 11.4 25.4 12.6 22.8C13.6 20.6 12.5 18.5 10.6 18.6C8.9 18.7 7.8 20.2 8.2 21.7" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-    <path class="ink" d="M12.6 10.2C16.7 7.7 22.1 7.2 27.9 8.2" stroke-width="2.7" stroke-linecap="round"/>
-    <path class="ink" d="M11.2 14.3C15.5 12.2 20.8 11.8 26.5 12.6" stroke-width="1.5" stroke-linecap="round"/>
-    <path class="ink" d="M14.7 17.8C16.7 17.1 18.7 16.8 20.5 16.9" stroke-width="1.45" stroke-linecap="round"/>
-    <path class="ink" d="M14.4 21.1C16.2 20.6 18.0 20.4 19.6 20.5" stroke-width="1.45" stroke-linecap="round"/>
-    <path class="fill-ink" d="M22.2 16.3C23.8 16.4 25.3 16.6 26.6 17.0L24.8 22.5C23.5 22.3 22.1 22.1 20.8 22.1L22.2 16.3Z"/>
+  <rect width="48" height="48" rx="12" class="bg"/>
+  <g transform="translate(4 6)">
+    <path class="shadow" d="M4.2 24.4C2.4 26.3 2.5 29.7 4.8 31.3C6.9 32.8 10.1 32.5 11.9 30.7L14.2 28.5C11.4 29.4 8.4 28.6 7.0 26.8C6.2 25.7 5.4 24.9 4.2 24.4Z"/>
+    <path class="page" d="M6.6 28.7C4.2 27.1 4.1 23.0 6.1 18.2C8.0 13.3 10.5 9.1 14.9 6.4C19.5 3.6 26.2 3.1 33.9 4.5C35.4 4.8 36.4 6.2 36.0 7.7C34.4 14.1 32.9 19.7 30.4 25.3C28.5 29.5 25.2 31.5 20.4 31.3C15.7 31.1 11.9 29.6 8.5 29.6C7.6 29.6 7.1 29.1 6.6 28.7Z" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="ink" d="M6.6 28.7C9.1 30.3 12.6 28.7 14.0 25.7C15.1 23.2 13.9 20.8 11.7 20.9C9.7 21.0 8.5 22.7 8.9 24.5" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="ink" d="M14.0 11.3C18.7 8.4 24.9 7.8 31.6 9.0" stroke-width="3.0" stroke-linecap="round"/>
+    <path class="ink" d="M12.4 16.0C17.3 13.6 23.4 13.1 30.0 14.1" stroke-width="1.75" stroke-linecap="round"/>
+    <path class="ink" d="M16.4 20.0C18.7 19.2 21.0 18.8 23.1 19.0" stroke-width="1.65" stroke-linecap="round"/>
+    <path class="ink" d="M16.0 23.8C18.1 23.2 20.1 23.0 22.0 23.1" stroke-width="1.65" stroke-linecap="round"/>
+    <path class="fill-ink" d="M25.0 18.3C26.8 18.4 28.6 18.7 30.1 19.1L28.0 25.4C26.5 25.2 24.9 25.0 23.4 25.0L25.0 18.3Z"/>
   </g>
 </svg>

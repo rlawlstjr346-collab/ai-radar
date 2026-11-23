@@ -1,69 +1,63 @@
 @import "tailwindcss";
 
 /*
- * AI Radar — 토큰은 저장소 루트 DESIGN.md 가 기준이다.
- * 기본: Paper · Warm Paper Reading Mode   /   <html data-theme="dark">: Dark · Quiet Research Room
- * Apple Newsroom · iOS Control Center · Perplexity Discover · Liner 문법 반영.
+ * AI Radar — Apple Newsroom 무채색 에디토리얼 + iOS 26 / visionOS Liquid Glass 모달 + Vercel X 워터마크 카드.
+ * 라이트: 바탕 #F5F5F7, 카드 #FFFFFF, 잉크 #1D1D1F
+ * 다크:   바탕 #09090B, 카드 #141417, 잉크 #F5F5F7
  */
 :root {
-  /* 기본(첫 방문) = Paper · Warm Paper Reading Mode — 순백(완전한 흰색) 금지 */
-  --bg-base: #fcfcf9;
-  --bg-surface: #f3f3ee;
-  --bg-elevated: #eaeae3;
-  --border-subtle: rgba(39, 37, 30, 0.11);
-  --border-strong: rgba(39, 37, 30, 0.22);
-  --text-primary: #27251e;
-  --text-secondary: #5c5a52;
-  --text-tertiary: #656259; /* WCAG AA 4.5:1+ 대비 확보 */
-  --text-reading: #22201c;
-  --text-heading: #18181b;
+  --bg-base: #f5f5f7;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ebebf0;
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --text-primary: #1d1d1f;
+  --text-secondary: #515154;
+  --text-tertiary: #636366;
+  --text-reading: #1d1d1f;
+  --text-heading: #1d1d1f;
   --brand-ink: #0f0f0f;
   --accent: #016a71;
   --live: #22c55e;
-  --scrim: rgba(39, 37, 30, 0.28);
-  /* 상세 요약 섹션 시맨틱 포인트 */
-  --sem-context: #4f46e5;
-  --sem-what: #0f766e;
-  --sem-why: #047857;
-  --sem-caveat: #b45309;
-  --sem-utility: #047857;
-  --hl-bg: rgba(254, 240, 138, 0.92); /* 라이트: 웜 옐로 #FEF08A 소프트 형광펜 */
-  --hl-underline: rgba(202, 138, 4, 0.36);
-  --frosted-bg: rgba(243, 243, 238, 0.78);
+  --scrim: rgba(12, 12, 16, 0.28);
+  --sem-context: #1d1d1f;
+  --sem-what: #1d1d1f;
+  --sem-why: #1d1d1f;
+  --sem-caveat: #515154;
+  --sem-utility: #1d1d1f;
+  --hl-bg: rgba(254, 240, 138, 0.88); /* 오직 핵심 결론 문장 형광펜 */
+  --hl-underline: rgba(202, 138, 4, 0.34);
+  --frosted-bg: rgba(255, 255, 255, 0.64);
   --sheen: rgba(255, 255, 255, 0.24);
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1); /* Apple Newsroom 스프링 감속 곡선 */
-  --font-scale: 1;
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-scale: 1.05;
   color-scheme: light;
 }
 
-:root[data-font-size="large"] {
-  --font-scale: 1.14;
-}
-
 :root[data-theme="dark"] {
-  --bg-base: #0f0f10;
-  --bg-surface: #19191a;
-  --bg-elevated: #232325;
-  --border-subtle: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.18);
-  --text-primary: #f0f0f0;
+  --bg-base: #09090b;
+  --bg-surface: #141417;
+  --bg-elevated: #1e1e24;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f5f5f7;
   --text-secondary: #a1a1a6;
   --text-tertiary: #94949b;
-  --text-reading: #efefef;
-  --text-heading: #f5f5f5;
+  --text-reading: #f0f0f3;
+  --text-heading: #f5f5f7;
   --brand-ink: #f7f7f7;
   --accent: #20b8cd;
   --live: #22c55e;
   --scrim: rgba(0, 0, 0, 0.55);
-  --sem-context: #a5b4fc;
-  --sem-what: #5eead4;
-  --sem-why: #6ee7b7;
-  --sem-caveat: #fcd34d;
-  --sem-utility: #6ee7b7;
-  --hl-bg: rgba(250, 204, 21, 0.26);
-  --hl-underline: rgba(94, 234, 212, 0.46);
-  --frosted-bg: rgba(25, 25, 26, 0.78);
+  --sem-context: #f5f5f7;
+  --sem-what: #f5f5f7;
+  --sem-why: #f5f5f7;
+  --sem-caveat: #a1a1a6;
+  --sem-utility: #f5f5f7;
+  --hl-bg: rgba(250, 204, 21, 0.24);
+  --hl-underline: rgba(94, 234, 212, 0.42);
+  --frosted-bg: rgba(24, 24, 28, 0.68);
   --sheen: rgba(32, 184, 205, 0.28);
   color-scheme: dark;
 }
@@ -116,7 +110,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 time,
@@ -134,66 +128,159 @@ kbd,
   color: var(--brand-ink);
 }
 
-/* ── 상향된 유동형 타입 스케일 (기본 100% 자체를 큼직하고 쾌적하게 × --font-scale) ─────── */
+/* ── 유동형 타입 스케일 (85% ~ 200% --font-scale 완전 연동, 줄바꿈·높이 자동 확장) ── */
 .t-lead {
-  font-size: calc(clamp(24px, 1.55vw + 6px, 30px) * var(--font-scale, 1));
+  font-size: calc(clamp(23px, 1.5vw + 5px, 30px) * var(--font-scale, 1));
   font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.024em;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 .t-feature {
-  font-size: calc(clamp(18px, 1.1vw + 4.5px, 21px) * var(--font-scale, 1));
+  font-size: calc(clamp(18px, 1.05vw + 4px, 21px) * var(--font-scale, 1));
   font-weight: 680;
   line-height: 1.38;
   letter-spacing: -0.018em;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 .t-stream {
-  font-size: calc(clamp(18px, 1.1vw + 4.5px, 21px) * var(--font-scale, 1));
+  font-size: calc(clamp(17.5px, 1vw + 4px, 20.5px) * var(--font-scale, 1));
   font-weight: 620;
   line-height: 1.42;
   letter-spacing: -0.016em;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 .t-panel-title {
-  font-size: calc(clamp(24px, 1.5vw + 6px, 30px) * var(--font-scale, 1));
+  font-size: calc(clamp(22px, 1.4vw + 5px, 29px) * var(--font-scale, 1));
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.022em;
   color: var(--text-primary);
+  overflow-wrap: anywhere;
 }
 .t-body {
-  font-size: calc(clamp(16px, 0.95vw + 4.5px, 18px) * var(--font-scale, 1));
+  font-size: calc(clamp(15.5px, 0.9vw + 4px, 17.5px) * var(--font-scale, 1));
   font-weight: 400;
-  line-height: 1.74;
+  line-height: 1.75;
   color: var(--text-reading);
-  max-width: 68ch;
+  overflow-wrap: anywhere;
 }
 .t-meta {
-  font-size: calc(clamp(13.5px, 0.78vw + 3px, 15px) * var(--font-scale, 1));
+  font-size: calc(clamp(13px, 0.72vw + 3px, 14.5px) * var(--font-scale, 1));
   line-height: 1.45;
   color: var(--text-tertiary);
   font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }
 .t-nav {
-  font-size: calc(clamp(14px, 0.8vw + 3px, 15px) * var(--font-scale, 1));
+  font-size: calc(clamp(13.5px, 0.76vw + 3px, 14.5px) * var(--font-scale, 1));
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .prose-ko p {
-  line-height: 1.74;
+  line-height: 1.75;
 }
 
-/* ── iOS Control Center 스타일 가로 캡슐 볼륨 슬라이더 ───────────────────────────── */
+/* ── Apple Newsroom 순수 무채색 기사 카드 (컬러 배경 틴트·컬러 좌측 보더 0%) ──────── */
+.newsroom-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.025);
+  transition:
+    transform 220ms var(--ease-apple),
+    box-shadow 220ms var(--ease-apple),
+    border-color 180ms ease-out;
+}
+.newsroom-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.09);
+  transform: translateY(-1px);
+}
+:root[data-theme="dark"] .newsroom-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+:root[data-theme="dark"] .newsroom-card:hover {
+  box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* ── X(Twitter) 카드 전용 대형 반투명 배경 워터마크 (Vercel 워터마크 스타일) ───────── */
+.x-watermark {
+  position: absolute;
+  right: -12px;
+  bottom: -18px;
+  width: 164px;
+  height: 164px;
+  color: var(--text-primary);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.85) 100%);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 55%, rgba(0, 0, 0, 0.85) 100%);
+}
+:root[data-theme="dark"] .x-watermark {
+  opacity: 0.08;
+}
+
+/* ── iOS 26 / visionOS Liquid Glass 정중앙 모달 (유리 굴절 + Specular Rim) ───────── */
+.liquid-backdrop {
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.liquid-glass-modal {
+  position: relative;
+  width: min(760px, 92vw);
+  max-height: 86vh;
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.82) 0%, rgba(246, 247, 250, 0.68) 100%);
+  -webkit-backdrop-filter: blur(36px) saturate(190%);
+  backdrop-filter: blur(36px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.3),
+    0 32px 80px -12px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="dark"] .liquid-glass-modal {
+  background: linear-gradient(145deg, rgba(32, 32, 38, 0.78) 0%, rgba(18, 18, 22, 0.66) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.32),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.1),
+    0 32px 80px -12px rgba(0, 0, 0, 0.68);
+}
+
+@keyframes liquid-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-liquid-modal {
+  animation: liquid-modal-in 380ms var(--ease-apple) both;
+}
+
+/* ── iOS Control Center 스타일 가로 캡슐 볼륨 슬라이더 (85% ~ 200%) ──────────────── */
 .ios-slider-track {
-  background: rgba(39, 37, 30, 0.08);
+  background: rgba(0, 0, 0, 0.06);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .ios-slider-fill {
-  background: linear-gradient(90deg, rgba(15, 23, 42, 0.16) 0%, rgba(15, 23, 42, 0.24) 100%);
-  box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.18);
+  background: linear-gradient(90deg, rgba(29, 29, 31, 0.14) 0%, rgba(29, 29, 31, 0.24) 100%);
+  box-shadow: inset -1px 0 0 rgba(29, 29, 31, 0.18);
 }
 .ios-slider-glyph {
   color: var(--text-primary);
@@ -202,174 +289,11 @@ kbd,
   background: rgba(255, 255, 255, 0.1);
 }
 :root[data-theme="dark"] .ios-slider-fill {
-  background: linear-gradient(90deg, rgba(247, 247, 247, 0.22) 0%, rgba(247, 247, 247, 0.34) 100%);
+  background: linear-gradient(90deg, rgba(245, 245, 247, 0.2) 0%, rgba(245, 245, 247, 0.34) 100%);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.28);
 }
 
-/* ── 출처군별 카드 뒷배경 틴트 + 브랜드 배지 (라이트/다크 자동 대응) ──────────────── */
-.source-card-x {
-  background-color: #f2f4f7;
-  border: 1px solid #cbd5e1;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
-}
-.source-card-x:hover {
-  background-color: #e8ecf1;
-  border-color: #94a3b8;
-}
-.source-badge-x {
-  background-color: #0f172a;
-  color: #f8fafc;
-}
-:root[data-theme="dark"] .source-card-x {
-  background-color: rgba(148, 163, 184, 0.1);
-  border-color: rgba(148, 163, 184, 0.24);
-}
-:root[data-theme="dark"] .source-card-x:hover {
-  background-color: rgba(148, 163, 184, 0.16);
-}
-:root[data-theme="dark"] .source-badge-x {
-  background-color: #f1f5f9;
-  color: #0f172a;
-}
-
-.source-card-github {
-  background-color: #f5f3ff;
-  border: 1px solid #ddd6fe;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
-}
-.source-card-github:hover {
-  background-color: #ede9fe;
-  border-color: #c4b5fd;
-}
-.source-badge-github {
-  background-color: #ede9fe;
-  color: #5b21b6;
-  border: 1px solid #c4b5fd;
-}
-:root[data-theme="dark"] .source-card-github {
-  background-color: rgba(139, 92, 246, 0.11);
-  border-color: rgba(167, 139, 250, 0.26);
-}
-:root[data-theme="dark"] .source-card-github:hover {
-  background-color: rgba(139, 92, 246, 0.17);
-}
-:root[data-theme="dark"] .source-badge-github {
-  background-color: rgba(139, 92, 246, 0.24);
-  color: #ddd6fe;
-  border-color: rgba(167, 139, 250, 0.35);
-}
-
-.source-card-global {
-  background-color: #f0f7ff;
-  border: 1px solid #bfdbfe;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
-}
-.source-card-global:hover {
-  background-color: #e2efff;
-  border-color: #93c5fd;
-}
-.source-badge-global {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-  border: 1px solid #93c5fd;
-}
-:root[data-theme="dark"] .source-card-global {
-  background-color: rgba(59, 130, 246, 0.1);
-  border-color: rgba(96, 165, 250, 0.24);
-}
-:root[data-theme="dark"] .source-card-global:hover {
-  background-color: rgba(59, 130, 246, 0.16);
-}
-:root[data-theme="dark"] .source-badge-global {
-  background-color: rgba(59, 130, 246, 0.22);
-  color: #bfdbfe;
-  border-color: rgba(96, 165, 250, 0.32);
-}
-
-.source-card-kr {
-  background-color: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
-}
-.source-card-kr:hover {
-  background-color: #dcfce7;
-  border-color: #86efac;
-}
-.source-badge-kr {
-  background-color: #dcfce7;
-  color: #047857;
-  border: 1px solid #86efac;
-}
-:root[data-theme="dark"] .source-card-kr {
-  background-color: rgba(16, 185, 129, 0.1);
-  border-color: rgba(52, 211, 153, 0.24);
-}
-:root[data-theme="dark"] .source-card-kr:hover {
-  background-color: rgba(16, 185, 129, 0.16);
-}
-:root[data-theme="dark"] .source-badge-kr {
-  background-color: rgba(16, 185, 129, 0.22);
-  color: #a7f3d0;
-  border-color: rgba(52, 211, 153, 0.32);
-}
-
-.source-card-community {
-  background-color: #fffbeb;
-  border: 1px solid #fde68a;
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
-}
-.source-card-community:hover {
-  background-color: #fef3c7;
-  border-color: #fcd34d;
-}
-.source-badge-community {
-  background-color: #fef3c7;
-  color: #b45309;
-  border: 1px solid #fcd34d;
-}
-:root[data-theme="dark"] .source-card-community {
-  background-color: rgba(245, 158, 11, 0.1);
-  border-color: rgba(251, 191, 36, 0.24);
-}
-:root[data-theme="dark"] .source-card-community:hover {
-  background-color: rgba(245, 158, 11, 0.16);
-}
-:root[data-theme="dark"] .source-badge-community {
-  background-color: rgba(245, 158, 11, 0.22);
-  color: #fde68a;
-  border-color: rgba(251, 191, 36, 0.32);
-}
-
-/* ── 우측 패널 상용 요약 서피스 카드 3종 (Perplexity · Liner · Apple News+) ───────── */
-.summary-card-amber {
-  background-color: #fffbeb;
-  border: 1px solid #fde68a;
-}
-:root[data-theme="dark"] .summary-card-amber {
-  background-color: rgba(245, 158, 11, 0.11);
-  border-color: rgba(251, 191, 36, 0.28);
-}
-
-.summary-card-brief {
-  background-color: #fcfcfa;
-  border: 1px solid #dbeafe;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
-}
-:root[data-theme="dark"] .summary-card-brief {
-  background-color: rgba(30, 41, 59, 0.38);
-  border-color: rgba(96, 165, 250, 0.22);
-}
-
-.summary-card-emerald {
-  background-color: #ecfdf5;
-  border: 1px solid #a7f3d0;
-}
-:root[data-theme="dark"] .summary-card-emerald {
-  background-color: rgba(16, 185, 129, 0.11);
-  border-color: rgba(52, 211, 153, 0.28);
-}
-
-/* ── 핵심 구절 소프트 형광펜 좌→우 드로잉 모션 ────────────────────────────────────── */
+/* ── 핵심 결론 문장 소프트 형광펜 좌→우 드로잉 모션 ───────────────────────────────── */
 @keyframes hl-sweep {
   from {
     background-size: 0% 85%;
@@ -392,52 +316,48 @@ kbd,
   box-decoration-break: clone;
   color: inherit;
   animation: hl-sweep 700ms var(--ease-apple) both;
-  animation-delay: 180ms;
+  animation-delay: 160ms;
 }
 
 :root[data-theme="dark"] .hl-mark {
-  background-image: linear-gradient(120deg, rgba(250, 204, 21, 0.28) 0%, rgba(94, 234, 212, 0.24) 100%);
+  background-image: linear-gradient(120deg, rgba(250, 204, 21, 0.26) 0%, rgba(94, 234, 212, 0.22) 100%);
 }
 
-/* ── AI 모델명·주요 인물명 인디고 칩 (듀얼 하이라이트) ──────────────────────────── */
+/* ── AI 모델명·주요 인물명 무채색 칩 ─────────────────────────────────────────────── */
 .hl-entity {
-  background: rgba(99, 102, 241, 0.1);
-  color: #312e81;
-  padding: 1px 5px;
-  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.055);
+  color: var(--text-primary);
+  padding: 1px 6px;
+  border-radius: 6px;
   font-weight: 600;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
 :root[data-theme="dark"] .hl-entity {
-  background: rgba(129, 140, 248, 0.16);
-  color: #c7d2fe;
+  background: rgba(255, 255, 255, 0.11);
+  color: #f5f5f7;
 }
 
-/* ── 상대 시간 마이크로 알약 (3시간 이내 최신 기사) + 24시간 이내 또렷한 명도 ─────── */
+/* ── 상대 시간 마이크로 알약 (3시간 이내 최신 기사) ───────────────────────────────── */
 .time-pill-fresh {
-  background: rgba(13, 148, 136, 0.11);
-  border: 1px solid rgba(13, 148, 136, 0.24);
-  color: #0f766e;
+  background: rgba(1, 106, 113, 0.09);
+  border: 1px solid rgba(1, 106, 113, 0.18);
+  color: #016a71;
 }
 :root[data-theme="dark"] .time-pill-fresh {
-  background: rgba(45, 212, 191, 0.14);
-  border: 1px solid rgba(45, 212, 191, 0.26);
+  background: rgba(32, 184, 205, 0.14);
+  border: 1px solid rgba(32, 184, 205, 0.26);
   color: #5eead4;
 }
 .time-recent {
-  color: #44403c;
-}
-:root[data-theme="dark"] .time-recent {
-  color: #d6d3d1;
+  color: var(--text-secondary);
 }
 
-/* ── Apple Newsroom 프로스티드 읽기 상단 바 + 2px 읽기 진행 바 ───────────────────── */
+/* ── 프로스티드 읽기 상단 바 + 2px 읽기 진행 바 ──────────────────────────────────── */
 .reading-sticky-bar {
   transition:
     background-color 220ms var(--ease-apple),
-    border-color 220ms var(--ease-apple),
-    box-shadow 220ms var(--ease-apple);
+    border-color 220ms var(--ease-apple);
 }
 .reading-sticky-bar[data-scrolled="true"] {
   background-color: var(--frosted-bg);
@@ -446,32 +366,18 @@ kbd,
   border-bottom-color: var(--border-subtle);
 }
 
-/* 얇은 스크롤바 */
 .thin-scroll {
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
 }
 
-/* ── 피드 행 선택 상태 ────────────────────────────────────────────────────────── */
-.row-hover {
-  transition: background-color 120ms ease-out, border-color 120ms ease-out;
-}
-.row-hover:hover {
-  background-color: var(--bg-surface);
-}
-.row-hover[data-active="true"] {
-  box-shadow: inset 3px 0 0 var(--accent);
-}
-
 .surface {
   background-color: var(--bg-surface);
-  transition: background-color 120ms ease-out;
+  border: 1px solid var(--border-subtle);
+  transition: background-color 140ms ease-out, border-color 140ms ease-out;
 }
 .surface:hover {
-  background-color: var(--bg-elevated);
-}
-.surface[data-active="true"] {
-  box-shadow: inset 3px 0 0 var(--accent);
+  border-color: var(--border-strong);
 }
 
 .press {
@@ -504,11 +410,10 @@ kbd,
   animation: shimmer 1.6s linear infinite;
 }
 
-/* ── Apple Newsroom 클릭마다 살아 숨 쉬는 슬라이드업 + 50ms 시차 등장 모션 ──────── */
 @keyframes article-lift-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -516,35 +421,19 @@ kbd,
   }
 }
 .animate-article-enter {
-  animation: article-lift-in 420ms var(--ease-apple) both;
+  animation: article-lift-in 360ms var(--ease-apple) both;
 }
 .reading-stagger {
-  animation: article-lift-in 440ms var(--ease-apple) both;
-  animation-delay: calc(var(--stagger, 0) * 50ms);
+  animation: article-lift-in 380ms var(--ease-apple) both;
+  animation-delay: calc(var(--stagger, 0) * 45ms);
 }
 
-@keyframes sheet-up {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
 @keyframes fade-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
-  }
-}
-@keyframes drawer-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
   }
 }
 @keyframes toast-in {
@@ -557,69 +446,11 @@ kbd,
     transform: translate(-50%, 0);
   }
 }
-.animate-sheet-up {
-  animation: sheet-up 380ms var(--ease-sheet);
-}
-.animate-drawer-in {
-  animation: drawer-in 380ms var(--ease-sheet);
-}
 .animate-fade-in {
-  animation: fade-in 140ms ease-out;
+  animation: fade-in 180ms ease-out;
 }
 .animate-toast-in {
   animation: toast-in 200ms var(--ease-sheet);
-}
-
-/* ── 지속형(Sustained) 모션 3종 — prefers-reduced-motion 이면 모두 정지 ───────────── */
-@property --beam-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-@keyframes beam-spin {
-  to {
-    --beam-angle: 360deg;
-  }
-}
-@keyframes beam-breathe {
-  0%,
-  100% {
-    box-shadow:
-      inset 3px 0 0 var(--accent),
-      0 0 0 0 transparent;
-  }
-  50% {
-    box-shadow:
-      inset 3px 0 0 var(--accent),
-      0 6px 22px -10px color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-}
-.beam[data-active="true"] {
-  animation: beam-breathe 3.6s ease-in-out infinite;
-}
-.beam[data-active="true"]::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--beam-angle),
-    transparent 0deg 250deg,
-    color-mix(in srgb, var(--accent) 35%, transparent) 290deg,
-    var(--accent) 330deg,
-    #67e8f9 348deg,
-    transparent 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box exclude,
-    linear-gradient(#000 0 0);
-  animation: beam-spin 7s linear infinite;
 }
 
 @keyframes live-ripple {
@@ -672,29 +503,23 @@ kbd,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .beam[data-active="true"],
-  .beam[data-active="true"]::before,
   .live-ping::after,
   .sheen::after,
   .hl-mark,
   .animate-article-enter,
-  .reading-stagger {
+  .reading-stagger,
+  .animate-liquid-modal,
+  .animate-fade-in,
+  .animate-toast-in,
+  .shimmer {
     animation: none;
   }
   .hl-mark {
     background-size: 100% 85%;
   }
-  .animate-sheet-up,
-  .animate-drawer-in,
-  .animate-fade-in,
-  .animate-toast-in,
-  .shimmer,
-  .animate-ping {
-    animation: none;
-  }
   .sliding-pill,
   .press,
-  .row-hover,
+  .newsroom-card,
   .surface,
   .reading-sticky-bar,
   .ios-slider-fill {

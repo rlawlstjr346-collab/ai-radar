@@ -3,11 +3,17 @@
 import { CATEGORY_META } from "@/lib/categories";
 import { ageHours, formatDate, freshness } from "@/lib/filter";
 import { stripHighlightMarks } from "@/lib/highlight";
-import { editionMark } from "@/lib/regions";
-import { sourceVisualFor } from "@/lib/source-style";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitTakeaway, PlatformBadge, QuietTag } from "./Badges";
+import XLogo from "./XLogo";
+
+/*
+ * Apple Newsroom 무채색 에디토리얼 카드:
+ * - 모든 카드는 순수 #FFFFFF(다크 #141417) + 미세 헤어라인 보더 + 20px 라운드 + 넉넉한 여백
+ * - 컬러 배경 틴트·컬러 보더 0%
+ * - 오직 X(Twitter) 카드에만 우하단 대형 반투명 𝕏 배경 워터마크(164px, opacity 0.05 / 다크 0.08)
+ */
 
 interface Props {
   item: FeedItem;
@@ -20,7 +26,6 @@ interface Props {
   onEntity: (name: string) => void;
 }
 
-/** 상대 시간 — 3시간 이내면 슬림 마이크로 알약(+ LIVE 점), 3~24시간은 명도 보강 텍스트, 그 외는 조용한 tertiary */
 function Freshness({ iso, now }: { iso: string; now: number }) {
   const f = freshness(iso, now);
   if (!f.label) return null;
@@ -30,7 +35,7 @@ function Freshness({ iso, now }: { iso: string; now: number }) {
       <time
         dateTime={iso}
         title={title}
-        className="time-pill-fresh inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2 py-0.5 font-semibold tabular-nums"
+        className="time-pill-fresh inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-0.5 font-semibold tabular-nums"
       >
         <span className="live-ping" aria-hidden />
         <span className="sr-only">방금 들어온 소식, </span>
@@ -80,7 +85,7 @@ function EntityLine({ item, platform, onEntity }: { item: FeedItem; platform?: P
               e.stopPropagation();
               onEntity(n);
             }}
-            className="max-w-[14rem] truncate rounded px-0.5 text-fg-2 underline decoration-line-strong underline-offset-4 transition-colors duration-100 hover:text-fg hover:decoration-fg-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="max-w-[16rem] truncate rounded px-0.5 text-fg-2 underline decoration-line-strong underline-offset-4 transition-colors duration-100 hover:text-fg hover:decoration-fg-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             title={`'${n}' 관련 소식 보기`}
           >
             {n}
@@ -109,7 +114,7 @@ const preview = (item: FeedItem) => {
   return t ? stripHighlightMarks(t) : t;
 };
 
-/** 메타 한 줄: 출처군 컬러 브랜드 알약 배지 + 플랫폼 + 상대시간 */
+/** 메타 한 줄: 깔끔한 무채색 매체명 + 시간 (+ X 포스트만 표준 𝕏 아이콘·계정명) */
 function Meta({
   item,
   platform,
@@ -123,28 +128,29 @@ function Meta({
   onSelectPlatform: (id: string) => void;
   tags?: boolean;
 }) {
-  const edition = editionMark(platform);
-  const visual = sourceVisualFor(item.platform_id, platform);
-
+  const isX = item.platform_id === "x";
   return (
-    <div className="t-meta flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5">
-      <span className={`${visual.badgeClass} relative z-10 inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[12px] font-semibold leading-tight`}>
-        {visual.group === "x" ? "𝕏 실시간" : visual.label}
-      </span>
-      <span className="-ml-0.5 min-w-0">
-        <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
-      </span>
-      {item.platform_id === "x" && item.author_handle && (
-        <span className="whitespace-nowrap font-semibold text-fg">{item.author_handle}</span>
-      )}
-      {edition && item.platform_id !== "x" && (
-        <>
-          <span aria-hidden>·</span>
-          <span className="whitespace-nowrap">
-            {edition.flag ? `${edition.flag} ` : ""}
-            {edition.label}
+    <div className="t-meta relative z-10 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5">
+      {isX ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectPlatform("x");
+          }}
+          className="inline-flex items-center gap-1.5 rounded-md py-0.5 pr-1 font-semibold text-fg transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          aria-label="X 플랫폼 소개 보기"
+        >
+          <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-elevated p-0.5 text-fg">
+            <XLogo className="h-3.5 w-3.5" />
           </span>
-        </>
+          <span>𝕏 실시간</span>
+          {item.author_handle && <span className="font-medium text-fg-2">{item.author_handle}</span>}
+        </button>
+      ) : (
+        <span className="-ml-0.5 min-w-0">
+          <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
+        </span>
       )}
       <span aria-hidden>·</span>
       {item.published_at ? (
@@ -179,21 +185,24 @@ function QuietTags({ item }: { item: FeedItem }) {
   );
 }
 
-/** ① 리드 스토리 — 출처군 틴트 + 넉넉한 에디토리얼 표면 */
+/** ① 히어로 리드 스토리 — Apple Newsroom 1면 와이드 화이트 카드 */
 export function LeadStory({ item, platform, selected, now, onSelect, onSelectPlatform, onEntity }: Props) {
   const text = preview(item);
-  const visual = sourceVisualFor(item.platform_id, platform);
+  const isX = item.platform_id === "x";
   return (
     <div
       data-active={selected ? "true" : "false"}
-      className={`${visual.cardClass} beam relative flex flex-col gap-3 rounded-2xl p-6 sm:p-7`}
+      className="newsroom-card relative flex flex-col gap-3.5 overflow-hidden p-6 sm:p-8"
     >
+      {isX && <XLogo className="x-watermark" />}
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
-      <h2 className="t-lead">
+      <h2 className="t-lead relative z-10">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
       </h2>
-      {text && <p className="t-body line-clamp-2 text-fg-2">{text}</p>}
-      <BenefitTakeaway tag={item.benefit_tag} className="text-[15px]" />
+      {text && <p className="t-body relative z-10 line-clamp-3 text-fg-2">{text}</p>}
+      <div className="relative z-10">
+        <BenefitTakeaway tag={item.benefit_tag} className="text-[15px]" />
+      </div>
       <div className="pt-0.5">
         <EntityLine item={item} platform={platform} onEntity={onEntity} />
       </div>
@@ -201,37 +210,43 @@ export function LeadStory({ item, platform, selected, now, onSelect, onSelectPla
   );
 }
 
-/** ② 피처 — 2·3위, 출처군 컬러 틴트 2열 카드 */
+/** ② 서브 피처드 2열 카드 */
 export function FeatureStory({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
   const text = preview(item);
-  const visual = sourceVisualFor(item.platform_id, platform);
+  const isX = item.platform_id === "x";
   return (
     <div
       data-active={selected ? "true" : "false"}
-      className={`${visual.cardClass} beam relative flex h-full flex-col gap-2.5 rounded-xl p-4 sm:p-5`}
+      className="newsroom-card relative flex h-full flex-col gap-3 overflow-hidden p-5 sm:p-6"
     >
+      {isX && <XLogo className="x-watermark" />}
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} />
-      <h3 className="t-feature">
+      <h3 className="t-feature relative z-10">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
       </h3>
-      {text && <p className="line-clamp-2 text-[15px] leading-[1.6] text-fg-2">{text}</p>}
+      {text && <p className="t-body relative z-10 line-clamp-2 text-fg-2">{text}</p>}
     </div>
   );
 }
 
-/** ③ 브리핑 스트림 카드 — 출처군 컬러 틴트 + 브랜드 배지 + 넉넉한 여백 */
+/** ③ 에디토리얼 아티클 리스트 카드 */
 export function StreamRow({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
-  const visual = sourceVisualFor(item.platform_id, platform);
+  const text = preview(item);
+  const isX = item.platform_id === "x";
   return (
     <div
       data-active={selected ? "true" : "false"}
-      className={`${visual.cardClass} beam relative flex flex-col gap-2 rounded-xl px-4 py-4 sm:px-5`}
+      className="newsroom-card relative flex flex-col gap-2.5 overflow-hidden px-5 py-5 sm:px-6"
     >
+      {isX && <XLogo className="x-watermark" />}
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
-      <h3 className="t-stream">
+      <h3 className="t-stream relative z-10">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
       </h3>
-      <BenefitTakeaway tag={item.benefit_tag} />
+      {text && <p className="t-meta relative z-10 line-clamp-2 leading-relaxed text-fg-2">{text}</p>}
+      <div className="relative z-10">
+        <BenefitTakeaway tag={item.benefit_tag} />
+      </div>
     </div>
   );
 }

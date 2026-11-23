@@ -7,9 +7,9 @@ import { GET as getPlanningFeed } from "@/app/api/planning-feed/route";
 import { SAMPLE_FEED } from "@/data/sample-feed";
 import { loadLiveSnapshot } from "@/lib/live-snapshot";
 import { getHighlightSummary, getPlanningMeta, getUtilityInsight } from "@/lib/reading-insights";
-import { classifySourceGroup, sourceVisualFor } from "@/lib/source-style";
 import {
   contrastRatio,
+  FONT_SCALE_DEFAULT,
   FONT_SCALE_MAX,
   FONT_SCALE_MIN,
   FONT_SIZE_STORAGE_KEY,
@@ -65,13 +65,18 @@ describe("형광펜 핵심 요약 · 실전 효용 팁 · 기획팀 메타", () 
   });
 });
 
-describe("가+ 글자 크기 토글 · 명도 대비 WCAG AA · 순수 흑백 S-커브 로고", () => {
-  it("글자 크기 기본값은 standard, large 저장 시에만 크게 전환되고 부트 스크립트가 읽는다", () => {
+describe("iOS 슬라이더(85~200%) · 리퀴드 글라스 · 잘림 없는 흑백 로고 & 공식 X 로고", () => {
+  it("글자 크기 슬라이더가 85% ~ 200% 범위를 정확히 지원하고 부트 스크립트가 읽는다", () => {
+    expect(FONT_SCALE_MIN).toBe(85);
+    expect(FONT_SCALE_MAX).toBe(200);
     expect(parseFontSize(null)).toBe("standard");
     expect(parseFontSize("large")).toBe("large");
-    expect(parseFontSize("other")).toBe("standard");
+    expect(parseFontPercent(null)).toBe(FONT_SCALE_DEFAULT);
+    expect(parseFontPercent("50")).toBe(85);
+    expect(parseFontPercent("180")).toBe(180);
+    expect(parseFontPercent("250")).toBe(200);
     expect(THEME_BOOT_SCRIPT).toContain(FONT_SIZE_STORAGE_KEY);
-    expect(THEME_BOOT_SCRIPT).toContain('dataset.fontSize="large"');
+    expect(THEME_BOOT_SCRIPT).toContain("--font-scale");
   });
 
   it("메타/보조 회색(--text-tertiary)도 라이트·다크 양쪽에서 WCAG AA 4.5:1 이상을 확보한다", () => {
@@ -82,40 +87,30 @@ describe("가+ 글자 크기 토글 · 명도 대비 WCAG AA · 순수 흑백 S-
     }
   });
 
-  it("파비콘(icon.svg)과 BrandLogo 는 유채색 없이 순수 흑백 벡터로 구성된다", () => {
+  it("파비콘(icon.svg), BrandLogo, 공식 XLogo 는 잘림 없는 여백과 순수 흑백 벡터로 구성된다", () => {
     const iconSvg = readFileSync(join(__dirname, "../src/app/icon.svg"), "utf8");
     const brandTsx = readFileSync(join(__dirname, "../src/components/BrandLogo.tsx"), "utf8");
-    expect(iconSvg).not.toContain("#016A71");
+    const xLogoTsx = readFileSync(join(__dirname, "../src/components/XLogo.tsx"), "utf8");
+    expect(iconSvg).toContain('viewBox="0 0 48 48"');
     expect(iconSvg).toContain("#0F0F0F");
     expect(iconSvg).toContain("#F7F7F7");
+    expect(brandTsx).toContain('viewBox="0 0 48 44"');
     expect(brandTsx).not.toContain("var(--accent)");
-    expect(brandTsx).toContain("currentColor");
+    expect(xLogoTsx).toContain('viewBox="0 0 24 24"');
+    expect(xLogoTsx).toContain("M18.244 2.25h3.308l-7.227 8.26");
   });
 
-  it("iOS 슬라이더 글자 크기 퍼센트(85~135%) 클램핑과 기존 저장값 호환이 정확하다", () => {
-    expect(parseFontPercent(null)).toBe(100);
-    expect(parseFontPercent("standard")).toBe(100);
-    expect(parseFontPercent("large")).toBe(114);
-    expect(parseFontPercent("50")).toBe(FONT_SCALE_MIN);
-    expect(parseFontPercent("180")).toBe(FONT_SCALE_MAX);
-    expect(parseFontPercent("118")).toBe(118);
+  it("globals.css 는 Apple Newsroom 무채색 + Liquid Glass 모달 + X 워터마크를 정의하고 컬러 틴트 카드를 제거했다", () => {
+    const css = readFileSync(join(__dirname, "../src/app/globals.css"), "utf8");
+    expect(css).toContain(".newsroom-card");
+    expect(css).toContain(".liquid-glass-modal");
+    expect(css).toContain("blur(36px) saturate(190%)");
+    expect(css).toContain(".x-watermark");
+    expect(css).not.toContain(".source-card-global");
+    expect(css).not.toContain(".summary-card-amber");
   });
 
-  it("출처군별 5색 카드 뒷배경·브랜드 배지 매핑이 정확하다", () => {
-    expect(classifySourceGroup("x")).toBe("x");
-    expect(classifySourceGroup("github")).toBe("github");
-    expect(classifySourceGroup("apple-ml")).toBe("global_media");
-    expect(classifySourceGroup("openai")).toBe("global_media");
-    expect(classifySourceGroup("aitimes")).toBe("kr_media");
-    expect(classifySourceGroup("geeknews")).toBe("community");
-    expect(sourceVisualFor("x").cardClass).toBe("source-card-x");
-    expect(sourceVisualFor("github").cardClass).toBe("source-card-github");
-    expect(sourceVisualFor("apple-ml").cardClass).toBe("source-card-global");
-    expect(sourceVisualFor("aitimes").cardClass).toBe("source-card-kr");
-    expect(sourceVisualFor("geeknews").cardClass).toBe("source-card-community");
-  });
-
-  it("live-feed.json 전 기사가 도입부 잡담(로이킴 등) 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {
+  it("live-feed.json 전 기사가 도입부 잡담 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {
     const snap = loadLiveSnapshot();
     expect(snap.items.length).toBeGreaterThan(20);
     for (const item of snap.items) {

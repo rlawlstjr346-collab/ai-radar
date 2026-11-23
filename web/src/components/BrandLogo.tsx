@@ -1,67 +1,68 @@
 /**
- * AI Radar 브랜드 심볼 — 바깥 박스/원 없는 순수 흑백 'S자 곡선 웨이브 브로드시트 신문' 벡터 SVG.
- * - 좌측 하단의 유려한 S-커브 롤링 폴드 + 우측 상단으로 휘어지며 펼쳐지는 지면
- * - 곡면을 따라 흐르는 상단 굵은 마스트헤드 바, 웨이브 본문 라인, 우하단 칼럼 피처 블록
- * - currentColor + --bg-base 로 라이트(#0F0F0F) / 다크(#F7F7F7) 자동 반전
+ * AI Radar 브랜드 심볼 — 순수 흑백 'S자 곡선 웨이브 브로드시트 신문' 벡터 SVG.
+ * viewBox="0 0 48 44" 내부에 넉넉한 안전 여백(4px+)을 확보해 어떤 해상도·줌에서도 1px 도 잘리지 않는다.
+ * currentColor + --bg-base 로 라이트(#0F0F0F) / 다크(#F7F7F7) 자동 반전.
  */
 export default function BrandLogo({ className = "h-10 w-11" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 36" fill="none" className={className} aria-hidden focusable="false">
-      {/* 좌측 하단 롤링 폴드 입체 음영 */}
-      <path
-        d="M4.2 24.4C2.4 26.3 2.5 29.7 4.8 31.3C6.9 32.8 10.1 32.5 11.9 30.7L14.2 28.5C11.4 29.4 8.4 28.6 7.0 26.8C6.2 25.7 5.4 24.9 4.2 24.4Z"
-        fill="currentColor"
-        fillOpacity="0.24"
-      />
-      {/* 메인 S자 곡선 브로드시트 지면 */}
-      <path
-        d="M6.6 28.7C4.2 27.1 4.1 23.0 6.1 18.2C8.0 13.3 10.5 9.1 14.9 6.4C19.5 3.6 26.2 3.1 33.9 4.5C35.4 4.8 36.4 6.2 36.0 7.7C34.4 14.1 32.9 19.7 30.4 25.3C28.5 29.5 25.2 31.5 20.4 31.3C15.7 31.1 11.9 29.6 8.5 29.6C7.6 29.6 7.1 29.1 6.6 28.7Z"
-        fill="var(--bg-base)"
-        stroke="currentColor"
-        strokeWidth="2.35"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* 좌측 하단 S-커브 롤링 립 */}
-      <path
-        d="M6.6 28.7C9.1 30.3 12.6 28.7 14.0 25.7C15.1 23.2 13.9 20.8 11.7 20.9C9.7 21.0 8.5 22.7 8.9 24.5"
-        stroke="currentColor"
-        strokeWidth="2.15"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* 곡면을 따라 흐르는 상단 굵은 헤드라인 마스트헤드 바 */}
-      <path
-        d="M14.0 11.3C18.7 8.4 24.9 7.8 31.6 9.0"
-        stroke="currentColor"
-        strokeWidth="3.1"
-        strokeLinecap="round"
-      />
-      {/* 웨이브 리드 본문 라인 1 */}
-      <path
-        d="M12.4 16.0C17.3 13.6 23.4 13.1 30.0 14.1"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
-      {/* 좌측 칼럼 웨이브 본문 라인 2·3 */}
-      <path
-        d="M16.4 20.0C18.7 19.2 21.0 18.8 23.1 19.0"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16.0 23.8C18.1 23.2 20.1 23.0 22.0 23.1"
-        stroke="currentColor"
-        strokeWidth="1.65"
-        strokeLinecap="round"
-      />
-      {/* 우하단 칼럼 피처 블록 */}
-      <path
-        d="M25.0 18.3C26.8 18.4 28.6 18.7 30.1 19.1L28.0 25.4C26.5 25.2 24.9 25.0 23.4 25.0L25.0 18.3Z"
-        fill="currentColor"
-      />
+    <svg viewBox="0 0 48 44" fill="none" className={className} aria-hidden focusable="false">
+      <g transform="translate(4 4)">
+        {/* 좌측 하단 롤링 폴드 입체 음영 */}
+        <path
+          d="M4.2 24.4C2.4 26.3 2.5 29.7 4.8 31.3C6.9 32.8 10.1 32.5 11.9 30.7L14.2 28.5C11.4 29.4 8.4 28.6 7.0 26.8C6.2 25.7 5.4 24.9 4.2 24.4Z"
+          fill="currentColor"
+          fillOpacity="0.24"
+        />
+        {/* 메인 S자 곡선 브로드시트 지면 */}
+        <path
+          d="M6.6 28.7C4.2 27.1 4.1 23.0 6.1 18.2C8.0 13.3 10.5 9.1 14.9 6.4C19.5 3.6 26.2 3.1 33.9 4.5C35.4 4.8 36.4 6.2 36.0 7.7C34.4 14.1 32.9 19.7 30.4 25.3C28.5 29.5 25.2 31.5 20.4 31.3C15.7 31.1 11.9 29.6 8.5 29.6C7.6 29.6 7.1 29.1 6.6 28.7Z"
+          fill="var(--bg-surface)"
+          stroke="currentColor"
+          strokeWidth="2.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* 좌측 하단 S-커브 롤링 립 */}
+        <path
+          d="M6.6 28.7C9.1 30.3 12.6 28.7 14.0 25.7C15.1 23.2 13.9 20.8 11.7 20.9C9.7 21.0 8.5 22.7 8.9 24.5"
+          stroke="currentColor"
+          strokeWidth="2.1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        {/* 곡면을 따라 흐르는 상단 굵은 마스트헤드 바 */}
+        <path
+          d="M14.0 11.3C18.7 8.4 24.9 7.8 31.6 9.0"
+          stroke="currentColor"
+          strokeWidth="3.0"
+          strokeLinecap="round"
+        />
+        {/* 웨이브 리드 본문 라인 1 */}
+        <path
+          d="M12.4 16.0C17.3 13.6 23.4 13.1 30.0 14.1"
+          stroke="currentColor"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+        />
+        {/* 좌측 칼럼 웨이브 본문 라인 2·3 */}
+        <path
+          d="M16.4 20.0C18.7 19.2 21.0 18.8 23.1 19.0"
+          stroke="currentColor"
+          strokeWidth="1.65"
+          strokeLinecap="round"
+        />
+        <path
+          d="M16.0 23.8C18.1 23.2 20.1 23.0 22.0 23.1"
+          stroke="currentColor"
+          strokeWidth="1.65"
+          strokeLinecap="round"
+        />
+        {/* 우하단 칼럼 피처 블록 */}
+        <path
+          d="M25.0 18.3C26.8 18.4 28.6 18.7 30.1 19.1L28.0 25.4C26.5 25.2 24.9 25.0 23.4 25.0L25.0 18.3Z"
+          fill="currentColor"
+        />
+      </g>
     </svg>
   );
 }

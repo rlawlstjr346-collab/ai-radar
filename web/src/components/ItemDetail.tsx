@@ -1,26 +1,10 @@
 "use client";
 
-import {
-  AlertTriangle,
-  ArrowRight,
-  ArrowUpRight,
-  BookOpenText,
-  Compass,
-  Highlighter,
-  Info,
-  Languages,
-  Lightbulb,
-  Radio,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpenText, Languages, Radio, Zap } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 
 import { formatDate } from "@/lib/filter";
 import { getHighlightSummary, getUtilityInsight } from "@/lib/reading-insights";
-import { sourceVisualFor } from "@/lib/source-style";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitChip, CategoryLine, CategoryTag, DifficultyBadge, PlatformBadge } from "./Badges";
@@ -28,6 +12,7 @@ import EasyOriginalView from "./EasyOriginalView";
 import ProjectGuide from "./ProjectGuide";
 import SegmentedControl from "./SegmentedControl";
 import TermText from "./TermText";
+import XLogo from "./XLogo";
 
 type Tab = "summary" | "easy";
 
@@ -39,9 +24,9 @@ interface Props {
 }
 
 export const BTN_PRIMARY =
-  "press group inline-flex items-center justify-center gap-2 rounded-xl bg-fg px-4 py-3.5 text-[15px] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
+  "press group inline-flex items-center justify-center gap-2 rounded-2xl bg-fg px-5 py-3.5 text-[15px] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
 export const BTN_SECONDARY =
-  "press group inline-flex items-center justify-center gap-2 rounded-xl border border-line-strong px-4 py-2.5 text-[14.5px] font-medium text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "press group inline-flex items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/50 px-5 py-3 text-[14.5px] font-medium text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export function OriginalLink({ url, variant }: { url: string; variant: "primary" | "secondary" }) {
   return (
@@ -56,28 +41,24 @@ function staggerStyle(index: number): CSSProperties {
   return { "--stagger": index } as CSSProperties;
 }
 
-/** 3포인트 구조화 브리핑 카드 안의 스캔형 블록 */
-function BriefingPoint({
-  badge,
-  badgeClass,
-  Icon,
+/** Apple Intelligence 스타일 — 단일 리퀴드 글라스 면 위의 헤어라인 구분 섹션 (컬러 박스 0%) */
+function GlassSection({
+  title,
+  staggerIndex,
   children,
 }: {
-  badge: string;
-  badgeClass: string;
-  Icon: typeof Info;
+  title: string;
+  staggerIndex: number;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2 border-b border-line/70 pb-4 last:border-b-0 last:pb-0">
-      <h3 className="flex items-center gap-2">
-        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[12.5px] font-bold ${badgeClass}`}>
-          <Icon className="h-3.5 w-3.5 shrink-0" strokeWidth={2.2} aria-hidden />
-          {badge}
-        </span>
-      </h3>
+    <section
+      className="reading-stagger flex flex-col gap-2 border-t border-line pt-5"
+      style={staggerStyle(staggerIndex)}
+    >
+      <h3 className="text-[14px] font-bold tracking-[-0.01em] text-fg">{title}</h3>
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -91,22 +72,30 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
   const hasAltOriginalTitle = Boolean(item.original_title && item.original_title.trim() !== item.hook_title.trim());
   const highlightSummary = getHighlightSummary(item);
   const utility = getUtilityInsight(item, platform?.name);
-  const visual = sourceVisualFor(item.platform_id, platform);
+  const isX = item.platform_id === "x";
 
   return (
     <article className="flex flex-col" aria-labelledby={`detail-${item.id}`}>
       <CategoryLine category={item.category} />
-      <div className="mx-auto flex w-full max-w-[68ch] flex-col gap-6 px-5 pb-12 pt-4 sm:px-7 sm:pt-5">
+      <div className="mx-auto flex w-full max-w-[66ch] flex-col gap-6 px-6 pb-10 pt-2 sm:px-9">
         <header className="reading-stagger flex flex-col gap-3" style={staggerStyle(0)}>
           <div className="t-meta flex flex-wrap items-center gap-x-2 gap-y-1.5">
-            <span className={`${visual.badgeClass} inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[12.5px] font-bold`}>
-              {visual.group === "x" ? "𝕏 실시간" : visual.label}
-            </span>
-            <span className="-ml-0.5">
-              <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
-            </span>
-            {item.platform_id === "x" && item.author_handle && (
-              <span className="font-semibold text-fg">{item.author_handle}</span>
+            {isX ? (
+              <button
+                type="button"
+                onClick={() => onSelectPlatform("x")}
+                className="inline-flex items-center gap-1.5 rounded-md py-0.5 pr-1 font-semibold text-fg transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-elevated p-0.5 text-fg">
+                  <XLogo className="h-3.5 w-3.5" />
+                </span>
+                <span>𝕏 실시간</span>
+                {item.author_handle && <span className="font-medium text-fg-2">{item.author_handle}</span>}
+              </button>
+            ) : (
+              <span className="-ml-0.5">
+                <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
+              </span>
             )}
             <span aria-hidden>·</span>
             <CategoryTag category={item.category} />
@@ -121,7 +110,7 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               <button
                 type="button"
                 onClick={() => setShowOriginalTitle((v) => !v)}
-                className="press inline-flex items-center gap-1.5 rounded-full border border-line bg-canvas px-3 py-1 text-[13px] font-medium text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="press inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-surface/60 px-3 py-1 text-[13px] font-medium text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <Languages className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
                 {showOriginalTitle ? "한국어 제목 보기" : "원문 제목 보기"}
@@ -162,26 +151,23 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
         ) : (
           <div role="tabpanel" id={`${panelId}-panel-summary`} aria-labelledby={`${panelId}-tab-summary`} className="flex flex-col gap-5">
             {item.terms.length > 0 && !archived && (
-              <p className="-mt-2 text-[13px] text-fg-3">점선 밑줄 단어에 마우스를 올리거나 누르면 쉽게 풀어드려요.</p>
+              <p className="-mt-1 text-[13px] text-fg-3">점선 밑줄 단어에 마우스를 올리거나 누르면 쉽게 풀어드려요.</p>
             )}
 
             {archived ? (
-              <p className="rounded-xl bg-elevated p-4 text-[15px] leading-relaxed text-fg-2">
+              <p className="border-t border-line pt-5 text-[15px] leading-relaxed text-fg-2">
                 30일이 지난 소식이라 자세한 풀이는 보관함으로 옮겨졌어요. 원문은 아래 링크에서 볼 수 있어요.
               </p>
             ) : (
               <>
-                {/* ① 핵심 한 줄 결론 카드 (Warm Amber Card — Perplexity / Liner 스타일) */}
+                {/* 핵심 결론: 오직 이 핵심 문장에만 은은한 형광펜 하이라이트 */}
                 {highlightSummary && (
                   <section
-                    aria-label="핵심 한 줄 결론"
-                    className="summary-card-amber reading-stagger flex flex-col gap-2.5 rounded-2xl p-4 sm:p-5"
+                    aria-label="핵심 결론"
+                    className="reading-stagger flex flex-col gap-2 pt-1"
                     style={staggerStyle(1)}
                   >
-                    <h3 className="flex items-center gap-2 text-[13.5px] font-bold text-amber-800 [:root[data-theme=dark]_&]:text-amber-300">
-                      <Highlighter className="h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
-                      핵심 한 줄 결론 · 형광펜 요약
-                    </h3>
+                    <h3 className="text-[13.5px] font-bold tracking-[-0.01em] text-fg-2">핵심 결론</h3>
                     <TermText
                       text={highlightSummary}
                       terms={item.terms}
@@ -192,105 +178,64 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
                   </section>
                 )}
 
-                {/* ② 3포인트 구조화 브리핑 카드 (Clean White / Soft Blue Surface) */}
-                <section
-                  aria-label="3포인트 구조화 브리핑"
-                  className="summary-card-brief reading-stagger flex flex-col gap-4 rounded-2xl p-4 sm:p-5"
-                  style={staggerStyle(2)}
-                >
-                  {item.context_ko && (
-                    <BriefingPoint
-                      badge="원래는요 · 배경"
-                      badgeClass="bg-indigo-100 text-indigo-800 [:root[data-theme=dark]_&]:bg-indigo-500/20 [:root[data-theme=dark]_&]:text-indigo-200"
-                      Icon={Compass}
-                    >
-                      <TermText text={item.context_ko} terms={item.terms} entities={item.entities} className={body} highlight />
-                    </BriefingPoint>
-                  )}
+                {/* 기존 4단 요약 (단일 글라스 면 위 헤어라인 + 굵은 소제목 + 넉넉한 행간) */}
+                {item.context_ko && (
+                  <GlassSection title="원래는요" staggerIndex={2}>
+                    <TermText text={item.context_ko} terms={item.terms} entities={item.entities} className={body} />
+                  </GlassSection>
+                )}
 
-                  {item.what_ko && (
-                    <BriefingPoint
-                      badge="무슨 일이냐면요 · 핵심 변화"
-                      badgeClass="bg-sky-100 text-sky-800 [:root[data-theme=dark]_&]:bg-sky-500/20 [:root[data-theme=dark]_&]:text-sky-200"
-                      Icon={Sparkles}
-                    >
-                      <TermText text={item.what_ko} terms={item.terms} entities={item.entities} className={body} highlight />
-                      {item.analogy_ko && (
-                        <aside className="mt-1.5 flex flex-col gap-1 rounded-xl border border-amber-300/70 bg-amber-50/80 px-3.5 py-3 [:root[data-theme=dark]_&]:border-amber-500/30 [:root[data-theme=dark]_&]:bg-amber-500/10">
-                          <p className="text-[13px] font-bold text-amber-800 [:root[data-theme=dark]_&]:text-amber-300">
-                            솔직히 외계어 같죠? 쉽게 비유하자면요
-                          </p>
-                          <TermText text={item.analogy_ko} terms={item.terms} className="t-body" />
-                        </aside>
-                      )}
-                    </BriefingPoint>
-                  )}
+                {item.what_ko && (
+                  <GlassSection title="무슨 일이냐면요" staggerIndex={3}>
+                    <TermText text={item.what_ko} terms={item.terms} entities={item.entities} className={body} />
+                    {item.analogy_ko && (
+                      <blockquote className="mt-2 border-l-2 border-line-strong pl-4">
+                        <p className="mb-1 text-[13px] font-semibold text-fg-2">쉽게 비유하자면요</p>
+                        <TermText text={item.analogy_ko} terms={item.terms} className="t-body text-fg-2" />
+                      </blockquote>
+                    )}
+                  </GlassSection>
+                )}
 
-                  {item.why_ko && (
-                    <BriefingPoint
-                      badge="왜 중요할까요? · 의미"
-                      badgeClass="bg-teal-100 text-teal-800 [:root[data-theme=dark]_&]:bg-teal-500/20 [:root[data-theme=dark]_&]:text-teal-200"
-                      Icon={TrendingUp}
-                    >
-                      <TermText text={item.why_ko} terms={item.terms} entities={item.entities} className={body} highlight />
-                    </BriefingPoint>
-                  )}
+                {item.why_ko && (
+                  <GlassSection title="왜 중요할까요?" staggerIndex={4}>
+                    <TermText text={item.why_ko} terms={item.terms} entities={item.entities} className={body} />
+                  </GlassSection>
+                )}
 
-                  {item.caveats_ko && (
-                    <BriefingPoint
-                      badge="참고할 점"
-                      badgeClass="bg-amber-100 text-amber-800 [:root[data-theme=dark]_&]:bg-amber-500/20 [:root[data-theme=dark]_&]:text-amber-200"
-                      Icon={AlertTriangle}
-                    >
-                      <TermText text={item.caveats_ko} terms={item.terms} className="t-body text-fg-2" />
-                    </BriefingPoint>
-                  )}
-                </section>
+                {item.caveats_ko && (
+                  <GlassSection title="참고할 점" staggerIndex={5}>
+                    <TermText text={item.caveats_ko} terms={item.terms} className="t-body text-fg-2" />
+                  </GlassSection>
+                )}
 
-                {/* ③ 실전 활용 & 벤치마킹 카드 (Soft Emerald Card) */}
-                <section
-                  aria-label="어디에 써먹을까요? 실전 활용 및 벤치마킹"
-                  className="summary-card-emerald reading-stagger flex flex-col gap-3.5 rounded-2xl p-4 sm:p-5"
-                  style={staggerStyle(3)}
-                >
-                  <h3 className="flex items-center gap-2 text-[14px] font-bold text-emerald-800 [:root[data-theme=dark]_&]:text-emerald-300">
-                    <Lightbulb className="h-4 w-4 shrink-0" strokeWidth={2.2} aria-hidden />
-                    어디에 써먹을까요? · 실전 활용 &amp; 벤치마킹
-                  </h3>
-                  <ul className="flex flex-col gap-3">
-                    <li className="flex flex-col gap-1">
-                      <span className="inline-flex w-fit items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[12.5px] font-bold text-emerald-900 [:root[data-theme=dark]_&]:bg-emerald-500/25 [:root[data-theme=dark]_&]:text-emerald-200">
-                        <Target className="h-3.5 w-3.5" aria-hidden />
-                        추천 상황
-                      </span>
-                      <p className="t-body text-fg">{utility.when_needed}</p>
-                    </li>
-                    <li className="flex flex-col gap-1">
-                      <span className="inline-flex w-fit items-center gap-1 rounded-full bg-teal-100 px-2.5 py-0.5 text-[12.5px] font-bold text-teal-900 [:root[data-theme=dark]_&]:bg-teal-500/25 [:root[data-theme=dark]_&]:text-teal-200">
-                        <Zap className="h-3.5 w-3.5" aria-hidden />
-                        핵심 효용
-                      </span>
-                      <p className="t-body text-fg">{utility.work_utility}</p>
-                    </li>
-                    <li className="flex flex-col gap-1">
-                      <span className="inline-flex w-fit items-center gap-1 rounded-full bg-lime-100 px-2.5 py-0.5 text-[12.5px] font-bold text-lime-900 [:root[data-theme=dark]_&]:bg-lime-500/25 [:root[data-theme=dark]_&]:text-lime-200">
-                        <Lightbulb className="h-3.5 w-3.5" aria-hidden />
-                        바로 써볼 팁
-                      </span>
-                      <p className="t-body text-fg">{utility.practical_tip}</p>
-                    </li>
-                  </ul>
-                </section>
+                {/* 어디에 써먹을까요? · 실전 활용 팁 (컬러 박스 없이 헤어라인 정돈) */}
+                <GlassSection title="어디에 써먹을까요? · 실전 활용 팁" staggerIndex={6}>
+                  <dl className="flex flex-col gap-3 pt-1">
+                    <div className="flex flex-col gap-0.5">
+                      <dt className="text-[13.5px] font-semibold text-fg">추천 상황</dt>
+                      <dd className="t-body text-fg-2">{utility.when_needed}</dd>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <dt className="text-[13.5px] font-semibold text-fg">핵심 효용</dt>
+                      <dd className="t-body text-fg-2">{utility.work_utility}</dd>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <dt className="text-[13.5px] font-semibold text-fg">바로 써볼 팁</dt>
+                      <dd className="t-body text-fg-2">{utility.practical_tip}</dd>
+                    </div>
+                  </dl>
+                </GlassSection>
               </>
             )}
 
             {item.entities.length > 0 && (
-              <p className="t-meta reading-stagger leading-relaxed" style={staggerStyle(4)} aria-label="등장 키워드">
+              <p className="t-meta reading-stagger border-t border-line pt-4 leading-relaxed" style={staggerStyle(7)} aria-label="등장 키워드">
                 {item.entities.map((e) => e.name).join("  ·  ")}
               </p>
             )}
 
-            <div className="reading-stagger flex flex-col gap-2.5" style={staggerStyle(5)}>
+            <div className="reading-stagger flex flex-col gap-2.5 pt-1" style={staggerStyle(8)}>
               {canReadEasy ? (
                 <>
                   <button

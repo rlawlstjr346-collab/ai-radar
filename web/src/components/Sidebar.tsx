@@ -11,11 +11,6 @@ import FontSizeToggle from "./FontSizeToggle";
 import SegmentedControl from "./SegmentedControl";
 import ThemeToggle from "./ThemeToggle";
 
-/*
- * 사이드바 = 조용한 유틸리티 (DESIGN.md §1-4).
- * 순수 흑백 S-커브 웨이브 신문 심볼 + 클래식 세리프 워드마크, 13.5~14.5px 유동 메뉴, 하단 가+ 글자 크기·테마 스위치.
- */
-
 export type View = "feed" | "past" | "directory";
 
 export interface FilterState {
@@ -29,11 +24,8 @@ interface Props extends FilterState {
   counts: Record<CategoryFilter, number>;
   viewCounts: Record<View, number>;
   source: DataSource;
-  /** 도감 플랫폼 수 (하단 상태 줄) */
   platformCount?: number;
-  /** live-feed.json 마지막 자동 수집 시각(ISO) */
   lastCollectedAt?: string | null;
-  /** 현재 기준 시각(ms) */
   now?: number;
 }
 
@@ -49,10 +41,10 @@ const VIEWS: Array<{ id: View; label: string; short: string; Icon: LucideIcon }>
 ];
 
 const ITEM_BASE =
-  "press t-nav flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
-const itemState = (active: boolean) => (active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:bg-elevated hover:text-fg");
+  "press t-nav flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+const itemState = (active: boolean) => (active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:bg-elevated/70 hover:text-fg");
 
-/** 로고·제호: 바깥 박스/원 없는 순수 흑백 S-커브 웨이브 신문 심볼(42px) + 고대비 클래식 세리프 워드마크(24px) */
+/** 로고·제호: 여유 있는 viewBox(48×44) 순수 흑백 S-커브 신문 심볼 + 잘림 없는 클래식 세리프 AI Radar */
 export function Logo() {
   return (
     // 풀 새로고침이 목적이라 next/link 대신 일반 <a> 를 쓴다
@@ -64,12 +56,12 @@ export function Logo() {
         window.location.href = "/";
       }}
       aria-label="AI Radar 처음 화면으로 새로고침"
-      className="flex min-w-0 cursor-pointer items-center gap-3 rounded-lg py-0.5 transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="flex min-w-0 cursor-pointer items-center gap-2.5 overflow-visible rounded-xl py-1 transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
-      <BrandLogo className="h-[38px] w-[42px] shrink-0 text-brand" />
-      <div className="min-w-0 leading-tight">
-        <p className="font-editorial text-[24px] leading-none">AI Radar</p>
-        <p className="mt-1 truncate text-[13px] font-medium text-fg-3">실시간 글로벌 AI 뉴스룸</p>
+      <BrandLogo className="h-[40px] w-[44px] shrink-0 overflow-visible text-brand" />
+      <div className="min-w-0 overflow-visible">
+        <p className="font-editorial whitespace-nowrap text-[23px] leading-[1.18]">AI Radar</p>
+        <p className="mt-0.5 text-[12.5px] font-medium leading-snug text-fg-3">글로벌 AI 뉴스룸</p>
       </div>
     </a>
   );
@@ -108,16 +100,16 @@ export function CategoryChips({
             className={
               layout === "list"
                 ? `${ITEM_BASE} justify-between ${itemState(active)}`
-                : `press t-nav flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                : `press t-nav flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                     active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:text-fg"
                   }`
             }
           >
-            <span className="flex min-w-0 items-center gap-2.5 truncate">
+            <span className="flex min-w-0 items-center gap-2.5">
               {layout === "list" && <o.Icon className="h-4 w-4 shrink-0" strokeWidth={1.8} aria-hidden />}
-              {o.label}
+              <span className="min-w-0 break-words">{o.label}</span>
             </span>
-            <span className="ml-2 text-[13px] tabular-nums text-fg-3">{counts[o.id] ?? 0}</span>
+            <span className="ml-2 shrink-0 text-[13px] tabular-nums text-fg-3">{counts[o.id] ?? 0}</span>
           </button>
         );
       })}
@@ -160,8 +152,8 @@ export function ViewTabs({
             className={`${ITEM_BASE} ${itemState(active)}`}
           >
             <Icon className="h-4 w-4 shrink-0" strokeWidth={1.8} aria-hidden />
-            <span className="min-w-0 truncate">{label}</span>
-            {viewCounts && <span className="ml-auto text-[13px] tabular-nums text-fg-3">{viewCounts[id]}</span>}
+            <span className="min-w-0 flex-1 break-words">{label}</span>
+            {viewCounts && <span className="ml-1 shrink-0 text-[13px] tabular-nums text-fg-3">{viewCounts[id]}</span>}
           </button>
         );
       })}
@@ -176,22 +168,22 @@ export default function Sidebar(p: Props) {
     ? new Date(p.lastCollectedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
     : undefined;
   return (
-    <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-6 overflow-y-auto px-3.5 pb-14 pt-5">
-      <div className="px-0.5">
+    <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-6 overflow-y-auto border-r border-line bg-surface px-4 pb-10 pt-5">
+      <div className="overflow-visible px-0.5">
         <Logo />
       </div>
       <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} />
       <section aria-labelledby="sidebar-category" className="flex flex-col gap-1">
-        <h2 id="sidebar-category" className="px-2.5 pb-1 text-[13px] font-medium text-fg-3">
+        <h2 id="sidebar-category" className="px-3 pb-1 text-[13px] font-medium text-fg-3">
           분야
         </h2>
         <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
       </section>
-      <div className="mt-auto flex flex-col gap-3 border-t border-line px-1.5 pt-4">
+      <div className="mt-auto flex flex-col gap-3.5 border-t border-line px-1 pt-4">
         <div className="flex flex-col gap-1">
           <p className="flex items-center gap-2 text-[13px] leading-relaxed text-fg-2">
             <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-accent" : "bg-live"}`} aria-hidden />
-            {statusLine(p.source, p.platformCount)}
+            <span>{statusLine(p.source, p.platformCount)}</span>
           </p>
           {collectedLabel && (
             <p className="pl-3.5 text-[13px] tabular-nums text-fg-3" title={collectedTitle}>
