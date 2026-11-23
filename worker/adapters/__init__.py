@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import httpx
 
+from adapters.anthropic_news import AnthropicNewsAdapter
 from adapters.anthropic_sitemap import AnthropicSitemapAdapter
 from adapters.base import BaseAdapter, FeedGuard
 from adapters.bluesky import BlueskyAdapter
@@ -23,6 +24,7 @@ REGISTRY: tuple[type[BaseAdapter], ...] = (
     HackerNewsAdapter,
     CivitaiAdapter,
     BlueskyAdapter,
+    AnthropicNewsAdapter,
     AnthropicSitemapAdapter,
     GitHubHotAIAdapter,
     XOEmbedAdapter,

@@ -17,7 +17,7 @@ function setTheme(t: Theme) {
   } catch {
     // 저장이 막힌 환경에선 이번 방문 동안만 유지
   }
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", t === "paper" ? "#F5F5F7" : "#09090B");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", t === "paper" ? "#FBFBFD" : "#09090B");
   listeners.forEach((l) => l());
 }
 

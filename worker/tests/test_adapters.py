@@ -15,6 +15,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from adapters import resolve_adapter  # noqa: E402
+from adapters.anthropic_news import AnthropicNewsAdapter, extract_anthropic_news_from_html  # noqa: E402
 from adapters.anthropic_sitemap import AnthropicSitemapAdapter, title_from_slug  # noqa: E402
 from adapters.bluesky import BlueskyAdapter  # noqa: E402
 from adapters.civitai import CivitaiAdapter, UnsafeEndpointError, is_safe_model  # noqa: E402
@@ -42,14 +43,14 @@ def test_every_seed_source_resolves_to_expected_adapter():
     expected = {
         "HF Daily Papers": "HFDailyPapersAdapter", "HF Trending Models": "HFTrendingModelsAdapter",
         "HF Trending Spaces": "HFTrendingSpacesAdapter", "OpenAI News": "RSSAdapter",
-        "Anthropic News": "AnthropicSitemapAdapter", "Google DeepMind Blog": "RSSAdapter",
+        "Anthropic News": "AnthropicNewsAdapter", "Google DeepMind Blog": "RSSAdapter",
         "HN AI Stories": "HackerNewsAdapter", "Ollama Releases": "RSSAdapter", "vLLM Releases": "RSSAdapter",
         "Transformers Releases": "RSSAdapter", "ComfyUI Releases": "RSSAdapter",
         "Civitai Top Models (SFW)": "CivitaiAdapter", "Bluesky AI Researchers List": "BlueskyAdapter",
     }
     sources = load_seed_sources()
-    # 기본 13개 + 6개 권역 글로벌 확장 50개 (GitHub Hot AI + Apple Newsroom Global/KR 포함)
-    assert len(sources) == 63
+    # 기본 13개 + 6개 권역 글로벌 확장 52개 (GitHub Hot AI + Apple Newsroom Global/KR + AI Substack 5종 포함)
+    assert len(sources) == 65
     assert [s.name for s in sources[:13]] == list(expected)          # 기존 13개는 그대로, 같은 순서
     with httpx.Client() as c:
         for s in sources:
@@ -199,6 +200,52 @@ def test_anthropic_sitemap_only_recent_news_and_research():
                                       "https://www.anthropic.com/research/ai-safety-paper"]
     assert items[1].title == "Anthropic Research: AI Safety Paper"
     assert title_from_slug("81k-economics") == "81k Economics"
+
+
+def test_anthropic_news_adapter_extracts_html_cards_jsonld_and_sitemap_dates():
+    sample_html = """
+    <html><head>
+      <script type="application/ld+json">
+        {"@type": "NewsArticle", "headline": "Claude 5 Safety Report", "url": "/news/claude-5-safety", "description": "Detailed safety findings for Claude 5.", "datePublished": "2026-11-21T10:00:00Z"}
+      </script>
+    </head><body>
+      <ul>
+        <li data-listing-row="1">
+          <a href="/news/announcements">Announcements</a>
+          <a href="/news/ipo-close"><h3>Anthropic closes initial public offering</h3></a>
+          <p>Today Anthropic announced closing of its IPO and concurrent private placement.</p>
+        </li>
+        <li data-listing-row="2">
+          <time>Nov 18, 2026</time>
+          <a href="/news/cyber-verification-program"><h3>Cyber verification program</h3></a>
+          <p>New defensive cybersecurity evaluation framework for frontier models.</p>
+        </li>
+      </ul>
+    </body></html>
+    """
+    sm_xml = (
+        "<?xml version='1.0'?><urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>"
+        f"<url><loc>https://www.anthropic.com/news/ipo-close</loc><lastmod>{ISO(NOW)}</lastmod></url>"
+        f"<url><loc>https://www.anthropic.com/research/formal-verification</loc><lastmod>{ISO(NOW - timedelta(hours=6))}</lastmod></url>"
+        "</urlset>"
+    )
+    recs = extract_anthropic_news_from_html(sample_html)
+    assert {r["slug"] for r in recs} == {"claude-5-safety", "ipo-close", "cyber-verification-program"}
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        if "sitemap.xml" in str(req.url):
+            return httpx.Response(200, text=sm_xml)
+        return httpx.Response(200, text=sample_html)
+
+    items = AnthropicNewsAdapter(src("https://www.anthropic.com/news", "anthropic", method="rss"), client_for(handler)).fetch()
+    urls = [i.url for i in items]
+    assert "https://www.anthropic.com/news/ipo-close" in urls
+    assert "https://www.anthropic.com/news/cyber-verification-program" in urls
+    assert "https://www.anthropic.com/research/formal-verification" in urls
+    ipo = next(i for i in items if i.url.endswith("/ipo-close"))
+    assert ipo.title == "Anthropic closes initial public offering"
+    assert "IPO" in ipo.body
+    assert ipo.published_at is not None
 
 
 # ── Bluesky ─────────────────────────────────────────────────────────────────

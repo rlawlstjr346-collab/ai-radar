@@ -1069,7 +1069,7 @@
   },
   {
     "id": "ahead-of-ai",
-    "name": "Ahead of AI",
+    "name": "Substack · Ahead of AI",
     "category": "research",
     "one_liner_ko": "연구자 세바스찬 라슈카가 LLM 원리를 그림과 함께 풀어 쓰는 뉴스레터예요.",
     "why_visit_ko": "LLM이 속에서 어떻게 돌아가는지 차근차근 설명해 줘서, 원리를 공부하고 싶을 때 좋아요.",
@@ -1105,13 +1105,25 @@
   },
   {
     "id": "import-ai",
-    "name": "Import AI",
+    "name": "Substack · Import AI",
     "category": "research",
     "one_liner_ko": "앤트로픽 공동창업자 잭 클라크가 매주 쓰는 AI 연구 뉴스레터예요.",
     "why_visit_ko": "그 주의 중요한 논문을 짧게 요약하고 의미를 짚어 줘서, 연구 흐름을 따라가기 좋아요.",
     "url": "https://importai.substack.com",
     "theme_color": "#1F2937",
     "access_note": "무료로 구독할 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "interconnects",
+    "name": "Substack · Interconnects",
+    "category": "research",
+    "one_liner_ko": "AI 연구자 네이선 램버트가 오픈소스 모델·RLHF·추론 트렌드를 깊이 해부하는 Substack 뉴스레터예요.",
+    "why_visit_ko": "오픈 웨이트 모델 생태계와 최신 학습 기법의 기술적 맥락을 가장 빠르고 명쾌하게 짚어 줘요.",
+    "url": "https://www.interconnects.ai",
+    "theme_color": "#0071E3",
+    "access_note": "대부분 무료로 읽을 수 있어요.",
     "collect_status": "active",
     "region": "global"
   },
@@ -1345,13 +1357,25 @@
   },
   {
     "id": "latent-space",
-    "name": "Latent Space",
+    "name": "Substack · Latent Space",
     "category": "industry",
     "one_liner_ko": "AI 엔지니어를 위한 팟캐스트·뉴스레터예요. 현업 리더 인터뷰가 많아요.",
     "why_visit_ko": "AI 제품을 만드는 회사들이 실제로 어떻게 일하는지 깊은 인터뷰로 들을 수 있어요.",
     "url": "https://www.latent.space",
     "theme_color": "#6B21A8",
     "access_note": "대부분 무료로 읽고 들을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "one-useful-thing",
+    "name": "Substack · One Useful Thing",
+    "category": "industry",
+    "one_liner_ko": "와튼 스쿨 이선 몰릭 교수가 AI 실무 활용과 조직 변화를 실험·분석하는 Substack 뉴스레터예요.",
+    "why_visit_ko": "신규 AI 모델을 실제 업무·교육·기획에 써 본 구체적인 실험 결과와 통찰을 읽기 쉽게 풀어 줘요.",
+    "url": "https://www.oneusefulthing.org",
+    "theme_color": "#F56300",
+    "access_note": "무료로 읽고 구독할 수 있어요.",
     "collect_status": "active",
     "region": "global"
   },
@@ -1393,7 +1417,7 @@
   },
   {
     "id": "openai",
-    "name": "OpenAI",
+    "name": "OpenAI News",
     "category": "industry",
     "one_liner_ko": "챗GPT를 만든 바로 그 회사예요. 새 모델이 나오면 공식 블로그에 제일 먼저 자랑하러 와요.",
     "why_visit_ko": "GPT 시리즈나 새 기능 소식의 \"원본 출처\"가 여기거든요. 기사로 한 번 걸러진 이야기 말고, 회사가 직접 뭐라고 했는지 확인하고 싶을 때 가봐요.",

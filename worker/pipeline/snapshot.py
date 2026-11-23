@@ -584,15 +584,19 @@ def candidate_to_snapshot_item(
                 body_ko = ""
             llm_why = ""
 
-        hook_title = polish_korean_headline(
-            title_ko,
-            raw_title,
-            platform_id=c.platform_id,
-            author_handle=author_handle,
-            category=c.category,
-            metrics=c.metrics,
-        )
-        title_ko = hook_title
+        if translator is not None or not needs_translation(title_ko):
+            hook_title = polish_korean_headline(
+                title_ko,
+                raw_title,
+                platform_id=c.platform_id,
+                author_handle=author_handle,
+                category=c.category,
+                metrics=c.metrics,
+            )
+            title_ko = hook_title
+        else:
+            hook_title = raw_title
+            title_ko = raw_title
         benefit_tag = _benefit_tag_for(c)
         cat_label = CATEGORY_LABELS.get(c.category, "AI")
         entities = _extract_entities(c, platform_name)
@@ -694,9 +698,19 @@ def _parse_iso(raw: Any) -> Optional[datetime]:
         return None
 
 
+_FALLBACK_SUFFIX_RE = re.compile(
+    r"\s—\s(?:새 AI 모델·기능 업데이트|개발자 도구·오픈소스 공개|AI 이미지·디자인 모델 공개|"
+    r"AI 영상·음성 모델 업데이트|신규 AI 연구·벤치마크 발표|글로벌 AI 업계 주요 발표|글로벌 AI 빌더 실시간 공유|AI 주요 업데이트)$"
+)
+
+
 def _item_needs_translation(item: dict[str, Any]) -> bool:
     """기존 스냅샷 항목에 미번역 외국어 제목·본문·완독해설이 남아 있는지 확인."""
-    if needs_translation(str(item.get("hook_title") or "")):
+    hook = str(item.get("hook_title") or "")
+    orig = str(item.get("original_title") or "")
+    if needs_translation(hook) or CJK_JP_RE.search(hook):
+        return True
+    if _FALLBACK_SUFFIX_RE.search(hook) and needs_translation(orig):
         return True
     if needs_translation(str(item.get("what_ko") or "")):
         return True
@@ -788,7 +802,13 @@ def _upgrade_existing_item_translation(
     raw_body = raw_body_override if raw_body_override is not None else _extract_raw_body_from_existing(item)
 
     existing_title_ko = sanitize_text(str(item.get("title_ko") or item.get("hook_title") or ""), strip_emoji=True)
-    if existing_title_ko and not needs_translation(existing_title_ko) and (not raw_body or not needs_translation(raw_body)):
+    title_already_ok = (
+        bool(existing_title_ko)
+        and not needs_translation(existing_title_ko)
+        and not CJK_JP_RE.search(existing_title_ko)
+        and not (_FALLBACK_SUFFIX_RE.search(existing_title_ko) and needs_translation(raw_title))
+    )
+    if title_already_ok and (not raw_body or not needs_translation(raw_body)):
         title_ko = existing_title_ko
         body_ko = sanitize_text(raw_body) if raw_body and not needs_translation(raw_body) else ""
         llm_why = ""
@@ -1081,8 +1101,19 @@ def build_and_save_snapshot(
     picked_hot_urls: set[str] = set()
     per_plat: dict[str, int] = {}
 
-    # 최우선 실시간 소스(X 실시간, GitHub 핫 AI)가 다량 RSS 에 밀리지 않도록 우선 슬롯 보장
-    for priority_pid, reserve_cap in (("x", min(8, per_platform + 2)), ("github", min(6, per_platform))):
+    # 최우선 실시간 소스(OpenAI·Anthropic·Substack·X 실시간·GitHub 핫 AI)가 다량 RSS 에 밀리지 않도록 우선 슬롯 보장
+    priority_hot_quotas = (
+        ("openai", min(4, per_platform)),
+        ("anthropic", min(4, per_platform)),
+        ("latent-space", min(3, per_platform)),
+        ("import-ai", min(2, per_platform)),
+        ("ahead-of-ai", min(2, per_platform)),
+        ("one-useful-thing", min(2, per_platform)),
+        ("interconnects", min(2, per_platform)),
+        ("x", min(8, per_platform + 2)),
+        ("github", min(6, per_platform)),
+    )
+    for priority_pid, reserve_cap in priority_hot_quotas:
         cnt = 0
         for it in hot_ranked:
             if str(it["platform_id"]) != priority_pid:
@@ -1120,15 +1151,36 @@ def build_and_save_snapshot(
         seen_days: set[str] = set()
         picked_warm_urls: set[str] = set()
         warm_per_plat: dict[str, int] = {}
+        # 주간/격주 핵심 AI Substack·OpenAI·Anthropic 아카이브도 지난 주요 소식에 우선 보존
+        for priority_pid in ("openai", "anthropic", "one-useful-thing", "interconnects", "ahead-of-ai", "import-ai", "latent-space"):
+            for it in warm_ranked:
+                if str(it["platform_id"]) != priority_pid:
+                    continue
+                url = str(it["canonical_url"])
+                if url in picked_warm_urls or warm_per_plat.get(priority_pid, 0) >= 2:
+                    continue
+                selected_warm.append(it)
+                picked_warm_urls.add(url)
+                warm_per_plat[priority_pid] = warm_per_plat.get(priority_pid, 0) + 1
+                day_key = str(it.get("published_at") or it.get("created_at") or "")[:10]
+                if day_key:
+                    seen_days.add(day_key)
+                if len(selected_warm) >= warm_cap:
+                    break
+            if len(selected_warm) >= warm_cap:
+                break
         for it in warm_ranked:
+            if len(selected_warm) >= warm_cap:
+                break
+            url = str(it["canonical_url"])
             pid = str(it["platform_id"])
-            if warm_per_plat.get(pid, 0) >= per_platform:
+            if url in picked_warm_urls or warm_per_plat.get(pid, 0) >= per_platform:
                 continue
             day_key = str(it.get("published_at") or it.get("created_at") or "")[:10]
             if day_key and day_key not in seen_days:
                 seen_days.add(day_key)
                 selected_warm.append(it)
-                picked_warm_urls.add(str(it["canonical_url"]))
+                picked_warm_urls.add(url)
                 warm_per_plat[pid] = warm_per_plat.get(pid, 0) + 1
                 if len(selected_warm) >= warm_cap:
                     break

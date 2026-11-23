@@ -328,7 +328,7 @@ class XOEmbedAdapter(BaseAdapter):
         if feed.get("kind") == "hn_algolia":
             hits = self.get_json(url, timeout=self._timeout).get("hits", [])
             return "\n".join(f"{h.get('url') or ''} {h.get('story_text') or ''}" for h in hits)
-        parsed = feedparser.parse(self.get(url, timeout=self._timeout).content)
+        parsed = feedparser.parse(self.get(url, conditional=False, timeout=self._timeout).content)
         parts = []
         for e in parsed.entries[: feed.get("max_entries", 40)]:
             content = (e.get("content") or [{}])[0].get("value") or e.get("summary") or ""

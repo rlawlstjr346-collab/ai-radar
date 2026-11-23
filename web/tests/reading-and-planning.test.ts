@@ -12,7 +12,6 @@ import {
   FONT_SCALE_DEFAULT,
   FONT_SCALE_MAX,
   FONT_SCALE_MIN,
-  FONT_SIZE_STORAGE_KEY,
   parseFontPercent,
   parseFontSize,
   THEME_BOOT_SCRIPT,
@@ -65,18 +64,14 @@ describe("형광펜 핵심 요약 · 실전 효용 팁 · 기획팀 메타", () 
   });
 });
 
-describe("iOS 슬라이더(85~200%) · 리퀴드 글라스 · 잘림 없는 흑백 로고 & 공식 X 로고", () => {
-  it("글자 크기 슬라이더가 85% ~ 200% 범위를 정확히 지원하고 부트 스크립트가 읽는다", () => {
+describe("Apple ML Research 좌측 컬러 도트 · 무한 스크롤 · 고밀도 리퀴드 글라스 · 잘림 없는 흑백 로고 & 공식 X 로고", () => {
+  it("테마 유틸과 부트 스크립트가 기본 라이트/다크 전환을 안전하게 처리한다", () => {
     expect(FONT_SCALE_MIN).toBe(85);
     expect(FONT_SCALE_MAX).toBe(200);
     expect(parseFontSize(null)).toBe("standard");
     expect(parseFontSize("large")).toBe("large");
     expect(parseFontPercent(null)).toBe(FONT_SCALE_DEFAULT);
-    expect(parseFontPercent("50")).toBe(85);
-    expect(parseFontPercent("180")).toBe(180);
-    expect(parseFontPercent("250")).toBe(200);
-    expect(THEME_BOOT_SCRIPT).toContain(FONT_SIZE_STORAGE_KEY);
-    expect(THEME_BOOT_SCRIPT).toContain("--font-scale");
+    expect(THEME_BOOT_SCRIPT).toContain("ai-radar-theme-v2");
   });
 
   it("메타/보조 회색(--text-tertiary)도 라이트·다크 양쪽에서 WCAG AA 4.5:1 이상을 확보한다", () => {
@@ -100,10 +95,9 @@ describe("iOS 슬라이더(85~200%) · 리퀴드 글라스 · 잘림 없는 흑�
     expect(xLogoTsx).toContain("M18.244 2.25h3.308l-7.227 8.26");
   });
 
-  it("globals.css 는 루트 html rem 스케일링 + 상단 글래스 헤더 + 고밀도 Liquid Glass 모달 + Health 인셋 카드 + X 워터마크를 정의한다", () => {
+  it("globals.css 는 고정 16px 기본 스케일 + Apple Newsroom 20px 카드 + 고밀도 Liquid Glass 모달 + Health 인셋 카드 + X 워터마크를 정의한다", () => {
     const css = readFileSync(join(__dirname, "../src/app/globals.css"), "utf8");
-    expect(css).toContain("font-size: calc(16px * var(--font-scale, 1));");
-    expect(css).toContain(".top-glass-nav");
+    expect(css).toContain("font-size: 16px;");
     expect(css).toContain(".newsroom-card");
     expect(css).toContain(".liquid-glass-modal");
     expect(css).toContain("rgba(250, 250, 252, 0.94)");
@@ -114,6 +108,17 @@ describe("iOS 슬라이더(85~200%) · 리퀴드 글라스 · 잘림 없는 흑�
     expect(css).toContain("opacity: 0.16;");
     expect(css).not.toContain(".source-card-global");
     expect(css).not.toContain(".summary-card-amber");
+  });
+
+  it("RadarApp·Sidebar 는 검색창·글씨크기 슬라이더·수동 더보기 버튼을 제거하고 IntersectionObserver 무한 스크롤을 사용한다", () => {
+    const radarTsx = readFileSync(join(__dirname, "../src/components/RadarApp.tsx"), "utf8");
+    const sidebarTsx = readFileSync(join(__dirname, "../src/components/Sidebar.tsx"), "utf8");
+    expect(radarTsx).toContain("IntersectionObserver");
+    expect(radarTsx).toContain('rootMargin: "400px"');
+    expect(radarTsx).not.toContain("FontSizeToggle");
+    expect(radarTsx).not.toContain("더보기");
+    expect(sidebarTsx).not.toContain("FontSizeToggle");
+    expect(sidebarTsx).toContain("border-b-[1.5px] border-fg");
   });
 
   it("live-feed.json 전 기사가 도입부 잡담·복붙 템플릿·미번역 외국어 제목 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {

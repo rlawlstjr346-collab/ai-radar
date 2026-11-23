@@ -19,9 +19,9 @@ export const THEME_TOKENS = {
     "--accent": "#20B8CD",
   },
   paper: {
-    "--bg-base": "#F5F5F7",
+    "--bg-base": "#FBFBFD",
     "--bg-surface": "#FFFFFF",
-    "--bg-elevated": "#EBEBF0",
+    "--bg-elevated": "#F2F2F7",
     "--text-primary": "#1D1D1F",
     "--text-secondary": "#515154",
     "--text-tertiary": "#636366",
@@ -56,7 +56,7 @@ export function parseFontPercent(v: string | null | undefined): number {
  * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마와 글자 크기 슬라이더(85~200%)를 바로 적용.
  * localStorage 가 막힌 환경에서도 조용히 기본값으로.
  */
-export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark";var fs=localStorage.getItem("${FONT_SIZE_STORAGE_KEY}");if(fs==="large"){document.documentElement.dataset.fontSize="large";document.documentElement.dataset.fontPercent="120";document.documentElement.style.setProperty("--font-scale","1.2")}else if(fs&&!isNaN(Number(fs))){var p=Math.min(${FONT_SCALE_MAX},Math.max(${FONT_SCALE_MIN},Math.round(Number(fs))));document.documentElement.dataset.fontPercent=String(p);document.documentElement.style.setProperty("--font-scale",String(p/100))}}catch(e){}`;
+export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}`;
 
 /** WCAG 상대 휘도 */
 function luminance(hex: string): number {

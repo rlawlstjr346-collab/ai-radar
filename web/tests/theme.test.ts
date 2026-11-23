@@ -24,9 +24,9 @@ describe("DESIGN.md 토큰 ↔ globals.css", () => {
     }
   });
 
-  it("기본(:root)이 Apple Newsroom 라이트 무채색(#F5F5F7 바탕 + #FFFFFF 카드)이고 다크는 #09090B 바탕이다", () => {
+  it("기본(:root)이 Apple ML Research·Newsroom 라이트 무채색(#FBFBFD 바탕 + #FFFFFF 카드)이고 다크는 #09090B 바탕이다", () => {
     expect(block(":root")).toContain("color-scheme: light");
-    expect(block(":root").toLowerCase()).toContain("--bg-base: #f5f5f7;");
+    expect(block(":root").toLowerCase()).toContain("--bg-base: #fbfbfd;");
     expect(block(":root").toLowerCase()).toContain("--bg-surface: #ffffff;");
     expect(block(':root[data-theme="dark"]')).toContain("color-scheme: dark");
     expect(block(':root[data-theme="dark"]').toLowerCase()).toContain("--bg-base: #09090b;");

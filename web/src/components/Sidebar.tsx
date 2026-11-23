@@ -1,17 +1,16 @@
 "use client";
 
-import { Activity, Compass, History, LayoutGrid, type LucideIcon } from "lucide-react";
+import { Activity, Compass, History, type LucideIcon } from "lucide-react";
 
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
 import { formatLastCollected, type CategoryFilter } from "@/lib/filter";
 import type { DataSource } from "@/lib/types";
 
 import BrandLogo from "./BrandLogo";
-import FontSizeToggle from "./FontSizeToggle";
-import SegmentedControl from "./SegmentedControl";
 import ThemeToggle from "./ThemeToggle";
 
 export type View = "feed" | "past" | "directory";
+export type TitleLang = "ko" | "en";
 
 export interface FilterState {
   view: View;
@@ -23,6 +22,8 @@ interface Props extends FilterState {
   onCategory: (c: CategoryFilter) => void;
   counts: Record<CategoryFilter, number>;
   viewCounts: Record<View, number>;
+  lang: TitleLang;
+  onLang: (l: TitleLang) => void;
   source: DataSource;
   platformCount?: number;
   lastCollectedAt?: string | null;
@@ -35,17 +36,13 @@ export function statusLine(source: DataSource, platformCount?: number): string {
 }
 
 const VIEWS: Array<{ id: View; label: string; short: string; Icon: LucideIcon }> = [
-  { id: "feed", label: "실시간 레이더", short: "실시간", Icon: Activity },
-  { id: "past", label: "지난 주요 소식", short: "지난 소식", Icon: History },
-  { id: "directory", label: "글로벌 AI 플랫폼 도감", short: "도감", Icon: Compass },
+  { id: "feed", label: "실시간 레이더", short: "실시간 레이더", Icon: Activity },
+  { id: "past", label: "지난 주요 소식", short: "지난 주요 소식", Icon: History },
+  { id: "directory", label: "AI 플랫폼 도감", short: "AI 플랫폼 도감", Icon: Compass },
 ];
 
-const ITEM_BASE =
-  "press t-nav flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
-const itemState = (active: boolean) => (active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:bg-elevated/70 hover:text-fg");
-
-/** 로고·제호: 여유 있는 viewBox(48×44) 순수 흑백 S-커브 신문 심볼 + 잘림 없는 클래식 세리프 AI Radar */
-export function Logo() {
+/** 잘림 없는 순수 흑백 S-커브 신문 심볼 + 클래식 세리프 AI Radar */
+export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     // 풀 새로고침이 목적이라 next/link 대신 일반 <a> 를 쓴다
     // eslint-disable-next-line @next/next/no-html-link-for-pages
@@ -56,17 +53,50 @@ export function Logo() {
         window.location.href = "/";
       }}
       aria-label="AI Radar 처음 화면으로 새로고침"
-      className="flex min-w-0 cursor-pointer items-center gap-2.5 overflow-visible rounded-xl py-1 transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="flex min-w-0 cursor-pointer items-center gap-2.5 overflow-visible rounded-xl py-0.5 transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
-      <BrandLogo className="h-[40px] w-[44px] shrink-0 overflow-visible text-brand" />
-      <div className="min-w-0 overflow-visible">
-        <p className="font-editorial whitespace-nowrap text-[23px] leading-[1.18]">AI Radar</p>
-        <p className="mt-0.5 text-[12.5px] font-medium leading-snug text-fg-3">글로벌 AI 뉴스룸</p>
-      </div>
+      <BrandLogo className={`${compact ? "h-[32px] w-[36px]" : "h-[38px] w-[42px]"} shrink-0 overflow-visible text-brand`} />
+      <span className={`font-editorial whitespace-nowrap leading-[1.12] ${compact ? "text-[1.3rem]" : "text-[1.52rem]"}`}>
+        AI Radar
+      </span>
     </a>
   );
 }
 
+/** 한/영 전환 미니 토글 */
+export function LangToggle({ lang, onLang }: { lang: TitleLang; onLang: (l: TitleLang) => void }) {
+  return (
+    <div
+      role="radiogroup"
+      aria-label="제목 언어 전환"
+      className="inline-flex shrink-0 items-center gap-0.5 rounded-lg bg-elevated p-0.5"
+    >
+      {(["ko", "en"] as const).map((code) => {
+        const active = lang === code;
+        return (
+          <button
+            key={code}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            onClick={() => onLang(code)}
+            className={`press rounded-md px-2 py-1 text-[0.76rem] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+              active ? "bg-surface text-fg shadow-xs" : "text-fg-3 hover:text-fg-2"
+            }`}
+          >
+            {code === "ko" ? "한" : "EN"}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Apple Machine Learning Research 스타일의 '분야' 필터.
+ * - 데스크톱: 소제목 '분야' + 1.5px solid #1D1D1F 수평 실선 + 8px 원형 컬러 도트 + 1줄 텍스트
+ * - 모바일: 깔끔한 가로 스크롤 컬러 도트 스트립
+ */
 export function CategoryChips({
   category,
   onCategory,
@@ -78,16 +108,42 @@ export function CategoryChips({
   counts: Record<CategoryFilter, number>;
   layout: "list" | "row";
 }) {
-  const options: Array<{ id: CategoryFilter; label: string; Icon: LucideIcon }> = [
-    { id: "all", label: "전체", Icon: LayoutGrid },
-    ...CATEGORY_ORDER.map((c) => ({ id: c, label: CATEGORY_META[c].label, Icon: CATEGORY_META[c].Icon })),
+  const options: Array<{ id: CategoryFilter; label: string; dotClass: string }> = [
+    { id: "all", label: "전체", dotClass: "bg-fg" },
+    ...CATEGORY_ORDER.map((c) => ({
+      id: c,
+      label: CATEGORY_META[c].label,
+      dotClass: CATEGORY_META[c].dotClass,
+    })),
   ];
+
+  if (layout === "row") {
+    return (
+      <div role="radiogroup" aria-label="분야 필터" className="thin-scroll -mx-4 flex items-center gap-1.5 overflow-x-auto px-4 pb-1">
+        {options.map((o) => {
+          const active = category === o.id;
+          return (
+            <button
+              key={o.id}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              onClick={() => onCategory(o.id)}
+              className={`press inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.84rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                active ? "bg-elevated font-bold text-fg" : "font-medium text-fg-2 hover:bg-elevated/60 hover:text-fg"
+              }`}
+            >
+              <span className={`h-2 w-2 shrink-0 rounded-full ${o.dotClass}`} aria-hidden />
+              <span className="whitespace-nowrap">{o.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
-    <div
-      role="radiogroup"
-      aria-label="카테고리 필터"
-      className={layout === "list" ? "flex flex-col gap-0.5" : "thin-scroll -mx-4 flex gap-1 overflow-x-auto px-4 pb-1"}
-    >
+    <div role="radiogroup" aria-label="분야 필터" className="flex flex-col gap-0.5 pt-2.5">
       {options.map((o) => {
         const active = category === o.id;
         return (
@@ -97,19 +153,17 @@ export function CategoryChips({
             role="radio"
             aria-checked={active}
             onClick={() => onCategory(o.id)}
-            className={
-              layout === "list"
-                ? `${ITEM_BASE} justify-between ${itemState(active)}`
-                : `press t-nav flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                    active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:text-fg"
-                  }`
-            }
+            className={`press group flex w-full items-center justify-between gap-2 rounded-xl px-2.5 py-1.5 text-left text-[0.9rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+              active ? "bg-elevated/90 font-bold text-fg" : "font-medium text-fg-2 hover:bg-elevated/55 hover:text-fg"
+            }`}
           >
             <span className="flex min-w-0 items-center gap-2.5">
-              {layout === "list" && <o.Icon className="h-4 w-4 shrink-0" strokeWidth={1.8} aria-hidden />}
-              <span className="min-w-0 break-words">{o.label}</span>
+              <span className={`h-2 w-2 shrink-0 rounded-full ${o.dotClass}`} aria-hidden />
+              <span className="truncate">{o.label}</span>
             </span>
-            <span className="ml-2 shrink-0 text-[13px] tabular-nums text-fg-3">{counts[o.id] ?? 0}</span>
+            <span className={`tnum shrink-0 text-[0.78rem] ${active ? "font-semibold text-fg-2" : "text-fg-3"}`}>
+              {counts[o.id] ?? 0}
+            </span>
           </button>
         );
       })}
@@ -117,6 +171,7 @@ export function CategoryChips({
   );
 }
 
+/** Apple Podcasts 스타일 핵심 뷰 메뉴 */
 export function ViewTabs({
   view,
   onView,
@@ -130,16 +185,31 @@ export function ViewTabs({
 }) {
   if (compact) {
     return (
-      <SegmentedControl
-        label="보기 전환"
-        value={view}
-        onChange={onView}
-        options={VIEWS.map(({ id, short, Icon }) => ({ key: id, label: short, Icon }))}
-      />
+      <div role="tablist" aria-label="보기 전환" className="thin-scroll flex items-center gap-1 overflow-x-auto">
+        {VIEWS.map(({ id, short }) => {
+          const active = view === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => onView(id)}
+              className={`press inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.86rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                active ? "bg-elevated font-bold text-fg" : "font-medium text-fg-2 hover:text-fg"
+              }`}
+            >
+              <span>{short}</span>
+              {viewCounts && <span className="tnum text-[0.74rem] text-fg-3">{viewCounts[id]}</span>}
+            </button>
+          );
+        })}
+      </div>
     );
   }
+
   return (
-    <div role="tablist" aria-label="보기 전환" className="flex flex-col gap-0.5">
+    <div role="tablist" aria-label="보기 전환" className="flex flex-col gap-1">
       {VIEWS.map(({ id, label, Icon }) => {
         const active = view === id;
         return (
@@ -149,11 +219,17 @@ export function ViewTabs({
             role="tab"
             aria-selected={active}
             onClick={() => onView(id)}
-            className={`${ITEM_BASE} ${itemState(active)}`}
+            className={`press flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-[0.95rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+              active ? "bg-elevated font-bold text-fg" : "font-medium text-fg-2 hover:bg-elevated/60 hover:text-fg"
+            }`}
           >
-            <Icon className="h-4 w-4 shrink-0" strokeWidth={1.8} aria-hidden />
-            <span className="min-w-0 flex-1 break-words">{label}</span>
-            {viewCounts && <span className="ml-1 shrink-0 text-[13px] tabular-nums text-fg-3">{viewCounts[id]}</span>}
+            <Icon className={`h-[1.05rem] w-[1.05rem] shrink-0 ${active ? "text-fg" : "text-fg-3"}`} strokeWidth={active ? 2.1 : 1.8} aria-hidden />
+            <span className="min-w-0 flex-1 truncate">{label}</span>
+            {viewCounts && (
+              <span className={`tnum shrink-0 text-[0.78rem] ${active ? "font-semibold text-fg-2" : "text-fg-3"}`}>
+                {viewCounts[id]}
+              </span>
+            )}
           </button>
         );
       })}
@@ -161,39 +237,75 @@ export function ViewTabs({
   );
 }
 
-/** 데스크톱 좌측 사이드바 */
+/** 모바일(<lg) 반응형 상단 바 */
+export function MobileHeader(p: Props) {
+  const collectedLabel = p.lastCollectedAt && p.now !== undefined ? formatLastCollected(p.lastCollectedAt, p.now) : null;
+  return (
+    <header className="top-glass-nav sticky top-0 z-40 flex min-w-0 flex-col gap-2.5 px-4 pb-2.5 pt-3.5 md:px-6 lg:hidden">
+      <div className="flex min-w-0 items-center justify-between gap-2">
+        <Logo compact />
+        <div className="flex shrink-0 items-center gap-1.5">
+          {collectedLabel && (
+            <span className="tnum hidden items-center gap-1.5 pr-1 text-[0.76rem] text-fg-3 sm:inline-flex">
+              <span className="live-ping" aria-hidden />
+              {collectedLabel}
+            </span>
+          )}
+          <LangToggle lang={p.lang} onLang={p.onLang} />
+          <ThemeToggle compact />
+        </div>
+      </div>
+      <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} compact />
+      <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="row" />
+    </header>
+  );
+}
+
+/**
+ * 데스크톱 좌측 여백 일체형 컬럼 (width: 240px, sticky, 무배경).
+ * Apple Podcasts 좌상단 로고·핵심 메뉴 + Apple ML Research 'Research areas' 컬러 도트 필터.
+ */
 export default function Sidebar(p: Props) {
   const collectedLabel = p.lastCollectedAt && p.now !== undefined ? formatLastCollected(p.lastCollectedAt, p.now) : null;
   const collectedTitle = p.lastCollectedAt
-    ? new Date(p.lastCollectedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })
+    ? `마지막 자동 수집: ${new Date(p.lastCollectedAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" })} (KST)`
     : undefined;
+
   return (
-    <nav aria-label="탐색" className="thin-scroll flex h-full flex-col gap-6 overflow-y-auto border-r border-line bg-surface px-4 pb-10 pt-5">
-      <div className="overflow-visible px-0.5">
-        <Logo />
-      </div>
-      <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} />
-      <section aria-labelledby="sidebar-category" className="flex flex-col gap-1">
-        <h2 id="sidebar-category" className="px-3 pb-1 text-[13px] font-medium text-fg-3">
-          분야
-        </h2>
-        <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
-      </section>
-      <div className="mt-auto flex flex-col gap-3.5 border-t border-line px-1 pt-4">
-        <div className="flex flex-col gap-1">
-          <p className="flex items-center gap-2 text-[13px] leading-relaxed text-fg-2">
-            <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.source === "sample" ? "bg-accent" : "bg-live"}`} aria-hidden />
-            <span>{statusLine(p.source, p.platformCount)}</span>
-          </p>
-          {collectedLabel && (
-            <p className="pl-3.5 text-[13px] tabular-nums text-fg-3" title={collectedTitle}>
-              마지막 자동 수집: {collectedLabel}
-            </p>
-          )}
+    <aside className="sticky top-0 flex h-dvh w-[240px] shrink-0 flex-col justify-between overflow-y-auto bg-transparent pb-7 pt-8 thin-scroll">
+      <div className="flex flex-col gap-7">
+        {/* 1. 좌측 최상단 로고 */}
+        <div className="overflow-visible px-1">
+          <Logo />
         </div>
-        <FontSizeToggle />
-        <ThemeToggle />
+
+        {/* 2. Apple Podcasts 스타일 핵심 뷰 메뉴 */}
+        <nav aria-label="주요 메뉴">
+          <ViewTabs view={p.view} onView={p.onView} viewCounts={p.viewCounts} />
+        </nav>
+
+        {/* 3. Apple ML Research 스타일 분야 필터 (1.5px 수평 실선 + 8px 컬러 도트) */}
+        <section aria-labelledby="sidebar-category" className="px-1">
+          <h2 id="sidebar-category" className="border-b-[1.5px] border-fg pb-2 text-[0.86rem] font-bold tracking-[-0.01em] text-fg">
+            분야
+          </h2>
+          <CategoryChips category={p.category} onCategory={p.onCategory} counts={p.counts} layout="list" />
+        </section>
       </div>
-    </nav>
+
+      {/* 4. 하단 미니 유틸: 다크 모드 · 한/영 전환 + 조용한 20분 자동 업데이트 1줄 */}
+      <footer className="mt-8 flex flex-col gap-3 px-1 pt-4">
+        <div className="flex items-center gap-2">
+          <ThemeToggle compact />
+          <LangToggle lang={p.lang} onLang={p.onLang} />
+        </div>
+        <p className="flex items-center gap-1.5 text-[0.76rem] text-fg-3" title={collectedTitle}>
+          <span className="live-ping" aria-hidden />
+          <span className="truncate">
+            20분 자동 업데이트{collectedLabel ? ` · ${collectedLabel}` : ""}
+          </span>
+        </p>
+      </footer>
+    </aside>
   );
 }

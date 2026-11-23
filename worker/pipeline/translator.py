@@ -118,6 +118,21 @@ class TranslatedArticle:
     caveats_ko: Optional[str] = None
 
 
+_JP_KANA_RE = re.compile(r"[\u3040-\u30ff]")
+_BAD_CACHE_SUFFIX_RE = re.compile(
+    r"\s—\s(?:새 AI 모델·기능 업데이트|개발자 도구·오픈소스 공개|AI 이미지·디자인 모델 공개|"
+    r"AI 영상·음성 모델 업데이트|신규 AI 연구·벤치마크 발표|글로벌 AI 업계 주요 발표|글로벌 AI 빌더 실시간 공유|AI 주요 업데이트)$"
+)
+
+
+def _is_bad_cached_title(title_ko: str, original_title: str = "") -> bool:
+    if not title_ko or needs_translation(title_ko) or _JP_KANA_RE.search(title_ko):
+        return True
+    if _BAD_CACHE_SUFFIX_RE.search(title_ko) and (not original_title or needs_translation(original_title)):
+        return True
+    return False
+
+
 class TranslationCache:
     """live-feed-meta.json 의 `translations` 섹션 + 기존 live-feed.json 을 URL 기준으로 재사용하는 캐시."""
 
@@ -151,7 +166,7 @@ class TranslationCache:
             title_ko = str(it.get("title_ko") or it.get("hook_title") or "").strip()
             original_title = str(it.get("original_title") or title_ko).strip()
             what_ko = str(it.get("what_ko") or "").strip()
-            if not title_ko or needs_translation(title_ko) or needs_translation(what_ko):
+            if _is_bad_cached_title(title_ko, original_title) or needs_translation(what_ko):
                 continue
             # 이미 한국어 번역 완료된 항목만 캐시에 시드 (미번역 외국어 항목은 재번역 대상)
             if it.get("title_ko") or (original_title != title_ko):
@@ -168,7 +183,8 @@ class TranslationCache:
         if not entry:
             return None
         title_ko = str(entry.get("title_ko") or "").strip()
-        if not title_ko or needs_translation(title_ko):
+        original_title = str(entry.get("original_title") or "").strip()
+        if _is_bad_cached_title(title_ko, original_title):
             return None
         return entry
 

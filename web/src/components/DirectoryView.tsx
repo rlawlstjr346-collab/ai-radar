@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { CATEGORY_META } from "@/lib/categories";
 import { groupPlatforms, type CategoryFilter } from "@/lib/filter";
@@ -16,38 +16,78 @@ interface Props {
   platforms: Platform[];
   items: FeedItem[];
   category: CategoryFilter;
-  query?: string;
   selectedId: string | null;
   onSelect: (id: string) => void;
 }
 
 const FILTERS: PlatformFilter[] = ["all", "live", "free", "open_local"];
 const REGION_FILTERS: RegionFilter[] = ["all", ...REGION_ORDER];
+const DIR_BATCH = 24;
 const regionLabel = (r: RegionFilter) =>
   r === "all" ? "전체" : r === "social" ? REGION_META.social.filter : `${REGION_META[r].flag} ${REGION_META[r].filter}`;
 
-function matchesPlatformQuery(p: Platform, query: string): boolean {
-  const q = query.trim().toLowerCase();
-  if (!q) return true;
-  return [p.name, p.id, p.one_liner_ko, p.why_visit_ko, p.access_note ?? ""].some((s) => s.toLowerCase().includes(q));
-}
-
-export default function DirectoryView({ platforms, items, category, query = "", selectedId, onSelect }: Props) {
+export default function DirectoryView({ platforms, items, category, selectedId, onSelect }: Props) {
   const [trait, setTrait] = useState<PlatformFilter>("all");
   const [region, setRegion] = useState<RegionFilter>("all");
-  const filtered = platforms.filter(
-    (p) => matchesPlatformFilter(p, trait) && matchesRegion(p, region) && matchesPlatformQuery(p, query),
+  const [visibleCount, setVisibleCount] = useState(DIR_BATCH);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  const filtered = useMemo(
+    () => platforms.filter((p) => matchesPlatformFilter(p, trait) && matchesRegion(p, region)),
+    [platforms, trait, region],
   );
-  const groups = groupPlatforms(filtered, category);
-  const countBy = items.reduce<Record<string, number>>((acc, i) => {
-    acc[i.platform_id] = (acc[i.platform_id] ?? 0) + 1;
-    return acc;
-  }, {});
-  const inCategory = (p: Platform) => (category === "all" || p.category === category) && matchesPlatformQuery(p, query);
+  const groups = useMemo(() => groupPlatforms(filtered, category), [filtered, category]);
+  const totalMatching = useMemo(() => groups.reduce((acc, [, list]) => acc + list.length, 0), [groups]);
+
+  // 필터/카테고리 변경 시 배치 초기화
+  useEffect(() => {
+    setVisibleCount(DIR_BATCH);
+  }, [category, trait, region]);
+
+  // 자동 무한 스크롤 센티넬
+  const remaining = totalMatching - visibleCount;
+  useEffect(() => {
+    if (remaining <= 0) return;
+    const node = sentinelRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisibleCount((v) => Math.min(totalMatching, v + DIR_BATCH));
+        }
+      },
+      { rootMargin: "400px" },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [remaining, totalMatching]);
+
+  const countBy = useMemo(
+    () =>
+      items.reduce<Record<string, number>>((acc, i) => {
+        acc[i.platform_id] = (acc[i.platform_id] ?? 0) + 1;
+        return acc;
+      }, {}),
+    [items],
+  );
+  const inCategory = (p: Platform) => category === "all" || p.category === category;
+
+  // 그룹 단위로 visibleCount 만큼만 순차 절단
+  const visibleGroups = useMemo(() => {
+    let budget = visibleCount;
+    const sliced: Array<[typeof groups[number][0], Platform[], number]> = [];
+    for (const [cat, list] of groups) {
+      if (budget <= 0) break;
+      const take = list.slice(0, budget);
+      sliced.push([cat, take, list.length]);
+      budget -= take.length;
+    }
+    return sliced;
+  }, [groups, visibleCount]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <header className="flex flex-col gap-3.5">
+    <div className="flex flex-col gap-7">
+      <div className="flex flex-col gap-3">
         {/* 성격별 빠른 필터 (슬라이딩 필) */}
         <SegmentedControl
           role="radiogroup"
@@ -62,7 +102,7 @@ export default function DirectoryView({ platforms, items, category, query = "", 
             count: platforms.filter((p) => inCategory(p) && matchesRegion(p, region) && matchesPlatformFilter(p, f)).length,
           }))}
         />
-        {/* 권역 필터: 한국 AI 생태계만 따로 모아보기 등 */}
+        {/* 권역 필터 */}
         <SegmentedControl
           role="radiogroup"
           label="권역 필터"
@@ -76,26 +116,26 @@ export default function DirectoryView({ platforms, items, category, query = "", 
             count: platforms.filter((p) => inCategory(p) && matchesPlatformFilter(p, trait) && matchesRegion(p, r)).length,
           }))}
         />
-      </header>
+      </div>
 
-      {groups.length === 0 && (
+      {visibleGroups.length === 0 && (
         <p className="newsroom-card px-6 py-12 text-center text-[0.95rem] text-fg-2">
-          이 조건에 맞는 플랫폼이 없어요. 필터나 검색어를 바꿔 보세요.
+          이 조건에 맞는 플랫폼이 없어요. 필터를 바꿔 보세요.
         </p>
       )}
 
-      {groups.map(([cat, list]) => {
+      {visibleGroups.map(([cat, list, fullCount]) => {
         const meta = CATEGORY_META[cat];
         return (
           <section key={cat} aria-labelledby={`dir-${cat}`} className="flex flex-col gap-4">
-            <div className="flex items-baseline gap-2.5 border-b border-line pb-2.5">
-              <meta.Icon className="h-[1.05rem] w-[1.05rem] shrink-0 self-center text-fg-2" strokeWidth={2} aria-hidden />
-              <h2 id={`dir-${cat}`} className="text-[1.12rem] font-bold tracking-[-0.015em] text-fg">
+            <div className="flex items-center gap-2.5 border-b border-line pb-2.5">
+              <span className={`h-2 w-2 shrink-0 rounded-full ${meta.dotClass}`} aria-hidden />
+              <h2 id={`dir-${cat}`} className="text-[1.08rem] font-bold tracking-[-0.015em] text-fg">
                 {meta.label}
               </h2>
-              <span className="t-meta tnum">{list.length}곳</span>
+              <span className="t-meta tnum">{fullCount}곳</span>
             </div>
-            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {list.map((p) => {
                 const selected = selectedId === p.id;
                 return (
@@ -119,8 +159,8 @@ export default function DirectoryView({ platforms, items, category, query = "", 
                           aria-hidden
                         />
                       </span>
-                      <span className="text-[0.9rem] leading-relaxed text-fg-2">{p.one_liner_ko}</span>
-                      <span className="mt-auto flex flex-wrap items-center gap-2 pt-1.5">
+                      <span className="text-[0.92rem] leading-relaxed text-fg-2">{p.one_liner_ko}</span>
+                      <span className="mt-auto flex flex-wrap items-center gap-2 pt-1">
                         <StatusBadge status={p.collect_status} />
                         {regionOf(p) !== "global" && (
                           <span className="text-[0.78rem] font-medium text-fg-3">
@@ -137,6 +177,12 @@ export default function DirectoryView({ platforms, items, category, query = "", 
           </section>
         );
       })}
+
+      {remaining > 0 && (
+        <div ref={sentinelRef} aria-hidden className="flex h-12 items-center justify-center">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-fg-3/50" />
+        </div>
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { getHighlightSummary } from "@/lib/reading-insights";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitTakeaway, PlatformMark, QuietTag } from "./Badges";
-import type { TitleLang } from "./TopNavHeader";
+import type { TitleLang } from "./Sidebar";
 import XLogo from "./XLogo";
 
 interface Props {
@@ -78,11 +78,10 @@ function CoverButton({
 }
 
 /**
- * 시각 위계 역전:
- * 좌측 상단에서 '가져온 플랫폼(출처)'이 굵은 볼드체 + 심볼 캡슐로 가장 선명하게 드러나고,
- * 시간 표시는 그 옆에 차분한 보조 텍스트로 배치한다.
+ * Apple Machine Learning Research 스타일 Eyebrow:
+ * `컬러 분야명 | 심볼 + 굵은 출처 플랫폼명 · 상대시간`
  */
-function SourceHeader({
+function ResearchEyebrow({
   item,
   platform,
   now,
@@ -96,6 +95,7 @@ function SourceHeader({
   tags?: boolean;
 }) {
   const xCard = isXItem(item);
+  const catMeta = CATEGORY_META[item.category];
   const platformName = platform?.name ?? item.platform_id;
   const f = item.published_at ? freshness(item.published_at, now) : null;
   const timeIso = item.published_at ?? item.fetched_at ?? item.created_at;
@@ -103,20 +103,27 @@ function SourceHeader({
   const timeLabel = f?.label || `수집 ${formatDate(item.fetched_at ?? item.created_at)}`;
 
   return (
-    <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1.5">
-      {/* 출처(플랫폼) 볼드 캡슐 배지 — 카드에서 가장 먼저 눈에 띄는 시그니처 */}
+    <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-[0.86rem]">
+      {/* 1. 컬러 분야명 (좌측 컬러 도트와 동일 애플 포인트 컬러) */}
+      <span className={`font-semibold tracking-[-0.01em] ${catMeta.text}`}>{catMeta.label}</span>
+
+      <span className="select-none text-fg-3/50" aria-hidden>
+        |
+      </span>
+
+      {/* 2. 가져온 플랫폼/웹 이름 (선명한 #1D1D1F 굵은 볼드체 + 작은 심볼) */}
       <button
         type="button"
         onClick={(e) => {
           e.stopPropagation();
           onSelectPlatform(xCard ? "x" : item.platform_id);
         }}
-        className="press inline-flex max-w-full items-center gap-1.5 rounded-full bg-elevated px-3 py-1 text-[0.82rem] font-bold tracking-[-0.01em] text-fg transition-colors hover:bg-fg hover:text-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        className="press inline-flex max-w-full items-center gap-1.5 rounded-md py-0.5 font-bold tracking-[-0.012em] text-fg transition-opacity hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         aria-label={`${platformName} 플랫폼 소개 보기`}
       >
         {xCard ? (
           <>
-            <XLogo className="h-3.5 w-3.5 shrink-0" />
+            <XLogo className="h-3.5 w-3.5 shrink-0 text-fg" />
             <span className="truncate">𝕏 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
           </>
         ) : (
@@ -127,8 +134,12 @@ function SourceHeader({
         )}
       </button>
 
-      {/* 차분한 보조 시간 텍스트 */}
-      <time dateTime={timeIso} title={timeTitle} className="t-meta inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-medium text-fg-3">
+      <span className="select-none text-fg-3/60" aria-hidden>
+        ·
+      </span>
+
+      {/* 3. 상대시간 (#86868B / text-fg-3) */}
+      <time dateTime={timeIso} title={timeTitle} className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[0.83rem] font-medium text-fg-3">
         {f?.fresh && <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />}
         {timeLabel}
       </time>
@@ -176,21 +187,21 @@ function EntityLine({ item, platform, onEntity }: { item: FeedItem; platform?: P
   );
 }
 
-/** ① 와이드 히어로 후킹 카드 — Apple Newsroom 1면 최상단 */
+/** ① 상단 대표 후킹 피처드 카드 (Apple Newsroom 둥근 20px 카드 마감) */
 export function LeadStory({ item, platform, selected, now, lang = "ko", onSelect, onSelectPlatform, onEntity }: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   return (
-    <div
+    <article
       data-active={selected ? "true" : "false"}
-      className="newsroom-card group relative flex flex-col gap-4 overflow-hidden p-6 sm:p-8"
+      className="newsroom-card group relative flex flex-col gap-3.5 overflow-hidden p-6 sm:p-8"
     >
       {xCard && <XLogo className="x-watermark" />}
-      <SourceHeader item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
+      <ResearchEyebrow item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
       <h2 className="t-lead relative z-10">
         <CoverButton item={item} lang={lang} selected={selected} onSelect={onSelect} />
       </h2>
-      {text && <p className="t-body relative z-10 max-w-[72ch] text-fg-2">{text}</p>}
+      {text && <p className="t-body relative z-10 max-w-[70ch] text-fg-2">{text}</p>}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-1">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
           <BenefitTakeaway tag={item.benefit_tag} />
@@ -200,61 +211,59 @@ export function LeadStory({ item, platform, selected, now, lang = "ko", onSelect
           1분 요약 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
         </span>
       </div>
-    </div>
+    </article>
   );
 }
 
-/** ② 서브 피처드 카드 (2열 그리드) */
+/** ② 서브 피처드 카드 (2열 균형 카드) */
 export function FeatureStory({ item, platform, selected, now, lang = "ko", onSelect, onSelectPlatform }: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   return (
-    <div
+    <article
       data-active={selected ? "true" : "false"}
-      className="newsroom-card group relative flex h-full flex-col justify-between gap-3.5 overflow-hidden p-5 sm:p-6"
+      className="newsroom-card group relative flex h-full flex-col justify-between gap-3.5 overflow-hidden p-6"
     >
       {xCard && <XLogo className="x-watermark" />}
-      <div className="relative z-10 flex flex-col gap-3">
-        <SourceHeader item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
+      <div className="relative z-10 flex flex-col gap-2.5">
+        <ResearchEyebrow item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
         <h3 className="t-feature">
           <CoverButton item={item} lang={lang} selected={selected} onSelect={onSelect} />
         </h3>
-        {text && <p className="t-body line-clamp-3 text-fg-2">{text}</p>}
+        {text && <p className="line-clamp-2 text-[0.98rem] leading-relaxed text-fg-2">{text}</p>}
       </div>
-      <div className="relative z-10 flex items-center justify-between gap-2 pt-2">
+      <div className="relative z-10 flex items-center justify-between gap-2 pt-1">
         <BenefitTakeaway tag={item.benefit_tag} />
         <span className="t-meta ml-auto inline-flex shrink-0 items-center gap-1 font-semibold text-fg-2 transition-transform group-hover:translate-x-0.5">
           1분 요약 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
         </span>
       </div>
-    </div>
+    </article>
   );
 }
 
-/** ③ 에디토리얼 그리드 카드 */
+/** ③ 정갈하고 큼직한 에디토리얼 피드 카드 (Apple ML Research + Apple Newsroom 20px 마감) */
 export function StreamRow({ item, platform, selected, now, lang = "ko", onSelect, onSelectPlatform }: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   return (
-    <div
+    <article
       data-active={selected ? "true" : "false"}
-      className="newsroom-card group relative flex h-full flex-col justify-between gap-3 overflow-hidden p-5 sm:p-6"
+      className="newsroom-card group relative flex flex-col gap-2.5 overflow-hidden p-6"
     >
       {xCard && <XLogo className="x-watermark" />}
-      <div className="relative z-10 flex flex-col gap-2.5">
-        <SourceHeader item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
-        <h3 className="t-stream">
-          <CoverButton item={item} lang={lang} selected={selected} onSelect={onSelect} />
-        </h3>
-        {text && <p className="t-meta line-clamp-2 leading-relaxed text-fg-2">{text}</p>}
-      </div>
-      <div className="relative z-10 flex items-center justify-between gap-2 pt-1.5">
+      <ResearchEyebrow item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
+      <h3 className="t-stream relative z-10">
+        <CoverButton item={item} lang={lang} selected={selected} onSelect={onSelect} />
+      </h3>
+      {text && <p className="relative z-10 line-clamp-2 max-w-[74ch] text-[0.98rem] leading-relaxed text-fg-2">{text}</p>}
+      <div className="relative z-10 flex items-center justify-between gap-2 pt-1">
         <BenefitTakeaway tag={item.benefit_tag} />
         <span className="t-meta ml-auto inline-flex shrink-0 items-center gap-1 font-semibold text-fg-2 transition-transform group-hover:translate-x-0.5">
           1분 요약 <ArrowRight className="h-3.5 w-3.5" aria-hidden />
         </span>
       </div>
-    </div>
+    </article>
   );
 }
 

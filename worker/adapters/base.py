@@ -288,21 +288,23 @@ class BaseAdapter:
         raise NotImplementedError
 
     # ── helpers ─────────────────────────────────────────────────────────────
-    def get(self, url: str, **kwargs: Any) -> httpx.Response:
+    def get(self, url: str, *, conditional: bool = True, **kwargs: Any) -> httpx.Response:
         if self.guard is not None:
             until = self.guard.is_cooling_down(url)
             if until is not None:
                 raise CooldownError(f"cooldown until {until.isoformat().replace('+00:00', 'Z')}")
             self.guard.wait_for_domain(url)
-            cond = self.guard.conditional_headers(url)
-            if cond:
-                merged = dict(cond)
-                if kwargs.get("headers"):
-                    merged.update(kwargs["headers"])
-                kwargs["headers"] = merged
+            if conditional:
+                cond = self.guard.conditional_headers(url)
+                if cond:
+                    merged = dict(cond)
+                    if kwargs.get("headers"):
+                        merged.update(kwargs["headers"])
+                    kwargs["headers"] = merged
             resp = self.client.get(url, **kwargs)
-            self.guard.record_response(url, resp, source_id=self.source.id, platform_id=self.source.platform_id)
-            if resp.status_code == 304:
+            if conditional or resp.status_code in (403, 429):
+                self.guard.record_response(url, resp, source_id=self.source.id, platform_id=self.source.platform_id)
+            if conditional and resp.status_code == 304:
                 raise NotModifiedError(f"304 Not Modified: {url}")
             resp.raise_for_status()
             return resp

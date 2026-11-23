@@ -19,14 +19,24 @@ from collector.normalize import strip_html
 from pipeline.curator import is_blocked_noise
 
 LOOKBACK_DAYS = 14
+SUBSTACK_LOOKBACK_DAYS = 30
 MAX_ENTRIES = 20
 PRERELEASE_RE = re.compile(r"(?:^|[-._])(rc|alpha|beta|dev|nightly|pre)\d*", re.I)
 GH_RELEASES_RE = re.compile(r"github\.com/([^/]+)/([^/]+)/releases")
 
 # 공식 발표는 '반응 수'가 없으므로 고정 가중치 (HN 포인트 환산)
-ENGAGEMENT_OFFICIAL_BLOG = 150.0
+ENGAGEMENT_OFFICIAL_BLOG = 160.0
+ENGAGEMENT_SUBSTACK = 120.0          # 핵심 AI Substack 뉴스레터
 ENGAGEMENT_RELEASE = 60.0
-ENGAGEMENT_COMMUNITY = 90.0          # 커뮤니티·뉴스레터·사내 기술블로그 (공식 발표보다 약간 낮게)
+ENGAGEMENT_COMMUNITY = 90.0          # 커뮤니티·사내 기술블로그
+
+SUBSTACK_MARKERS: tuple[str, ...] = (
+    "latent.space",
+    "importai.substack.com",
+    "sebastianraschka.com",
+    "oneusefulthing.org",
+    "interconnects.ai",
+)
 
 # AI 키워드 필터를 적용할 종합 피드 (endpoint 부분 문자열)
 AI_FILTER_MARKERS: tuple[str, ...] = (
@@ -37,8 +47,8 @@ AI_FILTER_MARKERS: tuple[str, ...] = (
 # 커뮤니티·뉴스레터·사내 블로그 (반응 수가 없어 공식 발표보다 낮은 고정 가중치)
 COMMUNITY_MARKERS: tuple[str, ...] = AI_FILTER_MARKERS + (
     "discuss.pytorch.kr", "gpters.org", "aikoreacommunity.com", "zenn.dev", "qiita.com", "reddit.com/r/",
-    "simonwillison.net", "latent.space", "importai", "sebastianraschka.com", "qbitai.com",
-)
+    "simonwillison.net", "qbitai.com",
+) + SUBSTACK_MARKERS
 AI_KEYWORDS_RE = re.compile(
     r"(\bA\.?I\b|인공지능|LLM|\bGPT|에이전트|\bagents?\b|\bagentic\b|머신러닝|딥러닝|\bML\b|machine learning|"
     r"deep learning|추천|\bvision\b|비전|생성형|\bRAG\b|프롬프트|prompt|임베딩|embedding|Claude|Gemini|OpenAI|"
@@ -85,9 +95,11 @@ class RSSAdapter(BaseAdapter):
 
         gh = GH_RELEASES_RE.search(self.source.endpoint)
         is_apple_newsroom = any(m in self.source.endpoint for m in APPLE_NEWSROOM_MARKERS)
+        is_substack = any(m in self.source.endpoint for m in SUBSTACK_MARKERS)
         needs_filter = any(m in self.source.endpoint for m in AI_FILTER_MARKERS)
         community = any(m in self.source.endpoint for m in COMMUNITY_MARKERS)
-        cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
+        lookback = SUBSTACK_LOOKBACK_DAYS if is_substack else LOOKBACK_DAYS
+        cutoff = datetime.now(timezone.utc) - timedelta(days=lookback)
         entries = []
         for e in feed.entries:
             published = (
@@ -126,6 +138,8 @@ class RSSAdapter(BaseAdapter):
                 if repo.lower() not in title.lower():
                     title = f"{repo} {title}"
                 engagement = ENGAGEMENT_RELEASE
+            elif is_substack:
+                engagement = ENGAGEMENT_SUBSTACK
             else:
                 engagement = ENGAGEMENT_COMMUNITY if community else ENGAGEMENT_OFFICIAL_BLOG
             out.append(self.item(

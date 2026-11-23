@@ -49,7 +49,7 @@ values
  'active'),
 
 -- research ────────────────────────────────────
-('openai', 'OpenAI', 'industry',
+('openai', 'OpenAI News', 'industry',
  '챗GPT를 만든 바로 그 회사예요. 새 모델이 나오면 공식 블로그에 제일 먼저 자랑하러 와요.',
  'GPT 시리즈나 새 기능 소식의 "원본 출처"가 여기거든요. 기사로 한 번 걸러진 이야기 말고, 회사가 직접 뭐라고 했는지 확인하고 싶을 때 가봐요.',
  'https://openai.com/news', '#10A37F',
@@ -251,7 +251,7 @@ values
    'https://openai.com/news/rss.xml',
    'rss', 'industry', true),
   ('anthropic', 'Anthropic News',
-   'https://www.anthropic.com/sitemap.xml',                               -- 공식 RSS 미제공 → 공식 sitemap 의 /news/·/research/ 만 (HTML 스크래핑 없음)
+   'https://www.anthropic.com/news',                                      -- 전용 HTML+JSON-LD+Sitemap 어댑터(anthropic_news)
    'rss', 'industry', true),
   ('google-deepmind', 'Google DeepMind Blog',
    'https://deepmind.google/blog/rss.xml',
