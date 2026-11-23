@@ -52,7 +52,7 @@ const ITEM_BASE =
   "press t-nav flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 const itemState = (active: boolean) => (active ? "bg-elevated font-semibold text-fg" : "text-fg-2 hover:bg-elevated hover:text-fg");
 
-/** 로고·제호: 순수 흑백 S-커브 웨이브 신문 심볼 + 클래식 에디토리얼 세리프 워드마크 */
+/** 로고·제호: 바깥 박스/원 없는 순수 흑백 S-커브 웨이브 신문 심볼(42px) + 고대비 클래식 세리프 워드마크(24px) */
 export function Logo() {
   return (
     // 풀 새로고침이 목적이라 next/link 대신 일반 <a> 를 쓴다
@@ -64,14 +64,12 @@ export function Logo() {
         window.location.href = "/";
       }}
       aria-label="AI Radar 처음 화면으로 새로고침"
-      className="flex min-w-0 cursor-pointer items-center gap-2.5 rounded-lg transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="flex min-w-0 cursor-pointer items-center gap-3 rounded-lg py-0.5 transition-opacity duration-100 hover:opacity-75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
-      <span className="grid h-9 w-9 shrink-0 place-items-center text-brand">
-        <BrandLogo className="h-8 w-9 text-brand" />
-      </span>
+      <BrandLogo className="h-[38px] w-[42px] shrink-0 text-brand" />
       <div className="min-w-0 leading-tight">
-        <p className="font-editorial text-[20px] leading-none">AI Radar</p>
-        <p className="mt-1 truncate text-[13px] text-fg-3">실시간 글로벌 AI 뉴스룸</p>
+        <p className="font-editorial text-[24px] leading-none">AI Radar</p>
+        <p className="mt-1 truncate text-[13px] font-medium text-fg-3">실시간 글로벌 AI 뉴스룸</p>
       </div>
     </a>
   );

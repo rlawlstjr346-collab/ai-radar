@@ -24,6 +24,7 @@ import FontSizeToggle from "./FontSizeToggle";
 import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
 import Sidebar, { CategoryChips, Logo, ViewTabs, type View } from "./Sidebar";
 import ThemeToggle from "./ThemeToggle";
+import XRealtimeBoard from "./XRealtimeBoard";
 
 const CLOCK_TICK_MS = 60_000;
 
@@ -266,22 +267,18 @@ function FeedList({
         </section>
       )}
       {features.length > 0 && (
-        <ul className="grid grid-cols-1 border-b border-line pb-4 @xl:grid-cols-2" aria-label="주요 소식">
-          {features.map((item, i) => (
-            <li
-              key={item.id}
-              data-item-id={item.id}
-              className={`min-w-0 ${i > 0 ? "border-t border-line pt-2 @xl:border-l @xl:border-t-0 @xl:pl-4 @xl:pt-0" : "@xl:pr-4"}`}
-            >
+        <ul className="grid grid-cols-1 gap-3.5 @xl:grid-cols-2" aria-label="주요 소식">
+          {features.map((item) => (
+            <li key={item.id} data-item-id={item.id} className="min-w-0">
               <FeatureStory {...rowProps(item)} />
             </li>
           ))}
         </ul>
       )}
       {shown.length > 0 && (
-        <ul className="-mt-2 flex flex-col" aria-label={topCount > 0 ? "브리핑" : "소식 목록"}>
+        <ul className="flex flex-col gap-3" aria-label={topCount > 0 ? "브리핑" : "소식 목록"}>
           {shown.map((item) => (
-            <li key={item.id} data-item-id={item.id} className="border-b border-line py-1 last:border-b-0">
+            <li key={item.id} data-item-id={item.id}>
               <StreamRow {...rowProps(item)} />
             </li>
           ))}
@@ -310,6 +307,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const [view, setView] = useState<View>("feed");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [query, setQuery] = useState("");
+  const [xOnly, setXOnly] = useState(false);
   // 와이드 화면 첫 진입 시 우측 패널이 놀지 않도록 1면 첫 카드(TOP SPOTLIGHT 01)를 기본 선택 (URL 에는 쓰지 않는다).
   // 드로어·바텀시트 구간에선 이 기본 선택으로 화면을 가리지 않는다 (sheetOpen=false 유지).
   const defaultSelection = useMemo<Selection>(() => {
@@ -325,6 +323,18 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
   const hotItems = useMemo(() => hotFeed(data.items, category, now, query, names), [data.items, category, now, query, names]);
   const pastItems = useMemo(() => pastFeed(data.items, category, query, names), [data.items, category, query, names]);
+  // X 실시간 전용 분리 보드용 아이템 (실시간 레이더 전체·검색 기준)
+  const xHotItems = useMemo(() => hotFeed(data.items, "all", now, query, names).filter((i) => i.platform_id === "x"), [data.items, now, query, names]);
+  // X 전용 보드가 상단에 떠 있는 기본 실시간 피드에서는 일반 기사 스트림과 깔끔하게 분리 (xOnly 켜면 X 전용 모아보기)
+  const showXBoard = view === "feed" && xHotItems.length > 0 && (category === "all" || category === "social" || xOnly);
+  const feedDisplayItems = useMemo(() => {
+    if (view !== "feed") return pastItems;
+    if (xOnly) return xHotItems;
+    if (showXBoard && category === "all" && !query.trim()) {
+      return hotItems.filter((i) => i.platform_id !== "x");
+    }
+    return hotItems;
+  }, [view, pastItems, xOnly, xHotItems, showXBoard, category, query, hotItems]);
 
   // URL 의 선택이 실제 데이터에 있는지 확인하고, 그 기사/플랫폼이 보이는 탭으로 이동
   const applySelection = useCallback(
@@ -418,15 +428,14 @@ export default function RadarApp({ data }: { data: RadarData }) {
     [data.platforms, selectPlatform, view],
   );
 
-  // 1면 편집(리드·피처)은 실시간 레이더의 '전체' 화면에서만. 분야 필터·검색 결과는 스트림 규칙
-  const editorial = view === "feed" && category === "all" && !query.trim();
+  // 1면 편집(리드·피처)은 실시간 레이더의 '전체' 화면에서만. 분야 필터·검색·X 전용 모아보기는 스트림 규칙
+  const editorial = view === "feed" && category === "all" && !query.trim() && !xOnly;
 
   // 지금 화면에 보이는 순서 (J/K 탐색용)
   const navOrder = useMemo(() => {
     if (view === "directory") return [];
-    const list = view === "feed" ? hotItems : pastItems;
-    return editorialOrder(editorialLayout(list, editorial));
-  }, [view, hotItems, pastItems, editorial]);
+    return editorialOrder(editorialLayout(feedDisplayItems, editorial));
+  }, [view, feedDisplayItems, editorial]);
 
   // J / ↓ : 다음 기사, K / ↑ : 이전 기사 — 검색창 등 입력 중이 아닐 때만
   useEffect(() => {
@@ -468,19 +477,28 @@ export default function RadarApp({ data }: { data: RadarData }) {
   // 카드 '선택됨' 표시는 상세 내용이 실제로 화면에 보일 때만
   const visibleSelection: Selection = layout === "wide" || sheetOpen ? selection : null;
   // 필터·보기가 바뀌면 '더보기' 페이지 수를 처음으로 되돌린다
-  const listKey = `${view}:${category}:${query}`;
+  const listKey = `${view}:${category}:${query}:${xOnly ? "x" : "all"}`;
   const lastCollectedLabel = useMemo(() => formatLastCollected(data.lastCollectedAt, now), [data.lastCollectedAt, now]);
 
+  const handleViewChange = useCallback((v: View) => {
+    setView(v);
+    if (v !== "feed") setXOnly(false);
+  }, []);
+  const handleCategoryChange = useCallback((c: CategoryFilter) => {
+    setCategory(c);
+    setXOnly(false);
+  }, []);
+
   return (
-    // 리눅스·고해상도 와이드 화면 3단 비율 최적화 (모바일·분할창 반응형 유지)
-    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[clamp(232px,15vw,272px)_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[clamp(236px,15vw,276px)_minmax(0,1fr)_clamp(460px,36vw,640px)]">
+    // 와이드·고해상도 모니터에서 중앙 피드가 좁아지지 않도록 3단 비율 및 중앙 폭 시원하게 확장
+    <div className="w-full min-w-0 lg:grid lg:h-dvh lg:grid-cols-[clamp(248px,16vw,292px)_minmax(0,1fr)] lg:overflow-hidden wide:grid-cols-[clamp(256px,16vw,296px)_minmax(0,1fr)_clamp(500px,37vw,700px)]">
       {/* 좌측: 데스크톱 사이드바 */}
       <div className="hidden min-w-0 overflow-hidden bg-surface lg:block">
         <Sidebar
           view={view}
           category={category}
-          onView={setView}
-          onCategory={setCategory}
+          onView={handleViewChange}
+          onCategory={handleCategoryChange}
           counts={counts}
           viewCounts={viewCounts}
           source={data.source}
@@ -502,14 +520,13 @@ export default function RadarApp({ data }: { data: RadarData }) {
             <ThemeToggle compact />
           </div>
         </div>
-        <ViewTabs view={view} onView={setView} compact />
-        <CategoryChips category={category} onCategory={setCategory} counts={counts} layout="row" />
+        <ViewTabs view={view} onView={handleViewChange} compact />
+        <CategoryChips category={category} onCategory={handleCategoryChange} counts={counts} layout="row" />
       </header>
 
       {/* 중앙 */}
-      {/* 데이터 출처 표시는 사이드바 하단(데스크톱)·상단 바 배지(좁은 화면)에 있으므로 피드 상단 배너는 두지 않는다 */}
-      <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-8 lg:py-8">
-        <div className="mx-auto w-full min-w-0 max-w-[1040px]">
+      <main className="@container thin-scroll min-w-0 px-4 py-6 md:px-6 lg:overflow-y-auto lg:px-8 xl:px-10 lg:py-8">
+        <div className="mx-auto w-full min-w-0 max-w-[1320px]">
 
         {view === "directory" ? (
           <DirectoryView
@@ -523,14 +540,24 @@ export default function RadarApp({ data }: { data: RadarData }) {
           <div className="flex flex-col gap-6">
             <FeedHeader
               view={view}
-              total={view === "feed" ? hotItems.length : pastItems.length}
+              total={feedDisplayItems.length}
               lastCollectedLabel={lastCollectedLabel}
             >
-              <SearchBox value={query} onChange={setQuery} total={view === "feed" ? hotItems.length : pastItems.length} />
+              <SearchBox value={query} onChange={setQuery} total={feedDisplayItems.length} />
             </FeedHeader>
+            {showXBoard && (
+              <XRealtimeBoard
+                items={xHotItems}
+                selectedId={visibleSelection?.type === "item" ? visibleSelection.id : null}
+                now={now}
+                xOnly={xOnly}
+                onToggleXOnly={() => setXOnly((v) => !v)}
+                onSelect={selectItem}
+              />
+            )}
             <FeedList
               key={listKey}
-              items={view === "feed" ? hotItems : pastItems}
+              items={feedDisplayItems}
               platformsById={platformsById}
               selection={visibleSelection}
               now={now}

@@ -1,10 +1,12 @@
-/** 듀얼 리딩 테마 (DESIGN.md §2) + 유동 글자 크기 스케일. 값은 globals.css 와 같아야 한다. */
+/** 듀얼 리딩 테마 (DESIGN.md §2) + iOS 슬라이더 글자 크기 스케일(85%~135%). 값은 globals.css 와 같아야 한다. */
 export type Theme = "dark" | "paper";
 export type FontSizeScale = "standard" | "large";
 
-// v2: 기본값이 다크 → 종이로 바뀌어서, 예전 키에 남은 '다크' 선택을 무시하고 모두 종이로 새로 시작한다
 export const THEME_STORAGE_KEY = "ai-radar-theme-v2";
 export const FONT_SIZE_STORAGE_KEY = "ai-radar-font-scale-v1";
+export const FONT_SCALE_MIN = 85;
+export const FONT_SCALE_MAX = 135;
+export const FONT_SCALE_DEFAULT = 100;
 
 export const THEME_TOKENS = {
   dark: {
@@ -32,17 +34,29 @@ export function parseTheme(v: string | null | undefined): Theme {
   return v === "dark" ? "dark" : "paper";
 }
 
-/** 저장값이 'large' 일 때만 크게, 그 외는 표준 */
+/** 호환용: 'large' 또는 108% 이상이면 large, 그 외 standard */
 export function parseFontSize(v: string | null | undefined): FontSizeScale {
-  return v === "large" ? "large" : "standard";
+  if (v === "large") return "large";
+  const num = Number(v);
+  if (Number.isFinite(num) && num >= 108) return "large";
+  return "standard";
+}
+
+/** 연속 슬라이더용 퍼센트(85~135) 파싱. 기존 'large'/'standard' 저장값도 자동 호환 */
+export function parseFontPercent(v: string | null | undefined): number {
+  if (!v) return FONT_SCALE_DEFAULT;
+  if (v === "large") return 114;
+  if (v === "standard") return FONT_SCALE_DEFAULT;
+  const n = Math.round(Number(v));
+  if (!Number.isFinite(n)) return FONT_SCALE_DEFAULT;
+  return Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, n));
 }
 
 /**
- * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마와 글자 크기를 바로 적용해 깜빡임을 없앤다.
- * 기본 CSS 가 이미 종이/표준이라, 다크·크게를 고른 사람만 data 속성을 붙인다.
+ * 첫 페인트 전에 <head> 에서 실행할 인라인 스크립트 — 저장된 테마와 글자 크기 슬라이더(85~135%)를 바로 적용.
  * localStorage 가 막힌 환경(사생활 보호 창 등)에서도 조용히 기본값으로.
  */
-export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark";if(localStorage.getItem("${FONT_SIZE_STORAGE_KEY}")==="large")document.documentElement.dataset.fontSize="large"}catch(e){}`;
+export const THEME_BOOT_SCRIPT = `try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark")document.documentElement.dataset.theme="dark";var fs=localStorage.getItem("${FONT_SIZE_STORAGE_KEY}");if(fs==="large"){document.documentElement.dataset.fontSize="large";document.documentElement.style.setProperty("--font-scale","1.14")}else if(fs&&!isNaN(Number(fs))){var p=Math.min(${FONT_SCALE_MAX},Math.max(${FONT_SCALE_MIN},Math.round(Number(fs))));document.documentElement.dataset.fontPercent=String(p);document.documentElement.style.setProperty("--font-scale",String(p/100))}}catch(e){}`;
 
 /** WCAG 상대 휘도 */
 function luminance(hex: string): number {

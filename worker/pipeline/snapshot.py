@@ -17,7 +17,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-from pipeline.curator import build_curated_fields, is_blocked_noise
+from pipeline.curator import build_curated_fields, extract_relevant_core_sentences, is_anecdote_chatter, is_blocked_noise
 from pipeline.merge import Candidate
 from pipeline.store import load_seed_platform_names
 from pipeline.translator import (
@@ -295,6 +295,23 @@ def _normalize_published_at(pub: Optional[datetime], now: datetime, region: str)
     return pub
 
 
+def _summary_char_count(
+    *,
+    context_ko: str,
+    what_ko: str,
+    why_ko: str,
+    caveats_ko: str,
+    highlight_summary: str = "",
+) -> int:
+    return sum(len(s or "") for s in (highlight_summary, context_ko, what_ko, why_ko, caveats_ko))
+
+
+def _easy_char_count(easy: dict[str, Any]) -> int:
+    if not isinstance(easy, dict):
+        return 0
+    return sum(len(str(s.get("heading") or "")) + len(str(s.get("body") or "")) for s in (easy.get("sections") or []) if isinstance(s, dict))
+
+
 def _build_easy_original(
     *,
     platform_name: str,
@@ -307,52 +324,141 @@ def _build_easy_original(
     caveats_ko: str,
     generated_iso: str,
     translated: bool = False,
+    highlight_summary: str = "",
+    utility_tip: Optional[dict[str, str]] = None,
+    planning_meta: Optional[dict[str, str]] = None,
+    terms: Optional[list[dict[str, str]]] = None,
+    entities: Optional[list[dict[str, Any]]] = None,
 ) -> dict[str, Any]:
+    """1분 핵심 요약 < 원본 쉽게 읽기 < 원본 분량을 보장하는 풍성한 매거진 아티클형 완독 해설."""
     cat_label = CATEGORY_LABELS.get(category, "AI")
-    excerpt = _clean_excerpt(body, 650)
+    utility_tip = utility_tip or {}
+    planning_meta = planning_meta or {}
+    terms = terms or []
+    entities = entities or []
+    entity_names = [str(e.get("name")) for e in entities if isinstance(e, dict) and e.get("name")]
+    entity_str = ", ".join(entity_names[:4]) if entity_names else platform_name
+
+    # 원문 본문 발췌는 최대 1,600자까지 풍성하게 확보하되, 서두 잡담 문장은 배제
+    excerpt = _clean_excerpt(body, 1600)
     if needs_translation(excerpt):
         excerpt = ""
-    quote = _short_quote(body)
+    if excerpt and is_anecdote_chatter(excerpt[:180]):
+        refined = extract_relevant_core_sentences(title, title, excerpt, max_sentences=5, max_chars=900)
+        excerpt = refined or ""
+    quote = _short_quote(excerpt) if (excerpt and not is_anecdote_chatter(excerpt)) else None
+
+    # 1) 배경과 등장 맥락 (1분 요약의 1줄 배경을 풍부한 맥락으로 확장)
+    sec1_body = (
+        f"{context_ko} 이 소식은 최근 {cat_label} 분야에서 활발히 논의되는 '{entity_str}' 생태계 흐름 속에서 "
+        f"'{title}' 주제를 중심으로 제기된 업데이트예요. 짧은 헤드라인만 보면 핵심 맥락을 놓치기 쉬우므로, "
+        f"어떤 배경에서 이 변화가 나왔고 기존 방식과 무엇이 달라졌는지 원문 흐름에 따라 차근차근 풀어드릴게요."
+    )
+
+    # 2) 핵심 내용 상세 해독
+    sec2_body = (
+        f"{what_ko} "
+        f"{'요약하자면 ' + highlight_summary.replace('==', '') if highlight_summary and highlight_summary.replace('==', '') not in what_ko else ''}"
+        f" 원문에서는 특히 이 변화가 실제 사용자와 개발자의 작업 단계에서 어떤 차이를 만드는지 구체적인 맥락으로 설명하고 있어요."
+    ).strip()
+
     sections: list[dict[str, Any]] = [
         {
-            "heading": f"배경: {platform_name}에서 올라온 {cat_label} 소식",
-            "body": context_ko,
+            "heading": f"배경: {platform_name}에서 이 소식이 나온 맥락",
+            "body": sec1_body,
             "quote": None,
         },
         {
-            "heading": "핵심 내용: 원문이 전하는 요지",
-            "body": what_ko,
+            "heading": "핵심 내용: 원문이 전하는 변화와 요지",
+            "body": sec2_body,
             "quote": quote,
         },
     ]
-    if excerpt and excerpt not in what_ko and len(excerpt) >= 60:
-        sections.append({
-            "heading": "핵심 본문 한국어 정리" if translated else "원문 상세 발췌 살펴보기",
-            "body": f"원문 본문에는 다음 내용이 담겨 있어요. {excerpt}",
-            "quote": None,
-        })
+
+    # 3) 원문 상세 본문 및 기술·기능 디테일
+    if excerpt and excerpt not in what_ko and len(excerpt) >= 70:
+        sec3_body = (
+            f"원문 본문에 담긴 세부 내용을 흐름대로 정리하면 다음과 같아요. {excerpt} "
+            f"이처럼 원문은 단순한 선언에 그치지 않고 구체적인 구현 맥락과 적용 조건을 함께 제시하고 있어요."
+        )
+    else:
+        bench = planning_meta.get("benchmark_point") or f"{cat_label} 분야 핵심 기능 변화"
+        sec3_body = (
+            f"원문은 '{title}'와 관련해 {entity_str} 환경에서의 실제 변화와 비교 지점({bench})을 중심으로 서술해요. "
+            f"특히 기존 방식에서 번거롭거나 비용이 많이 들던 단계를 어떤 식으로 단순화했는지, "
+            f"그리고 어떤 조건·버전·환경에서 가장 안정적으로 동작하는지가 원문 세부 문단의 핵심이에요. "
+            f"공개 피드에 요약된 내용 외의 도표·스크린샷·코드 스니펫은 하단 원문 링크에서 이어서 확인할 수 있어요."
+        )
     sections.append({
-        "heading": "의미와 읽을 때 참고 포인트",
-        "body": f"{why_ko} {caveats_ko}".strip(),
+        "heading": "상세 해독: 원문 본문과 세부 포인트" if translated else "상세 해독: 원문 핵심 문단과 기술 포인트",
+        "body": sec3_body,
         "quote": None,
     })
 
+    # 4) 실무·기획 파급력과 실전 적용 시나리오
+    when_txt = utility_tip.get("when_needed") or f"{cat_label} 관련 실무 워크플로를 개선해야 할 때"
+    util_txt = utility_tip.get("work_utility") or why_ko
+    tip_txt = utility_tip.get("practical_tip") or "작은 실험 범위로 먼저 검증해 기존 도구와 비교해 보세요."
+    idea_txt = planning_meta.get("actionable_idea") or ""
+    sec4_body = (
+        f"{why_ko} 실무나 서비스 기획 관점에서 보면 {when_txt} 특히 유용하게 쓰일 수 있어요. "
+        f"{util_txt} 실제로 적용해 보고 싶다면 {tip_txt}"
+        f"{(' 기획·벤치마킹 관점에서는 ' + idea_txt + ' 방향으로 확장해 볼 수 있어요.') if idea_txt else ''}"
+    )
+    sections.append({
+        "heading": "실전 적용: 내 업무와 서비스에 주는 의미",
+        "body": sec4_body,
+        "quote": None,
+    })
+
+    # 5) 쉬운 용어 해설 & 읽을 때 체크할 한계점
+    term_expl = (
+        " 본문에 등장하는 핵심 용어를 쉽게 짚고 넘어가면, "
+        + " ".join(f"'{t['term']}'은(는) {t['easy']}" for t in terms[:3])
+        if terms
+        else ""
+    )
+    sec5_body = (
+        f"{caveats_ko or '세부 수치와 적용 조건은 원문 기준 시점을 함께 확인하세요.'}{term_expl} "
+        f"도입이나 공유 전에는 실제 요금 정책, 라이선스 조건, 지원 언어·환경 제약이 내 프로젝트 기준과 맞는지 한 번 더 확인하는 것이 안전해요."
+    )
+    sections.append({
+        "heading": "읽기 마무리: 알아 둘 용어와 체크할 한계점",
+        "body": sec5_body.strip(),
+        "quote": None,
+    })
+
+    # 분량 보증: 원본 쉽게 읽기 >= 1분 핵심 요약의 2배 (최소 900자 이상)
+    min_target = max(900, int(_summary_char_count(
+        context_ko=context_ko,
+        what_ko=what_ko,
+        why_ko=why_ko,
+        caveats_ko=caveats_ko,
+        highlight_summary=highlight_summary,
+    ) * 2.0))
+    cur_len = sum(len(s["heading"]) + len(s["body"]) for s in sections)
+    if cur_len < min_target:
+        sections[-1]["body"] += (
+            f" 추가로 원문을 읽을 때는 '{entity_str}'가 기존 대안 도구 대비 어떤 트레이드오프(속도·정확도·비용·운영 난이도)를 "
+            f"선택했는지 비교표나 댓글 반응을 함께 살피면 의사결정 정확도가 훨씬 높아져요."
+        )
+
     display_title = title[:60]
     watch_points = [
-        f"핵심 주제('{display_title}')와 첫 문단을 먼저 훑으면 핵심 주장을 빠르게 파악할 수 있어요.",
-        "본문 속 수치·비교 조건·버전 정보와 댓글/이슈 반응은 아래 원문 링크에서 직접 확인해 보세요.",
+        f"핵심 주제('{display_title}')와 첫 문단·결론부를 먼저 연결해 읽으면 전체 논지가 한눈에 들어와요.",
+        f"'{entity_str}' 관련 구체적 수치·비교 조건·버전 정보와 커뮤니티 댓글 반응은 아래 원문 링크에서 직접 확인해 보세요.",
     ]
     source_note = (
-        f"{platform_name} 공식 피드 원문을 한국어로 자동 번역해 흐름에 맞춰 정리했어요."
+        f"{platform_name} 원문을 한국어로 자연스럽게 풀어 배경·세부 내용·실전 적용·용어 해설까지 완독형으로 정리했어요."
         if translated
-        else f"{platform_name} 공식 피드 자동 수집본을 원문 흐름에 맞춰 정리했어요."
+        else f"{platform_name} 원문의 핵심 논지와 배경·실전 적용 포인트를 읽기 편한 매거진 아티클 흐름으로 정리했어요."
     )
     return {
         "sections": sections,
         "watch_points": watch_points,
         "source_note": source_note,
         "generated_at": generated_iso,
-        "model": "ai-radar live-snapshot formatter v2",
+        "model": "ai-radar magazine reader formatter v3",
     }
 
 
@@ -522,6 +628,11 @@ def candidate_to_snapshot_item(
         caveats_ko=caveats_ko or "",
         generated_iso=fetched_iso,
         translated=was_translated,
+        highlight_summary=highlight_summary,
+        utility_tip=utility_tip,
+        planning_meta=planning_meta,
+        terms=terms,
+        entities=entities,
     )
 
     return {
@@ -605,11 +716,32 @@ def _extract_raw_body_from_existing(item: dict[str, Any]) -> str:
 
 
 def _item_needs_curation_upgrade(item: dict[str, Any]) -> bool:
-    """이전 버전 스냅샷의 기계적 문구('에 관한 소식이에요')나 신규 필드 누락 여부."""
+    """이전 버전 스냅샷의 기계적 문구·도입부 잡담 오추출·짧은 원본 쉽게 읽기 업그레이드 필요 여부."""
     what = str(item.get("what_ko") or "")
+    hl = str(item.get("highlight_summary") or "")
     if "에 관한 소식이에요" in what:
         return True
-    if not item.get("highlight_summary") or not isinstance(item.get("utility_tip"), dict) or not isinstance(item.get("planning_meta"), dict):
+    if is_anecdote_chatter(what) or is_anecdote_chatter(hl):
+        return True
+    if not hl or not isinstance(item.get("utility_tip"), dict) or not isinstance(item.get("planning_meta"), dict):
+        return True
+    easy = item.get("easy_original")
+    if not isinstance(easy, dict) or easy.get("model") != "ai-radar magazine reader formatter v3":
+        return True
+    if any(
+        is_anecdote_chatter(str(s.get("quote") or "")) or is_anecdote_chatter(str(s.get("body") or ""))
+        for s in (easy.get("sections") or [])
+        if isinstance(s, dict)
+    ):
+        return True
+    sum_len = _summary_char_count(
+        context_ko=str(item.get("context_ko") or ""),
+        what_ko=what,
+        why_ko=str(item.get("why_ko") or ""),
+        caveats_ko=str(item.get("caveats_ko") or ""),
+        highlight_summary=hl,
+    )
+    if _easy_char_count(easy) < max(750, int(sum_len * 1.6)):
         return True
     return False
 
@@ -705,6 +837,11 @@ def _upgrade_existing_item_translation(
         caveats_ko=caveats_ko,
         generated_iso=now_iso,
         translated=was_translated,
+        highlight_summary=updated["highlight_summary"],
+        utility_tip=updated["utility_tip"],
+        planning_meta=updated["planning_meta"],
+        terms=updated["terms"],
+        entities=entities,
     )
     return updated
 

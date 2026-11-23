@@ -5,8 +5,19 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { GET as getPlanningFeed } from "@/app/api/planning-feed/route";
 import { SAMPLE_FEED } from "@/data/sample-feed";
+import { loadLiveSnapshot } from "@/lib/live-snapshot";
 import { getHighlightSummary, getPlanningMeta, getUtilityInsight } from "@/lib/reading-insights";
-import { contrastRatio, FONT_SIZE_STORAGE_KEY, parseFontSize, THEME_BOOT_SCRIPT, THEME_TOKENS } from "@/lib/theme";
+import { classifySourceGroup, sourceVisualFor } from "@/lib/source-style";
+import {
+  contrastRatio,
+  FONT_SCALE_MAX,
+  FONT_SCALE_MIN,
+  FONT_SIZE_STORAGE_KEY,
+  parseFontPercent,
+  parseFontSize,
+  THEME_BOOT_SCRIPT,
+  THEME_TOKENS,
+} from "@/lib/theme";
 
 describe("형광펜 핵심 요약 · 실전 효용 팁 · 기획팀 메타", () => {
   it("기존 저장/샘플 기사 전수에서 형광펜 핵심 요약과 3단 실전 효용 팁이 비어 있지 않다", () => {
@@ -79,5 +90,44 @@ describe("가+ 글자 크기 토글 · 명도 대비 WCAG AA · 순수 흑백 S-
     expect(iconSvg).toContain("#F7F7F7");
     expect(brandTsx).not.toContain("var(--accent)");
     expect(brandTsx).toContain("currentColor");
+  });
+
+  it("iOS 슬라이더 글자 크기 퍼센트(85~135%) 클램핑과 기존 저장값 호환이 정확하다", () => {
+    expect(parseFontPercent(null)).toBe(100);
+    expect(parseFontPercent("standard")).toBe(100);
+    expect(parseFontPercent("large")).toBe(114);
+    expect(parseFontPercent("50")).toBe(FONT_SCALE_MIN);
+    expect(parseFontPercent("180")).toBe(FONT_SCALE_MAX);
+    expect(parseFontPercent("118")).toBe(118);
+  });
+
+  it("출처군별 5색 카드 뒷배경·브랜드 배지 매핑이 정확하다", () => {
+    expect(classifySourceGroup("x")).toBe("x");
+    expect(classifySourceGroup("github")).toBe("github");
+    expect(classifySourceGroup("apple-ml")).toBe("global_media");
+    expect(classifySourceGroup("openai")).toBe("global_media");
+    expect(classifySourceGroup("aitimes")).toBe("kr_media");
+    expect(classifySourceGroup("geeknews")).toBe("community");
+    expect(sourceVisualFor("x").cardClass).toBe("source-card-x");
+    expect(sourceVisualFor("github").cardClass).toBe("source-card-github");
+    expect(sourceVisualFor("apple-ml").cardClass).toBe("source-card-global");
+    expect(sourceVisualFor("aitimes").cardClass).toBe("source-card-kr");
+    expect(sourceVisualFor("geeknews").cardClass).toBe("source-card-community");
+  });
+
+  it("live-feed.json 전 기사가 도입부 잡담(로이킴 등) 0건 및 원본 쉽게 읽기 > 1분 요약 분량을 보장한다", () => {
+    const snap = loadLiveSnapshot();
+    expect(snap.items.length).toBeGreaterThan(20);
+    for (const item of snap.items) {
+      expect(item.what_ko ?? "", item.id).not.toContain("로이킴");
+      expect(item.highlight_summary ?? "", item.id).not.toContain("로이킴");
+      const easy = snap.easyOriginals[item.id];
+      expect(easy, item.id).toBeDefined();
+      const summaryLen = [item.highlight_summary, item.context_ko, item.what_ko, item.why_ko, item.caveats_ko]
+        .filter(Boolean)
+        .join("").length;
+      const easyLen = easy.sections.reduce((acc, s) => acc + s.heading.length + s.body.length, 0);
+      expect(easyLen, `${item.id}: easy(${easyLen}) <= summary(${summaryLen})`).toBeGreaterThan(summaryLen);
+    }
   });
 });

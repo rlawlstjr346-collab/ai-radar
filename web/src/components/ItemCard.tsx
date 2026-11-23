@@ -2,19 +2,12 @@
 
 import { CATEGORY_META } from "@/lib/categories";
 import { ageHours, formatDate, freshness } from "@/lib/filter";
-import { editionMark } from "@/lib/regions";
 import { stripHighlightMarks } from "@/lib/highlight";
+import { editionMark } from "@/lib/regions";
+import { sourceVisualFor } from "@/lib/source-style";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitTakeaway, PlatformBadge, QuietTag } from "./Badges";
-
-/*
- * 에디토리얼 피드 (DESIGN.md §4) — 박스·테두리 없이 표면 색, 여백, 하단 구분선만으로 나눈다.
- *   LeadStory    ① 1위 하나: bg-surface 라운드 표면, 28–32px 헤드라인
- *   FeatureStory ② 2·3위: 테두리 없는 2열, 20–21px 헤드라인 + 요약 1줄
- *   StreamRow    ③ 4위~ / 필터·검색 결과: 메타 한 줄 + 18.5px 헤드라인 (+ accent 이득 한 줄)
- * 호버는 배경색만(<120ms), 선택은 왼쪽 2px accent + bg-surface.
- */
 
 interface Props {
   item: FeedItem;
@@ -24,7 +17,6 @@ interface Props {
   now: number;
   onSelect: (id: string) => void;
   onSelectPlatform: (id: string) => void;
-  /** 엔티티(기술 태그)를 누르면: 같은 이름의 플랫폼이 있으면 프로필, 없으면 그 키워드로 검색 */
   onEntity: (name: string) => void;
 }
 
@@ -64,13 +56,11 @@ function Freshness({ iso, now }: { iso: string; now: number }) {
 
 const norm = (s: string) => s.toLowerCase().replace(/[\s._-]+/g, "");
 
-/** 카드 상단 플랫폼명과 겹치는 엔티티는 뺀다 (예: Hugging Face 카드의 #Hugging Face) */
 export function visibleEntities(item: FeedItem, platform?: Platform): string[] {
   const skip = new Set([norm(item.platform_id), ...(platform ? [norm(platform.name)] : [])]);
   return [...new Set(item.entities.map((e) => e.name))].filter((n) => !skip.has(norm(n)));
 }
 
-/** 리드 기사 하단의 조용한 키워드 링크 — 누르면 그 플랫폼 프로필 또는 키워드 검색 */
 function EntityLine({ item, platform, onEntity }: { item: FeedItem; platform?: Platform; onEntity: (name: string) => void }) {
   const names = visibleEntities(item, platform).slice(0, 3);
   if (names.length === 0) return null;
@@ -101,7 +91,6 @@ function EntityLine({ item, platform, onEntity }: { item: FeedItem; platform?: P
   );
 }
 
-/** 행 전체를 덮는 버튼 (플랫폼·키워드 버튼은 z-10 으로 위에 올라와 따로 클릭됨) */
 function CoverButton({ item, selected, onSelect }: { item: FeedItem; selected: boolean; onSelect: (id: string) => void }) {
   return (
     <button
@@ -115,13 +104,12 @@ function CoverButton({ item, selected, onSelect }: { item: FeedItem; selected: b
   );
 }
 
-/** 요약 한 줄: 배경 정의(context) 대신 '무슨 일이 터졌는지'(what) */
 const preview = (item: FeedItem) => {
   const t = item.what_ko ?? item.context_ko;
   return t ? stripHighlightMarks(t) : t;
 };
 
-/** 메타 한 줄: 플랫폼 · 상대시간 (+ 조용한 텍스트 배지) */
+/** 메타 한 줄: 출처군 컬러 브랜드 알약 배지 + 플랫폼 + 상대시간 */
 function Meta({
   item,
   platform,
@@ -135,24 +123,26 @@ function Meta({
   onSelectPlatform: (id: string) => void;
   tags?: boolean;
 }) {
-  // 국내·일본·중국·X 출처만 조용한 표식 (북미·글로벌·유럽 카드는 예전 모양 그대로)
   const edition = editionMark(platform);
+  const visual = sourceVisualFor(item.platform_id, platform);
+
   return (
-    <div className="t-meta flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-      {edition?.flag && (
-        <span className="-mr-1 text-[12px] leading-none" aria-hidden>
-          {edition.flag}
-        </span>
-      )}
+    <div className="t-meta flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5">
+      <span className={`${visual.badgeClass} relative z-10 inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-0.5 text-[12px] font-semibold leading-tight`}>
+        {visual.group === "x" ? "𝕏 실시간" : visual.label}
+      </span>
       <span className="-ml-0.5 min-w-0">
         <PlatformBadge platform={platform} fallbackId={item.platform_id} onSelect={onSelectPlatform} />
       </span>
-      {edition && (
+      {item.platform_id === "x" && item.author_handle && (
+        <span className="whitespace-nowrap font-semibold text-fg">{item.author_handle}</span>
+      )}
+      {edition && item.platform_id !== "x" && (
         <>
           <span aria-hidden>·</span>
           <span className="whitespace-nowrap">
+            {edition.flag ? `${edition.flag} ` : ""}
             {edition.label}
-            {item.platform_id === "x" && item.author_handle ? ` ${item.author_handle}` : ""}
           </span>
         </>
       )}
@@ -173,7 +163,6 @@ function Meta({
   );
 }
 
-/** 해당될 때만 붙는 조용한 텍스트 배지: 완독해설 / 논문 / N곳 포착 */
 function QuietTags({ item }: { item: FeedItem }) {
   return (
     <>
@@ -190,42 +179,54 @@ function QuietTags({ item }: { item: FeedItem }) {
   );
 }
 
-/** ① 리드 스토리 — 화면에 단 하나 */
+/** ① 리드 스토리 — 출처군 틴트 + 넉넉한 에디토리얼 표면 */
 export function LeadStory({ item, platform, selected, now, onSelect, onSelectPlatform, onEntity }: Props) {
   const text = preview(item);
+  const visual = sourceVisualFor(item.platform_id, platform);
   return (
-    <div data-active={selected ? "true" : "false"} className="surface beam relative flex flex-col gap-3 rounded-2xl p-6 sm:p-8">
+    <div
+      data-active={selected ? "true" : "false"}
+      className={`${visual.cardClass} beam relative flex flex-col gap-3 rounded-2xl p-6 sm:p-7`}
+    >
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
       <h2 className="t-lead">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
       </h2>
-      {text && <p className="line-clamp-2 max-w-[64ch] text-[16px] leading-[1.65] text-fg-2">{text}</p>}
+      {text && <p className="t-body line-clamp-2 text-fg-2">{text}</p>}
       <BenefitTakeaway tag={item.benefit_tag} className="text-[15px]" />
-      <div className="pt-1">
+      <div className="pt-0.5">
         <EntityLine item={item} platform={platform} onEntity={onEntity} />
       </div>
     </div>
   );
 }
 
-/** ② 피처 — 2·3위, 테두리 없는 2열 */
+/** ② 피처 — 2·3위, 출처군 컬러 틴트 2열 카드 */
 export function FeatureStory({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
   const text = preview(item);
+  const visual = sourceVisualFor(item.platform_id, platform);
   return (
-    <div data-active={selected ? "true" : "false"} className="row-hover beam relative flex h-full flex-col gap-2 rounded-lg px-3 py-4">
+    <div
+      data-active={selected ? "true" : "false"}
+      className={`${visual.cardClass} beam relative flex h-full flex-col gap-2.5 rounded-xl p-4 sm:p-5`}
+    >
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} />
       <h3 className="t-feature">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
       </h3>
-      {text && <p className="line-clamp-1 text-[14.5px] leading-relaxed text-fg-2">{text}</p>}
+      {text && <p className="line-clamp-2 text-[15px] leading-[1.6] text-fg-2">{text}</p>}
     </div>
   );
 }
 
-/** ③ 브리핑 스트림 한 줄 — 4위~, 그리고 필터·검색 결과 전부 */
+/** ③ 브리핑 스트림 카드 — 출처군 컬러 틴트 + 브랜드 배지 + 넉넉한 여백 */
 export function StreamRow({ item, platform, selected, now, onSelect, onSelectPlatform }: Props) {
+  const visual = sourceVisualFor(item.platform_id, platform);
   return (
-    <div data-active={selected ? "true" : "false"} className="row-hover beam relative flex flex-col gap-1.5 rounded-lg px-3 py-4">
+    <div
+      data-active={selected ? "true" : "false"}
+      className={`${visual.cardClass} beam relative flex flex-col gap-2 rounded-xl px-4 py-4 sm:px-5`}
+    >
       <Meta item={item} platform={platform} now={now} onSelectPlatform={onSelectPlatform} tags />
       <h3 className="t-stream">
         <CoverButton item={item} selected={selected} onSelect={onSelect} />
@@ -235,12 +236,10 @@ export function StreamRow({ item, platform, selected, now, onSelect, onSelectPla
   );
 }
 
-/** 예전 이름 호환: 일반 카드 = 스트림 한 줄 */
 export default function ItemCard(props: Props) {
   return <StreamRow {...props} />;
 }
 
-/** 예전 이름 호환: TOP SPOTLIGHT = 1위는 리드, 나머지는 피처 */
 export function SpotlightCard({ rank, ...props }: Props & { rank: number }) {
   return rank === 1 ? <LeadStory {...props} /> : <FeatureStory {...props} />;
 }

@@ -149,6 +149,7 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
     if (item)
       return (
         <ItemDetail
+          key={item.id}
           item={item}
           platform={byId.get(item.platform_id)}
           onSelectPlatform={onSelectPlatform}
@@ -158,7 +159,7 @@ function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatf
   }
   if (selection?.type === "platform") {
     const platform = byId.get(selection.id);
-    if (platform) return <PlatformProfile platform={platform} items={items} onSelectItem={onSelectItem} />;
+    if (platform) return <PlatformProfile key={platform.id} platform={platform} items={items} onSelectItem={onSelectItem} />;
   }
   return <EmptyPanel />;
 }

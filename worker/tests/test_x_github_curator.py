@@ -256,3 +256,70 @@ def test_curator_blocks_noise_eliminates_robotic_text_and_writes_planning_feed(t
     planning = json.loads(planning_path.read_text(encoding="utf-8"))
     assert planning["item_count"] == 1
     assert planning["signals"][0]["planning_meta"]["signal_type"] == "open_source_trend"
+
+
+def test_apple_newsroom_strict_ai_filter():
+    from adapters.rss import RSSAdapter, is_apple_ai_news
+
+    assert is_apple_ai_news("Apple Intelligence expands with new Foundation Models and MLX tools") is True
+    assert is_apple_ai_news("Apple opens new flagship retail store in Seoul") is False
+    assert is_apple_ai_news("Apple TV+ announces new comedy drama season") is False
+
+    xml = (
+        "<?xml version='1.0'?><rss version='2.0'><channel><title>Apple Newsroom</title>"
+        "<item><title>Apple opens new retail store in Gangnam</title>"
+        "<link>https://www.apple.com/newsroom/2026/11/store/</link>"
+        "<description>Customers can visit the new flagship store.</description></item>"
+        "<item><title>Apple introduces new Core ML and MLX tools for Apple Intelligence</title>"
+        "<link>https://www.apple.com/newsroom/2026/11/apple-intelligence-mlx/</link>"
+        "<description>Developers can run on-device Foundation Models faster on Neural Engine.</description></item>"
+        "</channel></rss>"
+    )
+    src = SourceConfig(
+        id="apple-nr",
+        platform_id="apple-ml",
+        name="Apple Newsroom AI (Global)",
+        endpoint="https://www.apple.com/newsroom/rss-feed.rss",
+        method="rss",
+        default_category="industry",
+    )
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200, text=xml)))
+    items = RSSAdapter(src, client).fetch()
+    assert len(items) == 1
+    assert "apple-intelligence-mlx" in items[0].url
+
+
+def test_anecdote_intro_never_leaks_into_summary_and_easy_original_is_longer(tmp_path: Path):
+    now = datetime(2026, 11, 23, 11, 0, 0, tzinfo=timezone.utc)
+    snap_path = tmp_path / "live-feed.json"
+    platforms = {"gpters": {"id": "gpters", "name": "GPTers", "region": "kr"}}
+    raws = [
+        RawItem(
+            source_id="s-gpters",
+            source_name="GPTers",
+            platform_id="gpters",
+            category="video_audio",
+            url="https://www.gpters.org/post/reels-claude-vs-autoke",
+            title="AI로 릴스 편집하면 어떨까? 'Claude' VS 'Autoke'",
+            body=(
+                "저는 어느덧 4년차 로이킴 팬이 되어 11월 22일 로이킴 콘서트를 다녀왔습니다! "
+                "매년 연말마다 막콘으로 다녀왔어요. "
+                "이번에 촬영한 숏폼 영상을 AI로 자동 릴스 편집하기 위해 Claude와 Autoke 두 도구를 직접 비교해 봤습니다. "
+                "Claude는 대본과 자막 타이밍 구성에 강했고, Autoke는 컷 편집 속도를 3배 단축해 주는 장점이 뚜렷했습니다."
+            ),
+            engagement=90.0,
+            published_at=now - timedelta(hours=1),
+        )
+    ]
+    cands = list(group_raw_items(raws).values())
+    payload, _ = build_and_save_snapshot(snap_path, cands, platforms=platforms, now=now)
+    item = payload["items"][0]
+    assert "로이킴" not in item["what_ko"]
+    assert "로이킴" not in item["highlight_summary"]
+    assert "Claude" in item["what_ko"] or "Autoke" in item["what_ko"]
+
+    summary_len = sum(len(str(item.get(k) or "")) for k in ("highlight_summary", "context_ko", "what_ko", "why_ko", "caveats_ko"))
+    easy_len = sum(len(s["heading"]) + len(s["body"]) for s in item["easy_original"]["sections"])
+    assert easy_len >= summary_len * 1.8
+    assert len(item["easy_original"]["sections"]) >= 5
+

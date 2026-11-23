@@ -1,88 +1,142 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useRef, useSyncExternalStore } from "react";
 
-import { FONT_SIZE_STORAGE_KEY, parseFontSize, type FontSizeScale } from "@/lib/theme";
+import {
+  FONT_SCALE_DEFAULT,
+  FONT_SCALE_MAX,
+  FONT_SCALE_MIN,
+  FONT_SIZE_STORAGE_KEY,
+  parseFontPercent,
+} from "@/lib/theme";
 
 const listeners = new Set<() => void>();
-const readFontSize = (): FontSizeScale => parseFontSize(document.documentElement.dataset.fontSize);
 
-function setFontSize(size: FontSizeScale) {
-  if (size === "large") document.documentElement.dataset.fontSize = "large";
+function readPercent(): number {
+  if (typeof document === "undefined") return FONT_SCALE_DEFAULT;
+  const ds = document.documentElement.dataset.fontPercent;
+  if (ds) return parseFontPercent(ds);
+  if (document.documentElement.dataset.fontSize === "large") return 114;
+  return FONT_SCALE_DEFAULT;
+}
+
+function applyPercent(next: number) {
+  const clamped = Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, Math.round(next)));
+  document.documentElement.dataset.fontPercent = String(clamped);
+  document.documentElement.style.setProperty("--font-scale", String(clamped / 100));
+  if (clamped >= 108) document.documentElement.dataset.fontSize = "large";
   else delete document.documentElement.dataset.fontSize;
   try {
-    localStorage.setItem(FONT_SIZE_STORAGE_KEY, size);
+    localStorage.setItem(FONT_SIZE_STORAGE_KEY, String(clamped));
   } catch {
     // 저장이 막힌 환경에선 이번 방문 동안만 유지
   }
   listeners.forEach((l) => l());
 }
 
-function useFontSize(): FontSizeScale {
+function useFontPercent(): number {
   return useSyncExternalStore(
     (cb) => {
       listeners.add(cb);
       return () => listeners.delete(cb);
     },
-    readFontSize,
-    () => "standard",
+    readPercent,
+    () => FONT_SCALE_DEFAULT,
   );
 }
 
-const OPTIONS: Array<{ key: FontSizeScale; label: string }> = [
-  { key: "standard", label: "표준" },
-  { key: "large", label: "크게" },
-];
-
-/** 가+ 글자 크기 토글 (표준 / 크게, localStorage 저장) */
+/**
+ * Apple iOS Control Center 볼륨/밝기 바 스타일 가로 캡슐형 글씨 크기 슬라이더 (85% ~ 135%).
+ * 드래그·클릭·키보드 화살표 모두 실시간 반응하며 localStorage 에 영구 저장된다.
+ */
 export default function FontSizeToggle({ compact = false }: { compact?: boolean }) {
-  const size = useFontSize();
+  const percent = useFontPercent();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const ratio = ((percent - FONT_SCALE_MIN) / (FONT_SCALE_MAX - FONT_SCALE_MIN)) * 100;
+
+  const updateFromClientX = (clientX: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const t = Math.min(1, Math.max(0, (clientX - rect.left) / Math.max(1, rect.width)));
+    applyPercent(FONT_SCALE_MIN + t * (FONT_SCALE_MAX - FONT_SCALE_MIN));
+  };
 
   if (compact) {
-    const next: FontSizeScale = size === "large" ? "standard" : "large";
+    const steps = [90, 100, 112, 125];
+    const next = steps.find((s) => s > percent) ?? steps[0];
     return (
       <button
         type="button"
-        onClick={() => setFontSize(next)}
-        aria-pressed={size === "large"}
-        aria-label={size === "large" ? "글자 크기 표준으로 되돌리기" : "글자 크기 크게 보기"}
-        title="글자 크기 전환 (표준 / 크게)"
-        className={`press inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[13px] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-          size === "large" ? "bg-fg text-canvas" : "bg-elevated text-fg-2 hover:text-fg"
+        onClick={() => applyPercent(next)}
+        aria-label={`글자 크기 현재 ${percent}%, 눌러서 조절`}
+        title="글자 크기 조절 (90% → 100% → 112% → 125%)"
+        className={`press inline-flex shrink-0 items-center gap-1 rounded-full border border-line px-2.5 py-1 text-[13px] font-semibold tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          percent !== 100 ? "bg-fg text-canvas" : "bg-elevated text-fg-2 hover:text-fg"
         }`}
       >
-        가+
+        <span>가</span>
+        <span className="text-[11.5px] opacity-80">{percent}%</span>
       </button>
     );
   }
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <span className="inline-flex items-center gap-1 text-[13px] font-medium text-fg-2">
-        <span className="font-bold text-fg" aria-hidden>
-          가+
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between px-0.5">
+        <span className="text-[13px] font-medium text-fg-2">글자 크기</span>
+        <button
+          type="button"
+          onClick={() => applyPercent(FONT_SCALE_DEFAULT)}
+          title="누르면 기본 크기(100%)로 초기화"
+          className="tnum rounded px-1.5 py-0.5 text-[12.5px] font-semibold text-fg-2 transition-colors hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          {percent}%
+        </button>
+      </div>
+
+      {/* iOS Control Center 가로 캡슐 볼륨 바 */}
+      <div
+        ref={trackRef}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture?.(e.pointerId);
+          updateFromClientX(e.clientX);
+        }}
+        onPointerMove={(e) => {
+          if (e.buttons === 1 || e.pointerType === "touch") {
+            updateFromClientX(e.clientX);
+          }
+        }}
+        onDoubleClick={() => applyPercent(FONT_SCALE_DEFAULT)}
+        className="ios-slider-track relative flex h-10 w-full cursor-ew-resize select-none items-center justify-between overflow-hidden rounded-full border border-line-strong/80 px-3.5"
+      >
+        {/* 부드럽게 채워지는 필 바 (Fill Bar) */}
+        <div
+          aria-hidden
+          className="ios-slider-fill pointer-events-none absolute inset-y-0 left-0 rounded-full transition-[width] duration-75 ease-out"
+          style={{ width: `${Math.max(10, ratio)}%` }}
+        />
+
+        {/* 좌측 작은 '가' / 우측 큰 '가' */}
+        <span className="ios-slider-glyph pointer-events-none relative z-10 text-[12px] font-semibold leading-none" aria-hidden>
+          가
         </span>
-        글자 크기
-      </span>
-      <div role="radiogroup" aria-label="글자 크기" className="inline-flex shrink-0 items-center gap-0.5 rounded-lg bg-elevated p-0.5">
-        {OPTIONS.map(({ key, label }) => {
-          const active = size === key;
-          return (
-            <button
-              key={key}
-              type="button"
-              role="radio"
-              aria-checked={active}
-              aria-label={`글자 크기 ${label}`}
-              onClick={() => setFontSize(key)}
-              className={`press inline-flex items-center rounded-md px-2 py-1 text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-                active ? "bg-canvas text-fg" : "text-fg-3 hover:text-fg-2"
-              }`}
-            >
-              {label}
-            </button>
-          );
-        })}
+        <span className="ios-slider-glyph pointer-events-none relative z-10 text-[18px] font-bold leading-none" aria-hidden>
+          가
+        </span>
+
+        {/* 스크린 리더 및 키보드 좌우 화살표 지원 */}
+        <input
+          type="range"
+          min={FONT_SCALE_MIN}
+          max={FONT_SCALE_MAX}
+          step={1}
+          value={percent}
+          aria-label="글자 크기 조절 슬라이더"
+          aria-valuetext={`${percent}%`}
+          onChange={(e) => applyPercent(Number(e.target.value))}
+          className="absolute inset-0 z-20 h-full w-full cursor-ew-resize opacity-0"
+        />
       </div>
     </div>
   );

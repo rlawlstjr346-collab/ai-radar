@@ -48,9 +48,27 @@ AI_KEYWORDS_RE = re.compile(
 )
 
 
+# Apple Newsroom 공식 피드: 매장 오픈·엔터테인먼트·일반 홍보 100% 차단, 명확한 AI·ML 글만 통과
+APPLE_NEWSROOM_MARKERS: tuple[str, ...] = (
+    "apple.com/newsroom/rss-feed.rss",
+    "apple.com/kr/newsroom/rss-feed.rss",
+)
+APPLE_AI_STRICT_RE = re.compile(
+    r"(Apple\s+Intelligence|애플\s*인텔리전스|\bMLX\b|Core\s*ML|Neural\s+Engine|뉴럴\s*엔진|"
+    r"Foundation\s+Models?|\bSiri\b|\bLLM\b|machine\s+learning|머신러닝|인공지능|온디바이스\s*AI|"
+    r"Private\s+Cloud\s+Compute|OpenELM|Ferret|FastVLM|\bAI\s+(?:model|feature|research|chip|agent|기능|모델|연구))",
+    re.I,
+)
+
+
 def ai_relevant(title: str, body: str = "") -> bool:
     """종합 피드에서 AI·LLM·에이전트·추천·비전 관련 글인지 (제목 우선, 본문 앞부분 보조)."""
     return bool(AI_KEYWORDS_RE.search(title) or AI_KEYWORDS_RE.search(body[:600]))
+
+
+def is_apple_ai_news(title: str, body: str = "") -> bool:
+    """Apple Newsroom 피드 전용 엄격 AI 필터 (일반 제품·매장·엔터 홍보 100% 스킵)."""
+    return bool(APPLE_AI_STRICT_RE.search(title) or APPLE_AI_STRICT_RE.search(body[:800]))
 
 
 class RSSAdapter(BaseAdapter):
@@ -66,6 +84,7 @@ class RSSAdapter(BaseAdapter):
             raise ValueError(f"unparseable feed: {feed.bozo_exception}")
 
         gh = GH_RELEASES_RE.search(self.source.endpoint)
+        is_apple_newsroom = any(m in self.source.endpoint for m in APPLE_NEWSROOM_MARKERS)
         needs_filter = any(m in self.source.endpoint for m in AI_FILTER_MARKERS)
         community = any(m in self.source.endpoint for m in COMMUNITY_MARKERS)
         cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
@@ -95,6 +114,8 @@ class RSSAdapter(BaseAdapter):
             plain_preview = strip_html(content, 2000)
             if is_blocked_noise(title, plain_preview, link):
                 continue                                   # 독서 모임·채용·모객 홍보글 차단
+            if is_apple_newsroom and not is_apple_ai_news(title, plain_preview):
+                continue                                   # Apple Newsroom 비-AI 일반/매장/엔터 글 100% 스킵
             if needs_filter and not ai_relevant(title, plain_preview):
                 continue                                   # 종합 피드의 비 AI 글은 제외
             if gh:

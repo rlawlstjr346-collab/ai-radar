@@ -96,14 +96,19 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const chars = easy.sections.reduce((n, s) => n + s.heading.length + s.body.length, 0);
   const minutes = Math.max(1, Math.round(chars / 500));
   return (
-    <div className="flex flex-col gap-7">
-      <p className="t-meta inline-flex items-center gap-2">
-        <BookOpenText className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden />
-        총 <span className="tnum text-fg-2">{easy.sections.length}</span>문단 · 약{" "}
-        <span className="tnum text-fg-2">{minutes}</span>분 완독
-      </p>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-canvas/85 px-4 py-3">
+        <p className="t-meta inline-flex items-center gap-2 font-medium text-fg-2">
+          <BookOpenText className="h-4 w-4 text-accent" strokeWidth={2} aria-hidden />
+          매거진 완독 해설 · 총 <span className="tnum font-semibold text-fg">{easy.sections.length}</span>문단 · 약{" "}
+          <span className="tnum font-semibold text-fg">{minutes}</span>분 완독
+        </p>
+        <span className="tnum rounded-full bg-elevated px-2.5 py-0.5 text-[12.5px] font-medium text-fg-3">
+          {chars.toLocaleString("ko-KR")}자
+        </span>
+      </div>
       {easy.source_note && (
-        <p className="t-meta -mt-4 leading-relaxed">
+        <p className="t-meta -mt-3 px-1 leading-relaxed">
           {easy.source_note}
           {state.phase === "done" &&
           state.data.status === "ready" &&
@@ -115,17 +120,22 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
         </p>
       )}
 
-      <ol className="flex flex-col gap-7">
+      <ol className="flex flex-col gap-5">
         {easy.sections.map((s, i) => (
-          <li key={i} className="flex flex-col gap-2">
-            {/* 문단 순서가 실제 원문 순서라 번호는 의미가 있다 — 조용한 tertiary 로만 */}
-            <h3 className="flex items-baseline gap-2.5 text-[17px] font-bold leading-snug text-heading">
-              <span className="tnum shrink-0 rounded-md bg-accent/12 px-1.5 py-0.5 text-[12.5px] font-bold leading-none text-accent">{i + 1}</span>
+          <li
+            key={i}
+            className="summary-card-brief reading-stagger flex flex-col gap-3 rounded-2xl p-5"
+            style={{ "--stagger": i + 1 } as React.CSSProperties}
+          >
+            <h3 className="flex items-baseline gap-2.5 text-[clamp(17.5px,1.05vw+4px,20px)] font-bold leading-snug text-heading">
+              <span className="tnum shrink-0 rounded-md bg-accent/14 px-2 py-0.5 text-[13px] font-bold leading-none text-accent">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               {s.heading}
             </h3>
             <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} highlight />
             {s.quote && (
-              <blockquote className="rounded-r-lg border-l-2 border-accent/60 bg-accent/[0.05] py-2.5 pl-4 pr-3 text-[14px] italic leading-relaxed text-fg-2">
+              <blockquote className="rounded-r-xl border-l-[3px] border-accent/70 bg-accent/[0.06] py-3 pl-4 pr-3.5 text-[15px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
                   {s.quote}
