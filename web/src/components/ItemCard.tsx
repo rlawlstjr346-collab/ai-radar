@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import type { KeyboardEvent } from "react";
 
 import { CATEGORY_META } from "@/lib/categories";
 import { formatDate, freshness } from "@/lib/filter";
 import { stripHighlightMarks } from "@/lib/highlight";
 import { getHighlightSummary } from "@/lib/reading-insights";
+import { formatRelatedCaption } from "@/lib/story-clusterer";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitTakeaway, PlatformMark, QuietTag } from "./Badges";
@@ -20,6 +21,8 @@ interface Props {
   selected: boolean;
   now: number;
   lang?: TitleLang;
+  isRead?: boolean;
+  isMajor?: boolean;
   onSelect: (id: string) => void;
   onSelectPlatform: (id: string) => void;
   onEntity: (name: string) => void;
@@ -81,11 +84,17 @@ function ResearchEyebrow({
   item,
   platform,
   now,
+  lang = "ko",
+  isRead = false,
+  isMajor = false,
   tags = false,
 }: {
   item: FeedItem;
   platform?: Platform;
   now: number;
+  lang?: TitleLang;
+  isRead?: boolean;
+  isMajor?: boolean;
   tags?: boolean;
 }) {
   const xCard = isXItem(item);
@@ -95,6 +104,7 @@ function ResearchEyebrow({
   const timeIso = item.published_at ?? item.fetched_at ?? item.created_at;
   const timeTitle = new Date(timeIso).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
   const timeLabel = f?.label || `수집 ${formatDate(item.fetched_at ?? item.created_at)}`;
+  const showMajorBadge = isMajor && !isRead;
 
   return (
     <div className="relative z-10 flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 text-[15px]">
@@ -120,15 +130,33 @@ function ResearchEyebrow({
         )}
       </span>
 
+      {/* 주요 이슈 절제된 다크 모노크롬 배지 (미열람 주요 기사에만 표시) */}
+      {showMajorBadge && (
+        <span className="major-issue-badge" data-major-badge="true">
+          {lang === "en" ? "Major" : "주요 이슈"}
+        </span>
+      )}
+
       <span className="select-none text-fg-3/60" aria-hidden>
         ·
       </span>
 
       {/* 3. 상대시간 */}
       <time dateTime={timeIso} title={timeTitle} className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[14.5px] font-medium text-fg-3">
-        {f?.fresh && <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />}
+        {f?.fresh && !isRead && <span className="h-1.5 w-1.5 rounded-full bg-live" aria-hidden />}
         {timeLabel}
       </time>
+
+      {/* 이미 읽은 기사 표시 */}
+      {isRead && (
+        <span
+          data-read-badge="true"
+          className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap text-[13px] font-medium text-fg-3/85"
+        >
+          <Check className="h-3.5 w-3.5" strokeWidth={2.2} aria-hidden />
+          {lang === "en" ? "Read" : "읽음"}
+        </span>
+      )}
 
       {tags && <QuietTags item={item} />}
     </div>
@@ -136,15 +164,34 @@ function ResearchEyebrow({
 }
 
 function QuietTags({ item }: { item: FeedItem }) {
+  const hasClusterCaption = Boolean(item.relatedArticles && item.relatedArticles.length > 0);
   return (
     <>
       {item.category === "research" && <QuietTag>논문</QuietTag>}
-      {item.source_count > 1 && (
+      {item.source_count > 1 && !hasClusterCaption && (
         <QuietTag title={`${item.source_count}곳에서 같은 소식을 포착했어요`}>
           <span className="tnum">{item.source_count}</span>곳 포착
         </QuietTag>
       )}
     </>
+  );
+}
+
+function RelatedCoverageCaption({
+  item,
+  platformsById,
+  lang,
+}: {
+  item: FeedItem;
+  platformsById: Map<string, Platform>;
+  lang: TitleLang;
+}) {
+  const caption = formatRelatedCaption(item, platformsById, lang);
+  if (!caption) return null;
+  return (
+    <p data-related-caption="true" className="t-meta relative z-10 text-[13.5px] font-medium text-fg-3">
+      {caption}
+    </p>
   );
 }
 
@@ -160,10 +207,22 @@ function EntityLine({ item, platform }: { item: FeedItem; platform?: Platform })
 }
 
 /** ① 상단 대표 후킹 피처드 카드 (전체 박스 클릭 영역 + 비례 확대 패딩) */
-export function LeadStory({ item, platform, selected, now, lang = "ko", onSelect }: Props) {
+export function LeadStory({
+  item,
+  platform,
+  platformsById,
+  selected,
+  now,
+  lang = "ko",
+  isRead = false,
+  isMajor,
+  onSelect,
+}: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   const handlers = makeCardHandlers(item.id, onSelect);
+  const major = Boolean(isMajor ?? item.is_major_issue);
+  const highlightMajor = major && !isRead;
   return (
     <article
       role="button"
@@ -171,17 +230,22 @@ export function LeadStory({ item, platform, selected, now, lang = "ko", onSelect
       aria-pressed={selected}
       aria-label={`${displayHeadline(item, lang)} — 1분 핵심 요약 열기`}
       data-active={selected ? "true" : "false"}
+      data-read={isRead ? "true" : "false"}
+      data-major={highlightMajor ? "true" : "false"}
       {...handlers}
-      className={`newsroom-card group relative flex cursor-pointer flex-col gap-4 overflow-hidden p-7 sm:p-9 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
+      className={`newsroom-card ${highlightMajor ? "newsroom-card-major" : ""} group relative flex cursor-pointer flex-col gap-4 overflow-hidden p-7 sm:p-9 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
     >
       {xCard && <XLogo className="x-watermark" />}
-      <ResearchEyebrow item={item} platform={platform} now={now} tags />
+      <ResearchEyebrow item={item} platform={platform} now={now} lang={lang} isRead={isRead} isMajor={major} tags />
       <h2 className="t-lead relative z-10">{displayHeadline(item, lang)}</h2>
       {text && <p className="t-card-summary relative z-10 max-w-[74ch]">{text}</p>}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-1">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
-          <BenefitTakeaway tag={item.benefit_tag} />
-          <EntityLine item={item} platform={platform} />
+        <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+            <BenefitTakeaway tag={item.benefit_tag} />
+            <EntityLine item={item} platform={platform} />
+          </div>
+          <RelatedCoverageCaption item={item} platformsById={platformsById} lang={lang} />
         </div>
         <span className="t-meta inline-flex items-center gap-1.5 font-semibold text-fg-2 transition-transform group-hover:translate-x-0.5">
           1분 요약 <ArrowRight className="h-4 w-4" aria-hidden />
@@ -192,10 +256,22 @@ export function LeadStory({ item, platform, selected, now, lang = "ko", onSelect
 }
 
 /** ② 서브 피처드 카드 (2열 균형 카드 — 전체 박스 클릭 영역) */
-export function FeatureStory({ item, platform, selected, now, lang = "ko", onSelect }: Props) {
+export function FeatureStory({
+  item,
+  platform,
+  platformsById,
+  selected,
+  now,
+  lang = "ko",
+  isRead = false,
+  isMajor,
+  onSelect,
+}: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   const handlers = makeCardHandlers(item.id, onSelect);
+  const major = Boolean(isMajor ?? item.is_major_issue);
+  const highlightMajor = major && !isRead;
   return (
     <article
       role="button"
@@ -203,17 +279,22 @@ export function FeatureStory({ item, platform, selected, now, lang = "ko", onSel
       aria-pressed={selected}
       aria-label={`${displayHeadline(item, lang)} — 1분 핵심 요약 열기`}
       data-active={selected ? "true" : "false"}
+      data-read={isRead ? "true" : "false"}
+      data-major={highlightMajor ? "true" : "false"}
       {...handlers}
-      className={`newsroom-card group relative flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden p-7 sm:p-8 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
+      className={`newsroom-card ${highlightMajor ? "newsroom-card-major" : ""} group relative flex h-full cursor-pointer flex-col justify-between gap-4 overflow-hidden p-7 sm:p-8 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
     >
       {xCard && <XLogo className="x-watermark" />}
       <div className="relative z-10 flex flex-col gap-3">
-        <ResearchEyebrow item={item} platform={platform} now={now} tags />
+        <ResearchEyebrow item={item} platform={platform} now={now} lang={lang} isRead={isRead} isMajor={major} tags />
         <h3 className="t-feature">{displayHeadline(item, lang)}</h3>
         {text && <p className="t-card-summary line-clamp-2">{text}</p>}
       </div>
-      <div className="relative z-10 flex items-center justify-between gap-2 pt-1">
-        <BenefitTakeaway tag={item.benefit_tag} />
+      <div className="relative z-10 flex flex-wrap items-end justify-between gap-2 pt-1">
+        <div className="flex min-w-0 flex-col gap-1">
+          <BenefitTakeaway tag={item.benefit_tag} />
+          <RelatedCoverageCaption item={item} platformsById={platformsById} lang={lang} />
+        </div>
         <span className="t-meta ml-auto inline-flex shrink-0 items-center gap-1.5 font-semibold text-fg-2 transition-transform group-hover:translate-x-0.5">
           1분 요약 <ArrowRight className="h-4 w-4" aria-hidden />
         </span>
@@ -223,10 +304,22 @@ export function FeatureStory({ item, platform, selected, now, lang = "ko", onSel
 }
 
 /** ③ 정갈하고 큼직한 에디토리얼 피드 카드 (전체 박스 클릭 영역) */
-export function StreamRow({ item, platform, selected, now, lang = "ko", onSelect }: Props) {
+export function StreamRow({
+  item,
+  platform,
+  platformsById,
+  selected,
+  now,
+  lang = "ko",
+  isRead = false,
+  isMajor,
+  onSelect,
+}: Props) {
   const text = uniqueCardPreview(item);
   const xCard = isXItem(item);
   const handlers = makeCardHandlers(item.id, onSelect);
+  const major = Boolean(isMajor ?? item.is_major_issue);
+  const highlightMajor = major && !isRead;
   return (
     <article
       role="button"
@@ -234,15 +327,20 @@ export function StreamRow({ item, platform, selected, now, lang = "ko", onSelect
       aria-pressed={selected}
       aria-label={`${displayHeadline(item, lang)} — 1분 핵심 요약 열기`}
       data-active={selected ? "true" : "false"}
+      data-read={isRead ? "true" : "false"}
+      data-major={highlightMajor ? "true" : "false"}
       {...handlers}
-      className={`newsroom-card group relative flex cursor-pointer flex-col gap-3 overflow-hidden p-7 sm:p-8 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
+      className={`newsroom-card ${highlightMajor ? "newsroom-card-major" : ""} group relative flex cursor-pointer flex-col gap-3 overflow-hidden p-7 sm:p-8 focus-visible:outline-none focus-visible:ring-2 ${CATEGORY_META[item.category].ring}`}
     >
       {xCard && <XLogo className="x-watermark" />}
-      <ResearchEyebrow item={item} platform={platform} now={now} tags />
+      <ResearchEyebrow item={item} platform={platform} now={now} lang={lang} isRead={isRead} isMajor={major} tags />
       <h3 className="t-stream relative z-10">{displayHeadline(item, lang)}</h3>
       {text && <p className="t-card-summary relative z-10 line-clamp-2 max-w-[78ch]">{text}</p>}
-      <div className="relative z-10 flex items-center justify-between gap-2 pt-1">
-        <BenefitTakeaway tag={item.benefit_tag} />
+      <div className="relative z-10 flex flex-wrap items-end justify-between gap-2 pt-1">
+        <div className="flex min-w-0 flex-col gap-1">
+          <BenefitTakeaway tag={item.benefit_tag} />
+          <RelatedCoverageCaption item={item} platformsById={platformsById} lang={lang} />
+        </div>
         <span className="t-meta ml-auto inline-flex shrink-0 items-center gap-1.5 font-semibold text-fg-2 transition-transform group-hover:translate-x-0.5">
           1분 요약 <ArrowRight className="h-4 w-4" aria-hidden />
         </span>

@@ -1,10 +1,11 @@
 "use client";
 
-import { ArrowRight, ArrowUpRight, BookOpenText, Flame, Pin, Radio, Sparkles, Target, Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpenText, Flame, Layers, Pin, Radio, Sparkles, Target, Zap } from "lucide-react";
 import { useState, type CSSProperties } from "react";
 
 import { formatDate } from "@/lib/filter";
 import { getHighlightSummary, getUtilityInsight } from "@/lib/reading-insights";
+import { collectClusterItemIds } from "@/lib/visit-state";
 import type { FeedItem, Platform } from "@/lib/types";
 
 import { BenefitChip, CategoryLine, CategoryTag, DifficultyBadge, PlatformMark } from "./Badges";
@@ -12,6 +13,7 @@ import EasyOriginalView from "./EasyOriginalView";
 import { isXItem } from "./ItemCard";
 import ProjectGuide from "./ProjectGuide";
 import SegmentedControl from "./SegmentedControl";
+import type { TitleLang } from "./Sidebar";
 import TermText from "./TermText";
 import XLogo from "./XLogo";
 
@@ -20,7 +22,10 @@ type Tab = "summary" | "easy";
 interface Props {
   item: FeedItem;
   platform?: Platform;
+  platformsById?: Map<string, Platform>;
+  lang?: TitleLang;
   onSelectPlatform: (id: string) => void;
+  onMarkRead?: (ids: string[]) => void;
   canReadEasy?: boolean;
 }
 
@@ -29,9 +34,23 @@ export const BTN_PRIMARY =
 export const BTN_SECONDARY =
   "press group inline-flex h-auto select-none items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/85 px-5 py-3.5 text-[15.5px] font-medium leading-[1.35] text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
-export function OriginalLink({ url, variant }: { url: string; variant: "primary" | "secondary" }) {
+export function OriginalLink({
+  url,
+  variant,
+  onOpen,
+}: {
+  url: string;
+  variant: "primary" | "secondary";
+  onOpen?: () => void;
+}) {
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className={variant === "primary" ? BTN_PRIMARY : BTN_SECONDARY}>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onOpen}
+      className={variant === "primary" ? BTN_PRIMARY : BTN_SECONDARY}
+    >
       원문 보러가기
       <ArrowUpRight className="h-[18px] w-[18px] transition group-hover:-translate-y-px group-hover:translate-x-px" aria-hidden />
     </a>
@@ -70,7 +89,15 @@ function HealthInsetCard({
   );
 }
 
-export default function ItemDetail({ item, platform, onSelectPlatform, canReadEasy = true }: Props) {
+export default function ItemDetail({
+  item,
+  platform,
+  platformsById,
+  lang = "ko",
+  onSelectPlatform,
+  onMarkRead,
+  canReadEasy = true,
+}: Props) {
   const [tab, setTab] = useState<Tab>("summary");
   const panelId = `detail-${item.id}`;
   const body = "prose-ko t-body";
@@ -81,6 +108,8 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
   const utility = getUtilityInsight(item, platform?.name);
   const xCard = isXItem(item);
   const platformName = platform?.name ?? item.platform_id;
+  const relatedArticles = item.relatedArticles ?? [];
+  const handleMarkClusterRead = () => onMarkRead?.(collectClusterItemIds(item));
 
   // '어디에 써야할까요' 1~2줄 간결 합성 (중복 없이 실전 효용 + 바로 써볼 팁)
   const whereToUseText = `${utility.when_needed} — ${utility.work_utility}`;
@@ -230,7 +259,72 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
               </p>
             )}
 
-            <div className="reading-stagger flex flex-col gap-3 pt-1" style={staggerStyle(6)}>
+            {/* 다중 매체 클러스터링 관련 보도 함께 보기 */}
+            {relatedArticles.length > 0 && (
+              <section
+                aria-label={`관련 보도 함께 보기 (${relatedArticles.length}건)`}
+                data-related-section="true"
+                className="inset-health-card reading-stagger flex flex-col gap-3.5 p-6"
+                style={staggerStyle(6)}
+              >
+                <h3 className="flex select-none items-center gap-2 text-[15px] font-bold tracking-[-0.01em] text-fg">
+                  <Layers className="h-[18px] w-[18px] shrink-0 text-fg-2" strokeWidth={2.1} aria-hidden />
+                  <span>
+                    {lang === "en"
+                      ? `Related coverage (${relatedArticles.length})`
+                      : `관련 보도 함께 보기 (${relatedArticles.length}건)`}
+                  </span>
+                </h3>
+                <ul className="flex flex-col divide-y divide-line">
+                  {relatedArticles.map((rel) => {
+                    const relPlat = platformsById?.get(rel.platform_id);
+                    const relIsX = isXItem(rel);
+                    const relTitle =
+                      lang === "en" && rel.original_title?.trim() ? rel.original_title.trim() : rel.hook_title;
+                    const relSourceName = relIsX
+                      ? `X 실시간${rel.author_handle ? ` · ${rel.author_handle}` : ""}`
+                      : (relPlat?.name ?? rel.platform_id);
+                    return (
+                      <li key={rel.id} className="py-3 first:pt-0.5 last:pb-0.5">
+                        <a
+                          href={rel.canonical_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={handleMarkClusterRead}
+                          className="group flex flex-col gap-1.5 rounded-xl p-2 -mx-2 transition-colors hover:bg-elevated/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                          <div className="flex items-center justify-between gap-2 text-[13.5px]">
+                            <span className="inline-flex min-w-0 items-center gap-1.5 font-semibold text-fg">
+                              {relIsX ? (
+                                <XLogo className="h-3.5 w-3.5 shrink-0 text-fg" />
+                              ) : (
+                                <PlatformMark platform={relPlat} fallbackId={rel.platform_id} size="xs" />
+                              )}
+                              <span className="truncate">{relSourceName}</span>
+                              <span className="font-normal text-fg-3">
+                                · {formatDate(rel.published_at ?? rel.created_at)}
+                              </span>
+                            </span>
+                            <ArrowUpRight
+                              className="h-4 w-4 shrink-0 text-fg-3 transition group-hover:-translate-y-px group-hover:translate-x-px group-hover:text-fg"
+                              aria-hidden
+                            />
+                          </div>
+                          <p className="text-[15.5px] font-semibold leading-snug text-fg group-hover:underline">
+                            {relTitle}
+                          </p>
+                          {rel.what_ko && (
+                            <p className="line-clamp-2 text-[14px] leading-relaxed text-fg-2">{rel.what_ko}</p>
+                          )}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            )}
+
+            <div className="reading-stagger flex flex-col gap-3 pt-1" style={staggerStyle(7)}>
               {canReadEasy ? (
                 <>
                   <button
@@ -249,10 +343,10 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
                     </span>
                     <ArrowRight className="h-5 w-5 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
                   </button>
-                  <OriginalLink url={item.canonical_url} variant="secondary" />
+                  <OriginalLink url={item.canonical_url} variant="secondary" onOpen={handleMarkClusterRead} />
                 </>
               ) : (
-                <OriginalLink url={item.canonical_url} variant="primary" />
+                <OriginalLink url={item.canonical_url} variant="primary" onOpen={handleMarkClusterRead} />
               )}
               <ProjectGuide item={item} platformName={platform?.name} />
             </div>

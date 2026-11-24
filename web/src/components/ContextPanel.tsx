@@ -9,6 +9,7 @@ import type { EasyOriginalMode, FeedItem, Platform } from "@/lib/types";
 
 import ItemDetail from "./ItemDetail";
 import PlatformProfile from "./PlatformProfile";
+import type { TitleLang } from "./Sidebar";
 
 export type Selection = { type: "item"; id: string } | { type: "platform"; id: string } | null;
 
@@ -16,8 +17,10 @@ interface Props {
   selection: Selection;
   items: FeedItem[];
   platforms: Platform[];
+  lang?: TitleLang;
   onSelectItem: (id: string) => void;
   onSelectPlatform: (id: string) => void;
+  onMarkRead?: (ids: string[]) => void;
   onClose: () => void;
   easyMode: EasyOriginalMode;
 }
@@ -32,7 +35,12 @@ export function shareUrlFor(selection: NonNullable<Selection>, location: Pick<Lo
 
 function selectedHeading(selection: Selection, items: FeedItem[], platforms: Platform[]): string {
   if (!selection) return "";
-  if (selection.type === "item") return items.find((i) => i.id === selection.id)?.hook_title ?? "";
+  if (selection.type === "item") {
+    const found =
+      items.find((i) => i.id === selection.id) ??
+      items.find((i) => i.relatedArticles?.some((r) => r.id === selection.id));
+    return found?.hook_title ?? "";
+  }
   return platforms.find((p) => p.id === selection.id)?.name ?? "";
 }
 
@@ -97,17 +105,22 @@ function PanelActions({ selection, onClose }: { selection: Selection; onClose: (
   );
 }
 
-function PanelContent({ selection, items, platforms, onSelectItem, onSelectPlatform }: Omit<Props, "onClose">) {
+function PanelContent({ selection, items, platforms, lang, onSelectItem, onSelectPlatform, onMarkRead }: Omit<Props, "onClose">) {
   const byId = new Map(platforms.map((p) => [p.id, p]));
   if (selection?.type === "item") {
-    const item = items.find((i) => i.id === selection.id);
+    const item =
+      items.find((i) => i.id === selection.id) ??
+      items.find((i) => i.relatedArticles?.some((r) => r.id === selection.id));
     if (item) {
       return (
         <ItemDetail
           key={item.id}
           item={item}
           platform={byId.get(item.platform_id)}
+          platformsById={byId}
+          lang={lang}
           onSelectPlatform={onSelectPlatform}
+          onMarkRead={onMarkRead}
           canReadEasy
         />
       );

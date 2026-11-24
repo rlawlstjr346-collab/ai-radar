@@ -1,7 +1,7 @@
 "use client";
 
 import { Telescope } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
 import {
@@ -12,8 +12,19 @@ import {
   pastFeed,
   type CategoryFilter,
 } from "@/lib/filter";
+import { isClusterRead } from "@/lib/gravity";
 import { fetchLatestLiveFeed, mergeLiveFeedItems } from "@/lib/live-client";
+import { clusterStories } from "@/lib/story-clusterer";
 import type { FeedItem, Platform, RadarData } from "@/lib/types";
+import {
+  collectClusterItemIds,
+  computeVisitDivider,
+  formatVisitDividerLabel,
+  initSessionLastVisit,
+  loadReadIds,
+  recordReadIds,
+  type VisitDividerInfo,
+} from "@/lib/visit-state";
 
 import { LiquidGlassModal, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
@@ -80,6 +91,31 @@ function EmptyFeed({ allCount, onShowAll }: { allCount: number; onShowAll?: () =
   );
 }
 
+/** 마지막 방문 이후 경계 마커 — 박스 없는 1px 가로 실선 + 작은 무채색 라벨 */
+export function VisitDivider({
+  info,
+  lang,
+  className = "",
+}: {
+  info: VisitDividerInfo;
+  lang: TitleLang;
+  className?: string;
+}) {
+  const label = formatVisitDividerLabel(info, lang);
+  return (
+    <div
+      role="separator"
+      aria-label={label}
+      data-visit-divider="true"
+      className={`col-span-full my-1 flex w-full select-none items-center gap-3.5 py-1.5 ${className}`}
+    >
+      <span className="h-px flex-1 bg-line-strong/80" aria-hidden />
+      <span className="shrink-0 text-[12.5px] font-medium tracking-[-0.01em] text-fg-3">{label}</span>
+      <span className="h-px flex-1 bg-line-strong/80" aria-hidden />
+    </div>
+  );
+}
+
 /** 자동 무한 스크롤(IntersectionObserver, rootMargin 400px) 적용 피드 목록 */
 function FeedList({
   items,
@@ -88,6 +124,8 @@ function FeedList({
   now,
   lang,
   spotlight,
+  readIdSet,
+  visitDivider,
   onSelect,
   onSelectPlatform,
   onEntity,
@@ -100,6 +138,8 @@ function FeedList({
   now: number;
   lang: TitleLang;
   spotlight: boolean;
+  readIdSet: ReadonlySet<string>;
+  visitDivider: VisitDividerInfo | null;
   onSelect: (id: string) => void;
   onSelectPlatform: (id: string) => void;
   onEntity: (name: string) => void;
@@ -147,11 +187,22 @@ function FeedList({
     selected: isSelected(item.id),
     now,
     lang,
+    isRead: isClusterRead(item, readIdSet),
+    isMajor: Boolean(item.is_major_issue),
     onSelect,
     onSelectPlatform,
   });
 
   const topCount = (lead ? 1 : 0) + features.length;
+  const dividerAfterLead = Boolean(visitDivider && lead && visitDivider.afterIndex === 0);
+  const dividerBetweenFeatures = Boolean(
+    visitDivider && lead && features.length === 2 && visitDivider.afterIndex === 1,
+  );
+  const dividerAfterFeatures = Boolean(
+    visitDivider && lead && features.length > 0 && visitDivider.afterIndex === topCount - 1,
+  );
+  const dividerStreamIdx =
+    visitDivider && visitDivider.afterIndex >= topCount ? visitDivider.afterIndex - topCount : -1;
 
   return (
     <div className="flex flex-col gap-5">
@@ -162,24 +213,45 @@ function FeedList({
         </section>
       )}
 
-      {/* 주요 피처 2열 카드 */}
+      {dividerAfterLead && visitDivider && <VisitDivider info={visitDivider} lang={lang} />}
+
+      {/* 주요 피처 2열 카드 — 2·3번 사이에 구분선이 걸릴 때는 col-span-full + 행 경계 정렬로 2열 깨짐 방지 */}
       {features.length > 0 && (
         <ul className="grid grid-cols-1 gap-5 md:grid-cols-2" aria-label="주요 소식">
-          {features.map((item) => (
-            <li key={item.id} data-item-id={item.id} className="min-w-0">
-              <FeatureStory {...rowProps(item)} />
-            </li>
+          {features.map((item, idx) => (
+            <Fragment key={item.id}>
+              <li
+                data-item-id={item.id}
+                className={`min-w-0 ${dividerBetweenFeatures ? "md:col-span-2" : ""}`}
+              >
+                <FeatureStory {...rowProps(item)} />
+              </li>
+              {dividerBetweenFeatures && idx === 0 && visitDivider && (
+                <li key="visit-divider-features" className="col-span-full list-none">
+                  <VisitDivider info={visitDivider} lang={lang} />
+                </li>
+              )}
+            </Fragment>
           ))}
         </ul>
       )}
 
+      {dividerAfterFeatures && visitDivider && <VisitDivider info={visitDivider} lang={lang} />}
+
       {/* 정갈하고 큼직한 에디토리얼 아티클 스트림 */}
       {shown.length > 0 && (
         <ul className="flex flex-col gap-5" aria-label={topCount > 0 ? "최신 에디토리얼 피드" : "소식 목록"}>
-          {shown.map((item) => (
-            <li key={item.id} data-item-id={item.id} className="min-w-0">
-              <StreamRow {...rowProps(item)} />
-            </li>
+          {shown.map((item, idx) => (
+            <Fragment key={item.id}>
+              <li data-item-id={item.id} className="min-w-0">
+                <StreamRow {...rowProps(item)} />
+              </li>
+              {dividerStreamIdx === idx && visitDivider && (
+                <li key="visit-divider-stream" className="col-span-full list-none">
+                  <VisitDivider info={visitDivider} lang={lang} />
+                </li>
+              )}
+            </Fragment>
           ))}
         </ul>
       )}
@@ -206,6 +278,33 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const selectionRef = useRef<Selection>(null);
   selectionRef.current = selection;
   const lastFetchRef = useRef<number>(0);
+
+  // 세션 고정 직전 방문 시각 (`ai_radar_last_visit_ts`) & 읽은 기사 목록 (`ai_radar_read_ids`, 최대 1,000개)
+  const [sessionLastVisitTs, setSessionLastVisitTs] = useState<number | null>(null);
+  const [readIds, setReadIds] = useState<string[]>([]);
+  const [rankReadIds, setRankReadIds] = useState<string[]>([]);
+  const readIdsRef = useRef<string[]>([]);
+  readIdsRef.current = readIds;
+
+  useEffect(() => {
+    setSessionLastVisitTs(initSessionLastVisit(Date.now()));
+    const storedRead = loadReadIds();
+    setReadIds(storedRead);
+    setRankReadIds(storedRead);
+  }, []);
+
+  // 뷰/분야 전환 시 최신 읽음 상태를 상단 부력 해제에 반영 (모달 닫을 때 리스트가 갑자기 튀는 현상 방지)
+  useEffect(() => {
+    setRankReadIds(readIdsRef.current);
+  }, [view, category]);
+
+  const readIdSet = useMemo(() => new Set(readIds), [readIds]);
+  const rankReadIdSet = useMemo(() => new Set(rankReadIds), [rankReadIds]);
+
+  const markRead = useCallback((ids: string[]) => {
+    if (ids.length === 0) return;
+    setReadIds((prev) => recordReadIds(prev, ids));
+  }, []);
 
   const validPlatformIds = useMemo(() => new Set(data.platforms.map((p) => p.id)), [data.platforms]);
 
@@ -277,15 +376,31 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
   const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
   const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
-  const hotItems = useMemo(() => hotFeed(items, category, now, "", names), [items, category, now, names]);
-  const pastItems = useMemo(() => pastFeed(items, category, "", names), [items, category, names]);
+  // 36시간 이내 다중 매체 동일 이슈 결정론적 클러스터링 (SSR/CSR hydration 일치)
+  const clusteredItems = useMemo(() => clusterStories(items), [items]);
+  const hotItems = useMemo(
+    () => hotFeed(clusteredItems, category, now, "", names, { readIds: rankReadIdSet }),
+    [clusteredItems, category, now, names, rankReadIdSet],
+  );
+  const pastItems = useMemo(
+    () => pastFeed(clusteredItems, category, "", names, now),
+    [clusteredItems, category, names, now],
+  );
+
+  const findClusterForItemId = useCallback(
+    (id: string): FeedItem | undefined =>
+      clusteredItems.find((i) => i.id === id) ??
+      clusteredItems.find((i) => i.relatedArticles?.some((r) => r.id === id)),
+    [clusteredItems],
+  );
 
   const applySelection = useCallback(
     (sel: Selection, fromUrl: boolean) => {
       if (sel?.type === "item") {
-        const item = items.find((i) => i.id === sel.id);
+        const item = findClusterForItemId(sel.id) ?? items.find((i) => i.id === sel.id);
         if (!item) return false;
         if (fromUrl) setView(item.lifecycle_status === "warm" ? "past" : "feed");
+        markRead(collectClusterItemIds(item));
       } else if (sel?.type === "platform") {
         if (!data.platforms.some((p) => p.id === sel.id)) return false;
         if (fromUrl) setView("directory");
@@ -293,7 +408,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       setSelection(sel);
       return true;
     },
-    [items, data.platforms],
+    [findClusterForItemId, items, data.platforms, markRead],
   );
 
   // 공유 링크(?item= / ?platform=)로 들어왔을 때 자동 오픈 + 브라우저 뒤로/앞으로 가기
@@ -312,28 +427,35 @@ export default function RadarApp({ data }: { data: RadarData }) {
     const pool =
       view === "directory"
         ? data.platforms.map((p) => p.category)
-        : items
+        : clusteredItems
             .filter((i) => i.lifecycle_status === (view === "feed" ? "hot" : "warm"))
             .map((i) => i.category);
     const c = { all: view === "feed" ? Math.min(pool.length, HOT_LIMIT) : pool.length } as Record<CategoryFilter, number>;
     for (const cat of CATEGORY_ORDER) c[cat] = pool.filter((x) => x === cat).length;
     return c;
-  }, [view, items, data.platforms]);
+  }, [view, clusteredItems, data.platforms]);
 
   const viewCounts = useMemo(
     () => ({
-      feed: Math.min(items.filter((i) => i.lifecycle_status === "hot").length, HOT_LIMIT),
-      past: items.filter((i) => i.lifecycle_status === "warm").length,
+      feed: Math.min(clusteredItems.filter((i) => i.lifecycle_status === "hot").length, HOT_LIMIT),
+      past: clusteredItems.filter((i) => i.lifecycle_status === "warm").length,
       directory: data.platforms.length,
     }),
-    [items, data.platforms],
+    [clusteredItems, data.platforms],
   );
 
-  const selectItem = useCallback((id: string) => {
-    const sel: Selection = { type: "item", id };
-    setSelection(sel);
-    writeSelectionToUrl(sel);
-  }, []);
+  const selectItem = useCallback(
+    (id: string) => {
+      const target = findClusterForItemId(id);
+      const ids = target ? collectClusterItemIds(target) : [id];
+      markRead(ids);
+      const resolvedId = target ? target.id : id;
+      const sel: Selection = { type: "item", id: resolvedId };
+      setSelection(sel);
+      writeSelectionToUrl(sel);
+    },
+    [findClusterForItemId, markRead],
+  );
   const selectPlatform = useCallback((id: string) => {
     const sel: Selection = { type: "platform", id };
     setSelection(sel);
@@ -359,6 +481,11 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const feedDisplayItems = useMemo(() => {
     return view === "past" ? pastItems : hotItems;
   }, [view, hotItems, pastItems]);
+
+  const visitDivider = useMemo(() => {
+    if (view !== "feed") return null;
+    return computeVisitDivider(feedDisplayItems, sessionLastVisitTs, now);
+  }, [view, feedDisplayItems, sessionLastVisitTs, now]);
 
   const navOrder = useMemo(() => {
     if (view === "directory") return [];
@@ -450,6 +577,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
               now={now}
               lang={lang}
               spotlight={editorial}
+              readIdSet={readIdSet}
+              visitDivider={visitDivider}
               onSelect={selectItem}
               onSelectPlatform={selectPlatform}
               onEntity={onEntity}
@@ -463,10 +592,12 @@ export default function RadarApp({ data }: { data: RadarData }) {
       {/* 정중앙 고밀도 리퀴드 글라스 4단 요약 모달 (기사·플랫폼 클릭 또는 URL 공유 진입 시 오픈) */}
       <LiquidGlassModal
         selection={selection}
-        items={items}
+        items={clusteredItems}
         platforms={data.platforms}
+        lang={lang}
         onSelectItem={selectItem}
         onSelectPlatform={selectPlatform}
+        onMarkRead={markRead}
         onClose={close}
         easyMode={data.easyMode}
       />

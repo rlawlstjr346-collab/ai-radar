@@ -89,6 +89,16 @@ export interface FeedItem {
   entities: Entity[];
   /** [원본 쉽게 읽기] 해설이 이미 준비돼 있는지 (샘플 데이터 또는 DB 캐시) */
   easy_original_ready: boolean;
+  /** 다중 매체 동일 이슈 클러스터링으로 묶인 관련 기사들 (대표 카드에만 부착) */
+  relatedArticles?: FeedItem[];
+  /** 클러스터 대표 ID */
+  cluster_id?: string;
+  /** HN 중력 공식(basePoints / (hours + 2)^1.8) 기반 산출 점수 */
+  gravity_score?: number;
+  /** 중력 공식의 기본 체급 점수(출처 티어 + 클러스터 보도 수 + 릴리즈 시그널) */
+  gravity_base_points?: number;
+  /** 주요 이슈(고중력·다중 보도·프론티어 공식 발표) 여부 */
+  is_major_issue?: boolean;
 }
 
 /** [원본 쉽게 읽기] 완독 해설 — summaries.easy_original_json */

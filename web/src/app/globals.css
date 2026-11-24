@@ -208,6 +208,60 @@ kbd,
   box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.55);
 }
 
+/* ── 중요 기사(고중력·다중 보도·프론티어 공식 발표) 무채색 한 톤 짙은 마감 ──────── */
+.newsroom-card-major {
+  background-color: #f1f2f6;
+  border-color: #cfd4dc;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.045);
+}
+.newsroom-card-major:hover {
+  border-color: #b8bfc9;
+  box-shadow: 0 14px 34px -12px rgba(15, 23, 42, 0.12);
+}
+:root[data-theme="dark"] .newsroom-card-major {
+  background-color: #212228;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.36);
+}
+:root[data-theme="dark"] .newsroom-card-major:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.62);
+}
+
+/* ── 상단 출처 옆 절제된 다크 모노크롬 주요 이슈 배지 ───────────────────────────── */
+.major-issue-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background-color: #1d1d1f;
+  color: #ffffff;
+  padding: 1.5px 7px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+:root[data-theme="dark"] .major-issue-badge {
+  background-color: #e5e5ea;
+  color: #141417;
+}
+
+/* ── 이미 읽은 기사 시각적 톤다운 (라이트 #86868B / 다크 #7C7C84 + 요약 투명도) ── */
+.newsroom-card[data-read="true"] .t-lead,
+.newsroom-card[data-read="true"] .t-feature,
+.newsroom-card[data-read="true"] .t-stream {
+  color: #86868b;
+}
+:root[data-theme="dark"] .newsroom-card[data-read="true"] .t-lead,
+:root[data-theme="dark"] .newsroom-card[data-read="true"] .t-feature,
+:root[data-theme="dark"] .newsroom-card[data-read="true"] .t-stream {
+  color: #7c7c84;
+}
+.newsroom-card[data-read="true"] .t-card-summary {
+  opacity: 0.68;
+}
+
 /* ── X(Twitter) 카드 전용 대형 반투명 𝕏 배경 워터마크 (선명도 보정: 라이트 0.10 / 다크 0.16) ── */
 .x-watermark {
   position: absolute;

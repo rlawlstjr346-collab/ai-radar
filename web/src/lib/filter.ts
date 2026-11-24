@@ -1,4 +1,5 @@
 import { CATEGORY_ORDER } from "./categories";
+import { computeGravityMetrics, isBuoyantHighGravity, isClusterRead, warmGravityScore } from "./gravity";
 import type { Category, FeedItem, Platform } from "./types";
 
 export type CategoryFilter = Category | "all";
@@ -8,6 +9,8 @@ export const HOT_LIMIT = 100;
 export const PAGE_SIZE = 12;
 export const SPOTLIGHT_COUNT = 2;
 const FRESH_HOURS = 3;
+/** 최근 12시간 이내 고중력 주요 이슈 상단 체류 슬롯 상한 (히어로 1번 아래) */
+const MAX_BUOYANT_SLOTS = 5;
 
 /** 키워드 검색: 공백으로 나눈 모든 단어가 제목·이득 칩·요약·기술 태그·용어·플랫폼명 어딘가에 있으면 통과 */
 export function matchesQuery(item: FeedItem, query: string, platformName?: string): boolean {
@@ -117,32 +120,111 @@ export function interleaveMaxConsecutive(items: FeedItem[], maxRun = MAX_CONSECU
   return result;
 }
 
-/** 메인 라이브 피드: hot 만, 무조건 최신 발행·포착 시각 내림차순 최우선 + 3연속 동일 출처만 미세 인터리빙 */
+export interface HotFeedOptions {
+  /** 이미 읽은 기사 ID 집합 — 읽은 기사는 12시간 고중력 상단 부력을 해제해 고착을 방지한다 */
+  readIds?: ReadonlySet<string>;
+}
+
+function enrichGravity(item: FeedItem, now: number): FeedItem {
+  const m = computeGravityMetrics(item, now);
+  return {
+    ...item,
+    gravity_score: m.gravityScore,
+    gravity_base_points: m.basePoints,
+    is_major_issue: m.isMajorIssue,
+  };
+}
+
+/**
+ * 메인 라이브 피드:
+ * 1) 1번 히어로 슬롯은 항상 가장 최근에 들어온 실시간 최신 미열람 기사를 배치(실시간 속보감 보장)
+ * 2) 최근 12시간 이내 미열람 고중력(High-Gravity) 주요 이슈는 HN 중력 점수 순으로 상단권 체류력 부여(시차 방어)
+ * 3) 12시간이 지나거나 이미 읽은 기사는 상단 부력을 해제해 고착 현상 방지
+ * 4) 나머지는 최신 발행·포착 시각 내림차순 + 3연속 동일 출처만 미세 인터리빙
+ */
 export function hotFeed(
   items: FeedItem[],
   category: CategoryFilter,
   now: number,
   query = "",
   names?: Map<string, string>,
+  options?: HotFeedOptions,
 ): FeedItem[] {
-  const sorted = items
+  const readIds = options?.readIds;
+  const filtered = items
     .filter((i) => i.lifecycle_status === "hot")
     .filter((i) => category === "all" || i.category === category)
     .filter((i) => matchesQuery(i, query, names?.get(i.platform_id)))
-    .map((i) => [i, liveChronoKey(i, now)] as const)
-    .sort((a, b) => b[1][0] - a[1][0] || b[1][1] - a[1][1] || b[1][2] - a[1][2])
-    .map(([i]) => i);
-  return interleaveMaxConsecutive(sorted, MAX_CONSECUTIVE_SAME_SOURCE).slice(0, HOT_LIMIT);
+    .map((raw) => {
+      const enriched = enrichGravity(raw, now);
+      const metrics = computeGravityMetrics(enriched, now);
+      const key = liveChronoKey(enriched, now);
+      return { item: enriched, metrics, key };
+    });
+
+  const tier2 = filtered
+    .filter((x) => x.key[0] === 2)
+    .sort((a, b) => b.key[1] - a.key[1] || b.metrics.gravityScore - a.metrics.gravityScore || b.key[2] - a.key[2]);
+  const tierRest = filtered
+    .filter((x) => x.key[0] < 2)
+    .sort((a, b) => b.key[0] - a.key[0] || b.key[1] - a.key[1] || b.metrics.gravityScore - a.metrics.gravityScore);
+
+  const ordered: FeedItem[] = [];
+  if (tier2.length > 0) {
+    // ① 1번 히어로 슬롯: 가장 최근 실시간 미열람 기사 (모두 읽었으면 최신 1번)
+    const heroIdx = readIds ? tier2.findIndex((x) => !isClusterRead(x.item, readIds)) : 0;
+    const pickedHeroIdx = heroIdx >= 0 ? heroIdx : 0;
+    const hero = tier2[pickedHeroIdx];
+    ordered.push(hero.item);
+
+    const remaining = tier2.filter((_, idx) => idx !== pickedHeroIdx);
+
+    // ② 최근 12시간 이내 미열람 고중력 주요 이슈 상단 체류 (시차로 해외 빅테크 발표가 파묻히지 않게 방어)
+    const buoyantAll = remaining
+      .filter((x) => isBuoyantHighGravity(x.item, x.metrics, readIds))
+      .sort((a, b) => b.metrics.gravityScore - a.metrics.gravityScore || b.key[1] - a.key[1]);
+    const buoyantTop = buoyantAll.slice(0, MAX_BUOYANT_SLOTS);
+    const buoyantIds = new Set(buoyantTop.map((x) => x.item.id));
+
+    for (const b of buoyantTop) ordered.push(b.item);
+    for (const r of remaining) {
+      if (!buoyantIds.has(r.item.id)) ordered.push(r.item);
+    }
+  }
+
+  for (const r of tierRest) ordered.push(r.item);
+
+  return interleaveMaxConsecutive(ordered, MAX_CONSECUTIVE_SAME_SOURCE).slice(0, HOT_LIMIT);
 }
 
-/** 지난 주요 소식: warm(8~30일), 중요도 순 */
-export function pastFeed(items: FeedItem[], category: CategoryFilter, query = "", names?: Map<string, string>): FeedItem[] {
-  return filterItems(
-    items.filter((i) => i.lifecycle_status === "warm"),
-    category,
-    query,
-    names,
-  );
+/** 지난 주요 소식: warm(8~30일), HN 중력 체급 점수 순 */
+export function pastFeed(
+  items: FeedItem[],
+  category: CategoryFilter,
+  query = "",
+  names?: Map<string, string>,
+  now?: number,
+): FeedItem[] {
+  const warm = items
+    .filter((i) => i.lifecycle_status === "warm")
+    .filter((i) => category === "all" || i.category === category)
+    .filter((i) => matchesQuery(i, query, names?.get(i.platform_id)));
+
+  // now 미지정 시 피드 내 최신 시각을 결정론적 기준점으로 사용해 SSR/CSR 일치 보장
+  const refNow =
+    now ??
+    warm.reduce((acc, i) => {
+      const t = Date.parse(i.published_at ?? i.created_at);
+      return Number.isFinite(t) && t > acc ? t : acc;
+    }, 0);
+
+  return warm
+    .map((raw) => {
+      const item = enrichGravity(raw, refNow);
+      return { item, score: warmGravityScore(item, now) };
+    })
+    .sort((a, b) => b.score - a.score || b.item.importance_score - a.item.importance_score)
+    .map((x) => x.item);
 }
 
 /** 한국 시간 기준 날짜 번호 (서버·브라우저 시간대가 달라도 같은 값 → hydration 일치) */
