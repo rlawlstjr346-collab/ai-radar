@@ -1,8 +1,33 @@
 {
   "version": 1,
-  "generated_at": "2026-11-24T06:21:48.538125Z",
+  "generated_at": "2026-11-24T06:25:11.888509Z",
   "item_count": 100,
   "signals": [
+    {
+      "id": "live-9032d5fff7f7",
+      "title_ko": "AI와 대화하며 놀다가 뼈 때리는 '마음 처방전' 웹앱 만들어봤습니다",
+      "original_title": "AI와 대화하며 놀다가 뼈 때리는 '마음 처방전' 웹앱 만들어봤습니다",
+      "platform_id": "gpters",
+      "author_handle": null,
+      "category": "llm_chat",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://gpters.org/business/post/ai와-대화하며-놀다가-뼈-때리는-마음-처방전-웹앱-만들어봤습니다-mwub066k",
+      "published_at": "2026-11-24T06:18:33Z",
+      "fetched_at": "2026-11-24T06:25:11.888509Z",
+      "importance_score": 27.57,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==[시작한 이유] AI랑 대화하며 놀다가== \"고민을 말하면 뼈 때리는 처방전을 뽑아주는 웹앱이 있으면 재밌겠다\" 싶어서 가볍게 만들어 보았습니다. 대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요.",
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "chatbot-productivity",
+        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
+        "actionable_idea": "GPTers의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GPTers"
+      ]
+    },
     {
       "id": "live-501ea51abcc1",
       "title_ko": "[AI 모델 신작] 호요버스의 게임 AI·엔비디아의 확산언어모델 등 7종",
@@ -418,9 +443,9 @@
       "importance_score": 29.85,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "우리는 또한 Anthropic의 EFS(Enterprise Frontier Safeguards) 및 EDC(Enterprise Data Controls)라는 처음 두 가지 제품의 공개 미리 보기를 발표합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==Claude Opus 개발 생태계에서 'Anthropic의== Enterprise Frontier Safeguards 및 Enterprise Data Controls가 포함된…' 구현 방식과 실전 적용 사례가 공개됐어요. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
       "planning_meta": {
-        "signal_type": "model_release",
+        "signal_type": "dev_workflow",
         "product_domain": "coding-agent-devtool",
         "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
         "actionable_idea": "Claude Opus의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
@@ -542,7 +567,7 @@
       "canonical_url": "https://bsky.app/profile/timkellogg.me/post/3n2zrwcc2fc2s",
       "published_at": "2026-11-24T04:16:12.658000Z",
       "fetched_at": "2026-11-24T06:21:48.538125Z",
-      "importance_score": 17.66,
+      "importance_score": 18.06,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "==루프형 트랜스포머는 깔끔해 보이지만 여기서== 실제로 멋진 점은 모델 게이트를 통해 흐름을 제어하고 정보 스트림과 같은 작업을 수행하고 각 항목을 어느 정도 취하고 결합할지 결정하는 학습된 게이트가 갑자기 널리 퍼져 있다는 것입니다. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
@@ -598,7 +623,7 @@
       "importance_score": 28.1,
       "source_count": 1,
       "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "핵심 변경점: ## Docker 이미지 서명 확인 ```bash cosign verify \\ --certificate-identity \\ --certificate-oidc-issuer \\ ghcr.io/berriai/litellm:==v1.110.3==… 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
+      "highlight_summary": "GitHub 개발 생태계에서 'litellm ==v1.110.3== 새 버전 공개' 구현 방식과 실전 적용 사례가 공개됐어요. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
       "planning_meta": {
         "signal_type": "open_source_trend",
         "product_domain": "coding-agent-devtool",
@@ -1165,31 +1190,6 @@
       },
       "entities": [
         "Hatena Bookmark IT"
-      ]
-    },
-    {
-      "id": "live-a6feda8b6822",
-      "title_ko": "NariQ: BF16 수준의 Qwen3.8-27B를 10GB 파일에 담다",
-      "original_title": "NariQ: BF16 수준의 Qwen3.8-27B를 10GB 파일에 담다",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37749",
-      "published_at": "2026-11-24T01:39:18Z",
-      "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 27.19,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "NariQ v1은 Qwen3.8-==27B==를 가중치당 3비트, 2.5비트, 2비트로 양자화한 GGUF 모델로, 3비트와 2.5비트 버전은 공개된 장기 에이전트 작업, 수학, 이미지 이해 평가에서 BF16 수준의 성능을 보임 실제 코딩 에이전트 실행… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "Llama — 27B 기반 성능·효율 지표",
-        "actionable_idea": "Llama의 'Llama — 27B 기반 성능·효율 지표' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Llama"
       ]
     },
     {
