@@ -11,6 +11,7 @@ import { SAMPLE_FEED } from "@/data/sample-feed";
 import { getSupabaseEnv } from "./data";
 import { buildEasyOriginalUserMessage, EASY_ORIGINAL_PROMPT_VERSION, EASY_ORIGINAL_SYSTEM } from "./easy-original-prompt";
 import { synthesizeEasyOriginal, type SynthInput } from "./easy-synth";
+import { getCachedLiveEdgeItem } from "./live-harvester";
 import { loadLiveSnapshotAsync } from "./live-snapshot";
 import type { Category, Difficulty, EasyOriginal, EasyOriginalResponse, Entity, Term } from "./types";
 
@@ -327,7 +328,12 @@ function synthInputFromRow(row: DbRow, summary: SummaryRow | undefined): SynthIn
 }
 
 async function fromSample(id: string): Promise<EasyResult> {
-  // 1) 최신 스냅샷(원격 GitHub Raw 우선 + 로컬 번들 폴백) 기사 우선 조회
+  // 1) 실시간 라이브 보강 캐시(live-edge-*) 우선 조회
+  const edgeHit = getCachedLiveEdgeItem(id);
+  if (edgeHit) {
+    return { httpStatus: 200, body: { status: "ready", easy_original: edgeHit.easy, cached: true, source: "sample" } };
+  }
+  // 2) 최신 스냅샷(원격 GitHub Raw 우선 + 로컬 번들 폴백) 기사 조회
   const snap = await loadLiveSnapshotAsync();
   const liveItem = snap.items.find((i) => i.id === id);
   if (liveItem) {

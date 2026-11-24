@@ -2,11 +2,13 @@
 
 import type { Category, Difficulty, EasyOriginal, Entity, FeedItem, Lifecycle, PlanningMeta, Term, UtilityTip } from "./types";
 
+const API_LIVE_FEED_URL = "/api/live-feed";
 const REMOTE_LIVE_FEED_URL =
   "https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json";
 const LOCAL_LIVE_FEED_URL = "/live-feed.json";
-const FETCH_TIMEOUT_MS = 5000;
-const FIVE_MIN_MS = 300_000;
+const API_FETCH_TIMEOUT_MS = 10_000;
+const FALLBACK_FETCH_TIMEOUT_MS = 5_000;
+const THREE_MIN_MS = 180_000;
 
 const VALID_CATEGORIES = new Set<Category>(["llm_chat", "dev", "image_design", "video_audio", "research", "industry", "social"]);
 const VALID_URL_RE = /^https:\/\/[^/\s]+\.[^/\s]+/;
@@ -19,10 +21,15 @@ export function getClientEasyOriginal(id: string): EasyOriginal | null {
   return clientEasyCache.get(id) ?? null;
 }
 
+export function clearClientEasyCache(): void {
+  clientEasyCache.clear();
+}
+
 export interface ClientLiveSnapshot {
   generatedAt: string | null;
   items: FeedItem[];
-  source: "remote" | "local";
+  source: "api" | "remote" | "local";
+  liveAddedCount?: number;
 }
 
 function coerceEasy(raw: unknown): EasyOriginal | null {
@@ -151,7 +158,7 @@ function coerceClientItem(raw: unknown, validPlatformIds: Set<string>): { item: 
 function parseClientSnapshot(
   raw: Record<string, unknown>,
   validPlatformIds: Set<string>,
-  source: "remote" | "local",
+  source: "api" | "remote" | "local",
 ): ClientLiveSnapshot | null {
   const list = Array.isArray(raw?.items) ? raw.items : [];
   const items: FeedItem[] = [];
@@ -169,18 +176,25 @@ function parseClientSnapshot(
   if (items.length === 0) return null;
   const generatedAt =
     typeof raw?.generated_at === "string" && !Number.isNaN(Date.parse(raw.generated_at)) ? raw.generated_at : null;
-  return { generatedAt, items, source };
+  const liveAddedCount = typeof raw?.live_added_count === "number" ? raw.live_added_count : undefined;
+  return { generatedAt, items, source, liveAddedCount };
 }
 
-async function fetchJsonWithTimeout(url: string, signal?: AbortSignal): Promise<Record<string, unknown> | null> {
+async function fetchJsonWithTimeout(
+  url: string,
+  timeoutMs: number,
+  cacheMode: RequestCache,
+  signal?: AbortSignal,
+  fetchImpl: typeof fetch = fetch,
+): Promise<Record<string, unknown> | null> {
   const ctrl = new AbortController();
   const onAbort = () => ctrl.abort();
   signal?.addEventListener("abort", onAbort, { once: true });
-  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const res = await fetch(url, {
+    const res = await fetchImpl(url, {
       signal: ctrl.signal,
-      cache: "no-store",
+      cache: cacheMode,
       headers: { Accept: "application/json" },
     });
     if (!res.ok) return null;
@@ -195,40 +209,91 @@ async function fetchJsonWithTimeout(url: string, signal?: AbortSignal): Promise<
 }
 
 /**
- * 5분 단위 캐시 버스팅 쿼리를 붙인 GitHub Raw 최신 JSON 엔드포인트를 우선 수신하고,
- * 실패 시 로컬 정적 `/live-feed.json` 으로 안전 폴백한다.
+ * 1순위: 자체 서버 라이브 보강 API(`/api/live-feed`, 3분 CDN/ISR 캐시)
+ * 2순위: GitHub Raw 최신 `live-feed.json`
+ * 3순위: 로컬 정적 `/live-feed.json` 안전 폴백
  */
 export async function fetchLatestLiveFeed(
   validPlatformIds: Set<string>,
   signal?: AbortSignal,
+  fetchImpl: typeof fetch = fetch,
 ): Promise<ClientLiveSnapshot | null> {
-  const bucket = Math.floor(Date.now() / FIVE_MIN_MS);
-  const remoteRaw = await fetchJsonWithTimeout(`${REMOTE_LIVE_FEED_URL}?v=${bucket}`, signal);
+  const apiRaw = await fetchJsonWithTimeout(API_LIVE_FEED_URL, API_FETCH_TIMEOUT_MS, "default", signal, fetchImpl);
+  if (apiRaw) {
+    const parsed = parseClientSnapshot(apiRaw, validPlatformIds, "api");
+    if (parsed) return parsed;
+  }
+  if (signal?.aborted) return null;
+
+  const bucket = Math.floor(Date.now() / THREE_MIN_MS);
+  const remoteRaw = await fetchJsonWithTimeout(
+    `${REMOTE_LIVE_FEED_URL}?v=${bucket}`,
+    FALLBACK_FETCH_TIMEOUT_MS,
+    "no-store",
+    signal,
+    fetchImpl,
+  );
   if (remoteRaw) {
     const parsed = parseClientSnapshot(remoteRaw, validPlatformIds, "remote");
     if (parsed) return parsed;
   }
   if (signal?.aborted) return null;
-  const localRaw = await fetchJsonWithTimeout(`${LOCAL_LIVE_FEED_URL}?v=${bucket}`, signal);
+
+  const localRaw = await fetchJsonWithTimeout(
+    `${LOCAL_LIVE_FEED_URL}?v=${bucket}`,
+    FALLBACK_FETCH_TIMEOUT_MS,
+    "no-store",
+    signal,
+    fetchImpl,
+  );
   if (localRaw) {
     return parseClientSnapshot(localRaw, validPlatformIds, "local");
   }
   return null;
 }
 
-/** 최신 수신 스냅샷을 기존 피드(정적 샘플 포함)와 중복 없이 병합한다 (최신 live 우선). */
-export function mergeLiveFeedItems(baseItems: FeedItem[], liveItems: FeedItem[]): FeedItem[] {
+function sameFeedOrder(a: FeedItem[], b: FeedItem[]): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (
+      a[i].id !== b[i].id ||
+      a[i].hook_title !== b[i].hook_title ||
+      a[i].published_at !== b[i].published_at ||
+      a[i].created_at !== b[i].created_at
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * 최신 수신 스냅샷을 기존 피드(정적 샘플 포함)와 중복 없이 병합한다 (최신 live 우선).
+ * - 현재 열려 있는 모달 기사(`preserveItemId`)가 있다면 리스트에서 사라지지 않도록 보존한다.
+ * - 실제 변경이 없으면 기존 배열 참조를 그대로 반환해 불필요한 리렌더·스크롤 흔들림을 막는다.
+ */
+export function mergeLiveFeedItems(
+  baseItems: FeedItem[],
+  liveItems: FeedItem[],
+  preserveItemId?: string | null,
+): FeedItem[] {
   if (liveItems.length === 0) return baseItems;
   const seenIds = new Set<string>();
   const seenUrls = new Set<string>();
   const merged: FeedItem[] = [];
   // 이전 live-* 항목은 새 스냅샷으로 깔끔히 교체하고, 정적 샘플은 폴백용으로 뒤에 유지
   const staticFallback = baseItems.filter((i) => !i.id.startsWith("live-"));
-  for (const item of [...liveItems, ...staticFallback]) {
+  const preserved =
+    preserveItemId && !liveItems.some((i) => i.id === preserveItemId)
+      ? baseItems.find((i) => i.id === preserveItemId) ?? null
+      : null;
+
+  const pool = preserved ? [...liveItems, preserved, ...staticFallback] : [...liveItems, ...staticFallback];
+  for (const item of pool) {
     if (seenIds.has(item.id) || seenUrls.has(item.canonical_url)) continue;
     seenIds.add(item.id);
     seenUrls.add(item.canonical_url);
     merged.push(item);
   }
-  return merged;
+  return sameFeedOrder(baseItems, merged) ? baseItems : merged;
 }

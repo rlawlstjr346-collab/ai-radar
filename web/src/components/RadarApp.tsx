@@ -21,19 +21,21 @@ import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
 import Sidebar, { MobileHeader, type TitleLang, type View } from "./Sidebar";
 
 const CLOCK_TICK_MS = 60_000;
+const LIVE_POLL_INTERVAL_MS = 3 * 60_000;
 const LIVE_REFRESH_MIN_GAP_MS = 30_000;
 const INFINITE_BATCH = 20;
 const LANG_STORAGE_KEY = "ai-radar:lang";
 
 /** 기준 시각: 첫 렌더는 서버가 데이터를 만든 시각(hydration 일치), 이후 1분마다 현재 시각으로 */
-function useNow(initialIso: string): number {
+function useNow(initialIso: string): [number, () => void] {
   const [now, setNow] = useState(() => Date.parse(initialIso));
+  const bumpNow = useCallback(() => setNow(Date.now()), []);
   useEffect(() => {
     setNow(Date.now());
     const t = setInterval(() => setNow(Date.now()), CLOCK_TICK_MS);
     return () => clearInterval(t);
   }, []);
-  return now;
+  return [now, bumpNow];
 }
 
 /** ?item=… / ?platform=… ↔ 선택 상태 */
@@ -193,7 +195,7 @@ function FeedList({
 }
 
 export default function RadarApp({ data }: { data: RadarData }) {
-  const now = useNow(data.generatedAt);
+  const [now, bumpNow] = useNow(data.generatedAt);
   const [items, setItems] = useState<FeedItem[]>(data.items);
   const [lastCollectedAt, setLastCollectedAt] = useState<string | null | undefined>(data.lastCollectedAt);
   const [view, setView] = useState<View>("feed");
@@ -201,11 +203,13 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const [lang, setLang] = useState<TitleLang>("ko");
   // 첫 진입 시에는 리퀴드 글라스 모달을 닫아 뉴스룸 피드만 깔끔하게 보여준다 (URL 공유 진입 시 자동 오픈)
   const [selection, setSelection] = useState<Selection>(null);
+  const selectionRef = useRef<Selection>(null);
+  selectionRef.current = selection;
   const lastFetchRef = useRef<number>(0);
 
   const validPlatformIds = useMemo(() => new Set(data.platforms.map((p) => p.id)), [data.platforms]);
 
-  // 마운트 및 탭 포커스 시 GitHub Raw 최신 JSON(5분 캐시 버스팅 + 로컬 정적 폴백)을 비동기 수신해 지연 없이 반영
+  // 초기 정적 렌더 직후 + 3분 주기 인터벌 + 탭 복귀(visibilitychange/focus) 시 /api/live-feed 를 조용히 반영
   useEffect(() => {
     if (data.source === "supabase") return;
     let activeCtrl: AbortController | null = null;
@@ -219,13 +223,15 @@ export default function RadarApp({ data }: { data: RadarData }) {
       fetchLatestLiveFeed(validPlatformIds, ctrl.signal)
         .then((snap) => {
           if (!snap || ctrl.signal.aborted) return;
-          setItems((prev) => mergeLiveFeedItems(prev, snap.items));
+          const activeItemId = selectionRef.current?.type === "item" ? selectionRef.current.id : null;
+          setItems((prev) => mergeLiveFeedItems(prev, snap.items, activeItemId));
           if (snap.generatedAt) {
             setLastCollectedAt((prev) => {
               const prevTs = prev ? Date.parse(prev) : 0;
               const nextTs = Date.parse(snap.generatedAt!);
               return nextTs >= prevTs ? snap.generatedAt : prev;
             });
+            bumpNow();
           }
         })
         .catch(() => {
@@ -234,6 +240,9 @@ export default function RadarApp({ data }: { data: RadarData }) {
     };
 
     syncLatest(true);
+    const intervalId = setInterval(() => {
+      if (document.visibilityState === "visible") syncLatest(true);
+    }, LIVE_POLL_INTERVAL_MS);
     const onFocus = () => syncLatest(false);
     const onVisibility = () => {
       if (document.visibilityState === "visible") syncLatest(false);
@@ -242,10 +251,11 @@ export default function RadarApp({ data }: { data: RadarData }) {
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
       activeCtrl?.abort();
+      clearInterval(intervalId);
       window.removeEventListener("focus", onFocus);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [data.source, validPlatformIds]);
+  }, [data.source, validPlatformIds, bumpNow]);
 
   useEffect(() => {
     try {

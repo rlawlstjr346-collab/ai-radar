@@ -8,7 +8,7 @@ name: collect
 #      최대 60초 안에 최신 피드를 즉시 서빙한다.
 on:
   schedule:
-    - cron: "*/20 * * * *"      # 20분마다 (하루 72회)
+    - cron: "3,23,43 * * * *"   # 비혼잡 오프피크 분(매시 3·23·43분, 하루 72회)으로 스케줄 병목 최소화
   workflow_dispatch:
     inputs:
       dry_run:
@@ -24,13 +24,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: collect
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pipeline:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     permissions:
       contents: write
     steps:
@@ -95,10 +95,11 @@ jobs:
               --planning-json web/public/data/planning-feed.json
           fi
 
-      - name: Commit and push live snapshot (No-op when 0 new items)
+      - name: Commit and push live snapshot & planning feed (No-op when 0 changes)
         if: steps.gate.outputs.mode == 'snapshot'
         run: |
-          if git diff --quiet -- web/public/live-feed.json web/public/data/planning-feed.json && [ -z "$(git ls-files --others --exclude-standard -- web/public/live-feed.json web/public/data/planning-feed.json)" ]; then
+          TARGET_FILES="web/public/live-feed.json web/public/live-feed-meta.json web/public/data/planning-feed.json"
+          if git diff --quiet -- $TARGET_FILES && [ -z "$(git ls-files --others --exclude-standard -- $TARGET_FILES)" ]; then
             echo "변경된 기사가 0건이라 커밋을 생략합니다 (No-op)."
             exit 0
           fi
@@ -111,6 +112,10 @@ jobs:
           if [ -f web/public/data/planning-feed.json ]; then
             git add web/public/data/planning-feed.json
           fi
-          git commit -m "chore(feed): update live-feed snapshot [skip ci]"
+          if git diff --cached --quiet; then
+            echo "스테이징된 변경이 없어 커밋을 생략합니다 (No-op)."
+            exit 0
+          fi
+          git commit -m "chore(feed): update live-feed & planning-feed snapshot [skip ci]"
           git pull --rebase --autostash origin main || true
-          git push origin main
+          git push origin main || (git pull --rebase --autostash origin main && git push origin main)

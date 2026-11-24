@@ -193,7 +193,7 @@ export function loadLiveSnapshot(explicitPath?: string): LiveSnapshot {
  * 무부하 실시간 서빙: GitHub Raw 최신 live-feed.json (60초 ISR 캐시)을 우선 가져오고,
  * 네트워크 오류·타임아웃·테스트 환경에서는 로컬 번들 스냅샷으로 안전 폴백한다.
  */
-export async function loadLiveSnapshotAsync(): Promise<LiveSnapshot> {
+export async function loadLiveSnapshotAsync(revalidateSeconds = 60): Promise<LiveSnapshot> {
   const local = loadLiveSnapshot();
   if (process.env.NODE_ENV === "test" || process.env.VITEST || process.env.DISABLE_REMOTE_LIVE_FEED === "1") {
     return local;
@@ -204,7 +204,7 @@ export async function loadLiveSnapshotAsync(): Promise<LiveSnapshot> {
   try {
     const res = await fetch(remoteUrl, {
       signal: ctrl.signal,
-      next: { revalidate: 60 },
+      next: { revalidate: revalidateSeconds },
       headers: { Accept: "application/json" },
     });
     if (!res.ok) return local;
