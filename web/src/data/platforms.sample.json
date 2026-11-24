@@ -1213,14 +1213,14 @@
   },
   {
     "id": "jiqizhixin",
-    "name": "Jiqizhixin (机器之心)",
+    "name": "Synced · 기기지심",
     "category": "research",
     "one_liner_ko": "중국의 AI 연구·산업 전문 매체 지치즈신(机器之心)이에요.",
     "why_visit_ko": "중국어권 논문 해설과 연구자 인터뷰가 많아서 중국 AI 연구 흐름을 보기 좋아요.",
     "url": "https://www.jiqizhixin.com",
     "theme_color": "#0EA5E9",
     "access_note": "무료로 읽을 수 있어요.",
-    "collect_status": "directory_only",
+    "collect_status": "active",
     "region": "cn"
   },
   {
@@ -1429,7 +1429,7 @@
   },
   {
     "id": "qbitai",
-    "name": "QbitAI (量子位)",
+    "name": "QbitAI · 양자위",
     "category": "industry",
     "one_liner_ko": "중국의 대표 AI 전문 매체 량쯔웨이(量子位)예요.",
     "why_visit_ko": "중국 AI 기업·연구 소식을 가장 빠르게 보도해요. AI 레이더가 중국어를 한국어로 풀어 드려요.",
@@ -1472,7 +1472,7 @@
     "url": "https://36kr.com",
     "theme_color": "#2B6DE5",
     "access_note": "무료로 읽을 수 있어요.",
-    "collect_status": "directory_only",
+    "collect_status": "active",
     "region": "cn"
   },
   {
@@ -1714,5 +1714,29 @@
     "access_note": "로그인 없이도 읽을 수 있어요. 가끔 수위 있는 이미지가 있으니 계정 설정의 성인 콘텐츠 필터를 확인하세요.",
     "collect_status": "directory_only",
     "region": "global"
+  },
+  {
+    "id": "v2ex",
+    "name": "V2EX · 인디빌더",
+    "category": "social",
+    "one_liner_ko": "중국 개발자·1인 빌더들이 직접 만든 신규 AI 웹·앱·확장프로그램과 오픈소스를 가장 먼저 올리는 런칭 포럼이에요.",
+    "why_visit_ko": "중국 인디빌더들이 실제로 출시한 AI 도구와 GitHub 데모, 현업 개발자 피드백을 실시간으로 포착할 수 있어요.",
+    "url": "https://www.v2ex.com/go/create",
+    "theme_color": "#334155",
+    "access_note": "무료로 읽을 수 있어요. AI·신규 런칭 글만 엄선해 한국어로 풀어 와요.",
+    "collect_status": "active",
+    "region": "cn"
+  },
+  {
+    "id": "juejin",
+    "name": "Juejin · 굴진",
+    "category": "dev",
+    "one_liner_ko": "중국 최대 개발자 기술 커뮤니티 쥐진(掘金)의 AI·LLM 실전 아티클 채널이에요.",
+    "why_visit_ko": "Qwen·DeepSeek·Claude Code·MCP 로컬 연동과 에이전트 실측 벤치마크 같은 중국 현업 엔지니어의 실전 노하우가 매일 올라와요.",
+    "url": "https://juejin.cn/ai",
+    "theme_color": "#1E80FF",
+    "access_note": "무료로 읽을 수 있어요. AI·에이전트·오픈소스 글만 골라 한국어로 정리해 드려요.",
+    "collect_status": "active",
+    "region": "cn"
   }
 ]

@@ -49,15 +49,20 @@ def test_every_seed_source_resolves_to_expected_adapter():
         "Civitai Top Models (SFW)": "CivitaiAdapter", "Bluesky AI Researchers List": "BlueskyAdapter",
     }
     sources = load_seed_sources()
-    # 기본 13개 + 6개 권역 글로벌 확장 52개 (GitHub Hot AI + Apple Newsroom Global/KR + AI Substack 5종 포함)
-    assert len(sources) == 65
+    # 기본 13개 + 6개 권역 글로벌 확장 56개 (중국 AI·인디빌더 5대 소스 + GitHub Hot AI + Apple Newsroom + AI Substack 5종 포함)
+    assert len(sources) == 69
     assert [s.name for s in sources[:13]] == list(expected)          # 기존 13개는 그대로, 같은 순서
+    cn_markers = ("qbitai.com", "jiqizhixin.com", "36kr.com", "v2ex.com/api/topics", "api.juejin.cn")
     with httpx.Client() as c:
         for s in sources:
             want = expected.get(s.name) or (
                 "XOEmbedAdapter"
                 if "publish.twitter.com" in s.endpoint
-                else ("GitHubHotAIAdapter" if "api.github.com/search/repositories" in s.endpoint else "RSSAdapter")
+                else (
+                    "GitHubHotAIAdapter"
+                    if "api.github.com/search/repositories" in s.endpoint
+                    else ("CNTechAdapter" if any(m in s.endpoint for m in cn_markers) else "RSSAdapter")
+                )
             )
             assert type(resolve_adapter(s, c)).__name__ == want, s.name
 

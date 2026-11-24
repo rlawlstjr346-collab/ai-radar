@@ -25,9 +25,9 @@ interface Props {
 }
 
 export const BTN_PRIMARY =
-  "press group inline-flex h-auto items-center justify-center gap-2.5 rounded-2xl bg-fg px-5 py-4 text-[16px] font-semibold leading-[1.35] text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
+  "press group inline-flex h-auto select-none items-center justify-center gap-2.5 rounded-2xl bg-fg px-5 py-4 text-[16px] font-semibold leading-[1.35] text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
 export const BTN_SECONDARY =
-  "press group inline-flex h-auto items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/85 px-5 py-3.5 text-[15.5px] font-medium leading-[1.35] text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  "press group inline-flex h-auto select-none items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface/85 px-5 py-3.5 text-[15.5px] font-medium leading-[1.35] text-fg-2 hover:bg-elevated hover:text-fg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
 export function OriginalLink({ url, variant }: { url: string; variant: "primary" | "secondary" }) {
   return (
@@ -61,7 +61,7 @@ function HealthInsetCard({
       className="inset-health-card reading-stagger flex flex-col gap-3 p-6"
       style={staggerStyle(staggerIndex)}
     >
-      <h3 className={`flex items-center gap-2 text-[15px] font-bold tracking-[-0.01em] ${labelColorClass}`}>
+      <h3 className={`flex select-none items-center gap-2 text-[15px] font-bold tracking-[-0.01em] ${labelColorClass}`}>
         <Icon className="h-[18px] w-[18px] shrink-0" strokeWidth={2.2} aria-hidden />
         <span>{label}</span>
       </h3>
@@ -94,12 +94,12 @@ export default function ItemDetail({ item, platform, onSelectPlatform, canReadEa
             <button
               type="button"
               onClick={() => onSelectPlatform(xCard ? "x" : item.platform_id)}
-              className="press inline-flex max-w-full items-center gap-1.5 rounded-full bg-elevated px-3.5 py-1.5 text-[14.5px] font-bold text-fg transition-colors hover:bg-fg hover:text-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="press inline-flex max-w-full select-none items-center gap-1.5 rounded-full bg-elevated px-3.5 py-1.5 text-[14.5px] font-bold text-fg transition-colors hover:bg-fg hover:text-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {xCard ? (
                 <>
                   <XLogo className="h-4 w-4 shrink-0" />
-                  <span className="truncate">𝕏 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
+                  <span className="truncate">X 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
                 </>
               ) : (
                 <>

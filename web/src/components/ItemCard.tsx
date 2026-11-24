@@ -110,7 +110,7 @@ function ResearchEyebrow({
         {xCard ? (
           <>
             <XLogo className="h-4 w-4 shrink-0 text-fg" />
-            <span className="truncate">𝕏 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
+            <span className="truncate">X 실시간{item.author_handle ? ` · ${item.author_handle}` : ""}</span>
           </>
         ) : (
           <>

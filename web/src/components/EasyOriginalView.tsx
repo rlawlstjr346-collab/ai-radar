@@ -4,9 +4,10 @@ import { ArrowUpRight, BookOpenText, LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { synthesizeEasyOriginal } from "@/lib/easy-synth";
+import { getClientEasyOriginal } from "@/lib/live-client";
 import type { EasyOriginalResponse, FeedItem } from "@/lib/types";
 
-import TermText from "./TermText";
+import TermText, { SafeXText } from "./TermText";
 
 /** 같은 기사를 다시 열 때 다시 받지 않도록 탭 전환 간 메모리 캐시 */
 const memo = new Map<string, EasyOriginalResponse>();
@@ -16,14 +17,38 @@ type State =
   | { phase: "done"; data: EasyOriginalResponse }
   | { phase: "error" };
 
+/** 02 핵심 내용 · 04 실전 적용(단문 3단 구조는 1·3번 섹션)에만 절제된 웜 앰버 소프트 형광펜 적용 */
+export function shouldHighlightEasySection(index: number, heading: string, totalSections: number): boolean {
+  if (totalSections === 3) {
+    return index === 0 || index === 2;
+  }
+  if (index === 1 || index === 3) return true;
+  if (totalSections < 4 && /(핵심|실전\s*적용|실전\s*활용)/.test(heading)) return true;
+  return false;
+}
+
 function useEasyOriginal(id: string): State {
   const [state, setState] = useState<State>(() => {
     const hit = memo.get(id);
-    return hit ? { phase: "done", data: hit } : { phase: "loading" };
+    if (hit) return { phase: "done", data: hit };
+    const clientCached = getClientEasyOriginal(id);
+    if (clientCached) {
+      const resp: EasyOriginalResponse = { status: "ready", easy_original: clientCached, cached: true, source: "sample" };
+      memo.set(id, resp);
+      return { phase: "done", data: resp };
+    }
+    return { phase: "loading" };
   });
 
   useEffect(() => {
     if (memo.has(id)) return;
+    const clientCached = getClientEasyOriginal(id);
+    if (clientCached) {
+      const resp: EasyOriginalResponse = { status: "ready", easy_original: clientCached, cached: true, source: "sample" };
+      memo.set(id, resp);
+      setState({ phase: "done", data: resp });
+      return;
+    }
     const ctrl = new AbortController();
     fetch(`/api/items/${encodeURIComponent(id)}/easy-original`, {
       signal: ctrl.signal,
@@ -49,7 +74,7 @@ function OriginalLink({ url }: { url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="press group inline-flex items-center justify-center gap-2 rounded-2xl bg-fg px-5 py-3.5 text-[0.95rem] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      className="press group inline-flex select-none items-center justify-center gap-2 rounded-2xl bg-fg px-5 py-3.5 text-[0.95rem] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       원문 보러가기
       <ArrowUpRight
@@ -67,7 +92,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   if (state.phase === "loading") {
     return (
       <div className="flex flex-col gap-5" aria-busy="true" aria-live="polite">
-        <p className="inline-flex items-center gap-2 text-[0.88rem] text-fg-2">
+        <p className="inline-flex select-none items-center gap-2 text-[0.88rem] text-fg-2">
           <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
           원문을 처음부터 끝까지 쉽게 풀어 오는 중이에요…
         </p>
@@ -97,7 +122,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
   const minutes = Math.max(1, Math.round(chars / 500));
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line pb-3.5">
+      <div className="flex select-none flex-wrap items-center justify-between gap-2 border-b border-line pb-3.5">
         <p className="t-meta inline-flex items-center gap-2 font-medium text-fg-2">
           <BookOpenText className="h-4 w-4 text-fg" strokeWidth={2} aria-hidden />
           매거진 완독 해설 · 총 <span className="tnum font-semibold text-fg">{easy.sections.length}</span>문단 · 약{" "}
@@ -109,7 +134,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
       </div>
       {easy.source_note && (
         <p className="t-meta -mt-3 leading-relaxed">
-          {easy.source_note}
+          <SafeXText text={easy.source_note} />
           {state.phase === "done" &&
           state.data.status === "ready" &&
           state.data.source === "supabase" &&
@@ -128,17 +153,24 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
             style={{ "--stagger": i + 1 } as React.CSSProperties}
           >
             <h3 className="flex items-baseline gap-2.5 text-[19px] font-bold leading-snug text-heading">
-              <span className="tnum shrink-0 text-[14.5px] font-semibold text-fg-3">
+              <span className="tnum shrink-0 select-none text-[14.5px] font-semibold text-fg-3">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span>{s.heading}</span>
+              <SafeXText text={s.heading} />
             </h3>
-            <TermText text={s.body} terms={item.terms} entities={item.entities} className={body} />
+            <TermText
+              text={s.body}
+              terms={item.terms}
+              entities={item.entities}
+              className={body}
+              mode="easy"
+              enableMark={shouldHighlightEasySection(i, s.heading, easy.sections.length)}
+            />
             {s.quote && (
               <blockquote className="mt-1 border-l-2 border-line-strong py-1 pl-4 text-[16px] italic leading-relaxed text-fg-2">
                 <span>
                   <span className="sr-only">원문 인용: </span>
-                  {s.quote}
+                  <SafeXText text={s.quote} />
                 </span>
               </blockquote>
             )}
@@ -148,7 +180,7 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
 
       {easy.watch_points.length > 0 && (
         <section className="inset-health-card flex flex-col gap-3 p-6">
-          <h3 className="text-[15px] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">
+          <h3 className="select-none text-[15px] font-bold text-[#007AFF] [:root[data-theme=dark]_&]:text-[#38BDF8]">
             실제 원문 링크 들어가실 때 관람 포인트
           </h3>
           <ul className="flex flex-col gap-2">
@@ -157,10 +189,10 @@ export default function EasyOriginalView({ item }: { item: FeedItem }) {
                 key={i}
                 className="flex gap-2.5 text-[16.5px] leading-[1.7] text-fg"
               >
-                <span className="tnum text-[14.5px] leading-[1.95] text-fg-3">
+                <span className="tnum shrink-0 select-none text-[14.5px] leading-[1.95] text-fg-3">
                   {i + 1}
                 </span>
-                <span>{w}</span>
+                <SafeXText text={w} />
               </li>
             ))}
           </ul>

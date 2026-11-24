@@ -272,6 +272,22 @@ def polish_korean_headline(
     if platform_id == "x":
         t = re.sub(r"^@[A-Za-z0-9_]{1,20}:\s*", "", t).strip()
 
+    # 중국어·일본어 전각 문장부호를 깔끔한 한국어 뉴스룸 표기로 정돈
+    t = (
+        t.replace("【", "[")
+        .replace("】", "]")
+        .replace("「", "'")
+        .replace("」", "'")
+        .replace("『", "'")
+        .replace("』", "'")
+        .replace("，", ", ")
+        .replace("。", ".")
+        .replace("：", ": ")
+        .replace("！", "!")
+        .replace("？", "?")
+    )
+    t = re.sub(r"\s+", " ", t).strip(" .")
+
     # 어색한 직역 어미 다듬기
     t = re.sub(r"\s*최신\s*소식$", "", t).strip()
     t = re.sub(r"이야기\.$", "이유", t).strip()
@@ -345,13 +361,17 @@ def _synthesize_unique_what(
     return by_cat.get(category, by_cat["industry"])
 def _detect_signal_type(category: str, platform_id: str, feed_kind: str, title: str, body: str) -> str:
     hay = f"{title} {body[:400]}".lower()
+    if feed_kind == "cn_indie_launch" or platform_id == "v2ex":
+        if any(k in hay for k in ("github.com", "오픈소스", "open-source", "open source", "开源")):
+            return "open_source_trend"
+        return "new_product"
     if feed_kind in ("github_trending", "github_release") or platform_id == "github":
         return "open_source_trend"
     if platform_id == "x" or feed_kind == "x_oembed":
         if any(k in hay for k in ("launch", "ship", "demo", "built", "출시", "공개", "런칭")):
             return "new_product"
         return "builder_signal"
-    if any(k in hay for k in ("release", "v0.", "v1.", "v2.", "gpt-", "claude", "gemini", "qwen", "deepseek", "llama", "출시", "버전")):
+    if any(k in hay for k in ("release", "v0.", "v1.", "v2.", "gpt-", "claude", "gemini", "qwen", "deepseek", "kimi", "glm", "llama", "출시", "버전")):
         return "model_release"
     if category == "research":
         return "research_breakthrough"
@@ -395,7 +415,12 @@ def build_curated_fields(
     # 1) context_ko (원래는요 — 1줄 압축 배경)
     if platform_id == "x" or feed_kind == "x_oembed":
         who = f"{author_handle}" if author_handle else "글로벌 AI 빌더"
-        context_ko = f"𝕏 실시간 타임라인의 {who}가 공개한 {cat_label} 최신 시그널이에요{multi_note}."
+        context_ko = f"X 실시간 타임라인의 {who}가 공개한 {cat_label} 최신 시그널이에요{multi_note}."
+    elif platform_id == "v2ex" or feed_kind == "cn_indie_launch":
+        node_txt = f" ({metrics.get('node_name')} 노드)" if metrics.get("node_name") else ""
+        context_ko = f"{platform_name}{node_txt}에서 중국 1인 개발자·빌더가 직접 공개한 {cat_label} 신규 런칭·실전 프로젝트예요{multi_note}."
+    elif platform_id in ("qbitai", "jiqizhixin", "36kr-ai", "juejin") or feed_kind == "cn_ai_media":
+        context_ko = f"중국 AI 핵심 채널 {platform_name}에서 포착된 {cat_label} 실시간 속보예요{multi_note}."
     elif feed_kind == "github_trending":
         star_txt = f" (72시간 내 ★{stars}, +{velocity}/h)" if stars and velocity else ""
         context_ko = f"GitHub에서 급상승 중인 신규 AI 오픈소스 {repo_slug or lead_subject}{star_txt}예요{multi_note}."
@@ -459,7 +484,19 @@ def build_curated_fields(
 
     # 5) utility_tip (실전 활용 & 벤치마킹 카드)
     base_util = CATEGORY_UTILITY.get(category, CATEGORY_UTILITY["industry"])
-    if feed_kind == "github_trending":
+    if platform_id == "v2ex" or feed_kind == "cn_indie_launch":
+        utility_tip = {
+            "when_needed": f"{platform_name}처럼 중국 인디빌더들이 방금 런칭한 AI 웹·앱·확장프로그램 아이디어를 벤치마킹할 때",
+            "work_utility": "1인 개발자가 실제 불편을 푼 초경량 AI 제품 구조와 수익화·확산 포인트를 빠르게 기획 소재로 흡수할 수 있어요.",
+            "practical_tip": "원문 데모나 GitHub 링크, 현지 개발자 댓글의 개선 요청을 살펴 국내·글로벌 시장에 맞춘 차별화 포인트를 뽑아 보세요.",
+        }
+    elif platform_id in ("qbitai", "jiqizhixin", "36kr-ai", "juejin"):
+        utility_tip = {
+            "when_needed": f"{lead_subject}처럼 중국 AI 모델·오픈소스·실측 벤치마크 속보를 국내보다 한발 앞서 파악할 때",
+            "work_utility": "Qwen·DeepSeek·Kimi·GLM 같은 고가성비 오픈 모델과 실무 적용 노하우를 서비스 원가 절감과 기능 기획에 바로 참고해요.",
+            "practical_tip": "원문에 언급된 오픈소스 모델명·토큰 단가·로컬 실행 조건을 확인해 기존 상용 API 대비 비용 효율을 비교해 보세요.",
+        }
+    elif feed_kind == "github_trending":
         utility_tip = {
             "when_needed": f"{lead_subject} 같은 급상승 오픈소스를 발굴해 개발·자동화 시간을 줄이고 싶을 때",
             "work_utility": f"검증된 커뮤니티 반응(★{stars or '급상승'})을 바탕으로 바닥부터 구현하지 않고 프로토타입·사내 도구로 응용할 수 있어요.",
@@ -488,6 +525,12 @@ def build_curated_fields(
         benchmark_point = f"{lead_subject} — {metric_hit.group(0)} 기반 성능·효율 지표"
     elif feed_kind == "github_trending" and stars:
         benchmark_point = f"72시간 내 GitHub {stars}스타(+{velocity}/h) 돌파"
+    elif platform_id == "v2ex" or feed_kind == "cn_indie_launch":
+        gh_note = "오픈소스·GitHub 공개" if metrics.get("has_github") else "신규 AI 웹/앱·툴 런칭"
+        rep_note = f" (댓글 {metrics.get('replies')}개 반응)" if metrics.get("replies") else ""
+        benchmark_point = f"중국 인디빌더 {gh_note}{rep_note}"
+    elif platform_id in ("qbitai", "jiqizhixin", "36kr-ai", "juejin"):
+        benchmark_point = f"{platform_name} 포착 — {lead_subject} 중국 AI 생태계 최신 기술·제품 시그널"
     else:
         benchmark_point = CATEGORY_BENCHMARK_FALLBACK.get(category, "신규 AI 기능 및 시장 변화")
 

@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { SAMPLE_FEED } from "@/data/sample-feed";
 import { loadRadarData } from "@/lib/data";
-import { formatLastCollected, hotFeed, hotRankScore, pickSpotlight } from "@/lib/filter";
+import { formatLastCollected, hotFeed, hotRankScore, interleaveMaxConsecutive, pickSpotlight } from "@/lib/filter";
 import type { FeedItem } from "@/lib/types";
 
 describe("실제 원문 발행 시각 유지 + 최신 live-feed 1면 우선 정렬", () => {
@@ -81,5 +81,34 @@ describe("실제 원문 발행 시각 유지 + 최신 live-feed 1면 우선 정�
     expect(formatLastCollected("2026-11-21T00:05:00Z", now)).toBe("09:05");
     expect(formatLastCollected("2026-11-19T00:05:00Z", now)).toBe("11.19 09:05");
     expect(formatLastCollected(null, now)).toBeNull();
+  });
+
+  it("실시간 레이더는 매체 점수보다 무조건 최신 published_at 내림차순을 최우선으로 하고 3연속 동일 출처만 미세 인터리빙한다", () => {
+    const now = Date.parse("2026-11-24T04:00:00Z");
+    const mk = (id: string, platform_id: string, minsAgo: number, score: number): FeedItem => ({
+      ...SAMPLE_FEED[0],
+      id: `live-${id}`,
+      platform_id,
+      canonical_url: `https://example.net/${id}`,
+      importance_score: score,
+      published_at: new Date(now - minsAgo * 60_000).toISOString(),
+      created_at: new Date(now - minsAgo * 60_000).toISOString(),
+      lifecycle_status: "hot",
+    });
+
+    const olderHigh = mk("verge-old", "the-verge-ai", 240, 48); // 4시간 전 초고점수
+    const newest = mk("v2ex-10m", "v2ex", 10, 22); // 10분 전
+    const q1 = mk("qb-15m", "qbitai", 15, 25);
+    const q2 = mk("qb-20m", "qbitai", 20, 25);
+    const q3 = mk("qb-25m", "qbitai", 25, 25);
+    const j1 = mk("jj-30m", "juejin", 30, 24);
+    const stale50h = mk("stale-50h", "anthropic", 50 * 60, 49); // 48시간 초과
+
+    const ranked = hotFeed([olderHigh, stale50h, q3, j1, q2, q1, newest], "all", now);
+    expect(ranked[0].id).toBe("live-v2ex-10m");
+    expect(ranked[ranked.length - 1].id).toBe("live-stale-50h");
+    // 3연속 동일 출처(qbitai) 방지 확인
+    const interleaved = interleaveMaxConsecutive([q1, q2, q3, j1], 2);
+    expect(interleaved.map((x) => x.platform_id)).toEqual(["qbitai", "qbitai", "juejin", "qbitai"]);
   });
 });

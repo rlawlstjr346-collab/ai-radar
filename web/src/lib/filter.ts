@@ -66,7 +66,58 @@ export function hotRankScore(
   return base;
 }
 
-/** 메인 라이브 피드: hot 만, 신선도 중력 순, 최대 HOT_LIMIT 개 */
+/** 실시간 레이더 최신성 컷오프(48시간) 및 미래 시각 오파싱 허용 오차(5분) */
+const LIVE_FRESH_CUTOFF_HOURS = 48;
+const FUTURE_TOLERANCE_MS = 5 * 60_000;
+const MAX_CONSECUTIVE_SAME_SOURCE = 2;
+
+/**
+ * 실시간 레이더 최우선 정렬 키:
+ *  - Tier 2: 정상 발행 시각(`published_at` 정규화 UTC)이 48시간 이내 → 무조건 최신 시각 내림차순
+ *  - Tier 1: 정상 발행 시각이 48시간 초과(지연 수집 옛 기사) → 48시간 이내 최신 기사 뒤에서 최신순
+ *  - Tier 0: 발행 시각 미상(`published_at === null`) 또는 미래 오파싱 → 항상 최하단
+ */
+function liveChronoKey(
+  item: Pick<FeedItem, "importance_score" | "created_at"> & Partial<Pick<FeedItem, "id" | "published_at" | "fetched_at">>,
+  now: number,
+): [number, number, number] {
+  const isLive = typeof item.id === "string" && item.id.startsWith("live-");
+  const rawIso = isLive ? item.published_at : item.created_at;
+  const parsed = rawIso ? Date.parse(rawIso) : Number.NaN;
+  if (!Number.isNaN(parsed) && parsed <= now + FUTURE_TOLERANCE_MS) {
+    const effectiveTs = Math.min(parsed, now);
+    const ageH = Math.max(0, (now - effectiveTs) / 3_600_000);
+    const tier = ageH <= LIVE_FRESH_CUTOFF_HOURS ? 2 : 1;
+    return [tier, effectiveTs, Number(item.importance_score) || 0];
+  }
+  const fallbackTs = Date.parse(item.fetched_at ?? item.created_at) || 0;
+  return [0, Math.min(fallbackTs, now), Number(item.importance_score) || 0];
+}
+
+/** 동일 출처가 연속 3개 이상 붙을 때만 최소 거리로 미세 인터리빙 (최신순 원칙 보존) */
+export function interleaveMaxConsecutive(items: FeedItem[], maxRun = MAX_CONSECUTIVE_SAME_SOURCE): FeedItem[] {
+  if (items.length <= maxRun) return items;
+  const pool = [...items];
+  const result: FeedItem[] = [];
+  while (pool.length > 0) {
+    const lastPlat = result.length > 0 ? result[result.length - 1].platform_id : null;
+    let sameRun = 0;
+    for (let i = result.length - 1; i >= 0 && result[i].platform_id === lastPlat; i--) {
+      sameRun++;
+    }
+    if (lastPlat && sameRun >= maxRun && pool[0].platform_id === lastPlat) {
+      const altIdx = pool.findIndex((x) => x.platform_id !== lastPlat);
+      if (altIdx > 0) {
+        result.push(pool.splice(altIdx, 1)[0]);
+        continue;
+      }
+    }
+    result.push(pool.shift()!);
+  }
+  return result;
+}
+
+/** 메인 라이브 피드: hot 만, 무조건 최신 발행·포착 시각 내림차순 최우선 + 3연속 동일 출처만 미세 인터리빙 */
 export function hotFeed(
   items: FeedItem[],
   category: CategoryFilter,
@@ -74,14 +125,14 @@ export function hotFeed(
   query = "",
   names?: Map<string, string>,
 ): FeedItem[] {
-  return items
+  const sorted = items
     .filter((i) => i.lifecycle_status === "hot")
     .filter((i) => category === "all" || i.category === category)
     .filter((i) => matchesQuery(i, query, names?.get(i.platform_id)))
-    .map((i) => [i, hotRankScore(i, now)] as const)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, HOT_LIMIT)
+    .map((i) => [i, liveChronoKey(i, now)] as const)
+    .sort((a, b) => b[1][0] - a[1][0] || b[1][1] - a[1][1] || b[1][2] - a[1][2])
     .map(([i]) => i);
+  return interleaveMaxConsecutive(sorted, MAX_CONSECUTIVE_SAME_SOURCE).slice(0, HOT_LIMIT);
 }
 
 /** 지난 주요 소식: warm(8~30일), 중요도 순 */
@@ -194,9 +245,8 @@ export interface EditorialLayout {
  */
 export function editorialLayout(items: FeedItem[], editorial: boolean): EditorialLayout {
   if (!editorial) return { lead: null, features: [], stream: items };
-  const tops = pickSpotlight(items, EDITORIAL_TOP);
-  const topIds = new Set(tops.map((i) => i.id));
-  return { lead: tops[0] ?? null, features: tops.slice(1), stream: items.filter((i) => !topIds.has(i.id)) };
+  const tops = items.slice(0, EDITORIAL_TOP);
+  return { lead: tops[0] ?? null, features: tops.slice(1), stream: items.slice(EDITORIAL_TOP) };
 }
 
 /** 화면 표시 순서의 id 목록 */

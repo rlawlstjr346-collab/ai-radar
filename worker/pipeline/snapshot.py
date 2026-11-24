@@ -30,6 +30,7 @@ from pipeline.translator import (
     ArticleTranslator,
     TranslationCache,
     clean_source_boilerplate,
+    contains_untranslated_cjk,
     needs_translation,
 )
 
@@ -38,6 +39,8 @@ PLATFORMS_SAMPLE_JSON = REPO_ROOT / "web" / "src" / "data" / "platforms.sample.j
 
 RETENTION_DAYS = 30
 HOT_DAYS = 7
+HOT_FRESH_CUTOFF_HOURS = 48.0
+MAX_CONSECUTIVE_SAME_SOURCE = 2
 MAX_SNAPSHOT_ITEMS = 100
 MAX_HOT_ITEMS = 70
 MAX_WARM_ITEMS = 30
@@ -125,6 +128,11 @@ KNOWN_ENTITIES: tuple[tuple[str, str, tuple[str, ...]], ...] = (
     ("Claude", "model", ("anthropic", "claude", "llm")),
     ("DeepSeek", "model", ("deepseek", "open-weights", "llm")),
     ("Qwen", "model", ("qwen", "open-weights", "llm")),
+    ("Kimi", "model", ("moonshot", "kimi", "llm")),
+    ("GLM", "model", ("zhipu", "glm", "open-weights")),
+    ("MiniMax", "model", ("minimax", "multimodal")),
+    ("StepFun", "model", ("stepfun", "multimodal")),
+    ("ByteDance Seed", "company", ("bytedance", "research")),
     ("Llama", "model", ("meta", "open-weights", "llm")),
     ("Mistral", "model", ("mistral", "open-weights", "llm")),
     ("Grok", "model", ("xai", "llm")),
@@ -705,23 +713,27 @@ _FALLBACK_SUFFIX_RE = re.compile(
 
 
 def _item_needs_translation(item: dict[str, Any]) -> bool:
-    """기존 스냅샷 항목에 미번역 외국어 제목·본문·완독해설이 남아 있는지 확인."""
+    """기존 스냅샷 항목에 미번역 외국어(영어·중국어 한자·일본어 가나) 제목·본문·완독해설이 남아 있는지 확인."""
     hook = str(item.get("hook_title") or "")
     orig = str(item.get("original_title") or "")
-    if needs_translation(hook) or CJK_JP_RE.search(hook):
+    if needs_translation(hook) or contains_untranslated_cjk(hook):
         return True
     if _FALLBACK_SUFFIX_RE.search(hook) and needs_translation(orig):
         return True
-    if needs_translation(str(item.get("what_ko") or "")):
-        return True
+    for field in ("title_ko", "context_ko", "what_ko", "why_ko", "highlight_summary"):
+        val = str(item.get(field) or "")
+        if val and (needs_translation(val) or contains_untranslated_cjk(val)):
+            return True
     easy = item.get("easy_original")
     if isinstance(easy, dict):
         for sec in easy.get("sections") or []:
             if not isinstance(sec, dict):
                 continue
-            if needs_translation(str(sec.get("body") or "")):
+            heading = str(sec.get("heading") or "")
+            body = str(sec.get("body") or "")
+            if contains_untranslated_cjk(heading) or needs_translation(body) or contains_untranslated_cjk(body):
                 return True
-            if sec.get("quote") and needs_translation(str(sec.get("quote") or "")):
+            if sec.get("quote") and (needs_translation(str(sec.get("quote") or "")) or contains_untranslated_cjk(str(sec.get("quote") or ""))):
                 return True
     return False
 
@@ -754,7 +766,9 @@ def _item_needs_curation_upgrade(item: dict[str, Any]) -> bool:
         or "소식과 데모 맥락을 실시간으로 공유했어요" in what
     ):
         return True
-    if needs_translation(hook):
+    if needs_translation(hook) or contains_untranslated_cjk(hook):
+        return True
+    if "\U0001D54F" in str(item.get("context_ko") or ""):
         return True
     if is_anecdote_chatter(what) or is_anecdote_chatter(hl):
         return True
@@ -805,10 +819,10 @@ def _upgrade_existing_item_translation(
     title_already_ok = (
         bool(existing_title_ko)
         and not needs_translation(existing_title_ko)
-        and not CJK_JP_RE.search(existing_title_ko)
+        and not contains_untranslated_cjk(existing_title_ko)
         and not (_FALLBACK_SUFFIX_RE.search(existing_title_ko) and needs_translation(raw_title))
     )
-    if title_already_ok and (not raw_body or not needs_translation(raw_body)):
+    if title_already_ok and (not raw_body or (not needs_translation(raw_body) and not contains_untranslated_cjk(raw_body))):
         title_ko = existing_title_ko
         body_ko = sanitize_text(raw_body) if raw_body and not needs_translation(raw_body) else ""
         llm_why = ""
@@ -817,10 +831,43 @@ def _upgrade_existing_item_translation(
         tr = translator.translate_article(url=url, title=raw_title, body=raw_body)
         title_ko = sanitize_text(tr.title_ko, strip_emoji=True) or raw_title
         body_ko = sanitize_text(tr.body_ko)
-        if needs_translation(body_ko):
+        if needs_translation(body_ko) or contains_untranslated_cjk(body_ko):
             body_ko = ""
-        llm_why = sanitize_text(tr.why_ko or "") if (tr.why_ko and not needs_translation(tr.why_ko)) else ""
+        llm_why = sanitize_text(tr.why_ko or "") if (tr.why_ko and not needs_translation(tr.why_ko) and not contains_untranslated_cjk(tr.why_ko)) else ""
         was_translated = tr.translated
+
+    # 한국어 검증 게이트: 1차 번역 후에도 미번역 중국어 한자·일본어 가나·영문이 남으면 즉시 재번역 패스 실행
+    if needs_translation(title_ko) or contains_untranslated_cjk(title_ko):
+        retried = translator.force_translate_korean(raw_title)
+        if retried:
+            cleaned_retry = sanitize_text(retried, strip_emoji=True)
+            if cleaned_retry and not contains_untranslated_cjk(cleaned_retry):
+                title_ko = cleaned_retry
+                was_translated = True
+                if translator.cache is not None and not needs_translation(cleaned_retry):
+                    translator.cache.put(
+                        url,
+                        original_title=raw_title,
+                        title_ko=cleaned_retry,
+                        body_ko=body_ko,
+                        provider="retry_gate",
+                    )
+
+    if body_ko and (needs_translation(body_ko) or contains_untranslated_cjk(body_ko)):
+        retried_body = translator.force_translate_korean(body_ko)
+        if retried_body and not needs_translation(retried_body) and not contains_untranslated_cjk(retried_body):
+            body_ko = sanitize_text(retried_body)
+        else:
+            body_ko = ""
+
+    # 최후 안전망: 네트워크/번역기 전면 장애 시에도 한자·가나가 한국어 제목에 노출되지 않도록 한글 정제
+    if contains_untranslated_cjk(title_ko):
+        stripped_cjk = re.sub(r"[\u3040-\u30ff\u4e00-\u9fff]+", " ", title_ko)
+        stripped_cjk = re.sub(r"\s+", " ", stripped_cjk).strip(" -—|:·[]()【】")
+        if len(stripped_cjk) >= 4:
+            title_ko = stripped_cjk
+        else:
+            title_ko = f"{platform_name} {CATEGORY_LABELS.get(category, 'AI')} 최신 업데이트"
 
     hook_title = polish_korean_headline(
         title_ko,
@@ -1075,16 +1122,41 @@ def build_and_save_snapshot(
             by_url[built["canonical_url"]] = built
             by_id[str(built["id"])] = built
 
-    # 3) 실시간 레이더(hot) + 지난 주요 소식(warm, 일별 주요 이슈 보존) 균형 선별
-    def hot_sort_key(it: dict[str, Any]) -> tuple[float, str]:
+    # 3) 실시간 레이더(hot): 무조건 최신 발행·포착 시각(published_at 정규화 UTC 내림차순) 최우선 정렬
+    #    - Tier 2: 48시간 이내 유효 published_at → 무조건 최신순(동일 시각 시 중요도 보조)
+    #    - Tier 1: 48시간 초과(지연 수집된 옛 기사) → 48시간 이내 최신 기사 뒤에서 최신순
+    #    - Tier 0: 발행 시각 미상 또는 미래 오파싱 → 항상 최하단
+    def hot_sort_key(it: dict[str, Any]) -> tuple[int, float, float]:
         pub_dt = _parse_iso(it.get("published_at"))
-        created_dt = pub_dt or _parse_iso(it.get("created_at")) or now
-        age_h = max(0.0, (now - created_dt).total_seconds() / 3600.0)
-        effective_age = age_h if pub_dt is not None else max(age_h, 36.0)
-        hot_rank = float(it.get("importance_score") or 0) / ((effective_age + 2.0) ** 1.5)
-        if pub_dt is None:
-            hot_rank *= 0.25
-        return (hot_rank, str(it.get("published_at") or it.get("created_at") or ""))
+        if pub_dt is not None and pub_dt <= now + timedelta(minutes=5):
+            eff_dt = min(pub_dt, now)
+            age_h = max(0.0, (now - eff_dt).total_seconds() / 3600.0)
+            tier = 2 if age_h <= HOT_FRESH_CUTOFF_HOURS else 1
+            return (tier, eff_dt.timestamp(), float(it.get("importance_score") or 0))
+        fetched_dt = _parse_iso(it.get("fetched_at")) or _parse_iso(it.get("created_at")) or now
+        return (0, min(fetched_dt, now).timestamp(), float(it.get("importance_score") or 0))
+
+    def _interleave_max_consecutive(items: list[dict[str, Any]], max_run: int = MAX_CONSECUTIVE_SAME_SOURCE) -> list[dict[str, Any]]:
+        """동일 출처가 연속 3개 이상 붙을 때만 최소 거리로 미세 인터리빙해 최신순을 보존한다."""
+        if len(items) <= max_run:
+            return items
+        pool = list(items)
+        result: list[dict[str, Any]] = []
+        while pool:
+            last_pid = str(result[-1].get("platform_id") or "") if result else ""
+            same_run = 0
+            for prev in reversed(result):
+                if str(prev.get("platform_id") or "") == last_pid:
+                    same_run += 1
+                else:
+                    break
+            if last_pid and same_run >= max_run and str(pool[0].get("platform_id") or "") == last_pid:
+                alt_idx = next((idx for idx, x in enumerate(pool) if str(x.get("platform_id") or "") != last_pid), -1)
+                if alt_idx > 0:
+                    result.append(pool.pop(alt_idx))
+                    continue
+            result.append(pool.pop(0))
+        return result
 
     def warm_sort_key(it: dict[str, Any]) -> tuple[float, str]:
         score = float(it.get("importance_score") or 0) + max(0, int(it.get("source_count") or 1) - 1) * 4.0
@@ -1101,17 +1173,22 @@ def build_and_save_snapshot(
     picked_hot_urls: set[str] = set()
     per_plat: dict[str, int] = {}
 
-    # 최우선 실시간 소스(OpenAI·Anthropic·Substack·X 실시간·GitHub 핫 AI)가 다량 RSS 에 밀리지 않도록 우선 슬롯 보장
+    # 핵심 실시간 소스(중국 AI·인디빌더 5대 소스 + OpenAI·Anthropic·Substack·X·GitHub)가 다량 RSS 에 밀리지 않도록 슬롯 보장
     priority_hot_quotas = (
+        ("qbitai", min(3, per_platform)),
+        ("jiqizhixin", min(3, per_platform)),
+        ("36kr-ai", min(3, per_platform)),
+        ("v2ex", min(4, per_platform)),
+        ("juejin", min(3, per_platform)),
         ("openai", min(4, per_platform)),
         ("anthropic", min(4, per_platform)),
-        ("latent-space", min(3, per_platform)),
+        ("latent-space", min(2, per_platform)),
         ("import-ai", min(2, per_platform)),
         ("ahead-of-ai", min(2, per_platform)),
         ("one-useful-thing", min(2, per_platform)),
         ("interconnects", min(2, per_platform)),
         ("x", min(8, per_platform + 2)),
-        ("github", min(6, per_platform)),
+        ("github", min(5, per_platform)),
     )
     for priority_pid, reserve_cap in priority_hot_quotas:
         cnt = 0
@@ -1141,8 +1218,22 @@ def build_and_save_snapshot(
         picked_hot_urls.add(url)
         per_plat[pid] = per_plat.get(pid, 0) + 1
 
-    # 최종 hot 목록은 신선도·중요도 순으로 자연스럽게 정렬
+    # 최종 hot 목록은 무조건 최신 발행 시각 내림차순 최우선 정렬 + 3연속 동일 출처만 미세 인터리빙
     selected_hot.sort(key=hot_sort_key, reverse=True)
+    selected_hot = _interleave_max_consecutive(selected_hot, MAX_CONSECUTIVE_SAME_SOURCE)
+
+    # 48시간이 지나 hot 상단에서 자연스럽게 밀린 고중요도 기사는 지난 주요 소식(warm) 풀로 승격해 빛나게 한다
+    overflow_older = []
+    for it in hot_ranked:
+        if str(it["canonical_url"]) in picked_hot_urls:
+            continue
+        pub_dt = _parse_iso(it.get("published_at"))
+        if pub_dt is not None and (now - pub_dt).total_seconds() > HOT_FRESH_CUTOFF_HOURS * 3600.0:
+            promoted = dict(it)
+            promoted["lifecycle_status"] = "warm"
+            overflow_older.append(promoted)
+    if overflow_older:
+        warm_ranked = sorted([*warm_pool, *overflow_older], key=warm_sort_key, reverse=True)
 
     # 지난 주요 소식(8~30일): 플랫폼 다양성 쿼터 + 일별 최고 중요도 1건씩 우선 보존 후 중요도 순으로 채움
     warm_cap = min(MAX_WARM_ITEMS, max(0, max_items - len(selected_hot)))
@@ -1198,7 +1289,19 @@ def build_and_save_snapshot(
 
     selected = [*selected_hot, *selected_warm]
 
-    # 4) 최종 선정된 기사 중 외국어 번역 + 구버전 큐레이션 업그레이드 (URL 캐시 재사용)
+    # 4) 최종 선정된 기사 중 외국어 번역 + 구버전 큐레이션 업그레이드 (무료 Gemini 배치 → 무키 이중 폴백 + URL 캐시 재사용)
+    batch_candidates = [
+        {
+            "url": str(it.get("canonical_url") or ""),
+            "title": str(it.get("original_title") or it.get("hook_title") or ""),
+            "body": raw_body_by_url.get(str(it.get("canonical_url") or "")) or _extract_raw_body_from_existing(it),
+        }
+        for it in selected
+        if str(it.get("canonical_url") or "") not in llm_urls and _item_needs_translation(it)
+    ]
+    if batch_candidates:
+        translator.translate_batch_with_gemini(batch_candidates)
+
     translated_selected: list[dict[str, Any]] = []
     for it in selected:
         url = str(it.get("canonical_url") or "")

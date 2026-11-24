@@ -4,12 +4,38 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from
 import { Languages } from "lucide-react";
 import { createPortal } from "react-dom";
 
-import { highlightSegments, stripHighlightMarks } from "@/lib/highlight";
+import { easyOriginalSegments, highlightSegments, stripHighlightMarks } from "@/lib/highlight";
 import { splitByTerms } from "@/lib/terms";
 import type { Entity, Term } from "@/lib/types";
 
+import XLogo from "./XLogo";
+
 const POPOVER_WIDTH = 280;
 const GAP = 8;
+const MATH_X_GLYPH = "\uD835\uDD4F"; // 𝕏 (U+1D54F)
+
+/**
+ * 수학 기호 𝕏(U+1D54F)는 리눅스에서 Math 폴백 폰트로 떨어져 드래그 선택 영역이 위로 2~3배 팽창한다.
+ * 모든 𝕏 문자를 고정 높이(1em) 인라인 SVG 래퍼로 격리해 일반 한글·영문 줄과 드래그 높이를 1px 오차 없이 맞춘다.
+ */
+export function renderSafeX(text: string): React.ReactNode {
+  if (!text || !text.includes(MATH_X_GLYPH)) return text;
+  const parts = text.split(MATH_X_GLYPH);
+  return parts.map((part, idx) => (
+    <span key={idx}>
+      {part}
+      {idx < parts.length - 1 && (
+        <span className="x-glyph-inline" aria-label="X">
+          <XLogo className="h-[0.86em] w-[0.86em]" />
+        </span>
+      )}
+    </span>
+  ));
+}
+
+export function SafeXText({ text, className }: { text: string; className?: string }) {
+  return <span className={className}>{renderSafeX(text)}</span>;
+}
 
 /** 외계어 밑줄 + 풀이 팝오버. 데스크톱은 마우스 오버/포커스, 모바일은 탭으로 연다. */
 export function TermTooltip({ term, children }: { term: Term; children: React.ReactNode }) {
@@ -107,7 +133,7 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
             left: pos?.left ?? -9999,
             width: `min(${POPOVER_WIDTH}px, calc(100vw - 16px))`,
           }}
-          className="animate-fade-in z-[80] block rounded-lg bg-fg p-3.5 text-left"
+          className="animate-fade-in z-[80] block select-none rounded-lg bg-fg p-3.5 text-left"
           onPointerEnter={() => setOpen(true)}
           onPointerLeave={(e) => e.pointerType !== "touch" && !pinned && setOpen(false)}
         >
@@ -124,40 +150,69 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
 
 /**
  * 본문 문단 — terms 에 있는 단어에 툴팁 점선 밑줄을 자동으로 단다.
- * highlight: 핵심 구절(==마커== 또는 자동 감지한 수치·인용 구절)에 형광펜 밑줄 (lib/highlight.ts).
- * 하이라이트를 그리지 않을 때도 ==마커== 는 화면에 보이지 않게 걷어낸다.
+ * - mode="default": highlight=true 면 형광펜(.hl-mark) + 고유명사 칩(.hl-entity)
+ * - mode="easy": 원본 쉽게 읽기 전용 스마트 볼드(<strong>, 카드당 첫 등장 1회) + enableMark 섹션 결론 1문장 소프트 형광펜(<mark>)
  */
 export default function TermText({
   text,
   terms,
   className,
   highlight = false,
+  mode = "default",
+  enableMark = false,
   entities = [],
 }: {
   text: string;
   terms: Term[];
   className?: string;
   highlight?: boolean;
+  mode?: "default" | "easy";
+  enableMark?: boolean;
   entities?: Entity[];
 }) {
+  if (mode === "easy") {
+    const segments = easyOriginalSegments(text, terms, entities, { enableMark });
+    return (
+      <p className={className}>
+        {segments.map((s, i) =>
+          s.term ? (
+            <TermTooltip key={i} term={s.term}>
+              {renderSafeX(s.text)}
+            </TermTooltip>
+          ) : s.hl ? (
+            <mark key={i} className="hl-mark">
+              {renderSafeX(s.text)}
+            </mark>
+          ) : s.bold ? (
+            <strong key={i} className="easy-bold">
+              {renderSafeX(s.text)}
+            </strong>
+          ) : (
+            <span key={i}>{renderSafeX(s.text)}</span>
+          ),
+        )}
+      </p>
+    );
+  }
+
   const segments = highlight ? highlightSegments(text, terms, true, entities) : splitByTerms(stripHighlightMarks(text), terms);
   return (
     <p className={className}>
       {segments.map((s, i) =>
         s.term ? (
           <TermTooltip key={i} term={s.term}>
-            {s.text}
+            {renderSafeX(s.text)}
           </TermTooltip>
         ) : "hl" in s && s.hl ? (
           <mark key={i} className="hl-mark">
-            {s.text}
+            {renderSafeX(s.text)}
           </mark>
         ) : "entity" in s && s.entity ? (
           <span key={i} className="hl-entity">
-            {s.text}
+            {renderSafeX(s.text)}
           </span>
         ) : (
-          <span key={i}>{s.text}</span>
+          <span key={i}>{renderSafeX(s.text)}</span>
         ),
       )}
     </p>

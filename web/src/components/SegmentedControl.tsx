@@ -59,7 +59,7 @@ export default function SegmentedControl<K extends string>({
       ref={wrapRef}
       role={role}
       aria-label={label}
-      className={`relative flex min-w-0 gap-1 rounded-lg bg-elevated p-1 ${
+      className={`relative flex min-w-0 select-none gap-1 rounded-lg bg-elevated p-1 ${
         stretch ? "" : "thin-scroll overflow-x-auto"
       } ${className}`}
     >

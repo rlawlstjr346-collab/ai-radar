@@ -148,8 +148,9 @@ describe("Apple ML Research 좌측 컬러 도트 · 무한 스크롤 · 고밀�
       for (const bp of stockBoilerplate) {
         expect(item.what_ko ?? "", `${item.id} boilerplate what_ko`).not.toContain(bp);
       }
-      // 일본어 히라가나/가타카나 잔존 0건 + 순수 영문 미번역 제목 0건 (한글 최소 1자 이상 포함)
+      // 일본어 히라가나/가타카나 + 중국어 한자 잔존 0건 + 순수 영문 미번역 제목 0건 (한글 최소 1자 이상 포함)
       expect(item.hook_title, `${item.id} Japanese title`).not.toMatch(/[ぁ-んァ-ヶ]/);
+      expect(item.hook_title, `${item.id} Chinese Hanzi title`).not.toMatch(/[\u4e00-\u9fff]/);
       expect(item.hook_title, `${item.id} untranslated English title`).toMatch(/[가-힣]/);
 
       const easy = snap.easyOriginals[item.id];

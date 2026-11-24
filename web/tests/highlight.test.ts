@@ -2,7 +2,16 @@ import { describe, expect, it } from "vitest";
 
 import { SAMPLE_EASY_ORIGINAL } from "@/data/sample-easy-original";
 import { SAMPLE_FEED } from "@/data/sample-feed";
-import { autoHighlights, entityHighlights, highlightSegments, MAX_ENTITY_CHIPS, MAX_HIGHLIGHTS, parseHighlightMarks, stripHighlightMarks } from "@/lib/highlight";
+import {
+  autoHighlights,
+  easyOriginalSegments,
+  entityHighlights,
+  highlightSegments,
+  MAX_ENTITY_CHIPS,
+  MAX_HIGHLIGHTS,
+  parseHighlightMarks,
+  stripHighlightMarks,
+} from "@/lib/highlight";
 import type { Entity, Term } from "@/lib/types";
 
 const hl = (text: string, terms: Term[] = [], entities: Entity[] = []) =>
@@ -94,5 +103,32 @@ describe("듀얼 하이라이트: AI 모델명·주요 인물명 인디고 칩",
   it("문단당 인디고 칩 상한(MAX_ENTITY_CHIPS)을 지킨다", () => {
     const text = "GPT-6, Claude, Gemini, DeepSeek, Qwen, Llama, EXAONE, HyperCLOVA X";
     expect(entityHighlights(text)).toHaveLength(MAX_ENTITY_CHIPS);
+  });
+});
+
+describe("원본 쉽게 읽기 전용 스마트 볼드 + 절제된 결론 형광펜", () => {
+  it("인물·직함, @계정명, 따옴표 개념어, AI 기업·모델, 핵심 수치를 첫 등장 1회만 볼드 처리한다", () => {
+    const text =
+      "샘 올트먼 CEO와 @cursor_ai는 '로컬 추론' 기반으로 DeepSeek 비용을 84% 줄였습니다. DeepSeek는 다시 언급돼도 중복 볼드되지 않아요.";
+    const segs = easyOriginalSegments(text, [], [], { enableMark: false });
+    const bolds = segs.filter((s) => s.bold).map((s) => s.text);
+    expect(bolds).toContain("샘 올트먼 CEO");
+    expect(bolds).toContain("@cursor_ai");
+    expect(bolds).toContain("로컬 추론");
+    expect(bolds).toContain("DeepSeek");
+    expect(bolds).toContain("84%");
+    expect(bolds.filter((b) => b === "DeepSeek")).toHaveLength(1);
+    expect(segs.filter((s) => s.hl)).toHaveLength(0);
+    expect(segs.map((s) => s.text).join("")).toBe(text);
+  });
+
+  it("enableMark=true(02 핵심 내용·04 실전 적용)일 때만 결론 1문장(구절)에 소프트 형광펜을 적용한다", () => {
+    const text =
+      "기존 방식은 토큰 소비가 컸습니다. 이번 Qwen3 업데이트로 추론 속도가 2.4배 빨라지고 비용을 60% 절감할 수 있습니다. 원문 링크에서 세부 표를 확인하세요.";
+    const segs = easyOriginalSegments(text, [], [], { enableMark: true });
+    const marks = segs.filter((s) => s.hl).map((s) => s.text);
+    expect(marks).toHaveLength(1);
+    expect(marks[0]).toContain("60%");
+    expect(segs.map((s) => s.text).join("")).toBe(text);
   });
 });

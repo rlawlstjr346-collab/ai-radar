@@ -12,14 +12,16 @@ import {
   pastFeed,
   type CategoryFilter,
 } from "@/lib/filter";
+import { fetchLatestLiveFeed, mergeLiveFeedItems } from "@/lib/live-client";
 import type { FeedItem, Platform, RadarData } from "@/lib/types";
 
 import { LiquidGlassModal, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
-import { FeatureStory, isXItem, LeadStory, StreamRow } from "./ItemCard";
+import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
 import Sidebar, { MobileHeader, type TitleLang, type View } from "./Sidebar";
 
 const CLOCK_TICK_MS = 60_000;
+const LIVE_REFRESH_MIN_GAP_MS = 30_000;
 const INFINITE_BATCH = 20;
 const LANG_STORAGE_KEY = "ai-radar:lang";
 
@@ -32,30 +34,6 @@ function useNow(initialIso: string): number {
     return () => clearInterval(t);
   }, []);
   return now;
-}
-
-/**
- * 실시간 레이더 기본 전체 피드에서 X(Twitter) 빌더/런칭 이슈가 최하단에 묻히지 않도록
- * 상·중단 슬롯(#3, #6, #9)에 최대 3건을 자연스럽게 인터리빙한다.
- */
-function interleaveXItems(items: FeedItem[]): FeedItem[] {
-  const xItems = items.filter((i) => isXItem(i));
-  if (xItems.length === 0 || items.length < 4) return items;
-
-  const topNineX = items.slice(0, 9).filter((i) => isXItem(i)).length;
-  if (topNineX >= Math.min(3, xItems.length)) return items;
-
-  const promoted = xItems.slice(0, 3);
-  const promotedIds = new Set(promoted.map((i) => i.id));
-  const rest = items.filter((i) => !promotedIds.has(i.id));
-
-  const targetSlots = [2, 5, 8];
-  const result = [...rest];
-  promoted.forEach((xItem, idx) => {
-    const slot = Math.min(targetSlots[idx] ?? result.length, result.length);
-    result.splice(slot, 0, xItem);
-  });
-  return result;
 }
 
 /** ?item=… / ?platform=… ↔ 선택 상태 */
@@ -216,11 +194,58 @@ function FeedList({
 
 export default function RadarApp({ data }: { data: RadarData }) {
   const now = useNow(data.generatedAt);
+  const [items, setItems] = useState<FeedItem[]>(data.items);
+  const [lastCollectedAt, setLastCollectedAt] = useState<string | null | undefined>(data.lastCollectedAt);
   const [view, setView] = useState<View>("feed");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [lang, setLang] = useState<TitleLang>("ko");
   // 첫 진입 시에는 리퀴드 글라스 모달을 닫아 뉴스룸 피드만 깔끔하게 보여준다 (URL 공유 진입 시 자동 오픈)
   const [selection, setSelection] = useState<Selection>(null);
+  const lastFetchRef = useRef<number>(0);
+
+  const validPlatformIds = useMemo(() => new Set(data.platforms.map((p) => p.id)), [data.platforms]);
+
+  // 마운트 및 탭 포커스 시 GitHub Raw 최신 JSON(5분 캐시 버스팅 + 로컬 정적 폴백)을 비동기 수신해 지연 없이 반영
+  useEffect(() => {
+    if (data.source === "supabase") return;
+    let activeCtrl: AbortController | null = null;
+    const syncLatest = (force = false) => {
+      const nowMs = Date.now();
+      if (!force && nowMs - lastFetchRef.current < LIVE_REFRESH_MIN_GAP_MS) return;
+      lastFetchRef.current = nowMs;
+      activeCtrl?.abort();
+      const ctrl = new AbortController();
+      activeCtrl = ctrl;
+      fetchLatestLiveFeed(validPlatformIds, ctrl.signal)
+        .then((snap) => {
+          if (!snap || ctrl.signal.aborted) return;
+          setItems((prev) => mergeLiveFeedItems(prev, snap.items));
+          if (snap.generatedAt) {
+            setLastCollectedAt((prev) => {
+              const prevTs = prev ? Date.parse(prev) : 0;
+              const nextTs = Date.parse(snap.generatedAt!);
+              return nextTs >= prevTs ? snap.generatedAt : prev;
+            });
+          }
+        })
+        .catch(() => {
+          // 네트워크 실패 시 기존 SSR/로컬 스냅샷 유지
+        });
+    };
+
+    syncLatest(true);
+    const onFocus = () => syncLatest(false);
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") syncLatest(false);
+    };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      activeCtrl?.abort();
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [data.source, validPlatformIds]);
 
   useEffect(() => {
     try {
@@ -242,13 +267,13 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
   const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
   const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
-  const hotItems = useMemo(() => hotFeed(data.items, category, now, "", names), [data.items, category, now, names]);
-  const pastItems = useMemo(() => pastFeed(data.items, category, "", names), [data.items, category, names]);
+  const hotItems = useMemo(() => hotFeed(items, category, now, "", names), [items, category, now, names]);
+  const pastItems = useMemo(() => pastFeed(items, category, "", names), [items, category, names]);
 
   const applySelection = useCallback(
     (sel: Selection, fromUrl: boolean) => {
       if (sel?.type === "item") {
-        const item = data.items.find((i) => i.id === sel.id);
+        const item = items.find((i) => i.id === sel.id);
         if (!item) return false;
         if (fromUrl) setView(item.lifecycle_status === "warm" ? "past" : "feed");
       } else if (sel?.type === "platform") {
@@ -258,7 +283,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       setSelection(sel);
       return true;
     },
-    [data.items, data.platforms],
+    [items, data.platforms],
   );
 
   // 공유 링크(?item= / ?platform=)로 들어왔을 때 자동 오픈 + 브라우저 뒤로/앞으로 가기
@@ -277,21 +302,21 @@ export default function RadarApp({ data }: { data: RadarData }) {
     const pool =
       view === "directory"
         ? data.platforms.map((p) => p.category)
-        : data.items
+        : items
             .filter((i) => i.lifecycle_status === (view === "feed" ? "hot" : "warm"))
             .map((i) => i.category);
     const c = { all: view === "feed" ? Math.min(pool.length, HOT_LIMIT) : pool.length } as Record<CategoryFilter, number>;
     for (const cat of CATEGORY_ORDER) c[cat] = pool.filter((x) => x === cat).length;
     return c;
-  }, [view, data.items, data.platforms]);
+  }, [view, items, data.platforms]);
 
   const viewCounts = useMemo(
     () => ({
-      feed: Math.min(data.items.filter((i) => i.lifecycle_status === "hot").length, HOT_LIMIT),
-      past: data.items.filter((i) => i.lifecycle_status === "warm").length,
+      feed: Math.min(items.filter((i) => i.lifecycle_status === "hot").length, HOT_LIMIT),
+      past: items.filter((i) => i.lifecycle_status === "warm").length,
       directory: data.platforms.length,
     }),
-    [data.items, data.platforms],
+    [items, data.platforms],
   );
 
   const selectItem = useCallback((id: string) => {
@@ -322,9 +347,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
   const editorial = view === "feed" && category === "all";
   const feedDisplayItems = useMemo(() => {
-    if (view === "past") return pastItems;
-    return editorial ? interleaveXItems(hotItems) : hotItems;
-  }, [view, editorial, hotItems, pastItems]);
+    return view === "past" ? pastItems : hotItems;
+  }, [view, hotItems, pastItems]);
 
   const navOrder = useMemo(() => {
     if (view === "directory") return [];
@@ -368,7 +392,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
     onLang: handleLang,
     source: data.source,
     platformCount: data.platforms.length,
-    lastCollectedAt: data.lastCollectedAt,
+    lastCollectedAt,
     now,
   };
 
@@ -402,7 +426,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
           {view === "directory" ? (
             <DirectoryView
               platforms={data.platforms}
-              items={data.items}
+              items={items}
               category={category}
               selectedId={selection?.type === "platform" ? selection.id : null}
               onSelect={selectPlatform}
@@ -429,7 +453,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       {/* 정중앙 고밀도 리퀴드 글라스 4단 요약 모달 (기사·플랫폼 클릭 또는 URL 공유 진입 시 오픈) */}
       <LiquidGlassModal
         selection={selection}
-        items={data.items}
+        items={items}
         platforms={data.platforms}
         onSelectItem={selectItem}
         onSelectPlatform={selectPlatform}

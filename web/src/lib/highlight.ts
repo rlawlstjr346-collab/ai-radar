@@ -16,6 +16,7 @@ export const MAX_ENTITY_CHIPS = 4;
 
 export type HlRange = { start: number; end: number };
 export type HlSegment = { text: string; term?: Term; hl?: boolean; entity?: boolean };
+export type EasySegment = { text: string; term?: Term; hl?: boolean; bold?: boolean };
 
 const MARK = /==([^=\n]+?)==/g;
 
@@ -296,6 +297,307 @@ export function highlightSegments(raw: string, terms: Term[], auto = true, entit
       if (s >= e) continue;
       if (s > cursor) out.push({ text: text.slice(cursor, s) });
       out.push(r.kind === "hl" ? { text: text.slice(s, e), hl: true } : { text: text.slice(s, e), entity: true });
+      cursor = e;
+    }
+    if (cursor < segEnd) out.push({ text: text.slice(cursor, segEnd) });
+  }
+  return out;
+}
+
+// ── 원본 쉽게 읽기 전용: 스마트 볼드(인물·@계정·따옴표 개념어·기업/모델·핵심 수치, 카드당 첫 등장 1회) + 절제된 결론 1문장 형광펜 ──
+
+const EASY_COMPANIES_AND_PLATFORMS: readonly string[] = [
+  "Google DeepMind",
+  "Apple Intelligence",
+  "OpenAI",
+  "Anthropic",
+  "NVIDIA",
+  "Microsoft",
+  "Hugging Face",
+  "GitHub",
+  "Vercel",
+  "Cursor",
+  "Perplexity",
+  "Moonshot AI",
+  "Moonshot",
+  "Kimi",
+  "Zhipu AI",
+  "Zhipu",
+  "GLM",
+  "MiniMax",
+  "ByteDance",
+  "Alibaba",
+  "Tencent",
+  "StepFun",
+  "ModelScope",
+  "QbitAI",
+  "Synced",
+  "36Kr AI",
+  "36Kr",
+  "V2EX",
+  "Juejin",
+  "LangGraph",
+  "LangChain",
+  "PyTorch",
+  "Core ML",
+  "MLX",
+  "MCP",
+  "RAG",
+  "Codex",
+  "Meta",
+  "Google",
+  "Apple",
+  "xAI",
+  "오픈AI",
+  "앤트로픽",
+  "엔비디아",
+  "구글",
+  "애플",
+  "메타",
+  "마이크로소프트",
+  "알리바바",
+  "바이트댄스",
+  "텐센트",
+  "허깅페이스",
+  "양자위",
+  "기기지심",
+  "굴진",
+];
+
+const EASY_EXTRA_FIGURES: readonly string[] = [
+  "트럼프",
+  "도널드 트럼프",
+  "머스크",
+  "올트먼",
+  "알트먼",
+  "이선 몰릭",
+  "네이선 램버트",
+  "세바스찬 라슈카",
+  "잭 클라크",
+  "앤드류 응",
+  "리카이푸",
+];
+
+const PERSON_TITLE_SUFFIX_RE = /^(?:\s+(?:CEO|CTO|CFO|COO|대표|창업자|공동창업자|교수|연구원|수석|부사장|회장|박사))+/;
+const HANDLE_RE = /(?<![A-Za-z0-9_])@[A-Za-z0-9_]{1,20}/g;
+const EASY_QUOTED_RE = /(?<![A-Za-z0-9])['‘"“]([^'’"”\n]{2,22})['’"”]/g;
+const EASY_METRIC_RE =
+  /(?:★\d[\d,]*(?:\.\d+)?|\b\d+(?:\.\d+)?[BMK]\b|v\d+\.\d+(?:\.\d+)?|(?:(?:주당|전체|최대|최소|평균|약|하루|매달|매일|연간|월)\s?)?\$?\d[\d,]*(?:\.\d+)?\s?(?:%|퍼센트|배|달러|센트|원(?!래)|위(?![가-힣])|점(?![가-힣])|만\s?(?:명|건|개|원|달러|토큰)|억\s?(?:원|달러|파라미터|개)?|조\s?(?:원|토큰)?|토큰|파라미터|ms|초(?![가-힣])|시간(?![가-힣])|스타))/g;
+
+const CONCLUSION_SCORE_RE =
+  /(핵심|요약하면|결론|장점|차이|절감|단축|향상|개선|돌파|공개|출시|활용할\s*수|유용하게|실제로|추천|벤치마킹|자동화|효율|성능|비용|이득|바로)/g;
+
+const SENTENCE_BOUNDARY_RE = /(?<=[.!?])\s+|(?<=[다요음함]\.)\s+|\n+/g;
+
+/** 원본 쉽게 읽기 02(핵심 내용)·04(실전 적용) 섹션에서 가장 중요한 결론 1문장(또는 핵심 구절) 구간을 고른다. */
+export function selectConclusionHighlight(text: string): HlRange | null {
+  if (!text || text.trim().length < 20) return null;
+
+  const sentences: Array<{ start: number; end: number; text: string }> = [];
+  let cursor = 0;
+  for (const m of text.matchAll(SENTENCE_BOUNDARY_RE)) {
+    const idx = m.index ?? 0;
+    const raw = text.slice(cursor, idx);
+    const trimmed = raw.trim();
+    if (trimmed.length >= 16) {
+      const leadWs = raw.length - raw.trimStart().length;
+      const start = cursor + leadWs;
+      sentences.push({ start, end: start + trimmed.length, text: trimmed });
+    }
+    cursor = idx + m[0].length;
+  }
+  if (cursor < text.length) {
+    const raw = text.slice(cursor);
+    const trimmed = raw.trim();
+    if (trimmed.length >= 16) {
+      const leadWs = raw.length - raw.trimStart().length;
+      const start = cursor + leadWs;
+      sentences.push({ start, end: start + trimmed.length, text: trimmed });
+    }
+  }
+  if (sentences.length === 0) return null;
+
+  let best = sentences[0];
+  let bestScore = -Infinity;
+  for (let i = 0; i < sentences.length; i++) {
+    const s = sentences[i];
+    let score = 0;
+    const sigHits = s.text.match(CONCLUSION_SCORE_RE)?.length ?? 0;
+    score += sigHits * 2.5;
+    if (EASY_METRIC_RE.test(s.text)) {
+      EASY_METRIC_RE.lastIndex = 0;
+      score += 3.5;
+    }
+    if (s.text.length >= 24 && s.text.length <= 105) score += 2.0;
+    if (i === 0) score += 1.0;
+    if (/원문에서는 특히|하단 원문 링크|도표·스크린샷/.test(s.text)) score -= 5.0;
+    if (score > bestScore) {
+      bestScore = score;
+      best = s;
+    }
+  }
+
+  // 문장이 지나치게 길면(110자 초과) 앞쪽 핵심 절만 깔끔하게 하이라이트
+  if (best.text.length > 110) {
+    const clause = best.text.slice(0, 105);
+    const comma = Math.max(clause.lastIndexOf(", "), clause.lastIndexOf(" — "), clause.lastIndexOf("이며 "));
+    const cutLen = comma >= 35 ? comma : clause.lastIndexOf(" ");
+    if (cutLen >= 25) {
+      return { start: best.start, end: best.start + cutLen };
+    }
+  }
+  return { start: best.start, end: best.end };
+}
+
+/** 원본 쉽게 읽기 스마트 볼드 구간: 인물·직함, @계정명, 따옴표 개념어, AI 기업·모델·서비스명, 핵심 수치 (동일 단어 카드당 첫 등장 1회) */
+export function easyBoldRanges(
+  text: string,
+  exclude: HlRange[] = [],
+  entities: Entity[] = [],
+  max = 12,
+): HlRange[] {
+  if (!text || max <= 0) return [];
+
+  type Candidate = HlRange & { key: string; priority: number };
+  const hits: Candidate[] = [];
+
+  // 1) @계정명
+  for (const m of text.matchAll(HANDLE_RE)) {
+    const start = m.index ?? 0;
+    hits.push({ start, end: start + m[0].length, key: m[0].toLowerCase(), priority: 4 });
+  }
+
+  // 2) 핵심 수치 (%, 배수, 토큰, 스타, 파라미터 등)
+  for (const m of text.matchAll(EASY_METRIC_RE)) {
+    const start = m.index ?? 0;
+    hits.push({ start, end: start + m[0].length, key: m[0].toLowerCase().replace(/\s+/g, ""), priority: 3 });
+  }
+
+  // 3) 따옴표 핵심 개념어 (안쪽 텍스트만 볼드)
+  for (const m of text.matchAll(EASY_QUOTED_RE)) {
+    const start = (m.index ?? 0) + 1;
+    const inner = m[1];
+    hits.push({ start, end: start + inner.length, key: inner.toLowerCase().trim(), priority: 2 });
+  }
+
+  // 4) 인물·직함 + 주요 AI 기업·모델·서비스명 + 동적 entities
+  const nameMap = new Map<string, { name: string; exactCase: boolean; isPerson: boolean }>();
+  for (const f of [...BUILTIN_FIGURES, ...EASY_EXTRA_FIGURES]) {
+    nameMap.set(f.toLowerCase(), { name: f, exactCase: false, isPerson: true });
+  }
+  for (const m of BUILTIN_MODELS) {
+    nameMap.set(m.name.toLowerCase(), { name: m.name, exactCase: Boolean(m.exactCase), isPerson: false });
+  }
+  for (const c of EASY_COMPANIES_AND_PLATFORMS) {
+    const key = c.toLowerCase();
+    if (!nameMap.has(key)) {
+      nameMap.set(key, { name: c, exactCase: ASCII_RE.test(c) && c.length <= 4, isPerson: false });
+    }
+  }
+  for (const e of entities) {
+    const name = e?.name?.trim();
+    if (!name || name.length < 2) continue;
+    const key = name.toLowerCase();
+    if (!nameMap.has(key)) {
+      nameMap.set(key, {
+        name,
+        exactCase: ASCII_RE.test(name) && name.length <= 4,
+        isPerson: (e.kind ?? "").toLowerCase() === "person",
+      });
+    }
+  }
+
+  const sortedNames = [...nameMap.values()].sort((a, b) => b.name.length - a.name.length);
+  for (const { name, exactCase, isPerson } of sortedNames) {
+    const isAscii = ASCII_RE.test(name);
+    const pattern = isAscii ? `(?<![A-Za-z0-9])${escapeRegExp(name)}(?![A-Za-z0-9])` : escapeRegExp(name);
+    const re = new RegExp(pattern, exactCase ? "g" : "gi");
+    const m = re.exec(text);
+    if (!m) continue;
+    let end = m.index + m[0].length;
+    if (isPerson) {
+      const tail = text.slice(end, end + 20);
+      const titleMatch = PERSON_TITLE_SUFFIX_RE.exec(tail);
+      if (titleMatch) end += titleMatch[0].length;
+    }
+    hits.push({ start: m.index, end, key: name.toLowerCase(), priority: isPerson ? 5 : 3 });
+  }
+
+  // 긴 구간/높은 우선순위 먼저 겹침 제거 후 본문 순서대로 동일 키 1회만 선택
+  hits.sort((a, b) => b.priority - a.priority || (b.end - b.start) - (a.end - a.start) || a.start - b.start);
+  const nonOverlapping: Candidate[] = [];
+  for (const h of hits) {
+    if (exclude.some((x) => overlaps(x, h))) continue;
+    if (nonOverlapping.some((x) => overlaps(x, h))) continue;
+    nonOverlapping.push(h);
+  }
+  nonOverlapping.sort((a, b) => a.start - b.start);
+
+  const seenKeys = new Set<string>();
+  const picked: HlRange[] = [];
+  for (const h of nonOverlapping) {
+    if (picked.length >= max) break;
+    if (seenKeys.has(h.key)) continue;
+    seenKeys.add(h.key);
+    picked.push({ start: h.start, end: h.end });
+  }
+  return picked;
+}
+
+/**
+ * 원본 쉽게 읽기 전용 세그먼트 분할기:
+ * 1) 용어 툴팁(점선 밑줄)
+ * 2) enableMark=true(02 핵심 내용 · 04 실전 적용)일 때 결론 1문장/핵심구절만 웜 앰버 <mark>
+ * 3) 인물·직함, @계정명, 따옴표 핵심 개념어, AI 기업·모델·서비스명, 핵심 수치 <strong> (동일 단어 1회만)
+ */
+export function easyOriginalSegments(
+  raw: string,
+  terms: Term[],
+  entities: Entity[] = [],
+  options: { enableMark?: boolean } = {},
+): EasySegment[] {
+  if (!raw) return [];
+  const { text, ranges: explicitMarks } = parseHighlightMarks(raw);
+  const termSegs = splitByTerms(text, terms);
+
+  const termRanges: HlRange[] = [];
+  let pos = 0;
+  for (const seg of termSegs) {
+    if (seg.term) termRanges.push({ start: pos, end: pos + seg.text.length });
+    pos += seg.text.length;
+  }
+
+  const hlRanges: HlRange[] = [];
+  if (options.enableMark) {
+    const picked = explicitMarks[0] ?? selectConclusionHighlight(text);
+    if (picked) hlRanges.push(picked);
+  }
+
+  const boldRanges = easyBoldRanges(text, [...termRanges, ...hlRanges], entities);
+
+  type Span = HlRange & { kind: "hl" | "bold" };
+  const spans: Span[] = [
+    ...hlRanges.map((r): Span => ({ ...r, kind: "hl" })),
+    ...boldRanges.map((r): Span => ({ ...r, kind: "bold" })),
+  ].sort((a, b) => a.start - b.start);
+
+  const out: EasySegment[] = [];
+  pos = 0;
+  for (const seg of termSegs) {
+    const segStart = pos;
+    const segEnd = pos + seg.text.length;
+    pos = segEnd;
+    if (seg.term || spans.length === 0) {
+      out.push(seg);
+      continue;
+    }
+    let cursor = segStart;
+    for (const r of spans) {
+      const s = Math.max(r.start, segStart);
+      const e = Math.min(r.end, segEnd);
+      if (s >= e) continue;
+      if (s > cursor) out.push({ text: text.slice(cursor, s) });
+      out.push(r.kind === "hl" ? { text: text.slice(s, e), hl: true } : { text: text.slice(s, e), bold: true });
       cursor = e;
     }
     if (cursor < segEnd) out.push({ text: text.slice(cursor, segEnd) });

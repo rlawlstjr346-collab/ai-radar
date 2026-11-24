@@ -9,6 +9,7 @@ from adapters.anthropic_sitemap import AnthropicSitemapAdapter
 from adapters.base import BaseAdapter, FeedGuard
 from adapters.bluesky import BlueskyAdapter
 from adapters.civitai import CivitaiAdapter
+from adapters.cn_tech import CNTechAdapter
 from adapters.github_trending import GitHubHotAIAdapter
 from adapters.hacker_news import HackerNewsAdapter
 from adapters.huggingface import HFDailyPapersAdapter, HFTrendingModelsAdapter, HFTrendingSpacesAdapter
@@ -28,6 +29,7 @@ REGISTRY: tuple[type[BaseAdapter], ...] = (
     AnthropicSitemapAdapter,
     GitHubHotAIAdapter,
     XOEmbedAdapter,
+    CNTechAdapter,
     RSSAdapter,
 )
 

@@ -67,11 +67,21 @@ def hangul_ratio(text: str) -> float:
     return len(hangul_chars) / len(lang_chars)
 
 
+def contains_untranslated_cjk(text: str) -> bool:
+    """한국어 피드에 미번역 중국어 한자 또는 일본어 가나가 남아 있는지 판별."""
+    if not text:
+        return False
+    cleaned = URL_RE.sub("", text)
+    return bool(CJK_HAN_RE.search(cleaned) or JP_KANA_RE.search(cleaned))
+
+
 def needs_translation(text: str, threshold: float = HANGUL_THRESHOLD) -> bool:
-    """한글 비율이 threshold(기본 20%) 미만인 외국어 텍스트인지 판별."""
+    """미번역 중국어·일본어 문자가 있거나 한글 비율이 threshold(기본 20%) 미만인 외국어 텍스트인지 판별."""
     if not text or not text.strip():
         return False
     cleaned = URL_RE.sub("", text).strip()
+    if contains_untranslated_cjk(cleaned):
+        return True
     if len(LANG_CHAR_RE.findall(cleaned)) < 4:
         return False
     return hangul_ratio(cleaned) < threshold
@@ -126,7 +136,7 @@ _BAD_CACHE_SUFFIX_RE = re.compile(
 
 
 def _is_bad_cached_title(title_ko: str, original_title: str = "") -> bool:
-    if not title_ko or needs_translation(title_ko) or _JP_KANA_RE.search(title_ko):
+    if not title_ko or needs_translation(title_ko) or contains_untranslated_cjk(title_ko):
         return True
     if _BAD_CACHE_SUFFIX_RE.search(title_ko) and (not original_title or needs_translation(original_title)):
         return True
@@ -318,23 +328,36 @@ class ArticleTranslator:
         self._delay_sec = delay_sec
         self.enabled = enabled
         self._consecutive_errors = 0
+        self._gtx_blocked = False
         self._google_blocked = False
-        self._google_translator: Any = None
+        self._mymemory_blocked = False
+        self._gemini_blocked = False
+        self._google_translators: dict[str, Any] = {}
         self._mymemory_translators: dict[str, Any] = {}
         self.stats: dict[str, int] = {"cache_hits": 0, "translated": 0, "skipped_ko": 0, "fallbacks": 0}
 
-    def _get_google_translator(self) -> Any:
-        if self._google_translator is None:
+    @staticmethod
+    def _detect_google_source(text: str) -> str:
+        if JP_KANA_RE.search(text):
+            return "ja"
+        if CJK_HAN_RE.search(text):
+            return "zh-CN"
+        return "auto"
+
+    def _get_google_translator(self, src_lang: str = "auto") -> Any:
+        tr = self._google_translators.get(src_lang)
+        if tr is None:
             from deep_translator import GoogleTranslator
 
-            self._google_translator = GoogleTranslator(source="auto", target="ko")
-        return self._google_translator
+            tr = GoogleTranslator(source=src_lang, target="ko")
+            self._google_translators[src_lang] = tr
+        return tr
 
     @staticmethod
     def _detect_mymemory_source(text: str) -> str:
         if JP_KANA_RE.search(text):
             return "ja-JP"
-        if CJK_HAN_RE.search(text) and not HANGUL_RE.search(text):
+        if CJK_HAN_RE.search(text):
             return "zh-CN"
         return "en-US"
 
@@ -350,7 +373,7 @@ class ArticleTranslator:
     def _translate_mymemory(self, text: str) -> Optional[str]:
         if not text or not text.strip():
             return ""
-        if self._consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
+        if self._mymemory_blocked or self._consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
             return None
         try:
             src_lang = self._detect_mymemory_source(text)
@@ -363,6 +386,7 @@ class ArticleTranslator:
                 if res:
                     s = str(res).strip()
                     if "MYMEMORY WARNING" in s.upper():
+                        self._mymemory_blocked = True
                         raise RuntimeError(s)
                     out_parts.append(s)
             joined = " ".join(out_parts).strip()
@@ -371,40 +395,54 @@ class ArticleTranslator:
                 return joined
             return None
         except Exception as exc:
+            msg = str(exc).lower()
+            if "too many requests" in msg or "429" in msg:
+                self._mymemory_blocked = True
             self._consecutive_errors += 1
             log.warning("MyMemoryTranslator failed (%d/%d): %s", self._consecutive_errors, MAX_CONSECUTIVE_ERRORS, exc)
             return None
 
-    def _translate_google_gtx(self, text: str) -> Optional[str]:
-        """무료 공개 Google Translate GTX JSON 엔드포인트 (deep-translator 보다 안정적이고 429 내성이 높음)."""
-        if not text or not text.strip():
-            return ""
+    def _translate_google_gtx(self, text: str, *, source_lang: Optional[str] = None) -> Optional[str]:
+        """무료 공개 Google Translate GTX JSON 엔드포인트 (명시적 zh-CN/ja 감지 + 재시도 + 429 안전 폴백)."""
+        if not text or not text.strip() or self._gtx_blocked:
+            return None if self._gtx_blocked else ""
+        sl = source_lang or self._detect_google_source(text)
         try:
             out_parts: list[str] = []
             for chunk in _split_chunks(text, 1800):
-                if self._delay_sec > 0:
-                    time.sleep(min(self._delay_sec, 0.22))
-                resp = httpx.get(
-                    "https://translate.googleapis.com/translate_a/single",
-                    params={
-                        "client": "gtx",
-                        "sl": "auto",
-                        "tl": "ko",
-                        "dt": "t",
-                        "q": chunk,
-                    },
-                    headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"},
-                    timeout=10.0,
-                )
-                if resp.status_code == 429:
-                    self._google_blocked = True
-                    return None
-                resp.raise_for_status()
-                data = resp.json()
-                if isinstance(data, list) and data and isinstance(data[0], list):
-                    seg_txt = "".join(str(seg[0]) for seg in data[0] if isinstance(seg, list) and seg and seg[0])
-                    if seg_txt.strip():
-                        out_parts.append(seg_txt.strip())
+                seg_result: Optional[str] = None
+                for attempt in range(2):
+                    if self._delay_sec > 0:
+                        time.sleep(min(self._delay_sec, 0.22) * (1 + attempt))
+                    try:
+                        resp = httpx.get(
+                            "https://translate.googleapis.com/translate_a/single",
+                            params={
+                                "client": "gtx",
+                                "sl": sl,
+                                "tl": "ko",
+                                "dt": "t",
+                                "q": chunk,
+                            },
+                            headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"},
+                            timeout=10.0,
+                        )
+                        if resp.status_code == 429:
+                            self._gtx_blocked = True
+                            return None
+                        resp.raise_for_status()
+                        data = resp.json()
+                        if isinstance(data, list) and data and isinstance(data[0], list):
+                            seg_txt = "".join(str(seg[0]) for seg in data[0] if isinstance(seg, list) and seg and seg[0])
+                            if seg_txt.strip():
+                                seg_result = seg_txt.strip()
+                                break
+                    except Exception:
+                        if attempt == 0:
+                            continue
+                        raise
+                if seg_result:
+                    out_parts.append(seg_result)
             joined = " ".join(out_parts).strip()
             if joined:
                 self._consecutive_errors = 0
@@ -414,39 +452,106 @@ class ArticleTranslator:
             log.warning("Google GTX translation failed, trying fallback: %s", exc)
             return None
 
-    def _translate_google(self, text: str) -> Optional[str]:
+    def _translate_google_clients5(self, text: str, *, source_lang: Optional[str] = None) -> Optional[str]:
+        """보조 무료 Google Translate 공개 엔드포인트 (clients5)."""
         if not text or not text.strip():
             return ""
-        if self._google_blocked:
-            return self._translate_mymemory(text)
-        if self._consecutive_errors >= MAX_CONSECUTIVE_ERRORS:
-            return None
-        gtx = self._translate_google_gtx(text)
-        if gtx:
-            return gtx
+        sl = source_lang or self._detect_google_source(text)
         try:
-            tr = self._get_google_translator()
             out_parts: list[str] = []
-            for chunk in _split_chunks(text, GOOGLE_CHUNK_LIMIT):
+            for chunk in _split_chunks(text, 1500):
                 if self._delay_sec > 0:
-                    time.sleep(self._delay_sec)
-                res = tr.translate(chunk)
-                if res:
-                    out_parts.append(str(res).strip())
+                    time.sleep(min(self._delay_sec, 0.25))
+                resp = httpx.get(
+                    "https://clients5.google.com/translate_a/t",
+                    params={"client": "dict-chrome-ex", "sl": sl, "tl": "ko", "q": chunk},
+                    headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"},
+                    timeout=8.0,
+                )
+                if resp.status_code == 429:
+                    return None
+                resp.raise_for_status()
+                data = resp.json()
+                if isinstance(data, list) and data:
+                    first = data[0]
+                    if isinstance(first, str) and first.strip():
+                        out_parts.append(first.strip())
+                    elif isinstance(first, list) and first and isinstance(first[0], str):
+                        out_parts.append(first[0].strip())
             joined = " ".join(out_parts).strip()
-            if joined:
-                self._consecutive_errors = 0
-                return joined
+            return joined or None
+        except Exception:
             return None
-        except Exception as exc:
-            msg = str(exc).lower()
-            if "too many requests" in msg or "429" in msg:
-                self._google_blocked = True
-                log.warning("GoogleTranslator rate-limited (429), switching to MyMemoryTranslator fallback")
-                return self._translate_mymemory(text)
-            self._consecutive_errors += 1
-            log.warning("GoogleTranslator failed (%d/%d): %s", self._consecutive_errors, MAX_CONSECUTIVE_ERRORS, exc)
-            return self._translate_mymemory(text)
+
+    def _translate_google(self, text: str, *, source_lang: Optional[str] = None) -> Optional[str]:
+        if not text or not text.strip():
+            return ""
+        sl = source_lang or self._detect_google_source(text)
+        # 1순위: 가장 안정적인 Google GTX JSON 엔드포인트 (deep-translator 의 429 와 독립적으로 유지!)
+        gtx = self._translate_google_gtx(text, source_lang=sl)
+        if gtx:
+            # 번역 결과가 거의 한글이고 한자가 1~2자 우연히 남았을 때만 1회 재시도 (불필요한 deep-translator 폭격 방지)
+            if not contains_untranslated_cjk(gtx):
+                return gtx
+            retry_cjk = self._translate_google_gtx(gtx, source_lang=self._detect_google_source(gtx))
+            if retry_cjk and not contains_untranslated_cjk(retry_cjk):
+                return retry_cjk
+            return retry_cjk or gtx
+
+        # 2순위: clients5 무료 엔드포인트
+        c5 = self._translate_google_clients5(text, source_lang=sl)
+        if c5:
+            return c5
+
+        # 3순위: deep-translator GoogleTranslator
+        if not self._google_blocked and self._consecutive_errors < MAX_CONSECUTIVE_ERRORS:
+            try:
+                tr = self._get_google_translator(sl)
+                out_parts: list[str] = []
+                for chunk in _split_chunks(text, GOOGLE_CHUNK_LIMIT):
+                    if self._delay_sec > 0:
+                        time.sleep(self._delay_sec)
+                    res = tr.translate(chunk)
+                    if res:
+                        out_parts.append(str(res).strip())
+                joined = " ".join(out_parts).strip()
+                if joined:
+                    self._consecutive_errors = 0
+                    return joined
+            except Exception as exc:
+                msg = str(exc).lower()
+                if "too many requests" in msg or "429" in msg:
+                    self._google_blocked = True
+                    log.warning("GoogleTranslator rate-limited (429), disabling deep-translator Google fallback")
+                else:
+                    self._consecutive_errors += 1
+                    log.warning("GoogleTranslator failed (%d/%d): %s", self._consecutive_errors, MAX_CONSECUTIVE_ERRORS, exc)
+
+        # 4순위: MyMemoryTranslator
+        return self._translate_mymemory(text)
+
+    def force_translate_korean(self, text: str) -> Optional[str]:
+        """한국어 검증 게이트 재시도용: 한자·가나·미번역 영문이 남았을 때 명시 언어 지정으로 즉시 재번역."""
+        if not text or not text.strip() or not self.enabled:
+            return None
+        if self._translate_text_fn is not None:
+            try:
+                res = (self._translate_text_fn(text) or "").strip()
+                return res or None
+            except Exception:
+                return None
+        sl = self._detect_google_source(text)
+        out = self._translate_google_gtx(text, source_lang=sl)
+        if out and not contains_untranslated_cjk(out) and not needs_translation(out):
+            return out
+        c5 = self._translate_google_clients5(text, source_lang=sl)
+        if c5 and not contains_untranslated_cjk(c5) and not needs_translation(c5):
+            return c5
+        if not self._mymemory_blocked:
+            mm = self._translate_mymemory(text)
+            if mm and not contains_untranslated_cjk(mm) and not needs_translation(mm):
+                return mm
+        return out or c5
 
     def _translate_with_anthropic(self, title: str, body: str) -> Optional[dict[str, str]]:
         if not self.anthropic_api_key:
@@ -481,14 +586,15 @@ class ArticleTranslator:
         return None
 
     def _translate_with_gemini(self, title: str, body: str) -> Optional[dict[str, str]]:
-        if not self.gemini_api_key:
+        if not self.gemini_api_key or self._gemini_blocked:
             return None
         try:
             model = os.getenv("TRANSLATOR_GEMINI_MODEL", "gemini-2.5-flash")
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
             prompt = (
                 "다음 외국어 AI 뉴스 제목과 본문 발췌를 입문자가 읽기 쉬운 자연스러운 한국어로 번역·정리해 주세요.\n"
-                "고유명사(OpenAI, Claude, Gemini, vLLM 등)는 유지하고, 과장 표현(혁신적, 획기적, 충격 등)은 쓰지 마세요.\n"
+                "중국어 한자나 일본어 가나는 절대 남기지 말고 100% 자연스러운 한글로 바꾸세요.\n"
+                "고유명사(OpenAI, Claude, Gemini, Qwen, DeepSeek, Kimi, GLM, vLLM 등)는 유지하고, 과장 표현(혁신적, 획기적, 충격 등)은 쓰지 마세요.\n"
                 '반드시 JSON 객체만 출력하세요: {"title_ko": "...", "body_ko": "...", "why_ko": "..."}\n\n'
                 f"제목: {title}\n"
                 f"본문: {body[:MAX_TRANSLATE_BODY_CHARS]}"
@@ -502,6 +608,10 @@ class ArticleTranslator:
                 },
                 timeout=20.0,
             )
+            if resp.status_code == 429:
+                self._gemini_blocked = True
+                log.warning("Gemini API rate-limited (429), falling back to keyless translator")
+                return None
             resp.raise_for_status()
             data = resp.json()
             cands = data.get("candidates") or []
@@ -517,6 +627,90 @@ class ArticleTranslator:
         except Exception as exc:
             log.warning("Gemini translation failed, falling back: %s", exc)
         return None
+
+    def translate_batch_with_gemini(self, articles: list[dict[str, str]], *, batch_size: int = 8) -> int:
+        """무료 티어 GEMINI_API_KEY 가 있을 때 여러 기사를 배치 호출해 쿼터를 절약하고 URL 캐시에 채운다."""
+        if not self.enabled or not self.gemini_api_key or self._gemini_blocked or self._translate_text_fn is not None:
+            return 0
+        pending = [
+            a for a in articles
+            if a.get("url") and a.get("title") and (self.cache is None or self.cache.get(a["url"]) is None)
+        ]
+        if not pending:
+            return 0
+
+        model = os.getenv("TRANSLATOR_GEMINI_MODEL", "gemini-2.5-flash")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        saved = 0
+        for i in range(0, len(pending), batch_size):
+            if self._gemini_blocked:
+                break
+            chunk = pending[i : i + batch_size]
+            compact_in = [
+                {
+                    "idx": idx,
+                    "title": re.sub(r"\s+", " ", a["title"]).strip()[:200],
+                    "body": clean_source_boilerplate(a.get("body") or "")[:420],
+                }
+                for idx, a in enumerate(chunk)
+            ]
+            prompt = (
+                "다음 외국어(영어·중국어·일본어) AI 기사 배열을 한국어 뉴스룸 스타일로 자연스럽게 번역·요약해 주세요.\n"
+                "규칙:\n"
+                "1) 한자(중국어)나 일본어 가나는 1글자도 남기지 말고 100% 한글로 번역하세요.\n"
+                "2) 고유 AI 모델·기업명(OpenAI, Anthropic, Claude, Gemini, Qwen, DeepSeek, Kimi, GLM, MCP 등)은 자연스럽게 유지하세요.\n"
+                "3) 과장 표현(혁신적, 획기적, 충격, 역대급)은 쓰지 마세요.\n"
+                '반드시 JSON 객체만 출력하세요: {"items": [{"idx": 0, "title_ko": "...", "body_ko": "...", "why_ko": "..."}]}\n\n'
+                f"입력: {json.dumps(compact_in, ensure_ascii=False)}"
+            )
+            try:
+                resp = httpx.post(
+                    url,
+                    params={"key": self.gemini_api_key},
+                    json={
+                        "contents": [{"parts": [{"text": prompt}]}],
+                        "generationConfig": {"responseMimeType": "application/json", "temperature": 0.2},
+                    },
+                    timeout=25.0,
+                )
+                if resp.status_code == 429:
+                    self._gemini_blocked = True
+                    log.warning("Gemini batch rate-limited (429), switching remaining items to keyless translator")
+                    break
+                resp.raise_for_status()
+                data = resp.json()
+                cands = data.get("candidates") or []
+                parts = ((cands[0].get("content") or {}).get("parts") or []) if cands else []
+                parsed = _extract_json_object("".join(str(p.get("text") or "") for p in parts))
+                rows = parsed.get("items") if isinstance(parsed, dict) and isinstance(parsed.get("items"), list) else []
+                for row in rows:
+                    if not isinstance(row, dict):
+                        continue
+                    idx = row.get("idx")
+                    if not isinstance(idx, int) or idx < 0 or idx >= len(chunk):
+                        continue
+                    title_ko = str(row.get("title_ko") or "").strip()
+                    body_ko = str(row.get("body_ko") or "").strip()
+                    why_ko = str(row.get("why_ko") or "").strip()
+                    if not title_ko or needs_translation(title_ko) or contains_untranslated_cjk(title_ko):
+                        continue
+                    if body_ko and (needs_translation(body_ko) or contains_untranslated_cjk(body_ko)):
+                        body_ko = ""
+                    src = chunk[idx]
+                    if self.cache is not None:
+                        self.cache.put(
+                            src["url"],
+                            original_title=re.sub(r"\s+", " ", src["title"]).strip(),
+                            title_ko=title_ko,
+                            body_ko=body_ko,
+                            provider="gemini_batch",
+                            why_ko=why_ko or None,
+                        )
+                    saved += 1
+            except Exception as exc:
+                log.warning("Gemini batch translation failed, continuing with keyless fallback: %s", exc)
+                break
+        return saved
 
     def translate_text(self, text: str) -> Optional[str]:
         """단일 외국어 텍스트를 한국어로 번역 (실패 시 None)."""

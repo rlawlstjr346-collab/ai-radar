@@ -747,26 +747,40 @@ values
  '구경은 무료예요. 일부 기능은 회원가입이 필요해요. AI 레이더는 모델스코프의 학습 도구 ms-swift 새 버전을 받아 와요.',
  'active', 'cn'),
 
-('qbitai', 'QbitAI (量子位)', 'industry',
+('qbitai', 'QbitAI · 양자위', 'industry',
  '중국의 대표 AI 전문 매체 량쯔웨이(量子位)예요.',
  '중국 AI 기업·연구 소식을 가장 빠르게 보도해요. AI 레이더가 중국어를 한국어로 풀어 드려요.',
  'https://www.qbitai.com', '#1E40AF',
  '무료로 읽을 수 있어요.',
  'active', 'cn'),
 
-('jiqizhixin', 'Jiqizhixin (机器之心)', 'research',
+('jiqizhixin', 'Synced · 기기지심', 'research',
  '중국의 AI 연구·산업 전문 매체 지치즈신(机器之心)이에요.',
  '중국어권 논문 해설과 연구자 인터뷰가 많아서 중국 AI 연구 흐름을 보기 좋아요.',
  'https://www.jiqizhixin.com', '#0EA5E9',
  '무료로 읽을 수 있어요.',
- 'directory_only', 'cn'),
+ 'active', 'cn'),
 
 ('36kr-ai', '36Kr AI', 'industry',
  '중국 대표 스타트업·테크 매체 36Kr의 AI 관련 기사예요.',
  '중국 AI 스타트업 투자·출시 소식을 볼 수 있어요.',
  'https://36kr.com', '#2B6DE5',
  '무료로 읽을 수 있어요.',
- 'directory_only', 'cn'),
+ 'active', 'cn'),
+
+('v2ex', 'V2EX · 인디빌더', 'social',
+ '중국 개발자·1인 빌더들이 직접 만든 신규 AI 웹·앱·확장프로그램과 오픈소스를 가장 먼저 올리는 런칭 포럼이에요.',
+ '중국 인디빌더들이 실제로 출시한 AI 도구와 GitHub 데모, 현업 개발자 피드백을 실시간으로 포착할 수 있어요.',
+ 'https://www.v2ex.com/go/create', '#334155',
+ '무료로 읽을 수 있어요. AI·신규 런칭 글만 엄선해 한국어로 풀어 와요.',
+ 'active', 'cn'),
+
+('juejin', 'Juejin · 굴진', 'dev',
+ '중국 최대 개발자 기술 커뮤니티 쥐진(掘金)의 AI·LLM 실전 아티클 채널이에요.',
+ 'Qwen·DeepSeek·Claude Code·MCP 로컬 연동과 에이전트 실측 벤치마크 같은 중국 현업 엔지니어의 실전 노하우가 매일 올라와요.',
+ 'https://juejin.cn/ai', '#1E80FF',
+ '무료로 읽을 수 있어요. AI·에이전트·오픈소스 글만 골라 한국어로 정리해 드려요.',
+ 'active', 'cn'),
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- [EU] 유럽·캐나다·중동 신규 13곳 (기존 ElevenLabs 포함 14곳)
@@ -950,10 +964,22 @@ values
    'https://sakana.ai/feed.xml',
    'rss', 'research', true),
 
-  -- 중국어권
+  -- 중국어권 (5대 핵심 AI 속보 매체 + 1인 개발자 런칭 포럼 + 오픈 모델 릴리즈)
   ('qbitai', 'QbitAI',
    'https://www.qbitai.com/feed',
    'rss', 'industry', true),
+  ('jiqizhixin', 'Synced · 기기지심',
+   'https://www.jiqizhixin.com/rss',
+   'rss', 'research', true),
+  ('36kr-ai', '36Kr AI',
+   'https://gateway.36kr.com/api/mis/nav/ifm/subNav/flow',
+   'api', 'industry', true),
+  ('v2ex', 'V2EX · 인디빌더',
+   'https://www.v2ex.com/api/topics/show.json?node_name=create',
+   'api', 'social', true),
+  ('juejin', 'Juejin · 굴진',
+   'https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed',
+   'api', 'dev', true),
   ('qwen', 'Qwen Blog',
    'https://qwenlm.github.io/blog/index.xml',
    'rss', 'llm_chat', true),
