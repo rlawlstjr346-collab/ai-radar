@@ -1,201 +1,73 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T02:43:16.872187Z",
+  "generated_at": "2026-11-25T11:48:47.895699Z",
   "item_count": 100,
   "signals": [
     {
-      "id": "live-f0ce8d9baee6",
-      "title_ko": "36 Krypton New Trend Nvidia가 활동하고 Huang Renxun이 낙관적 기반으로 추적이 핫스팟으로 폭발했습니다.",
-      "original_title": "36氪新风向丨英伟达押注、黄仁勋看好，半导体赛道又爆出大热点",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4084560902728326",
-      "published_at": "2026-11-25T02:31:38.677000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.8,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==AI 컴퓨팅 파워 인프라에 투자하는== 것이 현재의 합의이다 AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI — 36 K 기반 성능·효율 지표",
-        "actionable_idea": "36Kr AI의 '36Kr AI — 36 K 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "36Kr AI"
-      ]
-    },
-    {
-      "id": "live-5124cda16097",
-      "title_ko": "갑자기 리만 가설을 증명한 후, Anthropic의 미공개 AI 모델이 너무 강력해서 무섭습니다",
-      "original_title": "突发，证明黎曼猜想之后，Anthropic未发布AI模型强到令人恐惧",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4084524180482436",
-      "published_at": "2026-11-25T02:21:53.802000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.77,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==OpenAI와 Anthropic의 내부 강력한 AI== 모델은 통제 불능 상태이며 안전하게 출시하기 어렵습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI 포착 — OpenAI 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "OpenAI의 '36Kr AI 포착 — OpenAI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-649222472f42",
-      "title_ko": "Show GN: Tern - Ctrl+ㅊ 를 Ctrl-C 로 처리해주는 한글 특화 터미널 에뮬레이터 앱",
-      "original_title": "Show GN: Tern - Ctrl+ㅊ 를 Ctrl-C 로 처리해주는 한글 특화 터미널 에뮬레이터 앱",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37811",
-      "published_at": "2026-11-25T02:20:17Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.53,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==컴퓨터로 작업하다가 밥 먹으러 나와서== 폰에서 SSH로 LLM들이 잘 하고 있나 보고 다음 프롬프트를 넣기 위해 들어가는 경우가 많은데요, 안드로이드의 터미널 앱들은 대부분 한글 입력이 아예 불가능하고, 최근 LLM 덕에 지원하는 앱이 늘긴 했지만… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "GeekNews의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GeekNews"
-      ]
-    },
-    {
-      "id": "live-acdb580f176a",
-      "title_ko": "실리콘 기반 노동자들이 전국 5A 명승지를 조용히 점유하고 있습니다",
-      "original_title": "硅基打工人，悄悄占领全国5A景区",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4084532073113993",
-      "published_at": "2026-11-25T02:21:37.454000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.77,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==36K==r AI가 전한 '실리콘 기반 노동자들이 전국 5A 명승지를 조용히 점유하고 있습니다' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI — 36K 기반 성능·효율 지표",
-        "actionable_idea": "36Kr AI의 '36Kr AI — 36K 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "36Kr AI"
-      ]
-    },
-    {
-      "id": "live-2d3c54d30ba6",
-      "title_ko": "Claude 코드 모범 사례 재검토: Anthropic 내의 장기 및 병렬 에이전트 워크플로",
-      "original_title": "重新思考 Claude Code 最佳实践：Anthropic 内部的长周期与并行 Agent 工作流",
-      "platform_id": "juejin",
+      "id": "live-a2153f1cdda4",
+      "title_ko": "리더보드는 귀하의 평가가 아닙니다",
+      "original_title": "リーダーボードはあなたの評価ではない",
+      "platform_id": "qiita",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7711707345664327723",
-      "published_at": "2026-11-25T02:05:25Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.24,
+      "canonical_url": "https://qiita.com/nrouter_ai1991/items/7266e6b555f917c3df91",
+      "published_at": "2026-11-25T11:47:02Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.59,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==Anthropic 팀인 Lydia Hallie의 연설을== 종합하면 분해 모델이 더욱 강력해진 후 Claude Code는 수동 단계별 확인에서 장기 주기, 다중 세션 병렬 및 자동화된 검증 워크플로우의 5가지 책임으로 전환했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==벤치마크 기반 라우터는 지속적으로 업데이트되는== 공급업체의 리더보드를 기반으로 각 호출에 대해 모델을 선택합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
       "planning_meta": {
-        "signal_type": "new_product",
+        "signal_type": "dev_workflow",
         "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭",
-        "actionable_idea": "Claude Code의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Claude Code",
-        "Claude",
-        "Anthropic"
+        "Qiita"
       ]
     },
     {
-      "id": "live-7ba7e0d22d7a",
-      "title_ko": "AI를 사용하면 하룻밤에 3개의 프로젝트를 시작할 수 있는데 왜 하나를 끝낼 수 없나요?",
-      "original_title": "AI 让我一晚能开三个项目，为什么还是做不完一个？",
-      "platform_id": "juejin",
+      "id": "live-b9d1a4a4b14d",
+      "title_ko": "모든 프레임워크를 위한 하나의 기본 URL: 단일 게이트웨이 뒤에 있는 LangChain, CrewAI, AutoGen",
+      "original_title": "One Base URL for Every Framework: LangChain, CrewAI, AutoGen Behind a Single Gateway",
+      "platform_id": "qiita",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7711653953067368457",
-      "published_at": "2026-11-25T02:00:33Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.23,
+      "canonical_url": "https://qiita.com/nrouter_ai1991/items/4ee1b4f66e7b382dec9b",
+      "published_at": "2026-11-25T11:19:41Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.51,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==세 명의 에이전트가 동시에 첫== 번째 버전을 전달하는 시나리오에서 우리는 작업 병렬성과 프로젝트 병렬성을 구분합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==AI 프레임워크는 조정하는 내용이 다르지만== 구성 가능한 기본 URL이 있는 OpenAI 호환 API라는 클라이언트 형태를 공유합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
       "planning_meta": {
-        "signal_type": "model_release",
+        "signal_type": "dev_workflow",
         "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "OpenAI의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Juejin · 굴진"
+        "OpenAI"
       ]
     },
     {
-      "id": "live-d617f1f83d1b",
-      "title_ko": "음악 서비스의 TIDAL, AI 생성 악곡을 삭제·접수 정지에 최근 90일의 전달 악곡의 43%가 AI 생성",
-      "original_title": "音楽サービスのTIDAL、AI生成楽曲を削除・受付停止へ 直近90日の配信楽曲の43％がAI生成",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://itmedia.co.jp/news/article/2611/25/2000003433",
-      "published_at": "2026-11-25T01:57:02Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.94,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==음악 스트리밍 서비스인 TIDAL은 완전== AI 생성 악곡의 접수를 중지하고 전달된 악곡도 삭제한다고 발표했다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "ITmedia AI+ — 43% 기반 성능·효율 지표",
-        "actionable_idea": "ITmedia AI+의 'ITmedia AI+ — 43% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "ITmedia AI+"
-      ]
-    },
-    {
-      "id": "live-9dad22592414",
-      "title_ko": "Octop 아키텍처 분석(추가 장): 두 가지 유형의 다중 에이전트 협업, Octop 그룹 채팅방 및 dsh 작업 주문 승인",
-      "original_title": "Octop 架构解析(外番篇)：两种多 Agent 协作，Octop 群聊房间 vs dsh 工单授权",
+      "id": "live-776174438bc6",
+      "title_ko": "에이전트 시대에는 당신의 정체성이 당신에 의해 정의됩니다",
+      "original_title": "Agent 时代，你的身份由你来定义",
       "platform_id": "juejin",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7711707345664180267",
-      "published_at": "2026-11-25T01:57:44Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "canonical_url": "https://juejin.cn/post/7711983826453168154",
+      "published_at": "2026-11-25T11:02:04Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
       "importance_score": 27.22,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==다중 에이전트 시스템은 협업을 가시화할== 뿐만 아니라 인증 및 실행을 추적 가능하게 만듭니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==Juejin · 굴진 개발 생태계에서== '에이전트 시대에는 당신의 정체성이 당신에 의해 정의됩니다' 구현 방식과 실전 적용 사례가 공개됐어요. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
       "planning_meta": {
         "signal_type": "dev_workflow",
         "product_domain": "coding-agent-devtool",
@@ -207,20 +79,274 @@
       ]
     },
     {
-      "id": "live-ddfcceeb8deb",
-      "title_ko": "Jen-Hsun Huang이 방금 돌아왔고 AI 신용 알람이 격렬하게 울리고 있습니다",
-      "original_title": "黄仁勋刚回归，AI信贷警报狂响",
+      "id": "live-8aab94ea2291",
+      "title_ko": "Continue의 Obsidian 협력을 Local REST API로 마이그레이션하여 검색 속도와 API 비용을 눈에 띄는 향상시킵니다",
+      "original_title": "Continue の Obsidian 連携をLocal REST API に移行して検索速度とAPIコストを劇的に改善する",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/pve_echo/articles/20261124_obsidian-mcp-local-rest-api",
+      "published_at": "2026-11-25T10:58:32Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.45,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==## 결론 (해결책) AI 편집기== (Continue 등)에서 Obsidian 노트를 검색하고 참조 할 때는 일반적인 @modelcontextprotocol/server-filesystem 대신 Obsidian 커뮤니티 플러그인 \"Local REST… 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-35af66458665",
+      "title_ko": "재부팅 전에 발견된 일일 편차와 수동 재부팅을 없애는 디자인",
+      "original_title": "再起動の前に見つかった1日のずれと、手動の再起動をなくす設計",
+      "platform_id": "qiita",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qiita.com/KingHAL0/items/bd719ecca2545f025336",
+      "published_at": "2026-11-25T10:52:18Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.43,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==이 기사는 AI (Claude)가 쓰고== ... 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude"
+      ]
+    },
+    {
+      "id": "live-89c8fff51f51",
+      "title_ko": "프로젝트를 더 좋게 보이게 만드는 방법은 무엇입니까? UI Lab을 사용하여 디자인 원칙을 연습하고 인터페이스에 AI 풍미를 부여하세요",
+      "original_title": "怎么让你的项目更好看？用 UI Lab 练设计原则，给界面去 AI 味",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7711955915188027392",
+      "published_at": "2026-11-25T10:44:02Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.17,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==UI Lab에는 색상 일치, 시각적== 계층 구조 및 대화형 효과를 다루는 400개 이상의 실용적인 디자인 사례가 포함되어 있습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Juejin · 굴진"
+      ]
+    },
+    {
+      "id": "live-a4682f035ad9",
+      "title_ko": "ZCode에 자체 API 연결: GLM-5.4를 사용자 지정 공급자로 이동하기 전의 모든 단계",
+      "original_title": "ZCodeに独自APIを接続する：GLM-5.4をカスタムプロバイダで動かすまでの全手順",
+      "platform_id": "qiita",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qiita.com/whitemarshall/items/1a043cc9235ad25e72f8",
+      "published_at": "2026-11-25T10:36:15Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.39,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==ZCode를 넣으면, 최초 기동으로 Z.ai에의== 로그인을 요구해, 공식 플랜을 사용하는 흐름이 됩니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "GLM의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GLM"
+      ]
+    },
+    {
+      "id": "live-d6a7fec25c65",
+      "title_ko": "MBZUAI, LLM이 행동 시간표를 쓰고 29B 확산 모델이 영상으로 옮기는 오픈 월드 모델 PAN 2 공개",
+      "original_title": "MBZUAI, LLM이 행동 시간표를 쓰고 29B 확산 모델이 영상으로 옮기는 오픈 월드 모델 PAN 2 공개",
+      "platform_id": "pytorch-kr",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://discuss.pytorch.kr/t/mbzuai-llm-29b-pan-2/12642",
+      "published_at": "2026-11-25T10:30:05Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.38,
+      "source_count": 1,
+      "benefit_tag": "오픈소스 공개 소식",
+      "highlight_summary": "언어 모델이 시간이 찍힌 행동 계획을 JSON으로 쓰면, ==29B== 확산 모델이 이를 최대 20초, 704x1248 해상도의 영상으로 옮깁니다. 핵심 이득은 ==오픈소스 공개 소식==이에요.",
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "오픈소스 공개 소식",
+        "actionable_idea": "MiniMax의 '오픈소스 공개 소식' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "MiniMax",
+        "vLLM",
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-fb927d8f5070",
+      "title_ko": "[아니마&일러스트리어스XL] [플라이엑스3] 12 in 1, CLAMP 시리즈 웍스 슈퍼 믹스 앤 매치 로라 -아티스트 스타일(LORA)",
+      "original_title": "[Anima & illustriousXL] [flyx3] 12 in 1，CLAMP 系列作品超级混搭Lora -Artist Style (LORA)",
+      "platform_id": "civitai",
+      "author_handle": null,
+      "category": "image_design",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://civitai.com/models/916102",
+      "published_at": "2026-11-25T10:30:00Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 18.43,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==Civitai 커뮤니티 LORA '[Anima &== illustriousXL] [flyx3] 12 in 1, CLAMP 시리즈 작품 슈퍼 매시업 Lora -Artist Style'. 시각 자산 제작 속도와 품질 일관성을 높이는 흐름이라 디자인·마케팅 자동화 파이프라인에 바로 참고할 수 있어요.",
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "image-design-studio",
+        "benchmark_point": "Civitai — 12스타 기반 성능·효율 지표",
+        "actionable_idea": "Civitai의 'Civitai — 12스타 기반 성능·효율 지표' 요소를 참고해, 우리 image-design-studio 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Civitai"
+      ]
+    },
+    {
+      "id": "live-25e4b4e51878",
+      "title_ko": "Show GN: gpgpru - 고2가 만들어본 gpgpu crate",
+      "original_title": "Show GN: gpgpru - 고2가 만들어본 gpgpu crate",
+      "platform_id": "geeknews",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.hada.io/topic?id=37831",
+      "published_at": "2026-11-25T10:28:15Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.37,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==제 노트북은 Intel Iris Xe,== 내장 그래픽 카드밖에 없어 성능이 넉넉지 않지만, 혼자서 로컬 모델이나 AI 연산, 아니면 간단한 GPGPU 코딩을 해보고 싶을 때가 많았습니다. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "GeekNews의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GeekNews"
+      ]
+    },
+    {
+      "id": "live-1dfa4b30710c",
+      "title_ko": "나는 로컬에서 복사할 수 있는 Mac용 회의 녹음 도구를 작성했습니다. 소스를 공개해서 공유하겠습니다",
+      "original_title": "写了个 Mac 上的会议录音工具，能本地转写，开源出来分享一下",
+      "platform_id": "v2ex",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://v2ex.com/t/1259786",
+      "published_at": "2026-11-25T10:24:22Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.02,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==최근에 저는 Moting이라는 Mac용 회의== 녹음 도구를 만들어 모든 사람이 사용해 볼 수 있도록 출시했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "중국 인디빌더 오픈소스·GitHub 공개",
+        "actionable_idea": "Ollama의 '중국 인디빌더 오픈소스·GitHub 공개' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Ollama",
+        "OpenAI"
+      ]
+    },
+    {
+      "id": "live-244d64bef72a",
+      "title_ko": "CUGA를 사용한 인도어 음성 에이전트",
+      "original_title": "An Indic Voice Agent with CUGA",
+      "platform_id": "huggingface",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://huggingface.co/blog/ibm-research/an-indic-voice-agent-with-cuga",
+      "published_at": "2026-11-25T10:22:09Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 29.83,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==Hugging Face가 'CUGA를 사용한 인도어== 음성 에이전트' 연구 결과를 발표해 차세대 모델 성능과 추론 효율의 새 기준을 제시했어요. 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Hugging Face의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-e0a1777e186f",
+      "title_ko": "AI가 만든 도구를 동료에게 어떻게 넘겨주나요?",
+      "original_title": "AI 做的小工具，怎样交给同事用？",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7711983801211322404",
+      "published_at": "2026-11-25T10:07:56Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==Anthropic은 2026년 11월 24일 Claude== 데스크탑 앱으로 설치 베타 버전을 출시했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Juejin · 굴진 포착 — Claude 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Claude의 'Juejin · 굴진 포착 — Claude 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude",
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "live-1393d37b9a2b",
+      "title_ko": "77,000xing 오픈 소스 AI 프로그래밍 아티팩트의 창립자는 중국 네티즌들에 의해 \"데이터 절도\" 혐의로 폭로된 후 그 자리에서…",
+      "original_title": "被中国网友扒出“偷数据”，7.7 万星开源AI编程神器创始人当场破防：今晚就闭源",
       "platform_id": "36kr-ai",
       "author_handle": null,
       "category": "industry",
       "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4084520472963465",
-      "published_at": "2026-11-25T01:52:43.674000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.69,
+      "canonical_url": "https://36kr.com/p/4084819336243589",
+      "published_at": "2026-11-25T10:06:45.303000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.55,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==Jen-Hsun Huang의 NVIDIA 복귀는 AI== 신용 시장에 급격한 변동을 촉발했습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "highlight_summary": "==중국팀의 난폭함을 비난하자마자 자신의 코드가== 돋보기로 데이터 채널에 노출됐고, 테오는 수비를 완벽하게 무너뜨렸다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
       "planning_meta": {
         "signal_type": "industry_shift",
         "product_domain": "ai-business-infra",
@@ -232,55 +358,859 @@
       ]
     },
     {
-      "id": "live-a15f36bd6cd1",
-      "title_ko": "@playwright/mcp를 순수 Rust 파이프라인으로 교체한 후 Rust 브라우저 Moli의 메모리가 90.7% 감소하고 속도가…",
-      "original_title": "把 @playwright/mcp 换成纯 Rust 管道后，Rust 浏览器 Moli 内存暴降 90.7%、速度反超 Chrome 2.76×（附官方 M4 复现）",
+      "id": "live-abc001a2d1be",
+      "title_ko": "AI가 명쾌하고 명확하게 답변했는데 원문을 확인해보니 숫자가 틀렸다고요?",
+      "original_title": "AI 回答得头头是道，怎么一查原文，条号就对不上了？",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7711983826452758554",
+      "published_at": "2026-11-25T10:03:38Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.06,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "질문만 2번만 했고, 모델은 개봉 및 검사에 대한 근거를 ==7조==와 같이 적었습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Juejin · 굴진 — 7조 기반 성능·효율 지표",
+        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 — 7조 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Juejin · 굴진"
+      ]
+    },
+    {
+      "id": "live-d446429ec84c",
+      "title_ko": "가중치가 -1·0·+1 뿐인 27B 모델 'Ternary Bonsai 2.5'를, Mac의 llama.cpp로 움직여 보았다",
+      "original_title": "重みが -1・0・+1 だけの 27B モデル「Ternary Bonsai 2.5」を、Mac の llama.cpp で動かしてみた",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/lecto/articles/bc5f934f14c2ab",
+      "published_at": "2026-11-25T10:00:06Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.29,
+      "source_count": 1,
+      "benefit_tag": "오픈소스 공개 소식",
+      "highlight_summary": "소개 2026년 11월 24일, PrismML은 Ternary Bonsai 2.5 ==27B==를 발표했습니다. 핵심 이득은 ==오픈소스 공개 소식==이에요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "오픈소스 공개 소식",
+        "actionable_idea": "Llama의 '오픈소스 공개 소식' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Llama",
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-4ce263c4c5c6",
+      "title_ko": "AI가 미국의 공개 기록 시스템에 부담을 주고 있다",
+      "original_title": "AI is straining America’s open records systems",
+      "platform_id": "mit-tech-review",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://technologyreview.com/2026/11/25/1149702/ai-is-straining-americas-open-records-systems",
+      "published_at": "2026-11-25T10:00:00Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 29.77,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==1858년에 교회로 지어진 목조 구조물인== 시청에서 아침 근무 시간 동안 그는 공공 기록 요청도 처리했습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "MIT Technology Review의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "MIT Technology Review"
+      ]
+    },
+    {
+      "id": "live-9c5c06b1548d",
+      "title_ko": "놓쳐버린 유슈, 일본, 한국 등 외국 투자자들이 중국의 체현정보회사에 투자를 서두르고 있다",
+      "original_title": "错过宇树，日韩等外资抢投中国具身智能公司",
+      "platform_id": "36kr-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://36kr.com/p/4084865144826246",
+      "published_at": "2026-11-25T09:54:30.233000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.52,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==1,407개 투자행사에서 선별된 33개 투자== 가운데 12개 해외 주요 기업이 중국 로봇에 투자했다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "36Kr AI의 '36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "36Kr AI"
+      ]
+    },
+    {
+      "id": "live-f485ce5fc81b",
+      "title_ko": "AI 에이전트 학습 요약(2): 컨텍스트, 메모리 및 도구",
+      "original_title": "AI Agent 学习总结（二）：上下文、记忆与工具",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7711983801211207716",
+      "published_at": "2026-11-25T09:47:48Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.02,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==이 기사에서는 실제 실험을 결합하여== 맥락, 메모리 검색 및 도구 설계에서 AI 에이전트의 주요 메커니즘을 요약하고 평가 게이팅 및 증거 체인에 대한 일반적인 오해를 분석합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Juejin · 굴진"
+      ]
+    },
+    {
+      "id": "live-81fb49dc49c6",
+      "title_ko": "2048비트 RSA 키 두 개가 GCD 한 번에 열립니다: 브라우저에서 RSA 공개키의 구조적 결함을 찾는 공개 도구",
+      "original_title": "2048비트 RSA 키 두 개가 GCD 한 번에 열립니다: 브라우저에서 RSA 공개키의 구조적 결함을 찾는 공개 도구",
+      "platform_id": "pytorch-kr",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://discuss.pytorch.kr/t/2048-rsa-gcd-rsa/12650",
+      "published_at": "2026-11-25T09:45:10Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.25,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==앱: KeyGuard - a Hugging== Face Space by FINAL-Bench 글: Two 2048-bit RSA Keys, One GCD, Both Broken: Check Your Own Public Keys in the Browser… 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Hugging Face의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-44e276649e55",
+      "title_ko": "추론 컴퓨팅 파워의 비중은 70%를 넘어섰고, 컴퓨팅 파워 수요의 초점은 피크에서 롱테일로 이동하고 있습니다",
+      "original_title": "推理算力占比破七成，算力需求的重心正从峰值转向长尾",
+      "platform_id": "36kr-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://36kr.com/p/4084944790268546",
+      "published_at": "2026-11-25T09:40:46.233000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.48,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==AI 컴퓨팅 전력 수요의 지배력은== 훈련 측면에서 추론 측면으로 완전히 이전되었습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "36Kr AI — 70% 기반 성능·효율 지표",
+        "actionable_idea": "36Kr AI의 '36Kr AI — 70% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "36Kr AI"
+      ]
+    },
+    {
+      "id": "live-b3ef654c57b4",
+      "title_ko": "Jen-Hsun Huang이 Nvidia로 돌아왔고, \"환호\"는 24시간 동안 지속되지 않았고, 인공 지능 신용 시장은 을 받았으며…",
+      "original_title": "黄仁勋重返英伟达，“欢呼声”没撑过24小时，人工智能信贷市场巨震，知名策略师发出最新警告",
+      "platform_id": "36kr-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://36kr.com/p/4084949410589059",
+      "published_at": "2026-11-25T09:39:41.600000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.48,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "황런순(Huang Renxun)이 엔비디아(Nvidia)로 돌아온 다음날 미국 AI 신용시장은 크게 요동쳤다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "36Kr AI — 24시간 기반 성능·효율 지표",
+        "actionable_idea": "36Kr AI의 '36Kr AI — 24시간 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "36Kr AI"
+      ]
+    },
+    {
+      "id": "live-74ffe54257de",
+      "title_ko": "[오픈소스] Pi Bot: 자신의 컴퓨터에서 작동하는 AI Bot 그룹으로, 뇌도 로컬에 있음",
+      "original_title": "[开源] Pi Bot：一群在你自己电脑上干活的 AI Bot，大脑也在本机",
       "platform_id": "v2ex",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1259622",
-      "published_at": "2026-11-25T01:49:47Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.23,
+      "canonical_url": "https://v2ex.com/t/1259779",
+      "published_at": "2026-11-25T09:38:56Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.9,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==이번 주에 저는 백엔드 헤드리스== 브라우저를 24,000개의 별을 받은 순수 Rust 브라우저 `lexmount/moli`로 교체했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==명령을 실행하고, 파일을 변경하고, 컴퓨터를== 작동하고, 연결한 애플리케이션과 MCP를 사용할 수 있습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "중국 인디빌더 오픈소스·GitHub 공개",
+        "actionable_idea": "Ollama의 '중국 인디빌더 오픈소스·GitHub 공개' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Ollama"
+      ]
+    },
+    {
+      "id": "live-ddf6c35351fc",
+      "title_ko": "open-webui v0.13.5 새 버전 공개",
+      "original_title": "open-webui v0.13.5",
+      "platform_id": "github",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://github.com/open-webui/open-webui/releases/tag/v0.13.5",
+      "published_at": "2026-11-25T09:37:55Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.1,
+      "source_count": 1,
+      "benefit_tag": "새 정식 버전 릴리스",
+      "highlight_summary": "==핵심 변경점: 독립형 Open WebUI== Computer(cptr) 앱을 사용한 경우 해당 워크플로가 이제 Open WebUI에 내장되어 있습니다. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "새 정식 버전 릴리스",
+        "actionable_idea": "Claude의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude"
+      ]
+    },
+    {
+      "id": "live-f6a9cb4b536b",
+      "title_ko": "가장 큰 골칫거리는 매일 쇼핑하러 가는 것입니다. 그래서 아내를 위해 식료품 쇼핑 목록 앱을 개발했습니다",
+      "original_title": "最头疼的是每天去买菜，给老婆开发了一个买菜清单小程序",
+      "platform_id": "v2ex",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://v2ex.com/t/1259777",
+      "published_at": "2026-11-25T09:33:27Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.13,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==이제 그녀는 분업에 따라 선택을== 책임지고 그에 따라 구매합니다 --- ![미니 프로그램]( --- ![목록]( --- ![홈페이지]( 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
       "planning_meta": {
         "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "V2EX · 인디빌더 — 90.7% 기반 성능·효율 지표",
-        "actionable_idea": "V2EX · 인디빌더의 'V2EX · 인디빌더 — 90.7% 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 1개 반응)",
+        "actionable_idea": "V2EX · 인디빌더의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 1개 반응)' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
         "V2EX · 인디빌더"
       ]
     },
     {
-      "id": "live-176620cd0be0",
-      "title_ko": "[오픈 소스] Pervio: 경량 앱을 사용하면 Claude Code 및 Codex와 같은 여러 에이전트가 휴대폰에서 협업하고 맞춤형…",
-      "original_title": "[开源] Pervio：轻量级 app 在手机上让 Claude Code、Codex 等多 agent 协作，支持自定义工作流",
+      "id": "live-aadcc74ba4b5",
+      "title_ko": "허니팟이 있으면 AI 에이전트의 행동은 어떻게 바뀌는지――있어/없음을 10회씩 비교해 보았다",
+      "original_title": "ハニーポットがあるとAIエージェントの行動はどう変わるのか――あり／なしを10回ずつ比べてみた",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/masuda_masuo/articles/2026-11-22-ai-deception-lab-ab",
+      "published_at": "2026-11-25T09:32:17Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.22,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==적절히 배치·운용할 수 있으면, 통상의== 업무의 통신과 구별하기 쉽다고 한다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-5a3e47d75385",
+      "title_ko": "오픈AI \"범용 AI GPT-6, 전문 모델 없이 단백질 설계…실험서 검증\"",
+      "original_title": "오픈AI \"범용 AI GPT-6, 전문 모델 없이 단백질 설계…실험서 검증\"",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217758",
+      "published_at": "2026-11-25T09:23:41Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==오픈AI가 범용 AI 모델 'GPT-6'== 제품군이 별도의 전문 모델을 호출하거나 작업별로 추가 학습하지 않고도 새로운 단백질을 설계할 수 있다고 밝혔다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "GPT-6의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GPT-6"
+      ]
+    },
+    {
+      "id": "live-2a1d2cf48e98",
+      "title_ko": "데이터 레이크의 데이터를 직접 확인하는 방법은 무엇인가요? Apache Doris 포트 프리 쿼리 Iceberg, Paimon…",
+      "original_title": "数据湖的数据怎么直接查？Apache Doris 免搬运查询 Iceberg、Paimon、Lance 与 AI 检索实战",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7711972639220351026",
+      "published_at": "2026-11-25T09:18:31Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 26.94,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==요약 데이터는 이미 Iceberg, Paimon== 또는 Lance에 저장되어 있으며 SQL 쿼리 또는 AI 검색을 수행하기 전에 반드시 데이터 웨어하우스 내의 테이블과 동기화할 필요는 없습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Juejin · 굴진"
+      ]
+    },
+    {
+      "id": "live-6c41c8b285b0",
+      "title_ko": "앤트로픽, AI 샌드박스 탈출 평가 '사이렌' 공개…최대 32% 접근 시도",
+      "original_title": "앤트로픽, AI 샌드박스 탈출 평가 '사이렌' 공개…최대 32% 접근 시도",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217763",
+      "published_at": "2026-11-25T09:13:28Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==앤트로픽이 AI 에이전트가 스스로 보안== 경계를 위반하는지를 측정하는 평가 도구를 공개했다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI타임스 — 32% 기반 성능·효율 지표",
+        "actionable_idea": "AI타임스의 'AI타임스 — 32% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-b991eccae058",
+      "title_ko": "[한국어SWE]샌드박스에 AI 에이전트를 발사하여 RL/벤치마크용 태스크를 자동 생성해 보았다",
+      "original_title": "【日本語SWE】サンドボックスにAIエージェントを放って、RL / ベンチマーク用タスクを自動生成してみた",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/holy_fox/articles/e02f9bd12f6898",
+      "published_at": "2026-11-25T09:09:59Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.16,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==소개 이번에는 샌드박스 환경에서 AI== 에이전트를 실행하여 일본어 소프트웨어 엔지니어링(SWE)을 위한 작업을 자동으로 만들려고 노력했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-c7a323521b85",
+      "title_ko": "최첨단 AI, 글 하나만으로 작성자 실명까지 알아내…익명성 위협",
+      "original_title": "최첨단 AI, 글 하나만으로 작성자 실명까지 알아내…익명성 위협",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217785",
+      "published_at": "2026-11-25T09:01:43Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==최첨단 AI 모델이 글 하나만으로== AI가 작성했는지 판별하는 것은 물론, 어떤 기업의 AI 모델이 썼는지, 심지어 인간 작성자가 누구인지까지 알아낼 수 있다는 연구 결과가 나왔다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-ace0a3646576",
+      "title_ko": "영상모델 다크호스 세계 1위, 30초 길이의 영상을 한번에 생성, 가격은 Seedance의 1/10 수준",
+      "original_title": "视频模型黑马杀到全球第一，30秒长镜头一次生成，价格打到Seedance 1/10",
+      "platform_id": "36kr-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://36kr.com/p/4084870019197572",
+      "published_at": "2026-11-25T08:56:19.854000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.36,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==4,800억== 개의 매개변수가 오픈 소스로 제공될 예정입니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "36Kr AI — 1위 기반 성능·효율 지표",
+        "actionable_idea": "36Kr AI의 '36Kr AI — 1위 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "36Kr AI"
+      ]
+    },
+    {
+      "id": "live-b2516b8fa1ea",
+      "title_ko": "AI가 사람을 길들인다, 인간이 개를 길들이는 다음 편은?",
+      "original_title": "AI 驯化人，是不是人驯化狗的下一集？",
+      "platform_id": "36kr-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://36kr.com/p/4084893101894280",
+      "published_at": "2026-11-25T08:49:37.565000Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.34,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==어쩌면 인간은 길들여질 필요가 없고== 우리 스스로 우리 안에 들어가게 될지도 모릅니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "36Kr AI의 '36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "36Kr AI"
+      ]
+    },
+    {
+      "id": "live-796d3e400bc8",
+      "title_ko": "오픈AI, 기업용 AI 에이전트 정확도 높이는 데이터 도구 '아테나' 개발 중",
+      "original_title": "오픈AI, 기업용 AI 에이전트 정확도 높이는 데이터 도구 '아테나' 개발 중",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217778",
+      "published_at": "2026-11-25T08:46:26Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==오픈AI가 기업용 AI 에이전트의 데이터== 분석 정확도를 높이기 위한 데이터 관리 도구를 개발하고 있다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-9690a8dc9a6d",
+      "title_ko": "Gemini가 ‘반짝반짝 작은 별’ 가사를 알려 달라는 요청을 거부함",
+      "original_title": "Gemini가 ‘반짝반짝 작은 별’ 가사를 알려 달라는 요청을 거부함",
+      "platform_id": "geeknews",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.hada.io/topic?id=37827",
+      "published_at": "2026-11-25T08:37:36Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.08,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==한 이용자가 Gemini에 ‘반짝반짝 작은== 별(Twinkle Twinkle Little Star)’ 가사를 요청했으나 제공을 거부당함 두 차례 시도 모두 같은 반응이 나타남 처음부터 거절한 것이 아니라 가사를 출력하기 시작함 이후 출력을 멈추고 이미… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Gemini의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Gemini"
+      ]
+    },
+    {
+      "id": "live-e3f5e39bb650",
+      "title_ko": "나는 요즘 부엌에서 와인을 마시고 있다",
+      "original_title": "나는 요즘 부엌에서 와인을 마시고 있다",
+      "platform_id": "geeknews",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.hada.io/topic?id=37826",
+      "published_at": "2026-11-25T08:34:36Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==Anthropic과 OpenAI가 같은 날 Valiant의== VP≠VNP 추측 증명을 각각 공개함. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "OpenAI의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI",
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "live-7e6e37a2b21f",
+      "title_ko": "오픈AI·시스코, AI로 리눅스 공격 막는 보안 기술 '시루도' 공개",
+      "original_title": "오픈AI·시스코, AI로 리눅스 공격 막는 보안 기술 '시루도' 공개",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217766",
+      "published_at": "2026-11-25T08:28:30Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": "오픈소스 공개 소식",
+      "highlight_summary": "==오픈AI와 시스코가 AI 에이전트를 활용해== 사이버 공격을 차단하는 리눅스 보안 기술을 공동 개발했다. 핵심 이득은 ==오픈소스 공개 소식==이에요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "오픈소스 공개 소식",
+        "actionable_idea": "AI타임스의 '오픈소스 공개 소식' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-c7e870ce70b4",
+      "title_ko": "n8n@2.49.6 새 정식 버전 릴리즈",
+      "original_title": "n8n@2.49.6",
+      "platform_id": "github",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://github.com/n8n-io/n8n/releases/tag/n8n%402.49.6",
+      "published_at": "2026-11-25T08:27:07Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.91,
+      "source_count": 1,
+      "benefit_tag": "새 정식 버전 릴리스",
+      "highlight_summary": "==GitHub의 n8n@2.49.6 새 정식 버전== 릴리즈 정식 배포가 이뤄져 안정화 패치와 신규 기능을 바로 프로젝트에 적용할 수 있어요. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "새 정식 버전 릴리스",
+        "actionable_idea": "GitHub의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GitHub"
+      ]
+    },
+    {
+      "id": "live-9580d445cd85",
+      "title_ko": "Anthropic에는 또한 가장 강력한 모델 두 개가 숨겨져 있습니다…",
+      "original_title": "Anthropic还藏着2个最强模型…",
+      "platform_id": "qbitai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qbitai.com/2026/11/512538.html",
+      "published_at": "2026-11-25T08:23:24Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.45,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==QbitAI · 양자위가 전한 'Anthropic에는== 또한 가장 강력한 모델 두 개가 숨겨져 있습니다…' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "QbitAI · 양자위 포착 — Anthropic 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Anthropic의 'QbitAI · 양자위 포착 — Anthropic 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "live-0e822e137e0b",
+      "title_ko": "MS, 자체 강화학습 인프라 '로켓' 공개…\"외부 모델 증류 없이 성능 향상\"",
+      "original_title": "MS, 자체 강화학습 인프라 '로켓' 공개…\"외부 모델 증류 없이 성능 향상\"",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217783",
+      "published_at": "2026-11-25T08:19:15Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 30.07,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==마이크로소프트(MS)가 경쟁사 AI 모델에서 지식을== 전달받는 '증류' 없이 자체 모델의 추론 능력을 높이는 데 나섰다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-452a9c9a3b04",
+      "title_ko": "현재 사용 중인 AI 데이터 분석 환경을 그대로 '국내에서 완료·엔화 결제'로 전환할 수 있을까? 사쿠라의 AI Engine × 다중…",
+      "original_title": "手元のAIデータ分析環境、そのまま「国内完結・円建て」にできる？ さくらのAI Engine × 多モデル自動ルーティングを徹底検証してみた",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/ruriopcode/articles/95733de014bb85",
+      "published_at": "2026-11-25T08:05:15Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 26.99,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==소개: PoC에서 프로덕션 데이터로의 전환으로== 멈추기 쉬운 점 평상시, 데이터 분석 기반의 구축이나 분석 실무에 종사하고 있으면, Python(OpenAI SDK/Jupyter)이나 DuckDB, 나아가서는 AI 에이전트를 조합한 워크플로우에 의해… 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "OpenAI의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI"
+      ]
+    },
+    {
+      "id": "live-6accda0ba534",
+      "title_ko": "OpenAI에 합류한 기업 티보(Tibo)가 공개됐습니다! 상장 전 사임한 3인조가 원격으로 재회했다",
+      "original_title": "A社Tibo被曝加盟OpenAI！上市前离职三人组异地团圆",
+      "platform_id": "qbitai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qbitai.com/2026/11/512515.html",
+      "published_at": "2026-11-25T07:46:52Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.36,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==OpenAI는 이제 두 개의 Tibo를== 갖게 될 것입니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "QbitAI · 양자위 포착 — OpenAI 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "OpenAI의 'QbitAI · 양자위 포착 — OpenAI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI"
+      ]
+    },
+    {
+      "id": "live-e938a9cd1e53",
+      "title_ko": "[오픈소스] 2.0으로 업데이트된 최초의 풀스택 프로젝트: 소규모 레스토랑 스캔 코드 주문 시스템에 온라인 주문 추가",
+      "original_title": "[开源] 第一个全栈项目更新到 2.0：小餐馆扫码点餐系统加上了线上点单",
       "platform_id": "v2ex",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1259619",
-      "published_at": "2026-11-25T01:44:46Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.09,
+      "canonical_url": "https://v2ex.com/t/1259743",
+      "published_at": "2026-11-25T07:38:36Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.59,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==**현재 Claude Code, Codex 및== Cursor의 세 가지 도구를 지원합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==2.0이 오늘 출시되었고 이제 이== 웹 앱에는 온라인 주문 기능도 포함되어 이제 일부는 코드를 스캔하여 매장 내에서 주문하고 다른 일부는 온라인 주문이 됩니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
       "planning_meta": {
         "signal_type": "open_source_trend",
         "product_domain": "coding-agent-devtool",
         "benchmark_point": "중국 인디빌더 오픈소스·GitHub 공개",
-        "actionable_idea": "Claude Code의 '중국 인디빌더 오픈소스·GitHub 공개' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "actionable_idea": "V2EX · 인디빌더의 '중국 인디빌더 오픈소스·GitHub 공개' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Claude Code",
-        "Claude",
-        "Cursor"
+        "V2EX · 인디빌더"
+      ]
+    },
+    {
+      "id": "live-d84907a68f9e",
+      "title_ko": "샌드박스에 격리된 모델도 추론 서버를 통해 통신할 수 있음",
+      "original_title": "샌드박스에 격리된 모델도 추론 서버를 통해 통신할 수 있음",
+      "platform_id": "geeknews",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.hada.io/topic?id=37824",
+      "published_at": "2026-11-25T07:34:06Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 26.91,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==같은 추론 서버를 쓰는 에이전트는== 직접 메시지를 보내거나 파일시스템을 공유하지 않아도 부채널(side channel) 로 정보를 교환할 수 있음 Step Sizing과 KV Cache Message Board는 배치 크기에 따른 GPU 커널 선택과… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "GeekNews — 8B 기반 성능·효율 지표",
+        "actionable_idea": "GeekNews의 'GeekNews — 8B 기반 성능·효율 지표' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GeekNews"
+      ]
+    },
+    {
+      "id": "live-0c6e5f360ef4",
+      "title_ko": "quantGAI 쿼츠 플랫폼 업데이트 일기 -2026-11-24",
+      "original_title": "quantGAIクオンツプラットフォームの更新日記-2026-11-24",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/gzh1994/articles/quantg-diary-20261124",
+      "published_at": "2026-11-25T07:11:28Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 26.86,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==QuantG는 일본 주식(구매만)을 위해 자사== 개발하고 있는 퀀츠 기반으로 LLM이 요인 코드를 작성하여 시스템이 검증합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-268100a611f8",
+      "title_ko": "Infrathon: 최초의 Long Horizon AI 인프라 최적화 벤치마크인 RSI를 향하여 - Sohu",
+      "original_title": "Infrathon：迈向RSI，首个Long Horizon AI Infra优化Benchmark - Sohu",
+      "platform_id": "jiqizhixin",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQLWhKTU5xN01JdFRGaEpmM2VwVGozeTRJbF9ZUGJpMHZjNWVlMTdpT1N6YnJtdEtIaDEyeWFlS3FmY0d4TllJTXlhMHZRM29rZnlxMGhZMmh3eEZ4UGRjQkFpNzdSV2Z3WXhLSkJLVDFQVEVOQmJJclFid2RxX1ZPeFR4dWlDbldw?oc=5",
+      "published_at": "2026-11-25T07:03:46Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.25,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==Infrathon: 최초의 Long Horizon AI== 인프라 최적화 벤치마크인 RSI를 향하여 Sohu 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "Synced · 기기지심 포착 — Synced · 기기지심 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Synced · 기기지심의 'Synced · 기기지심 포착 — Synced · 기기지심 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Synced · 기기지심"
+      ]
+    },
+    {
+      "id": "live-48aaa1e4d3d4",
+      "title_ko": "[AI뉴스] Gemini 4 Neon, GDM이 프론티어 랩으로 완전 복귀",
+      "original_title": "[AINews] Gemini 4 Neon marks GDM's full return as a Frontier Lab",
+      "platform_id": "latent-space",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://latent.space/p/ainews-gemini-4-neon-marks-gdm-s-full-return-as-a-frontier-lab",
+      "published_at": "2026-11-25T04:29:07Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.7,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==X에서 게시물 보기 ↗ Gemini== 4 Argon(RIP), Carbon 및 Neon에 타이틀 스토리(Hydrogen이 거의 누락됨)를 제공했음에도 불구하고 우리는 Neon 채택의 유난히 강력한 돌파 추세를 강조하기 위해 또 다른 드문 이중 기능… AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "Gemini 4 Neon의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Gemini 4 Neon",
+        "Gemini 4",
+        "Gemini",
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "live-d04e83675d25",
+      "title_ko": "Claude Opus 5.6 그레이 테스트 효과 출시",
+      "original_title": "Claude Opus 5.6灰测效果来了",
+      "platform_id": "qbitai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qbitai.com/2026/11/512478.html",
+      "published_at": "2026-11-25T02:43:07Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 27.62,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "전반적인 효율성은 이전 Opus 버전에 비해 약 2~==3배== 향상되었습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "Claude Opus — 3배 기반 성능·효율 지표",
+        "actionable_idea": "Claude Opus의 'Claude Opus — 3배 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Opus",
+        "Claude"
       ]
     },
     {
@@ -297,7 +1227,7 @@
       "importance_score": 28.29,
       "source_count": 1,
       "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "핵심 변경점: ## Docker 이미지 서명 확인 ```bash cosign verify \\ --certificate-identity \\ --certificate-oidc-issuer \\ ghcr.io/berriai/litellm:==v1.111.0==… 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
+      "highlight_summary": "Claude 개발 생태계에서 'litellm ==v1.111.0== 새 버전 공개' 구현 방식과 실전 적용 사례가 공개됐어요. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
       "planning_meta": {
         "signal_type": "open_source_trend",
         "product_domain": "coding-agent-devtool",
@@ -308,134 +1238,6 @@
         "Claude",
         "MiniMax",
         "Anthropic"
-      ]
-    },
-    {
-      "id": "live-c1000fdbb7a5",
-      "title_ko": "AI 에이전트의 비용은 토큰 요금만이 아니다: 24시간 운영으로 간과하기 쉬운 5가지",
-      "original_title": "AIエージェントのコストはトークン代だけじゃない：24時間運用で見落としがちな5つの出費",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/Ikegamik_genee/items/bafa39402609efc9f3bd",
-      "published_at": "2026-11-25T01:42:08Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.42,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==TL; DR 에이전트의 비용은 단계== 수에 대해 선형이 아니며 2 차 함수로 증가합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Qiita — 24시간 기반 성능·효율 지표",
-        "actionable_idea": "Qiita의 'Qiita — 24시간 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qiita"
-      ]
-    },
-    {
-      "id": "live-7da99031be51",
-      "title_ko": "Lao Huang이 돌아오기 전에 GLM-5.4가 출시되었습니다",
-      "original_title": "赶在老黄回归前，GLM-5.4 发布了。",
-      "platform_id": "juejin",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7711743882707599395",
-      "published_at": "2026-11-25T01:40:58Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.17,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Zhipu는 기본 시각적 이해 및== 팬 코딩 기능을 보완하는 Loop Transformer 아키텍처를 사용하여 첫 번째 플래그십 모델 GLM-5.4를 출시했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭",
-        "actionable_idea": "GLM의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GLM"
-      ]
-    },
-    {
-      "id": "live-ac251adc96b7",
-      "title_ko": "Claude, Skills over MCP 베타 공개 등 11/25 AI 뉴스",
-      "original_title": "Claude、Skills over MCP をベータ公開など、11/25 の AI ニュース",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/xdaily/items/728ed748ab738b8aa9ac",
-      "published_at": "2026-11-25T01:39:12Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.41,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==개발에 관련된 AI 뉴스를 매일== 아침 정리하고 있습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-005c7bda8437",
-      "title_ko": "Claude의 아티팩트는 지금 어떻게 되었는지 앱화를 계기로 정리했다",
-      "original_title": "Claude のアーティファクトは今どうなっているのか アプリ化を機に整理した",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/hisashi-ito/items/5d5f5b39ff066fdc1f6e",
-      "published_at": "2026-11-25T01:39:05Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.41,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==2026년 11월 24일(미국 시간)에 Anthropic이== Claude 아티팩트를 Mac 및 Windows 데스크톱 앱으로 설치할 수 있는 기능을 베타로 출시했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-09bcb0c3e128",
-      "title_ko": "GPT-6 모델, 내재적 단백질 설계 능력 입증",
-      "original_title": "GPT-6 모델, 내재적 단백질 설계 능력 입증",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37808",
-      "published_at": "2026-11-25T01:34:23Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.4,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==OpenAI의 GPT-6 계열 모델이 전문== 생물학 모델을 호출하지 않고 추론과 범용 코딩 도구만으로 새로운 단백질의 3차원 구조와 아미노산 서열을 설계하는 능력을 보임 자연어 프롬프트로 결합 위치, 단백질 형태, 특정 원자 사이의 결합 같은 조건을… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "GPT-6의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GPT-6",
-        "OpenAI"
       ]
     },
     {
@@ -464,664 +1266,6 @@
       ]
     },
     {
-      "id": "live-67b35dab6e22",
-      "title_ko": "별도의 교육 없이 Inkling-2-mini의 정확도 향상",
-      "original_title": "improve accuracy of Inkling-2-mini without any training",
-      "platform_id": "bluesky",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://bsky.app/profile/timkellogg.me/post/3n33yvc63ek2s",
-      "published_at": "2026-11-25T01:26:14.638000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 21.31,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==아무런 교육 없이도 Inkling-2-mini의 정확도를== 향상시킬 수 있으며 루프형 변압기에서만 작동합니다. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Bluesky의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Bluesky"
-      ]
-    },
-    {
-      "id": "live-1d33bd1259ad",
-      "title_ko": "chrome-devtools-cli v2.5.0을 사용하면 ai 에이전트가 실제 브라우저의 Rust 명령줄을 직접 조작할 수 있습니다.…",
-      "original_title": "chrome-devtools-cli v2.5.0 让 ai agent 直接操作真实浏览器的 rust 命令行，这版看得更多了",
-      "platform_id": "v2ex",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1259610",
-      "published_at": "2026-11-25T01:21:48Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.03,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==실제 브라우저를 구동해야 하는 AI== 에이전트가 사용할 수 있도록 devtools 프로토콜의 Rust 명령줄 도구를 직접 사용하는 chrome-devtools-cli를 만들어봤습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "V2EX · 인디빌더 — v2.5.0 기반 성능·효율 지표",
-        "actionable_idea": "V2EX · 인디빌더의 'V2EX · 인디빌더 — v2.5.0 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "V2EX · 인디빌더"
-      ]
-    },
-    {
-      "id": "live-7f431f349cd4",
-      "title_ko": "AI 네이티브 서비스 비즈니스 모델의 내부 구조",
-      "original_title": "AI 네이티브 서비스 비즈니스 모델의 내부 구조",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37807",
-      "published_at": "2026-11-25T01:20:02Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.36,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==AI 네이티브 서비스는 계약 검토== 도구를 파는 대신 계약 검토를 직접 맡는 사업임. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "GeekNews의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GeekNews"
-      ]
-    },
-    {
-      "id": "live-8d6aad09f630",
-      "title_ko": "2026년 기업용 AI 현황",
-      "original_title": "2026년 기업용 AI 현황",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37806",
-      "published_at": "2026-11-25T01:10:02Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.34,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "기업용 AI 활용 지출이 2026년 9월 기준 연환산 ==1,770억== 달러로 전년 대비 5.4배 증가함. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "OpenAI — 1,770억 기반 성능·효율 지표",
-        "actionable_idea": "OpenAI의 'OpenAI — 1,770억 기반 성능·효율 지표' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-f61ab02f5d1c",
-      "title_ko": "\"Claude\"로 만든 앱을 Mac / Windows에 설치 가능 모든 플랜에서 β 제공",
-      "original_title": "「Claude」で作ったアプリをMac／Windowsにインストール可能に 全プランでβ提供",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://itmedia.co.jp/news/article/2611/25/2000003431",
-      "published_at": "2026-11-25T01:07:59Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 35.81,
-      "source_count": 2,
-      "benefit_tag": null,
-      "highlight_summary": "==「Claude」로 만든 앱을 Mac/Windows에 인스톨== 가능하게 모든 플랜으로 β제공 미국 Anthropic은 11월 24일(현지 시간), AI 어시스턴트 「Claude」로 작성한 「아티팩트」(Artifacts)를, macOS 및… AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "Claude의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-ae3baabdd101",
-      "title_ko": "NVIDIA 위기는 경종을 울렸습니다. 기업은 AI 사이클 쇼크에 어떻게 대응해야 할까?",
-      "original_title": "英伟达风波敲响警钟，企业该如何应对AI周期震荡？",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4084422365260421",
-      "published_at": "2026-11-25T01:06:45.295000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.56,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==기업은 잠재적인 하방 위험을 견디기== 위해 어떻게 준비해야 합니까? AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "36Kr AI의 '36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "36Kr AI"
-      ]
-    },
-    {
-      "id": "live-8fcca2433f44",
-      "title_ko": "앤트로픽, 상장 4거래일 만에 공모가 붕괴…시총 5000억달러 증발",
-      "original_title": "앤트로픽, 상장 4거래일 만에 공모가 붕괴…시총 5000억달러 증발",
-      "platform_id": "aitimes",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217753",
-      "published_at": "2026-11-25T00:48:29Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 30.07,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "앤트로픽의 주가가 나스닥 상장 4거래일 만에 공모가인 ==83달러==를 밑돌며 마감했다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI타임스 — 5000억 기반 성능·효율 지표",
-        "actionable_idea": "AI타임스의 'AI타임스 — 5000억 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "AI타임스"
-      ]
-    },
-    {
-      "id": "live-324cd3f2bad5",
-      "title_ko": "OpenAI의 최악의 모델은? 아스트라 6.2",
-      "original_title": "OpenAI 史上最差的模型？Astra 6.2",
-      "platform_id": "juejin",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7711659559337394176",
-      "published_at": "2026-11-25T00:48:05Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.16,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==2026년 11월 17일 OpenAI는 GPT-6.2== Astra와 Sol의 두 가지 모델을 출시했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭",
-        "actionable_idea": "GPT-6의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GPT-6",
-        "OpenAI"
-      ]
-    },
-    {
-      "id": "live-eaf206bf3944",
-      "title_ko": "Nvidia B300 및 GB300 주문 배송 시간이 크게 연장되어 소비자 그래픽 카드 공급이 부족할 수 있습니다",
-      "original_title": "英伟达B300、GB300订单交期大幅拉长，或排挤消费性显卡供货",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/newsflashes/4084458040813959",
-      "published_at": "2026-11-25T00:45:34.717000Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.32,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==ODM 제조사들은 B300, GB300 등== 신규 주문의 배송 시간이 대폭 길어졌다고 밝혔다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "36Kr AI의 '36Kr AI 포착 — 36Kr AI 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "36Kr AI"
-      ]
-    },
-    {
-      "id": "live-dbfda93cd4ae",
-      "title_ko": "AI와의 장기 개발로 직면한 컨텍스트 문제와 연비 문제. 실패로부터 생각하는 AI 협동 개발의 설계",
-      "original_title": "AIとの長期開発で直面したコンテキスト問題と燃費問題。失敗から考えるAI協働開発の設計。",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/Soleil-design/items/a07cd477f58c823e11fa",
-      "published_at": "2026-11-25T00:23:09Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.21,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==저는 잠시 동안 AI와 협력하면서== WordPress 테마와 플러그인, iOS 앱 등을 개발하고 있습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qiita"
-      ]
-    },
-    {
-      "id": "live-189f8f492b75",
-      "title_ko": "Yale의 Sonnenfeld: Nvidia는 미국 산업의 힘에 '해를 끼치는' 존재이지 챔피언이 아닙니다",
-      "original_title": "Yale’s Sonnenfeld: Nvidia is a ‘detriment’ to U.S. industrial might — not a champion",
-      "platform_id": "techcrunch-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://techcrunch.com/2026/11/24/yales-sonnenfeld-nvidia-is-a-detriment-to-u-s-industrial-might-not-a-champion",
-      "published_at": "2026-11-25T00:12:02Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.66,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Yale의 Jeffrey Sonnenfeld는 월요일 시장이== 환호했던 Jensen Huang의 백악관 지원을 받아 Nvidia의 CEO 및 이사회 구성원으로 복귀한 것이 큰 실수로 판명될 수 있으며 점점 늘어나는 소송으로 인해 이사들이 \"역사적인\"… AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "NVIDIA의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "NVIDIA",
-        "Jensen Huang"
-      ]
-    },
-    {
-      "id": "live-034f4e3cbfe4",
-      "title_ko": "AI가 이모티콘을 아이콘으로 사용하도록 허용하지 마세요",
-      "original_title": "别再让 AI 用 emoji 当图标啦",
-      "platform_id": "v2ex",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1259595",
-      "published_at": "2026-11-25T00:03:51Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.06,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==\"심각한 아이콘으로 변경\"을 요청하면 SVG== 경로를 구성하기 시작하여 볼 수 없는 여러 곡선을 렌더링합니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 오픈소스·GitHub 공개 (댓글 2개 반응)",
-        "actionable_idea": "Claude의 '중국 인디빌더 오픈소스·GitHub 공개 (댓글 2개 반응)' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "Cursor"
-      ]
-    },
-    {
-      "id": "live-27488a3ae580",
-      "title_ko": "[AI리더의 서가] 에이전틱 코딩 완성의 기술",
-      "original_title": "[AI리더의 서가] 에이전틱 코딩 완성의 기술",
-      "platform_id": "aitimes",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217621",
-      "published_at": "2026-11-25T00:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 30.07,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==에이전틱 코딩 완성의 기술김플립 |== 한빛미디어2026년 10월 30일추천이유이 책은 AI가 코드를 작성하는 시대에 개발자가 AI의 작업을 설계하고 검증하여 결과물을 끝까지 완성하는 방법을 안내합니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "AI타임스"
-      ]
-    },
-    {
-      "id": "live-d63485c93543",
-      "title_ko": "설계자가 AI에 요구하는 것은 CAD 조작만이 아니다――SOLIDWORKS AI가 목표로 하는 과제 해결",
-      "original_title": "設計者がAIに求めるのはCAD操作だけじゃない――SOLIDWORKS AIが目指す課題解決",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://monoist.itmedia.co.jp/mn/articles/2611/25/news005.html",
-      "published_at": "2026-11-25T00:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.63,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==기조 강연에서는 산업 AI를 지원하는== 기술 기반과 3가지 가상 컴패니언의 활용에 대해 소개. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "ITmedia AI+의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "ITmedia AI+"
-      ]
-    },
-    {
-      "id": "live-5142b8754a83",
-      "title_ko": "미에현 경 초등학교 전 강사 AI 생성의 아동 포르노 화상 소지로 추송검 | NHK 뉴스",
-      "original_title": "三重県警 小学校元講師 AI生成の児童ポルノ画像所持で追送検 | NHKニュース",
-      "platform_id": "hatena-bookmark",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.web.nhk/newsweb/na/nd-20261124de80746",
-      "published_at": "2026-11-24T23:37:15Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.09,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==미에현 경 초등학교 전 강사== AI 생성의 아동 포르노 화상 소지로 추송검 | 추가 ... 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Hatena Bookmark IT의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hatena Bookmark IT"
-      ]
-    },
-    {
-      "id": "live-4a536675b9f4",
-      "title_ko": "유휴 컴퓨팅 자원으로 로컬 모델을 학습시키는 엔진",
-      "original_title": "유휴 컴퓨팅 자원으로 로컬 모델을 학습시키는 엔진",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37798",
-      "published_at": "2026-11-24T23:31:27Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.07,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Songe는 로컬 모델을 평소처럼 사용하는== 동안 도구 실행 결과, 오류, 사용자 수정과 선호를 기록하고, 에이전트가 조용할 때 이를 학습에 활용함 Quick Dream은 사용자 선호를 모델 지침에 추가하고, Deep Dream은 학습용 연습 상황을… 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "GeekNews의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GeekNews"
-      ]
-    },
-    {
-      "id": "live-2a9f59f47138",
-      "title_ko": "Ai2, 실제 로봇 조작 영상용 포인트 추적 벤치마크와 시뮬레이션 학습 데이터 RoboTrack 공개",
-      "original_title": "Ai2, 실제 로봇 조작 영상용 포인트 추적 벤치마크와 시뮬레이션 학습 데이터 RoboTrack 공개",
-      "platform_id": "pytorch-kr",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://discuss.pytorch.kr/t/ai2-robotrack/12634",
-      "published_at": "2026-11-24T23:30:26Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.07,
-      "source_count": 1,
-      "benefit_tag": "오픈소스 공개 소식",
-      "highlight_summary": "핵심 요약 Ai2가 실제 로봇 조작 영상용 포인트 추적 벤치마크 RoboTrack-Bench(영상 307개, 사람이 검증한 궤적 2,522개)와 시뮬레이션 학습 데이터 RoboTrack-==15M==을 GitHub 저장소와 함께 공개했습니다. 핵심 이득은 ==오픈소스 공개 소식==이에요.",
-      "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "오픈소스 공개 소식",
-        "actionable_idea": "Hugging Face의 '오픈소스 공개 소식' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-711ce68d79e7",
-      "title_ko": "12개월 동안 세 가지 LLM 변곡점",
-      "original_title": "Three LLM inflection points in twelve months",
-      "platform_id": "simon-willison",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://simonwillison.net/2026/Nov/24/llm-inflection-points",
-      "published_at": "2026-11-24T23:02:07Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 33.0,
-      "source_count": 2,
-      "benefit_tag": null,
-      "highlight_summary": "==저는 몇 주 전 AI== 엔지니어 코드 서밋에서 지난 12개월 동안 LLM과 코딩 에이전트의 능력에 세 가지 중요한 변곡점이 있었다는 아이디어를 중심으로 기조 연설을 했습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude Opus",
-        "Claude",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-cf0387bcc43e",
-      "title_ko": "AI 에이전트는 틈새 샌드박스 밖으로 나올 것인가 Anthropic이 평가 방법 'Siren'을 발표",
-      "original_title": "AIエージェントは隙あらばサンドボックスの外に出るのか Anthropicが評価手法「Siren」を発表",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://itmedia.co.jp/news/article/2611/25/2000003430",
-      "published_at": "2026-11-24T22:41:42Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.43,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Anthropic은 AI 에이전트가 취약한 샌드박스에서== 빠져나올지 여부를 측정하는 평가 방법 'Siren'을 발표했다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "Anthropic — 1.6% 기반 성능·효율 지표",
-        "actionable_idea": "Anthropic의 'Anthropic — 1.6% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-3a143e80c8b7",
-      "title_ko": "Microsoft, 대규모 장애 이후 ‘Code Red’ 선언…내부 메모로 드러난 대응 문제",
-      "original_title": "Microsoft, 대규모 장애 이후 ‘Code Red’ 선언…내부 메모로 드러난 대응 문제",
-      "platform_id": "geeknews",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://news.hada.io/topic?id=37797",
-      "published_at": "2026-11-24T22:38:44Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.94,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Microsoft가 ==24시간== 서비스 장애 이후 재발 방지와 복구 체계 개선을 최우선으로 추진하는 ‘Code Red’에 돌입함. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "GeekNews — 24시간 기반 성능·효율 지표",
-        "actionable_idea": "GeekNews의 'GeekNews — 24시간 기반 성능·효율 지표' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GeekNews"
-      ]
-    },
-    {
-      "id": "live-a2c1cab49763",
-      "title_ko": "AI에도 블랙 프라이데이. Google AI Plus/Pro의 연간 플랜이 반액!",
-      "original_title": "AIにもブラックフライデー。Google AI Plus/Proの年間プランが半額！",
-      "platform_id": "hatena-bookmark",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://pc.watch.impress.co.jp/docs/news/2158884.html",
-      "published_at": "2026-11-24T22:33:26Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.93,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Hatena Bookmark IT 커뮤니티에서 'AI에도== 블랙 프라이데이. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Hatena Bookmark IT의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hatena Bookmark IT"
-      ]
-    },
-    {
-      "id": "live-7d9379477c46",
-      "title_ko": "Jensen Huang은 여전히 ​​승계 계획이 불필요한 계층 구조를 만든다고 생각합니다",
-      "original_title": "Jensen Huang still thinks a succession plan creates unnecessary hierarchy",
-      "platform_id": "techcrunch-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://techcrunch.com/2026/11/24/jensen-huang-still-thinks-a-succession-plan-creates-unnecessary-hierarchy",
-      "published_at": "2026-11-24T22:27:52Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.39,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==TechCrunch AI가 전한 'Jensen Huang은== 여전히 ​​승계 계획이 불필요한 계층 구조를 만든다고 생각합니다' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "Jensen Huang의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Jensen Huang"
-      ]
-    },
-    {
-      "id": "live-c0248e766300",
-      "title_ko": "AI를 통한 개인 개발",
-      "original_title": "個人開発 with AI",
-      "platform_id": "hatena-bookmark",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/holygrail/scraps/dec6ae85d06b4f",
-      "published_at": "2026-11-24T22:02:28Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.85,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==개인 개발 with AI ##== 사용자에게 보고 사용자가 읽는 보고(진행, 완료, 판단의 의뢰, 수작업 안내)에 적용한다. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Hatena Bookmark IT의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hatena Bookmark IT"
-      ]
-    },
-    {
-      "id": "live-839196f497ed",
-      "title_ko": "[11월24일] AI 업계, 초지능 경고 넘어 개발 제한 방안까지…미국 규제에 영향 줄까",
-      "original_title": "[11월24일] AI 업계, 초지능 경고 넘어 개발 제한 방안까지…미국 규제에 영향 줄까",
-      "platform_id": "aitimes",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217724",
-      "published_at": "2026-11-24T22:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 30.07,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==메타의 최고AI책임자(CAIO)와 오픈AI 핵심 연구진이== 잇달아 초지능의 위험성을 경고하며 개발 속도를 조절할 구체적인 방안까지 제시하고 있습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "AI타임스"
-      ]
-    },
-    {
-      "id": "live-c1d38166a849",
-      "title_ko": "현역 임베디드 엔지니어가 생각하는 'GitHub Copilot'의 사용지와 검증의 실제",
-      "original_title": "現役組み込みエンジニアが考える「GitHub Copilot」の使いどころと検証の実際",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://monoist.itmedia.co.jp/mn/articles/2611/25/news009.html",
-      "published_at": "2026-11-24T22:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 29.32,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==현역 임베디드 엔지니어인 필자가 AI를== 업무에서 사용해 보인 기대와 한계의 전체상을 논한 전회 기사에 이어 이번에는 그 속편으로 한 걸음 더 나아가 대표적인 AI 코딩 에이전트로 알려진 'GitHub Copilot'의 활용법을 거론한다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "ITmedia AI+의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "ITmedia AI+"
-      ]
-    },
-    {
-      "id": "live-9e7d4bd171de",
-      "title_ko": "@ai-sdk/xai@5.0.50 새 정식 버전 릴리즈",
-      "original_title": "@ai-sdk/xai@5.0.50",
-      "platform_id": "github",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/vercel/ai/releases/tag/%40ai-sdk/xai%405.0.50",
-      "published_at": "2026-11-24T21:57:49Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.7,
-      "source_count": 1,
-      "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "==핵심 변경점: ### 패치 변경== 사항 - 565db6d: refactor(xai): 모델 카탈로그의 모델 ID당 언어 모델 기능 선언 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
-      "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "새 정식 버전 릴리스",
-        "actionable_idea": "GitHub의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GitHub"
-      ]
-    },
-    {
       "id": "live-940e27d9ff02",
       "title_ko": "12월 9일부터 카탈로그에서 완전히 AI로 생성된 모든 트랙을 제거하기 시작할 예정이며, 이 트랙이 모두 포함된 것을 확인하실 수 있습니다",
       "original_title": "@rsa: On December 9, we’ll begin removing all wholly AI-generated tracks from our catalog, and you’ll see them compl…",
@@ -1147,29 +1291,29 @@
       ]
     },
     {
-      "id": "live-e44779f7182e",
-      "title_ko": "Transformers 패치 릴리스 v5.24.1",
-      "original_title": "transformers Patch release v5.24.1",
+      "id": "live-c0c0d3a6ff98",
+      "title_ko": "matheusmongarde/garimpo: Google Maps에서 Pix로의 오픈 소스 발굴: 지도에서 비즈니스를 찾고 다음을…",
+      "original_title": "matheusmongarde/garimpo: Prospecção open source do Google Maps ao Pix: acha negócios no Maps, gera um site-prévia com",
       "platform_id": "github",
       "author_handle": null,
       "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/huggingface/transformers/releases/tag/v5.24.1",
-      "published_at": "2026-11-24T16:13:08Z",
-      "fetched_at": "2026-11-24T18:24:11.806991Z",
-      "importance_score": 25.5,
+      "canonical_url": "https://github.com/matheusmongarde/garimpo",
+      "published_at": "2026-11-24T23:58:18Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 28.77,
       "source_count": 1,
-      "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "핵심 변경점: 패치 릴리스 ==v5.24.1== vLLM에 대한 여러 가지 문제, 몇 가지 배포 문제 및 일부 모델 수정 사항(llama4, dory)을 수정하는 패치입니다. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
+      "benefit_tag": "GitHub 급상승 ★127",
+      "highlight_summary": "==Google 지도에서 Pix까지의 오픈 소스== 탐색: 지도에서 업체를 찾고, 각 업체의 이름으로 미리보기 웹사이트를 생성하고, WhatsApp에서 채팅하고, Pix, Mercado Pago 또는 Stripe를 통해 비용을 청구합니다. 핵심 이득은 ==GitHub 급상승 ★127==이에요.",
       "planning_meta": {
         "signal_type": "open_source_trend",
         "product_domain": "coding-agent-devtool",
-        "benchmark_point": "새 정식 버전 릴리스",
-        "actionable_idea": "vLLM의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "benchmark_point": "GitHub 급상승 ★127",
+        "actionable_idea": "Claude Code의 'GitHub 급상승 ★127' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "vLLM",
-        "PyTorch"
+        "Claude Code",
+        "Claude"
       ]
     },
     {
@@ -1183,7 +1327,7 @@
       "canonical_url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
       "published_at": "2026-11-24T13:00:00Z",
       "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 40.61,
+      "importance_score": 41.46,
       "source_count": 3,
       "benefit_tag": null,
       "highlight_summary": "==GPT-6 모델은 추론과 코드를 사용하여== 단백질 구조와 서열을 설계합니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
@@ -1223,56 +1367,6 @@
       ]
     },
     {
-      "id": "live-3e0984d875a3",
-      "title_ko": "Ant의 오픈 소스 의료 및 건강 예측 모델은 수면 데이터를 기반으로 향후 6년 동안 150가지 질병의 위험을 예측할 수 있습니다",
-      "original_title": "蚂蚁开源医疗健康预测模型，根据睡眠数据可预测未来六年150种疾病风险",
-      "platform_id": "qbitai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qbitai.com/2026/11/512451.html",
-      "published_at": "2026-11-24T10:15:57Z",
-      "fetched_at": "2026-11-24T18:24:11.806991Z",
-      "importance_score": 27.76,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Ant가 방금 의료 및 건강== 모델인 Family Bucket을 출시했습니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "QbitAI · 양자위 포착 — QbitAI · 양자위 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "QbitAI · 양자위의 'QbitAI · 양자위 포착 — QbitAI · 양자위 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "QbitAI · 양자위"
-      ]
-    },
-    {
-      "id": "live-cd844d4eab1c",
-      "title_ko": "Zhipu는 새로운 아키텍처인 GLM-5.4를 출시했습니다! 네티즌들은 “기대 이상이다”라고 말했다",
-      "original_title": "智谱刚刚发了GLM-5.4，全新架构的那种！网友直呼：超过预期",
-      "platform_id": "qbitai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qbitai.com/2026/11/512423.html",
-      "published_at": "2026-11-24T09:21:55Z",
-      "fetched_at": "2026-11-24T18:24:11.806991Z",
-      "importance_score": 27.63,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==QbitAI · 양자위가 전한 'Zhipu는== 새로운 아키텍처인 GLM-5.4를 출시했습니다! AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "QbitAI · 양자위 포착 — GLM 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "GLM의 'QbitAI · 양자위 포착 — GLM 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GLM"
-      ]
-    },
-    {
       "id": "live-4480a1245999",
       "title_ko": "갑자기 모델이 너무 강해서 감히 출판을 할 수 없나요? OpenAI와 Anthropic, 내부적으로 '훈련 중단' 논의 시작 - 36Kr",
       "original_title": "突发，模型强到不敢发？OpenAI、Anthropic内部开始讨论「停训」 - 36Kr",
@@ -1299,53 +1393,29 @@
       ]
     },
     {
-      "id": "live-27172b948134",
-      "title_ko": "Wenxin 5.5 Flash Preview는 공식적으로 오픈 소스이며 Apache 2.0 프로토콜을 채택합니다",
-      "original_title": "文心 5.5 Flash Preview正式开源，采用 Apache 2.0 协议",
-      "platform_id": "qbitai",
+      "id": "live-9d3b881680bb",
+      "title_ko": "갑자기 모델이 너무 강해서 감히 출판을 할 수 없나요? OpenAI와 Anthropic, 내부적으로 '훈련 중단' 논의 시작 - 36Kr",
+      "original_title": "突发，模型强到不敢发？OpenAI、Anthropic内部开始讨论「停训」 - 36Kr",
+      "platform_id": "jiqizhixin",
       "author_handle": null,
-      "category": "industry",
+      "category": "research",
       "lifecycle_status": "hot",
-      "canonical_url": "https://qbitai.com/2026/11/512354.html",
-      "published_at": "2026-11-24T06:22:28Z",
-      "fetched_at": "2026-11-24T18:24:11.806991Z",
-      "importance_score": 27.23,
+      "canonical_url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE92MDVQbnRZdlVjaEJJQXZVc3lGR1NIQVhITHBkU1BRXzRWUW11MEYzdWNvckd6SlBXRnVpcDJXeUJuc3J1WmVjbVEtcTZPUQ?oc=5",
+      "published_at": "2026-11-24T08:24:00Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 25.52,
       "source_count": 1,
-      "benefit_tag": "오픈소스 공개 소식",
-      "highlight_summary": "==QbitAI · 양자위가 전한 'Wenxin== 5.5 Flash Preview는 공식적으로 오픈 소스이며 Apache 2.0 프로토콜을 채택합니다' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. 핵심 이득은 ==오픈소스 공개 소식==이에요.",
+      "benefit_tag": null,
+      "highlight_summary": "==갑자기 모델이 너무 강해서 감히== 출판을 할 수 없나요? 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
       "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "오픈소스 공개 소식",
-        "actionable_idea": "QbitAI · 양자위의 '오픈소스 공개 소식' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "OpenAI — 36K 기반 성능·효율 지표",
+        "actionable_idea": "OpenAI의 'OpenAI — 36K 기반 성능·효율 지표' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "QbitAI · 양자위"
-      ]
-    },
-    {
-      "id": "live-c7bd50bd8375",
-      "title_ko": "vllm v0.34.1rc0: [Perf][Qwen4Exp] SM100 TP=2 및 TP=8 스키니 GEMM 계획 추가(#69529)",
-      "original_title": "vllm v0.34.1rc0: [Perf][Qwen4Exp] Add SM100 TP=2 and TP=8 skinny GEMM plans (#69529)",
-      "platform_id": "github",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/vllm-project/vllm/releases/tag/v0.34.1rc0",
-      "published_at": "2026-11-24T06:01:41Z",
-      "fetched_at": "2026-11-24T06:21:48.538125Z",
-      "importance_score": 25.8,
-      "source_count": 1,
-      "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "GitHub의 vllm ==v0.34.1==rc0: [Perf][Qwen4Exp] SM100 TP=2 및 TP=8 스키니 GEMM 계획 추가(#69529) 정식 배포가 이뤄져 안정화 패치와 신규 기능을 바로 프로젝트에 적용할 수 있어요. 핵심 이득은 ==새 정식 버전 릴리스==이에요.",
-      "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "새 정식 버전 릴리스",
-        "actionable_idea": "GitHub의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "GitHub"
+        "OpenAI",
+        "Anthropic"
       ]
     },
     {
@@ -1527,28 +1597,28 @@
       ]
     },
     {
-      "id": "live-3d75a4681e34",
-      "title_ko": "세계적으로 DeepSeek 및 FlashAttention의 여러 AI 드라이버가 공식적으로 검증되었습니다. - 36",
-      "original_title": "全球首次，DeepSeek与FlashAttention的多个生产级AI算子获得形式化验证 - 36氪",
-      "platform_id": "jiqizhixin",
+      "id": "live-44a305d49922",
+      "title_ko": "Anthropic Research: 형식 검증",
+      "original_title": "Anthropic Research: Formal Verification",
+      "platform_id": "anthropic",
       "author_handle": null,
       "category": "research",
       "lifecycle_status": "hot",
-      "canonical_url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5tXy1wNzc4MjgzS1ZJRXNPR2plSFBQUDcySXlPOTVKZ2J5dFVMMC1hZWVNMUUtQTA3Y3NYVW1BcTh5QnZuZ3RZT2d5OXhFZw?oc=5",
-      "published_at": "2026-11-22T09:56:00Z",
-      "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 24.32,
+      "canonical_url": "https://anthropic.com/research/formal-verification",
+      "published_at": "2026-11-20T18:45:25.849000Z",
+      "fetched_at": "2026-11-23T13:31:11.993521Z",
+      "importance_score": 24.57,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==DeepSeek 및 FlashAttention의 여러 프로덕션== 수준 AI 운영자가 세계 최초로 공식 검증을 받았습니다. 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
+      "highlight_summary": "==Anthropic가 'Anthropic Research: 형식 검증'== 연구 결과를 발표해 차세대 모델 성능과 추론 효율의 새 기준을 제시했어요. 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
       "planning_meta": {
-        "signal_type": "model_release",
+        "signal_type": "research_breakthrough",
         "product_domain": "ai-research-model",
-        "benchmark_point": "Synced · 기기지심 포착 — DeepSeek 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "DeepSeek의 'Synced · 기기지심 포착 — DeepSeek 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "DeepSeek"
+        "Anthropic"
       ]
     },
     {
@@ -1604,28 +1674,28 @@
       ]
     },
     {
-      "id": "live-3e2676efe418",
-      "title_ko": "AI 서비스 제공업체가 컴퓨팅 파워를 걱정할 때, 그들의 손에 있는 GPU는 잘 활용되고 있을까? - 소후",
-      "original_title": "AI服务商焦虑算力时，手里的GPU用好了吗？ - Sohu",
-      "platform_id": "jiqizhixin",
+      "id": "live-fb004b0ab30a",
+      "title_ko": "Anthropic 뉴스: IPO 마감",
+      "original_title": "Anthropic announces closing of initial public offering, including full exercise of underwriters’ option to purchase additional shares, and closing of concurrent private placement",
+      "platform_id": "anthropic",
       "author_handle": null,
-      "category": "research",
+      "category": "industry",
       "lifecycle_status": "hot",
-      "canonical_url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPYUwyRlVWUDYtS3BIRWcyZkU1ZFQ1TmJtM0sxMVJiWk9UMGYxZXQzd29jMXEtbE1XZDFBbmw1SEhKWXA3R3VHV1R3S3M1OXBWRUVFZFJ3OUpkVlBzTVNIRHFCS1BKTkVuWUZnYV93ZFZrSXh2WE9QTDZPQ2ZZLU5pNFNSMUJmMEJ4ampBVQ?oc=5",
-      "published_at": "2026-11-22T02:01:19Z",
-      "fetched_at": "2026-11-24T18:24:11.806991Z",
-      "importance_score": 23.1,
+      "canonical_url": "https://anthropic.com/news/ipo-close",
+      "published_at": "2026-11-20T00:00:00Z",
+      "fetched_at": "2026-11-23T13:31:11.993521Z",
+      "importance_score": 23.92,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==AI 서비스 제공업체가 컴퓨팅 파워를== 걱정할 때, 그들의 손에 있는 GPU는 잘 활용되고 있을까? 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
+      "highlight_summary": "==Anthropic가 전한 'Anthropic 뉴스: IPO== 마감' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
       "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "Synced · 기기지심 포착 — Synced · 기기지심 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "Synced · 기기지심의 'Synced · 기기지심 포착 — Synced · 기기지심 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "Anthropic의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Synced · 기기지심"
+        "Anthropic"
       ]
     },
     {
@@ -1680,83 +1750,6 @@
       ]
     },
     {
-      "id": "live-6081559db796",
-      "title_ko": "[AINews] 리만 가설이 두 번이나 독립적으로 증명되었습니다.",
-      "original_title": "[AINews] Riemann Hypothesis proved...twice independently",
-      "platform_id": "latent-space",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://latent.space/p/ainews-riemann-hypothesis-proved-twice-independently",
-      "published_at": "2026-11-21T05:02:13Z",
-      "fetched_at": "2026-11-23T13:31:11.993521Z",
-      "importance_score": 23.29,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==두 명의 수학자가 몇 시간== 간격으로(타임라인) 수학에서 가장 유명한 미해결 문제인 리만 가설에 대한 독립적인 증명을 주장했습니다(Scientific American). AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "Claude — 25만 기반 성능·효율 지표",
-        "actionable_idea": "Claude의 'Claude — 25만 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "OpenAI",
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-44a305d49922",
-      "title_ko": "Anthropic Research: 형식 검증",
-      "original_title": "Anthropic Research: Formal Verification",
-      "platform_id": "anthropic",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://anthropic.com/research/formal-verification",
-      "published_at": "2026-11-20T18:45:25.849000Z",
-      "fetched_at": "2026-11-23T13:31:11.993521Z",
-      "importance_score": 24.57,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Anthropic가 'Anthropic Research: 형식 검증'== 연구 결과를 발표해 차세대 모델 성능과 추론 효율의 새 기준을 제시했어요. 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
-      "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
-        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
-      ]
-    },
-    {
-      "id": "live-fb004b0ab30a",
-      "title_ko": "Anthropic 뉴스: IPO 마감",
-      "original_title": "Anthropic announces closing of initial public offering, including full exercise of underwriters’ option to purchase additional shares, and closing of concurrent private placement",
-      "platform_id": "anthropic",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://anthropic.com/news/ipo-close",
-      "published_at": "2026-11-20T00:00:00Z",
-      "fetched_at": "2026-11-23T13:31:11.993521Z",
-      "importance_score": 23.92,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==Anthropic가 전한 'Anthropic 뉴스: IPO== 마감' 이슈로 글로벌 AI 시장·서비스 전략의 방향 변화가 뚜렷해졌어요. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "Anthropic의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
-      ]
-    },
-    {
       "id": "live-9fef9270cdd5",
       "title_ko": "인류학 연구: 클로드 블랙홀 물리학",
       "original_title": "Anthropic Research: Claude Black Hole Physics",
@@ -1808,20 +1801,20 @@
       ]
     },
     {
-      "id": "live-705ad3f2223c",
-      "title_ko": "적대적 증류 방지",
-      "original_title": "Combatting adversarial distillation",
+      "id": "live-9c4f3852de8f",
+      "title_ko": "사내 법률을 위한 연결된 인텔리전스",
+      "original_title": "Connected intelligence for in-house legal",
       "platform_id": "openai",
       "author_handle": null,
       "category": "industry",
       "lifecycle_status": "warm",
-      "canonical_url": "https://openai.com/index/combatting-adversarial-distillation",
-      "published_at": "2026-11-20T10:00:00Z",
-      "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 23.29,
+      "canonical_url": "https://openai.com/business/learn/connected-intelligence-for-in-house-legal",
+      "published_at": "2026-11-23T08:00:00Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 24.79,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "==OpenAI의 적대적 증류에 대한 계층적== 접근 방식은 모델 훈련, 보호 조치, 탐지 및 시행을 결합하여 역량 추출로부터 보호합니다. AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "highlight_summary": "==OpenAI의 Stacey Wang, Craig Bruney,== LECG의 Mary O'Carroll, Cooley의 Richard Segal이 사내 법무팀이 비즈니스 컨텍스트를 연결하고 재사용 가능한 워크플로를 구축하며 외부 변호사로부터 더 많은… AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
       "planning_meta": {
         "signal_type": "industry_shift",
         "product_domain": "ai-business-infra",
@@ -2036,6 +2029,33 @@
       ]
     },
     {
+      "id": "live-6081559db796",
+      "title_ko": "[AINews] 리만 가설이 두 번이나 독립적으로 증명되었습니다.",
+      "original_title": "[AINews] Riemann Hypothesis proved...twice independently",
+      "platform_id": "latent-space",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://latent.space/p/ainews-riemann-hypothesis-proved-twice-independently",
+      "published_at": "2026-11-21T05:02:13Z",
+      "fetched_at": "2026-11-23T13:31:11.993521Z",
+      "importance_score": 23.29,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "==두 명의 수학자가 몇 시간== 간격으로(타임라인) 수학에서 가장 유명한 미해결 문제인 리만 가설에 대한 독립적인 증명을 주장했습니다(Scientific American). AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "Claude — 25만 기반 성능·효율 지표",
+        "actionable_idea": "Claude의 'Claude — 25만 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude",
+        "OpenAI",
+        "Anthropic"
+      ]
+    },
+    {
       "id": "live-1f910fb400db",
       "title_ko": "슬롭(Slop)과의 전쟁과 이를 퇴치하기 위한 새로운 무기: 형식 검증",
       "original_title": "The War Against Slop and an Emerging Weapon to Fight it: Formal Verification",
@@ -2061,31 +2081,6 @@
       ]
     },
     {
-      "id": "live-08e68c621ffe",
-      "title_ko": "[AINews] Anthropic, 사상 최대 규모의 IPO를 성공적으로 완료했으며, 기업 가치는 1.5조 달러에 달합니다.",
-      "original_title": "[AINews] Anthropic successfully completes largest IPO in history, valued at $1.5T",
-      "platform_id": "latent-space",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://latent.space/p/ainews-anthropic-successfully-completes-largest-ipo-in-history-valued-at-1-5t",
-      "published_at": "2026-11-20T07:12:24Z",
-      "fetched_at": "2026-11-23T13:31:11.993521Z",
-      "importance_score": 22.39,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "'상장(IPO) 전에 알아두어야 할 사항' 팟캐스트에서 미리 소개해 드린 바와 같이, Anthropic은 IPO 가격을 ==83달러==로 책정했으며, 오늘 $ANT는 공모가 대비 17% 상승한 97.17달러에 장을 마감했습니다(장 마감 후 -5% 하락하여… AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "Anthropic — 1.5조 기반 성능·효율 지표",
-        "actionable_idea": "Anthropic의 'Anthropic — 1.5조 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
-      ]
-    },
-    {
       "id": "live-4014c500a43e",
       "title_ko": "Thinkingmachines/Inkling-2-Mini — 새 AI 모델·기능 업데이트",
       "original_title": "thinkingmachines/Inkling-2-Mini",
@@ -2096,7 +2091,7 @@
       "canonical_url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
       "published_at": "2026-11-17T00:26:57Z",
       "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 34.11,
+      "importance_score": 34.2,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "포옹 얼굴 모델 저장소 'thinkingmachines/Inkling-2-Mini'. 대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요.",
@@ -2108,56 +2103,6 @@
       },
       "entities": [
         "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-bcc37ef45acc",
-      "title_ko": "나는 (Fable 5.2의 많은 도움을 받아) 새로운 데이터 세트 차트 플러그인을 구축했는데, 이는 Dat를 갖는 데 있어 최선의 시도입니다",
-      "original_title": "datasette-charts 0.1a0",
-      "platform_id": "simon-willison",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://simonwillison.net/2026/Nov/23/datasette-charts",
-      "published_at": "2026-11-23T00:37:20Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 28.41,
-      "source_count": 2,
-      "benefit_tag": null,
-      "highlight_summary": "==나는 Fable 5.2의 많은 도움을== 받아 새로운 Datasette-charts 플러그인을 만들었습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-ef12978eb3cb",
-      "title_ko": "놀랍게도 인간의 언어는 우주를 모델링하는 데 지나치게 효과적이었기 때문에",
-      "original_title": "It is amazing that human language turned out to be so unreasonably effective at modeling the universe that training a…",
-      "platform_id": "bluesky",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://bsky.app/profile/emollick.bsky.social/post/3n2seaj2c4c2m",
-      "published_at": "2026-11-21T05:22:44.733000Z",
-      "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 28.15,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "==놀랍게도 인간의 언어는 우주를 모델링하는== 데 지나치게 효과적이었기 때문에 문장에서 다음 단어를 예측하도록 시스템을 훈련시키는 것만으로도 이 정도의 성과를 거둘 수 있었습니다. 현업 AI 개발자·빌더가 지금 가장 주목하는 실전 사례라 댓글 반응과 한계점까지 함께 보면 기획 통찰이 선명해져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Bluesky의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Bluesky"
       ]
     },
     {
@@ -2180,6 +2125,31 @@
         "product_domain": "video-audio-media",
         "benchmark_point": "멀티모달 생성 자연스러움·실시간 처리 속도",
         "actionable_idea": "Hugging Face의 '멀티모달 생성 자연스러움·실시간 처리 속도' 요소를 참고해, 우리 video-audio-media 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-333374591041",
+      "title_ko": "SulphurAI/Sulphur-3 오픈 모델 공개",
+      "original_title": "SulphurAI/Sulphur-3",
+      "platform_id": "huggingface",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://huggingface.co/SulphurAI/Sulphur-3",
+      "published_at": "2026-10-31T20:31:01Z",
+      "fetched_at": "2026-11-23T10:35:04.678747Z",
+      "importance_score": 27.79,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "Hugging Face 개발 생태계에서 'SulphurAI/Sulphur-3 오픈 모델 공개' 구현 방식과 실전 적용 사례가 공개됐어요. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Hugging Face의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
         "Hugging Face"
@@ -2211,50 +2181,25 @@
       ]
     },
     {
-      "id": "live-333374591041",
-      "title_ko": "SulphurAI/Sulphur-3 오픈 모델 공개",
-      "original_title": "SulphurAI/Sulphur-3",
+      "id": "live-749bffc1f5fa",
+      "title_ko": "Antom 3-in-1 Transformer: 결제 기반 모델",
+      "original_title": "Antom 3-in-1 Transformer: A Payment Foundation Model",
       "platform_id": "huggingface",
       "author_handle": null,
-      "category": "dev",
+      "category": "research",
       "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/SulphurAI/Sulphur-3",
-      "published_at": "2026-10-31T20:31:01Z",
-      "fetched_at": "2026-11-23T10:35:04.678747Z",
-      "importance_score": 27.28,
+      "canonical_url": "https://arxiv.org/abs/2611.25403",
+      "published_at": "2026-11-19T00:00:00Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 24.67,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "Hugging Face 개발 생태계에서 'SulphurAI/Sulphur-3 오픈 모델 공개' 구현 방식과 실전 적용 사례가 공개됐어요. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "highlight_summary": "==우리는 지불 위험 감지를 위해== 시퀀스, 표 형식 및 그래프 표현을 통합하는 지불 기반 모델인 Antom 3-in-1 Transformer의 개발을 보고합니다. 조만간 상용 모델과 개발 도구에 흡수될 핵심 기법이라 실험 수치와 한계를 미리 짚어 두면 기술 로드맵에 도움돼요.",
       "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Hugging Face의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-6e9ceeed922d",
-      "title_ko": "포함AI/LingSante-3.1-플래시",
-      "original_title": "inclusionAI/LingSante-3.1-flash",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/inclusionAI/LingSante-3.1-flash",
-      "published_at": "2026-11-19T04:30:30Z",
-      "fetched_at": "2026-11-24T06:21:48.538125Z",
-      "importance_score": 24.23,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "포옹 얼굴 모델 저장소 'inclusionAI/LingSante-3.1-flash'. 대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요.",
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Hugging Face의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Hugging Face의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
         "Hugging Face"
@@ -2436,6 +2381,31 @@
       ]
     },
     {
+      "id": "live-829dc8d5ecc7",
+      "title_ko": "GLM-5.4: 첫 번째 루프 변환기를 사용한 일반화된 코딩을 향하여",
+      "original_title": "GLM-5.4: Toward generalized coding with our first loop transformer",
+      "platform_id": "hacker-news",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://z.ai/blog/glm-5.4",
+      "published_at": "2026-11-23T10:06:43Z",
+      "fetched_at": "2026-11-25T11:48:47.895699Z",
+      "importance_score": 39.54,
+      "source_count": 2,
+      "benefit_tag": null,
+      "highlight_summary": "==GLM-5.4가 나왔고 루프형 트랜스포머입니다.== 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "GLM의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GLM"
+      ]
+    },
+    {
       "id": "live-c0de4f7aecd1",
       "title_ko": "MedChemBench는 의약화학 분야의 AI 추론을 위한 새로운 벤치마크입니다. 이는 우리 개척지의 발전을 보여줍니다",
       "original_title": "@OpenAI: MedChemBench is a new benchmark for AI reasoning in medicinal chemistry. It shows the progress our frontier mo…",
@@ -2508,6 +2478,31 @@
       },
       "entities": [
         "Anthropic"
+      ]
+    },
+    {
+      "id": "live-bcc37ef45acc",
+      "title_ko": "나는 (Fable 5.2의 많은 도움을 받아) 새로운 데이터 세트 차트 플러그인을 구축했는데, 이는 Dat를 갖는 데 있어 최선의 시도입니다",
+      "original_title": "datasette-charts 0.1a0",
+      "platform_id": "simon-willison",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://simonwillison.net/2026/Nov/23/datasette-charts",
+      "published_at": "2026-11-23T00:37:20Z",
+      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "importance_score": 28.41,
+      "source_count": 2,
+      "benefit_tag": null,
+      "highlight_summary": "==나는 Fable 5.2의 많은 도움을== 받아 새로운 Datasette-charts 플러그인을 만들었습니다. 코딩 에이전트와 개발 워크플로 생산성에 바로 영향을 주는 변화라 도입 여부를 빠르게 가늠해 볼 가치가 커요.",
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude"
       ]
     },
     {
