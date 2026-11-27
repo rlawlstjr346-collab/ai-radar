@@ -10,13 +10,17 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "gen:sample": "node scripts/gen-sample-platforms.mjs",
-    "audit:snapshot": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-audit-snapshot.mjs"
+    "audit:snapshot": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-audit-snapshot.mjs",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",
+    "@opennextjs/cloudflare": "^1.20.19",
     "@supabase/supabase-js": "^2.57.4",
     "lucide-react": "^0.544.0",
-    "next": "15.5.28",
+    "next": "^15.5.29",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "server-only": "^0.0.1",
@@ -30,10 +34,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.28",
+    "eslint-config-next": "^15.5.29",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.168.0"
   },
   "overrides": {
     "rollup": "npm:@rollup/wasm-node@4.68.7"
