@@ -467,12 +467,12 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     expect(sameAgain).toBe(merged);
   });
 
-  it("vercel.json 에 일 1회 초과 crons 설정이 없고, collect.yml 이 오프피크 스케줄(3,23,43)과 timeout 12분을 유지한다", () => {
+  it("vercel.json 에 일 1회 초과 crons 설정이 없고, collect.yml 이 매시 1회 오프피크 스케줄(23분)과 timeout 12분을 유지한다", () => {
     const vercelJson = JSON.parse(readFileSync(join(__dirname, "../vercel.json"), "utf8")) as Record<string, unknown>;
     expect(vercelJson.crons).toBeUndefined();
 
     const collectYml = readFileSync(join(__dirname, "../../.github/workflows/collect.yml"), "utf8");
-    expect(collectYml).toContain('cron: "3,23,43 * * * *"');
+    expect(collectYml).toContain('cron: "23 * * * *"');
     expect(collectYml).toContain("timeout-minutes: 12");
     expect(collectYml).toContain("cancel-in-progress: true");
     expect(collectYml).toContain("web/public/data/planning-feed.json");
