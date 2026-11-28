@@ -413,7 +413,7 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     expect(parsedAtom[0].link).toBe("https://simonwillison.net/2026/nov/24/claude/");
   });
 
-  it("클라이언트 fetchLatestLiveFeed 는 GitHub Raw live-feed.json 을 최우선 호출하고 모달 열린 기사 보존·무변경 참조 유지를 보장한다", async () => {
+  it("클라이언트 fetchLatestLiveFeed 는 엣지 /api/live-feed 를 최우선 호출하고 모달 열린 기사 보존·무변경 참조 유지를 보장한다", async () => {
     const freshItem: FeedItem & { easy_original: { sections: Array<{ heading: string; body: string; quote: null }>; watch_points: string[] } } = {
       ...SAMPLE_FEED[0],
       id: "live-edge-abc123456789",
@@ -433,7 +433,7 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     const mockFetch: typeof fetch = vi.fn(async (input) => {
       const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
       calledUrls.push(url);
-      if (url.startsWith("https://raw.githubusercontent.com/")) {
+      if (url === "/api/live-feed") {
         return new Response(
           JSON.stringify({
             version: 1,
@@ -448,8 +448,8 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     });
 
     const snap = await fetchLatestLiveFeed(VALID_PLATFORM_IDS, undefined, mockFetch);
-    expect(calledUrls).toEqual(["https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json"]);
-    expect(snap?.source).toBe("remote");
+    expect(calledUrls).toEqual(["/api/live-feed"]);
+    expect(snap?.source).toBe("api");
     expect(snap?.items[0].id).toBe("live-edge-abc123456789");
     expect(getClientEasyOriginal("live-edge-abc123456789")?.sections[0].heading).toBe("배경");
 

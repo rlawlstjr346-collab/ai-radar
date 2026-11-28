@@ -317,6 +317,21 @@ def _normalize_published_at(pub: Optional[datetime], now: datetime, region: str)
     return pub
 
 
+DATE_ONLY_WINDOW = timedelta(hours=36)
+
+
+def _is_date_only(dt: Optional[datetime]) -> bool:
+    """시·분이 없는 RSS 날짜('2026-11-28')는 00:00:00 UTC 로 파싱돼 최대 하루 가까이 과거로 밀린다."""
+    return dt is not None and dt.hour == 0 and dt.minute == 0 and dt.second == 0 and dt.microsecond == 0
+
+
+def _fix_date_only(pub: Optional[datetime], first_seen: datetime) -> Optional[datetime]:
+    """날짜만 있는 발행 시각은 우리가 처음 포착한 시각(first_seen_at)으로 교정한다 (같은 날·36시간 이내일 때만)."""
+    if _is_date_only(pub) and timedelta(0) <= first_seen - pub <= DATE_ONLY_WINDOW:
+        return first_seen
+    return pub
+
+
 def _summary_char_count(
     *,
     context_ko: str,
@@ -501,7 +516,7 @@ def candidate_to_snapshot_item(
     region = platform.get("region") or "global"
 
     # 원문 발행 시각(published_at)과 수집 시각(fetched_at)을 명확히 분리한다.
-    pub = _normalize_published_at(c.published_at, now, region)
+    pub = _fix_date_only(_normalize_published_at(c.published_at, now, region), now)
     if pub and (now - pub) > timedelta(days=RETENTION_DAYS):
         return None
 
@@ -685,6 +700,7 @@ def candidate_to_snapshot_item(
         "lifecycle_status": lifecycle,
         "published_at": pub_iso,
         "fetched_at": fetched_iso,
+        "first_seen_at": fetched_iso,
         "created_at": created_iso,
         "original_title": raw_title,
         "title_ko": title_ko,
@@ -1094,6 +1110,12 @@ def build_and_save_snapshot(
         kept.setdefault("fetched_at", old_generated_at or str(kept.get("created_at") or now_iso))
         kept.setdefault("original_title", str(kept.get("hook_title") or ""))
         kept.setdefault("title_ko", str(kept.get("hook_title") or ""))
+        kept.setdefault("first_seen_at", str(kept.get("fetched_at") or ""))
+        seen_dt = _parse_iso(kept.get("first_seen_at"))
+        pub_dt = _parse_iso(kept.get("published_at"))
+        if seen_dt is not None and pub_dt is not None and _fix_date_only(pub_dt, seen_dt) is seen_dt:
+            kept["published_at"] = kept["first_seen_at"]
+            kept["created_at"] = kept["first_seen_at"]
         kept["lifecycle_status"] = "hot" if age_days <= HOT_DAYS else "warm"
         by_url[url] = kept
         by_id[str(kept.get("id"))] = kept
@@ -1132,7 +1154,10 @@ def build_and_save_snapshot(
             if not merged.get("author_handle") and built.get("author_handle"):
                 merged["author_handle"] = built["author_handle"]
             prev_pub = prev.get("published_at")
-            if built.get("published_at") and (not prev_pub or (old_generated_at and prev_pub == old_generated_at)):
+            date_only = _is_date_only(c.published_at.astimezone(timezone.utc) if c.published_at and c.published_at.tzinfo else c.published_at)
+            if built.get("published_at") and not (date_only and prev_pub) and (
+                not prev_pub or (old_generated_at and prev_pub == old_generated_at)
+            ):
                 merged["published_at"] = built["published_at"]
                 merged["created_at"] = built["created_at"]
                 merged["lifecycle_status"] = built["lifecycle_status"]

@@ -147,6 +147,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"\n=== 6) 스냅샷 저장: {args.snapshot_json} ({payload['item_count']}건, changed={changed}) ===")
         print(f"       기획팀 피드: {planning_path}")
+        from pipeline.ingest import push_snapshot
+        pushed = push_snapshot(args.snapshot_json)
+        print(f"=== 7) 엣지 D1 반영: {pushed if pushed is not None else '건너뜀 (FEED_INGEST_URL/SECRET 없음 또는 실패)'} ===")
 
     ok_or_skipped = sum(1 for r in report.sources if not r.error)
     if ok_or_skipped == 0:

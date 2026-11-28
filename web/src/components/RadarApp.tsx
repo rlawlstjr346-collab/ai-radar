@@ -16,7 +16,7 @@ import { CategoryNav, Masthead } from "./newsroom/Masthead";
 import type { TitleLang } from "./Sidebar";
 
 const CLOCK_TICK_MS = 30_000;
-const LIVE_POLL_INTERVAL_MS = 60_000;
+const LIVE_POLL_INTERVAL_MS = 30_000;
 const LIVE_REFRESH_MIN_GAP_MS = 15_000;
 const AUTO_MERGE_SCROLL_Y = 240;
 const PILL_VISIBLE_MS = 7_000;
@@ -75,6 +75,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const now = useNow(data.generatedAt);
   const [items, setItems] = useState<FeedItem[]>(data.items);
   const [lastCollectedAt, setLastCollectedAt] = useState<string | null>(data.lastCollectedAt ?? null);
+  // 엣지 5분 스캔이 마지막으로 확인한 시각 — 새 기사가 없어도 '마지막 업데이트'가 실제 확인 시각을 따라간다
+  const [scannedAt, setScannedAt] = useState<string | null>(null);
   const [tab, setTab] = useState<NewsTab>("all");
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query.trim());
@@ -88,6 +90,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const selectionRef = useRef(selection);
   selectionRef.current = selection;
   const lastCollectedRef = useRef(lastCollectedAt);
+  const apiSinceRef = useRef<string | null>(null);
   lastCollectedRef.current = lastCollectedAt;
 
   useEffect(() => setReadIds(loadReadIds()), []);
@@ -119,9 +122,12 @@ export default function RadarApp({ data }: { data: RadarData }) {
       ctrl?.abort();
       const c = new AbortController();
       ctrl = c;
-      fetchLatestLiveFeed(validPlatformIds, c.signal)
+      fetchLatestLiveFeed(validPlatformIds, c.signal, fetch, apiSinceRef.current)
         .then((snap) => {
-          if (!snap || c.signal.aborted || !isNewerSnapshot(snap.generatedAt, lastCollectedRef.current)) return;
+          if (!snap || c.signal.aborted) return;
+          if (snap.scannedAt) setScannedAt((prev) => (isNewerSnapshot(snap.scannedAt, prev) ? snap.scannedAt! : prev));
+          if (snap.source === "api" && snap.generatedAt && !snap.unchanged) apiSinceRef.current = snap.generatedAt;
+          if (snap.unchanged || !isNewerSnapshot(snap.generatedAt, lastCollectedRef.current)) return;
           const fresh = countNew(itemsRef.current, snap.items);
           const reading = window.scrollY > AUTO_MERGE_SCROLL_Y || selectionRef.current !== null;
           if (fresh === 0 || !reading) {
@@ -264,7 +270,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [navOrder, selection, openItem]);
 
-  const lastLabel = formatLastCollected(lastCollectedAt, now);
+  const lastLabel = formatLastCollected(isNewerSnapshot(scannedAt, lastCollectedAt) ? scannedAt : lastCollectedAt, now);
   const statusLabel = lastLabel ? (lastLabel === "방금 전" ? "방금 업데이트" : `마지막 업데이트 ${lastLabel}`) : "실시간 수신 중";
   const selectedItem = selection?.type === "item" ? findItem(selection.id) ?? null : null;
 

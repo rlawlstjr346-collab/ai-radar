@@ -64,8 +64,8 @@ export const SIDE_COUNT = 2;
 export const FEATURE_COUNT = 2;
 /** 1면 포토 슬롯(히어로 + 좌측 2선) 신선도 창: 30시간 → 부족하면 48시간 → 전체 */
 export const PHOTO_SLOT_WINDOWS_H: readonly number[] = [30, 48, Number.POSITIVE_INFINITY];
-/** 경과 시간 감쇠 반감기 — 12시간마다 점수가 절반 */
-export const PHOTO_DECAY_HALF_LIFE_H = 12;
+/** 경과 시간 감쇠 반감기 — 90분마다 점수가 절반 (몇 시간 지난 기사가 1면 포토 자리에 고착되지 않게) */
+export const PHOTO_DECAY_HALF_LIFE_H = 1.5;
 const PHOTO_SLOTS = 1 + SIDE_COUNT;
 
 const ageHours = (item: FeedItem, now: number) => Math.max(0, (now - itemTime(item, now)) / 3_600_000);

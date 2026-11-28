@@ -29,6 +29,10 @@ export interface ClientLiveSnapshot {
   items: FeedItem[];
   source: "api" | "remote" | "local";
   liveAddedCount?: number;
+  /** 엣지 5분 스캔이 마지막으로 확인한 시각 (새 기사가 없어도 갱신) */
+  scannedAt?: string | null;
+  /** since 이후 바뀐 것이 없어 본문 없이 끝난 응답(204) */
+  unchanged?: boolean;
 }
 
 function coerceEasy(raw: unknown): EasyOriginal | null {
@@ -177,7 +181,8 @@ function parseClientSnapshot(
   const generatedAt =
     typeof raw?.generated_at === "string" && !Number.isNaN(Date.parse(raw.generated_at)) ? raw.generated_at : null;
   const liveAddedCount = typeof raw?.live_added_count === "number" ? raw.live_added_count : undefined;
-  return { generatedAt, items, source, liveAddedCount };
+  const scannedAt = typeof raw?.scanned_at === "string" && !Number.isNaN(Date.parse(raw.scanned_at)) ? raw.scanned_at : null;
+  return { generatedAt, items, source, liveAddedCount, scannedAt };
 }
 
 async function fetchJsonWithTimeout(
@@ -208,16 +213,43 @@ async function fetchJsonWithTimeout(
   }
 }
 
+const API_LIVE_FEED_URL = "/api/live-feed";
+const API_FETCH_TIMEOUT_MS = 6_000;
+
 /**
- * 1순위: 공개 GitHub Raw 최신 `live-feed.json` — 15분 주기 수집 커밋을 재배포 없이 바로 받는다.
- *        `cache: "no-cache"` 로 ETag 조건부 요청을 보내 바뀐 게 없으면 304 로 가볍게 끝난다.
- * 2순위: 같은 배포에 번들된 정적 `/live-feed.json` 안전 폴백
+ * 1순위: 같은 Worker 의 `/api/live-feed?since=` — D1 스냅샷(5분 엣지 스캔 + 15분 심층 수집). 바뀐 게 없으면 204 로 몇 바이트만 오간다.
+ * 2순위: 공개 GitHub Raw `live-feed.json` (ETag 조건부 요청)
+ * 3순위: 같은 배포에 번들된 정적 `/live-feed.json`
  */
 export async function fetchLatestLiveFeed(
   validPlatformIds: Set<string>,
   signal?: AbortSignal,
   fetchImpl: typeof fetch = fetch,
+  since?: string | null,
 ): Promise<ClientLiveSnapshot | null> {
+  const apiUrl = since ? `${API_LIVE_FEED_URL}?since=${encodeURIComponent(since)}` : API_LIVE_FEED_URL;
+  const ctrl = new AbortController();
+  const onAbort = () => ctrl.abort();
+  signal?.addEventListener("abort", onAbort, { once: true });
+  const timer = setTimeout(() => ctrl.abort(), API_FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetchImpl(apiUrl, { signal: ctrl.signal, cache: "no-store", headers: { Accept: "application/json" } });
+    if (res.status === 204) {
+      return { generatedAt: res.headers.get("x-generated-at"), items: [], source: "api", unchanged: true, scannedAt: res.headers.get("x-scanned-at") };
+    }
+    if (res.ok) {
+      const raw = (await res.json()) as Record<string, unknown>;
+      const parsed = raw && typeof raw === "object" ? parseClientSnapshot(raw, validPlatformIds, "api") : null;
+      if (parsed) return parsed;
+    }
+  } catch {
+    // 엣지 API 장애 시 아래 정적 경로로
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", onAbort);
+  }
+  if (signal?.aborted) return null;
+
   const remoteRaw = await fetchJsonWithTimeout(REMOTE_LIVE_FEED_URL, REMOTE_FETCH_TIMEOUT_MS, "no-cache", signal, fetchImpl);
   if (remoteRaw) {
     const parsed = parseClientSnapshot(remoteRaw, validPlatformIds, "remote");

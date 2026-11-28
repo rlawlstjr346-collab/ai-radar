@@ -128,3 +128,10 @@ def test_repeated_sentences_across_items_are_dropped():
     enrich_snapshot_items(items, image_cache={}, fetch_og=False)
     for n, it in enumerate(items):
         assert it["easy_summary_ko"] == f"사건 {n}번의 고유한 사실이 공개됐어요."
+
+
+def test_ingest_keys_match_edge_rules():
+    from pipeline.ingest import title_key, url_key
+    assert url_key("https://www.AItimes.com/news/articleView.html?idxno=1") == "aitimes.com/news/articleView.html"
+    assert url_key("https://news.ycombinator.com/item?id=42") == "news.ycombinator.com/item?id=42"
+    assert title_key("오픈AI, 새 모델 공개 - 연합뉴스") == "t:오픈ai새모델공개"
