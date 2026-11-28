@@ -160,3 +160,26 @@ describe("5분 엣지 스캐너", () => {
     expect(stats.writes - writesBefore).toBe(1); // 메타 1행만
   });
 });
+
+describe("엣지 Gemini 재시도 상한", () => {
+  it("영문 기사가 두 번 연속 실패하면 세 번째 주기부터는 Gemini 를 부르지 않는다", async () => {
+    const { db } = fakeD1();
+    const en = `<rss><item><title>OpenAI ships a thing</title><link>https://techcrunch.com/2026/11/28/y/</link><pubDate>Sat, 28 Nov 2026 10:10:00 GMT</pubDate></item></rss>`;
+    let calls = 0;
+    const f = (async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("generativelanguage")) {
+        calls += 1;
+        return new Response("quota", { status: 429 });
+      }
+      return url.includes("techcrunch") ? new Response(en) : new Response("", { status: 500 });
+    }) as typeof fetch;
+    const r1 = await runEdgeScan({ DB: db, GEMINI_API_KEY: "k" }, new Date("2026-11-28T10:30:00Z"), f);
+    const r2 = await runEdgeScan({ DB: db, GEMINI_API_KEY: "k" }, new Date("2026-11-28T10:35:00Z"), f);
+    const r3 = await runEdgeScan({ DB: db, GEMINI_API_KEY: "k" }, new Date("2026-11-28T10:40:00Z"), f);
+    expect([r1.deferred, r2.deferred, r3.fresh_new]).toEqual([1, 1, 0]);
+    expect(r3.gemini_calls).toBe(0);
+    expect(r1.failed_sources.some((s) => s.startsWith("gn-ko:"))).toBe(true);
+    expect(calls).toBe(6); // 2주기 × 모델 체인 3개, 이후 0
+  });
+});

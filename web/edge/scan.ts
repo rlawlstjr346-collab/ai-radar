@@ -19,6 +19,8 @@ export interface EdgeSource {
   /** 시간대 표기가 없는 로컬 시각(예: AI타임스 '2026-11-28 18:31:30')의 오프셋 */
   tz?: string;
   limit: number;
+  /** 앞부분만 훑을 바이트 수 (본문 전문을 싣는 Atom 피드만 크게) */
+  maxText?: number;
 }
 
 export const EDGE_SOURCES: EdgeSource[] = [
@@ -30,14 +32,14 @@ export const EDGE_SOURCES: EdgeSource[] = [
     url: "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&numericFilters=points%3E15&hitsPerPage=8" },
   { id: "aitimes", platform: "aitimes", category: "industry", kind: "rss", lang: "ko", tz: "+09:00", limit: 6,
     url: "https://www.aitimes.com/rss/allArticle.xml" },
-  { id: "verge", platform: "the-verge-ai", category: "industry", kind: "rss", lang: "en", limit: 4,
+  { id: "verge", platform: "the-verge-ai", category: "industry", kind: "rss", lang: "en", limit: 4, maxText: 45_000,
     url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml" },
   { id: "techcrunch", platform: "techcrunch-ai", category: "industry", kind: "rss", lang: "en", limit: 4,
     url: "https://techcrunch.com/category/artificial-intelligence/feed/" },
 ];
 
 export const FETCH_TIMEOUT_MS = 3000;
-export const MAX_TEXT = 60_000;
+export const MAX_TEXT = 16_000;
 export const FRESH_WINDOW_MS = 6 * 3_600_000;
 export const EDGE_TTL_MS = 36 * 3_600_000;
 export const EDGE_CAP = 40;
@@ -82,7 +84,7 @@ export function parseDate(raw: string | null, tz?: string): number | null {
 }
 
 export function parseFeed(text: string, source: EdgeSource): RawEntry[] {
-  const body = text.slice(0, MAX_TEXT);
+  const body = text.slice(0, source.maxText ?? MAX_TEXT);
   if (source.kind === "hn") {
     try {
       const hits = (JSON.parse(body) as { hits?: Array<Record<string, unknown>> }).hits ?? [];
@@ -124,17 +126,25 @@ export function parseFeed(text: string, source: EdgeSource): RawEntry[] {
   return out;
 }
 
-async function fetchText(url: string, fetchImpl: typeof fetch): Promise<string | null> {
+const BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
+
+async function fetchText(source: EdgeSource, fetchImpl: typeof fetch): Promise<{ text: string | null; status: string }> {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
   try {
-    const res = await fetchImpl(url, {
+    const res = await fetchImpl(source.url, {
       signal: ctrl.signal,
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; AI-Radar-Edge/1.0)", Accept: "application/rss+xml, application/xml, application/json, text/xml" },
+      headers: {
+        // 구글 뉴스는 봇 UA 를 거절하는 경우가 있어 일반 브라우저 UA + 언어 헤더로 요청한다
+        "User-Agent": source.id.startsWith("gn") ? BROWSER_UA : "Mozilla/5.0 (compatible; AI-Radar-Edge/1.0)",
+        "Accept-Language": source.lang === "ko" ? "ko-KR,ko;q=0.9" : "en-US,en;q=0.9",
+        Accept: "application/rss+xml, application/xml, application/json, text/xml;q=0.9, */*;q=0.5",
+      },
     });
-    return res.ok ? await res.text() : null;
-  } catch {
-    return null;
+    if (!res.ok) return { text: null, status: String(res.status) };
+    return { text: await res.text(), status: "200" };
+  } catch (e) {
+    return { text: null, status: (e as Error)?.name === "AbortError" ? "timeout" : "error" };
   } finally {
     clearTimeout(t);
   }
@@ -283,6 +293,7 @@ export async function buildEdgeItem(e: RawEntry, edit: Edited | null, nowIso: st
 
 export interface ScanReport {
   fetched: number;
+  failed_sources: string[];
   candidates: number;
   fresh_new: number;
   published: number;
@@ -299,10 +310,11 @@ export interface ScanReport {
 export async function runEdgeScan(env: EdgeEnv, now = new Date(), fetchImpl: typeof fetch = fetch): Promise<ScanReport> {
   const nowMs = now.getTime();
   const nowIso = now.toISOString();
-  const [rows, ...texts] = await Promise.all([
+  const [rows, ...fetched] = await Promise.all([
     readRows(env.DB, ["meta", "edge", "seen"]),
-    ...EDGE_SOURCES.map((s) => fetchText(s.url, fetchImpl)),
+    ...EDGE_SOURCES.map((s) => fetchText(s, fetchImpl)),
   ]);
+  const texts = fetched.map((f) => f.text);
   const rowsRead = rows.size;
   const seen = new Set<string>(safeArray<string>(rows.get("seen")));
   seen.delete("");
@@ -330,7 +342,13 @@ export async function runEdgeScan(env: EdgeEnv, now = new Date(), fetchImpl: typ
       built.push(item);
       seen.add(urlKey(uniq[i].link));
       if (titleKey(uniq[i].title)) seen.add(titleKey(uniq[i].title));
-    } else deferred += 1; // 영문 + Gemini 실패 → seen 에 넣지 않아 다음 주기에 재시도
+    } else {
+      // 영문 + Gemini 실패 → 다음 주기에 한 번만 더 시도하고, 두 번째도 실패하면 포기 (같은 기사로 Gemini 를 계속 부르지 않게)
+      deferred += 1;
+      const k = urlKey(uniq[i].link);
+      if (seen.has(`r:${k}`)) seen.add(k);
+      else seen.add(`r:${k}`);
+    }
   }
 
   const prev = parseMeta(rows.get("meta"));
@@ -345,13 +363,14 @@ export async function runEdgeScan(env: EdgeEnv, now = new Date(), fetchImpl: typ
     count: prev?.count ?? 0,
     edge_count: edge.length,
   };
-  const statements = built.length > 0
+  const statements = built.length > 0 || deferred > 0
     ? [upsert(env.DB, "edge", JSON.stringify(edge), nowIso), upsert(env.DB, "seen", JSON.stringify(Array.from(seen).slice(-SEEN_CAP)), nowIso), upsert(env.DB, "meta", JSON.stringify(meta), nowIso)]
     : [upsert(env.DB, "meta", JSON.stringify(meta), nowIso)];
   await env.DB.batch(statements);
   resetMemo();
   return {
     fetched: texts.filter(Boolean).length,
+    failed_sources: EDGE_SOURCES.flatMap((s, i) => (texts[i] ? [] : [`${s.id}:${fetched[i].status}`])),
     candidates: entries.length,
     fresh_new: uniq.length,
     published: built.length,

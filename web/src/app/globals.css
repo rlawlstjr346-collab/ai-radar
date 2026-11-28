@@ -868,7 +868,7 @@ html[data-modal="open"] {
 /* ── 새 소식 도착 필 ───────────────────────────────────────────────────── */
 .arrival-pill {
   position: fixed;
-  top: 4.75rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   left: 50%;
   z-index: 45;
   display: inline-flex;
@@ -891,7 +891,7 @@ html[data-modal="open"] {
 @keyframes pill-in {
   from {
     opacity: 0;
-    transform: translate3d(-50%, -8px, 0);
+    transform: translate3d(-50%, 8px, 0);
   }
   to {
     opacity: 1;
