@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-11-28T15:32:24.350931Z",
+  "updated_at": "2026-11-28T15:47:14.563266Z",
   "sources": {
     "https://aws.amazon.com/blogs/machine-learning/feed/": {
       "source_id": "seed-56-aws-ml",
       "platform_id": "aws-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.718516Z",
+      "last_checked_at": "2026-11-28T15:45:43.181363Z",
       "cooldown_until": null,
       "last_modified": "Fri, 27 Nov 2026 22:27:21 GMT"
     },
@@ -13,21 +13,21 @@
       "source_id": "seed-31-hatena-bookmark",
       "platform_id": "hatena-bookmark",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:48.318649Z",
+      "last_checked_at": "2026-11-28T15:45:40.561262Z",
       "cooldown_until": null
     },
     "https://blog.google/technology/ai/rss/": {
       "source_id": "seed-57-google-deepmind",
       "platform_id": "google-deepmind",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.993482Z",
+      "last_checked_at": "2026-11-28T15:45:43.352050Z",
       "cooldown_until": null
     },
     "https://blogs.nvidia.com/feed/": {
       "source_id": "seed-51-nvidia-ai",
       "platform_id": "nvidia-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.539943Z",
+      "last_checked_at": "2026-11-28T15:45:42.917253Z",
       "cooldown_until": null,
       "etag": "\"09dbf3ffa8fbd71fcf4527a9f9e12030-gzip\"",
       "last_modified": "Thu, 26 Nov 2026 14:00:22 GMT"
@@ -36,46 +36,46 @@
       "source_id": "seed-11-civitai",
       "platform_id": "civitai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.733664Z",
+      "last_checked_at": "2026-11-28T15:45:39.715513Z",
       "cooldown_until": null,
-      "etag": "W/\"fpznq1tjp81ub2m\""
+      "etag": "W/\"6ggczxblnk1ublc\""
     },
     "https://d2.naver.com/d2.atom": {
       "source_id": "seed-24-naver-d2",
       "platform_id": "naver-d2",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:49.684729Z",
+      "last_checked_at": "2026-11-28T15:45:42.368358Z",
       "cooldown_until": null
     },
     "https://deepmind.google/blog/rss.xml": {
       "source_id": "seed-05-google-deepmind",
       "platform_id": "google-deepmind",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:47.339889Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:45:39.450467Z",
       "cooldown_until": null,
-      "etag": "\"0M48Dw\""
+      "etag": "\"B_PQwQ\""
     },
     "https://discuss.pytorch.kr/c/news/14.rss": {
       "source_id": "seed-14-pytorch-kr",
       "platform_id": "pytorch-kr",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:49.832703Z",
+      "last_checked_at": "2026-11-28T15:45:41.439846Z",
       "cooldown_until": null
     },
     "https://engineering.linecorp.com/ko/feed/": {
       "source_id": "seed-25-line-engineering",
       "platform_id": "line-engineering",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:48.179906Z",
+      "last_checked_at": "2026-11-28T15:45:40.314058Z",
       "cooldown_until": null,
-      "etag": "W/\"058bfee94670b9bb2cc7c2916bdb2b49\"",
+      "etag": "\"058bfee94670b9bb2cc7c2916bdb2b49\"",
       "last_modified": "Fri, 27 Nov 2026 03:07:43 GMT"
     },
     "https://feeds.arstechnica.com/arstechnica/technology-lab": {
       "source_id": "seed-62-ars-technica-ai",
       "platform_id": "ars-technica-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.840808Z",
+      "last_checked_at": "2026-11-28T15:45:43.578428Z",
       "cooldown_until": null,
       "etag": "\"3809dace6e9f8747f953f7cd9f5f72cc\"",
       "last_modified": "Sat, 28 Nov 2026 12:00:20 GMT"
@@ -84,23 +84,23 @@
       "source_id": "seed-39-qwen",
       "platform_id": "qwen",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:54.616445Z",
+      "last_checked_at": "2026-11-28T15:45:47.465540Z",
       "cooldown_until": null,
-      "etag": "W/\"2de496af0995fc646643f2702eef9210\""
+      "etag": "W/\"6ec4aa93c6d3923f9223ffde1f639b39\""
     },
     "https://github.com/QwenLM/qwen-code/releases.atom": {
       "source_id": "seed-41-qwen",
       "platform_id": "qwen",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:59.876564Z",
+      "last_checked_at": "2026-11-28T15:45:51.967317Z",
       "cooldown_until": null,
-      "etag": "W/\"7b1935701fccf58d26c3e56597084e53\""
+      "etag": "W/\"400c153f0ac5584cf32639effcad26f0\""
     },
     "https://github.com/comfyanonymous/ComfyUI/releases.atom": {
       "source_id": "seed-10-comfyui",
       "platform_id": "comfyui",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:53.116284Z",
+      "last_checked_at": "2026-11-28T15:45:45.838182Z",
       "cooldown_until": null,
       "etag": "W/\"e954c08a63e40b60196a5d454b0a7419\""
     },
@@ -108,7 +108,7 @@
       "source_id": "seed-40-deepseek",
       "platform_id": "deepseek",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:56.558136Z",
+      "last_checked_at": "2026-11-28T15:45:49.532024Z",
       "cooldown_until": null,
       "etag": "\"cbf1dbad3a8bde6996e6c66e305587f7\""
     },
@@ -116,15 +116,15 @@
       "source_id": "seed-09-github",
       "platform_id": "github",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:52.002964Z",
+      "last_checked_at": "2026-11-28T15:45:44.448153Z",
       "cooldown_until": null,
-      "etag": "W/\"5b365c12c0d5085a3168bdee1016499a\""
+      "etag": "W/\"ea9b74f7f69af3eb3d732abb9455927a\""
     },
     "https://github.com/langchain-ai/langgraph/releases.atom": {
       "source_id": "seed-49-langchain",
       "platform_id": "langchain",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:31:02.818564Z",
+      "last_checked_at": "2026-11-28T15:45:55.507184Z",
       "cooldown_until": null,
       "etag": "W/\"8fde805c09318178a4064fcf42278485\""
     },
@@ -132,7 +132,7 @@
       "source_id": "seed-63-mistral-ai",
       "platform_id": "mistral-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:31:05.033519Z",
+      "last_checked_at": "2026-11-28T15:45:56.821453Z",
       "cooldown_until": null,
       "etag": "W/\"b2c25625bb5ad483543502a5b74094a0\""
     },
@@ -140,7 +140,7 @@
       "source_id": "seed-42-modelscope",
       "platform_id": "modelscope",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:31:01.407164Z",
+      "last_checked_at": "2026-11-28T15:45:53.332421Z",
       "cooldown_until": null,
       "etag": "W/\"15bcf55fb0b5f98cab6b5ea8ffb0b094\""
     },
@@ -148,7 +148,7 @@
       "source_id": "seed-07-ollama",
       "platform_id": "ollama",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:47.607794Z",
+      "last_checked_at": "2026-11-28T15:45:39.307716Z",
       "cooldown_until": null,
       "etag": "W/\"8cf2b3188788fb88126d1b94ab9ead65\""
     },
@@ -156,7 +156,7 @@
       "source_id": "seed-08-github",
       "platform_id": "github",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.248728Z",
+      "last_checked_at": "2026-11-28T15:45:42.117406Z",
       "cooldown_until": null,
       "etag": "W/\"bc43809cab157d12b073a8717180ea5e\""
     },
@@ -164,105 +164,105 @@
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:49.680896Z",
+      "last_checked_at": "2026-11-28T15:45:41.804257Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:02.962182Z",
+      "last_checked_at": "2026-11-28T15:45:56.706684Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:56.855462Z",
+      "last_checked_at": "2026-11-28T15:45:50.018129Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:51.515806Z",
+      "last_checked_at": "2026-11-28T15:45:43.881055Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:59.062613Z",
+      "last_checked_at": "2026-11-28T15:45:52.240034Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.787495Z",
+      "last_checked_at": "2026-11-28T15:45:39.295748Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:12.762852Z",
+      "last_checked_at": "2026-11-28T15:46:07.115555Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:01.371774Z",
+      "last_checked_at": "2026-11-28T15:45:54.448034Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:10.994084Z",
+      "last_checked_at": "2026-11-28T15:46:04.983798Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:08.588121Z",
+      "last_checked_at": "2026-11-28T15:46:01.382808Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:09.327918Z",
+      "last_checked_at": "2026-11-28T15:46:02.873397Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:05.750462Z",
+      "last_checked_at": "2026-11-28T15:45:59.203405Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=twitter.com%20status%20AI&hitsPerPage=40": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:54.914246Z",
+      "last_checked_at": "2026-11-28T15:45:47.972115Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=x.com%20status&hitsPerPage=50": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:53.379419Z",
+      "last_checked_at": "2026-11-28T15:45:45.776000Z",
       "cooldown_until": null
     },
     "https://huggingface.co/api/daily_papers": {
       "source_id": "seed-00-huggingface",
       "platform_id": "huggingface",
-      "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.353277Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-28T15:45:39.073734Z",
       "cooldown_until": null,
       "etag": "W/\"45446-1KPYX15UiF5ULu7lgZs2bTNF6/U\""
     },
@@ -286,7 +286,7 @@
       "source_id": "seed-26-huggingface",
       "platform_id": "huggingface",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:49.347323Z",
+      "last_checked_at": "2026-11-28T15:45:41.163339Z",
       "cooldown_until": null,
       "etag": "W/\"42676-LtG2tM8PP55r2AsJTaaxFMoyXOI\""
     },
@@ -311,7 +311,7 @@
       "source_id": "seed-52-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.614500Z",
+      "last_checked_at": "2026-11-28T15:45:43.277391Z",
       "cooldown_until": null,
       "etag": "W/\"6b00aa86-260d\"",
       "last_modified": "Fri, 20 Nov 2026 20:16:06 GMT"
@@ -319,30 +319,30 @@
     "https://magazine.sebastianraschka.com/feed": {
       "source_id": "seed-46-ahead-of-ai",
       "platform_id": "ahead-of-ai",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.291789Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:45:43.456296Z",
       "cooldown_until": null,
-      "etag": "W/\"2c2642-c9xeo4DIbj8/x8CTPSke/B+Q/fo\""
+      "etag": "W/\"2c2642-N2cmgeVmiw5/R3RKh9dJtnjlXa4\""
     },
     "https://medium.com/feed/daangn": {
       "source_id": "seed-21-daangn-tech",
       "platform_id": "daangn-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.798765Z",
+      "last_checked_at": "2026-11-28T15:45:39.615775Z",
       "cooldown_until": null
     },
     "https://medium.com/feed/musinsa-tech": {
       "source_id": "seed-22-musinsa-tech",
       "platform_id": "musinsa-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.191756Z",
+      "last_checked_at": "2026-11-28T15:45:42.572612Z",
       "cooldown_until": null
     },
     "https://news.aikoreacommunity.com/rss/": {
       "source_id": "seed-16-ai-korea-community",
       "platform_id": "ai-korea-community",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:47.317409Z",
+      "last_checked_at": "2026-11-28T15:45:39.098029Z",
       "cooldown_until": null,
       "etag": "W/\"4b14d-yLvSyOYyYQg27EOGgLJGd+gQ90I\""
     },
@@ -350,7 +350,7 @@
       "source_id": "seed-13-geeknews",
       "platform_id": "geeknews",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.853063Z",
+      "last_checked_at": "2026-11-28T15:45:39.853262Z",
       "cooldown_until": null,
       "last_modified": "Sat, 28 Nov 2026 14:49:01 GMT"
     },
@@ -358,97 +358,97 @@
       "source_id": "seed-03-openai",
       "platform_id": "openai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.383520Z",
+      "last_checked_at": "2026-11-28T15:45:39.040645Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=clem.hf.co&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:10.396894Z",
+      "last_checked_at": "2026-11-28T15:46:00.876480Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=emollick.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:54.970680Z",
+      "last_checked_at": "2026-11-28T15:45:48.020990Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=hamel.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:04.132190Z",
+      "last_checked_at": "2026-11-28T15:45:55.553920Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=huggingface.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.317827Z",
+      "last_checked_at": "2026-11-28T15:45:39.182894Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=jeffdean.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:06.276464Z",
+      "last_checked_at": "2026-11-28T15:45:57.581738Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=karpathy.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.984116Z",
+      "last_checked_at": "2026-11-28T15:45:43.450287Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=natolambert.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:57.129620Z",
+      "last_checked_at": "2026-11-28T15:45:49.897846Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ollama.com&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 400,
-      "last_checked_at": "2026-11-28T15:30:53.298958Z"
+      "last_checked_at": "2026-11-28T15:45:45.569578Z"
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=rasbt.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:01.644901Z",
+      "last_checked_at": "2026-11-28T15:45:53.712354Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=simonwillison.net&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:49.107436Z",
+      "last_checked_at": "2026-11-28T15:45:41.740163Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=swyx.io&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:12.694893Z",
+      "last_checked_at": "2026-11-28T15:46:02.511999Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=thomwolf.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:08.069714Z",
+      "last_checked_at": "2026-11-28T15:45:59.248446Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=timkellogg.me&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:59.478274Z",
+      "last_checked_at": "2026-11-28T15:45:51.511492Z",
       "cooldown_until": null
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F0x45o%2Fstatus%2F2117332304880169152&omit_script=true&dnt=true": {
@@ -479,9 +479,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:53.320421Z",
+      "last_checked_at": "2026-11-28T15:46:45.109764Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:53 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:45 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FAlexRobey23%2Fstatus%2F2123872680718082542&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -559,17 +559,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:26.513569Z",
+      "last_checked_at": "2026-11-28T15:46:19.068044Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:26 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:19 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FDeepInsightLabs%2Fstatus%2F2123721278112911860&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:51.119404Z",
+      "last_checked_at": "2026-11-28T15:46:42.920138Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:51 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:42 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FDorialexander%2Fstatus%2F2126300342992200099&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -599,9 +599,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:10.335688Z",
+      "last_checked_at": "2026-11-28T15:46:59.931664Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:10 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:59 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FFounderClipsHQ%2Fstatus%2F2123411646777307310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -623,9 +623,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:41.205154Z",
+      "last_checked_at": "2026-11-28T15:46:33.289251Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:41 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:33 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FKSHartnett%2Fstatus%2F2123847664064241799&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -639,17 +639,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:55.017611Z",
+      "last_checked_at": "2026-11-28T15:45:48.242861Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:30:55 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:48 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FKobeissiLetter%2Fstatus%2F2121689817301819425&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:16.677572Z",
+      "last_checked_at": "2026-11-28T15:47:06.725935Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:16 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:06 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FLinusMixson%2Fstatus%2F2123283812184699218&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -663,9 +663,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:07.037894Z",
+      "last_checked_at": "2026-11-28T15:46:56.075189Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:07 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:56 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMParakhin%2Fstatus%2F2126160722816335941&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -679,17 +679,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:57.110733Z",
+      "last_checked_at": "2026-11-28T15:45:50.069224Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:30:57 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:50 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNTSB_Newsroom%2Fstatus%2F2119925879975395746&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:06.329015Z",
+      "last_checked_at": "2026-11-28T15:46:00.200249Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:06 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:00 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNielsRogge%2Fstatus%2F2123398384790684128&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -767,25 +767,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:45.411053Z",
+      "last_checked_at": "2026-11-28T15:46:36.914237Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:45 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:36 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FScott_Helme%2Fstatus%2F2122422157959471456&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:59.096605Z",
+      "last_checked_at": "2026-11-28T15:45:52.407462Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:30:59 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:52 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FStationhouseAI%2Fstatus%2F2121393278407123388&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:02.536853Z",
+      "last_checked_at": "2026-11-28T15:45:56.122987Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:02 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:56 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FSteveRattner%2Fstatus%2F2123523070044356875&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -799,9 +799,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:33.210896Z",
+      "last_checked_at": "2026-11-28T15:46:25.216467Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:33 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:25 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FTaylorLorenz%2Fstatus%2F2118095796981637203&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -879,9 +879,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:24.664393Z",
+      "last_checked_at": "2026-11-28T15:46:17.281789Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:24 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:17 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FWappy_x%2Fstatus%2F2126334414128873752&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -895,17 +895,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:12.623965Z",
+      "last_checked_at": "2026-11-28T15:47:02.434345Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:12 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:02 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F_TomHoward%2Fstatus%2F2124989725773856769&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:36.307064Z",
+      "last_checked_at": "2026-11-28T15:46:29.422127Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:36 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:29 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F_arohan_%2Fstatus%2F2126389028975165465&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -935,41 +935,41 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:04.802069Z",
+      "last_checked_at": "2026-11-28T15:46:54.243506Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:04 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:54 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fahmedmm72234641%2Fstatus%2F2124869402634129901&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:38.715581Z",
+      "last_checked_at": "2026-11-28T15:46:31.429127Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:38 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:31 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faidenybai%2Fstatus%2F2124550726882136542&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:43.384529Z",
+      "last_checked_at": "2026-11-28T15:46:34.976101Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:43 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:34 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faionic_labs%2Fstatus%2F2125019686136095036&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:19.585941Z",
+      "last_checked_at": "2026-11-28T15:46:13.334545Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:19 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:13 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Falexmichael%2Fstatus%2F2125976282303471643&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:13.931847Z",
+      "last_checked_at": "2026-11-28T15:46:07.639941Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:13 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:07 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fandersonbcdefg%2Fstatus%2F2126333185201991922&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -999,9 +999,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:58.102989Z",
+      "last_checked_at": "2026-11-28T15:46:48.930823Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:58 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:48 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbebuu_ai%2Fstatus%2F2118052769856888892&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1023,25 +1023,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:28.996606Z",
+      "last_checked_at": "2026-11-28T15:46:21.131582Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:28 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:21 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2117626126214504729&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:08.198018Z",
+      "last_checked_at": "2026-11-28T15:46:02.373104Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:08 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:02 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcatalinmpit%2Fstatus%2F2123061832781090948&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:00.286951Z",
+      "last_checked_at": "2026-11-28T15:46:50.572664Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:00 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:50 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcloneofsimo%2Fstatus%2F2123851306150605248&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1079,9 +1079,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:18.881584Z",
+      "last_checked_at": "2026-11-28T15:47:08.466347Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:18 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:08 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fdejavucoder%2Fstatus%2F2126302008273764535&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1095,9 +1095,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:04.210085Z",
+      "last_checked_at": "2026-11-28T15:45:58.081322Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:04 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:58 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Felder_plinius%2Fstatus%2F2126369007079133601&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1135,9 +1135,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:21.181675Z",
+      "last_checked_at": "2026-11-28T15:47:10.492343Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:21 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:10 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ffuturenomics%2Fstatus%2F2123501930580480142&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1159,9 +1159,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:55.686275Z",
+      "last_checked_at": "2026-11-28T15:46:47.337617Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:55 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:47 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fidekimforever%2Fstatus%2F2124674178741682684&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1191,9 +1191,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:09.147778Z",
+      "last_checked_at": "2026-11-28T15:46:57.766036Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:09 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:57 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fjerryjliu0%2Fstatus%2F2126369240001466664&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1223,9 +1223,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:10.124704Z",
+      "last_checked_at": "2026-11-28T15:46:04.075859Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:10 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:04 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fkarinanguyen%2Fstatus%2F2123509936475001310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1319,9 +1319,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:02.337366Z",
+      "last_checked_at": "2026-11-28T15:46:52.681594Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:02 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:52 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Flateinteraction%2Fstatus%2F2123827471325765706&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1375,25 +1375,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:16.013563Z",
+      "last_checked_at": "2026-11-28T15:46:09.647249Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:15 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:09 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmax_spero_%2Fstatus%2F2122032840204226687&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:14.342144Z",
+      "last_checked_at": "2026-11-28T15:47:04.884138Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:14 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:04 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmicro1_ai%2Fstatus%2F2123849880426926402&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:49.114546Z",
+      "last_checked_at": "2026-11-28T15:46:41.159729Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:49 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:41 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmike64_t%2Fstatus%2F2126420692405285146&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1431,9 +1431,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:22.027436Z",
+      "last_checked_at": "2026-11-28T15:46:15.405887Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:22 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:15 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fnptacek%2Fstatus%2F2126351949222285715&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1455,17 +1455,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:01.032551Z",
+      "last_checked_at": "2026-11-28T15:45:54.165378Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:01 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:54 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpaulosyibelo%2Fstatus%2F2106378929158135903&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:12.086895Z",
+      "last_checked_at": "2026-11-28T15:46:05.944853Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:12 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:05 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpushmeet%2Fstatus%2F2118752095859794390&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1487,9 +1487,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:34.680941Z",
+      "last_checked_at": "2026-11-28T15:46:27.613801Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:34 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:27 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fsaranormous%2Fstatus%2F2123504877674660255&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1535,9 +1535,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:17.978495Z",
+      "last_checked_at": "2026-11-28T15:46:11.809333Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:17 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:11 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FshakoistsLog%2Fstatus%2F2123478561449492504&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1551,9 +1551,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:31.154663Z",
+      "last_checked_at": "2026-11-28T15:46:23.085645Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:31 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:23 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fsolbier1%2Fstatus%2F2123485713760935944&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1655,9 +1655,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:31:47.134004Z",
+      "last_checked_at": "2026-11-28T15:46:39.122357Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:31:47 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:46:39 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ftheojaffee%2Fstatus%2F2123851368951910847&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1727,9 +1727,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:32:23.137447Z",
+      "last_checked_at": "2026-11-28T15:47:12.748171Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:32:23 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:47:12 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fyacinelearning%2Fstatus%2F2123439520616173794&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1799,15 +1799,15 @@
       "source_id": "seed-29-qiita",
       "platform_id": "qiita",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:48.258166Z",
+      "last_checked_at": "2026-11-28T15:45:40.512767Z",
       "cooldown_until": null,
-      "etag": "W/\"2bed7b92a6a450ab51b2b8c3f99c9b14\""
+      "etag": "W/\"578c850989f66073db722a6f3735add2\""
     },
     "https://qwenlm.github.io/blog/index.xml": {
       "source_id": "seed-38-qwen",
       "platform_id": "qwen",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:48.981180Z",
+      "last_checked_at": "2026-11-28T15:45:41.400286Z",
       "cooldown_until": null,
       "etag": "W/\"6970c244-98ff\"",
       "last_modified": "Wed, 21 Jan 2026 12:10:44 GMT"
@@ -1816,7 +1816,7 @@
       "source_id": "seed-58-arxiv",
       "platform_id": "arxiv",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.819935Z",
+      "last_checked_at": "2026-11-28T15:45:43.398939Z",
       "cooldown_until": null,
       "etag": "0f51919e665ed79d455326a1daff4c821d3d443eb1dcb2315b4064853477c33b"
     },
@@ -1824,25 +1824,25 @@
       "source_id": "seed-30-itmedia-aiplus",
       "platform_id": "itmedia-aiplus",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:48.589444Z",
+      "last_checked_at": "2026-11-28T15:45:40.980089Z",
       "cooldown_until": null,
-      "etag": "\"31fc-661575d023f88-gzip\"",
-      "last_modified": "Sat, 28 Nov 2026 14:55:10 GMT"
+      "etag": "\"31fc-66157c85aa96d-gzip\"",
+      "last_modified": "Sat, 28 Nov 2026 15:25:11 GMT"
     },
     "https://sakana.ai/feed.xml": {
       "source_id": "seed-32-sakana-ai",
       "platform_id": "sakana-ai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:48.432534Z",
+      "last_checked_at": "2026-11-28T15:45:40.750373Z",
       "cooldown_until": null,
-      "etag": "W/\"6b09410c-4f5b3\"",
-      "last_modified": "Fri, 27 Nov 2026 08:36:28 GMT"
+      "etag": "W/\"6b09410d-4f5b3\"",
+      "last_modified": "Fri, 27 Nov 2026 08:36:29 GMT"
     },
     "https://simonwillison.net/atom/everything/": {
       "source_id": "seed-43-simon-willison",
       "platform_id": "simon-willison",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.050023Z",
+      "last_checked_at": "2026-11-28T15:45:42.439083Z",
       "cooldown_until": null,
       "last_modified": "Fri, 27 Nov 2026 23:57:17 GMT"
     },
@@ -1850,7 +1850,7 @@
       "source_id": "seed-23-kakao-tech",
       "platform_id": "kakao-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:48.778929Z",
+      "last_checked_at": "2026-11-28T15:45:41.154698Z",
       "cooldown_until": null
     },
     "https://techblog.woowahan.com/feed/": {
@@ -1866,7 +1866,7 @@
       "source_id": "seed-59-techcrunch-ai",
       "platform_id": "techcrunch-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.805349Z",
+      "last_checked_at": "2026-11-28T15:45:43.443885Z",
       "cooldown_until": null,
       "etag": "W/\"0d0a0771740a7218779ec713f8673790\"",
       "last_modified": "Sat, 28 Nov 2026 14:00:11 GMT"
@@ -1875,14 +1875,14 @@
       "source_id": "seed-19-toss-tech",
       "platform_id": "toss-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:49.461519Z",
+      "last_checked_at": "2026-11-28T15:45:41.498090Z",
       "cooldown_until": null
     },
     "https://vercel.com/atom": {
       "source_id": "seed-50-vercel-v0",
       "platform_id": "vercel-v0",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.403530Z",
+      "last_checked_at": "2026-11-28T15:45:42.801393Z",
       "cooldown_until": null,
       "etag": "\"6c452dff835dd8b986ec4b3827382256\""
     },
@@ -1890,7 +1890,7 @@
       "source_id": "seed-18-aitimes",
       "platform_id": "aitimes",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:47.965806Z",
+      "last_checked_at": "2026-11-28T15:45:40.225479Z",
       "cooldown_until": null,
       "etag": "\"ca81-661534896c034-gzip\"",
       "last_modified": "Sat, 28 Nov 2026 10:03:08 GMT"
@@ -1899,22 +1899,22 @@
       "source_id": "seed-04-anthropic",
       "platform_id": "anthropic",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.574632Z",
+      "last_checked_at": "2026-11-28T15:45:39.442116Z",
       "cooldown_until": null
     },
     "https://www.apple.com/kr/newsroom/rss-feed.rss": {
       "source_id": "seed-54-apple-ml",
       "platform_id": "apple-ml",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:52.867251Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:45:45.466008Z",
       "cooldown_until": null,
-      "last_modified": "Wed, 18 Nov 2026 14:02:29 GMT"
+      "last_modified": "Wed, 18 Nov 2026 14:15:54 GMT"
     },
     "https://www.apple.com/newsroom/rss-feed.rss": {
       "source_id": "seed-53-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.458915Z",
+      "last_checked_at": "2026-11-28T15:45:42.911681Z",
       "cooldown_until": null,
       "last_modified": "Thu, 19 Nov 2026 16:00:20 GMT"
     },
@@ -1922,30 +1922,30 @@
       "source_id": "seed-15-gpters",
       "platform_id": "gpters",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:47.683984Z",
+      "last_checked_at": "2026-11-28T15:45:39.752358Z",
       "cooldown_until": null
     },
     "https://www.interconnects.ai/feed": {
       "source_id": "seed-48-interconnects",
       "platform_id": "interconnects",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.331127Z",
+      "last_checked_at": "2026-11-28T15:45:42.824195Z",
       "cooldown_until": null,
-      "etag": "W/\"7fac4-adex02AUPKdGXmOsQDMMKaatnh8\""
+      "etag": "W/\"7fac4-tj6rQH3ZjHHbr+8h4KReK96mnHw\""
     },
     "https://www.latent.space/feed": {
       "source_id": "seed-44-latent-space",
       "platform_id": "latent-space",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.480413Z",
+      "last_checked_at": "2026-11-28T15:45:42.998228Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:26:43 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:45:28 GMT"
     },
     "https://www.microsoft.com/en-us/research/feed/": {
       "source_id": "seed-55-microsoft-research",
       "platform_id": "microsoft-research",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.765176Z",
+      "last_checked_at": "2026-11-28T15:45:43.223284Z",
       "cooldown_until": null,
       "etag": "\"a9f83ee40cf2a9fc9ff27b558da9638c\"",
       "last_modified": "Sat, 28 Nov 2026 12:11:02 GMT"
@@ -1954,7 +1954,7 @@
       "source_id": "seed-47-one-useful-thing",
       "platform_id": "one-useful-thing",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.305728Z",
+      "last_checked_at": "2026-11-28T15:45:42.602397Z",
       "cooldown_until": null,
       "etag": "W/\"e0f01-6dOhy9C9y/czyMMhskkdJQrKoxI\""
     },
@@ -2001,7 +2001,7 @@
       "source_id": "seed-61-mit-tech-review",
       "platform_id": "mit-tech-review",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.941861Z",
+      "last_checked_at": "2026-11-28T15:45:43.535484Z",
       "cooldown_until": null,
       "etag": "W/\"777316aa5bd542835cdf44da4160da74\"",
       "last_modified": "Fri, 27 Nov 2026 13:00:08 GMT"
@@ -2010,7 +2010,7 @@
       "source_id": "seed-17-mit-tr-korea",
       "platform_id": "mit-tr-korea",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:48.690203Z",
+      "last_checked_at": "2026-11-28T15:45:40.707015Z",
       "cooldown_until": null,
       "etag": "\"24ccafef699df95bc17b63649538ed9a\"",
       "last_modified": "Sat, 28 Nov 2026 01:10:56 GMT"
@@ -2019,25 +2019,25 @@
       "source_id": "seed-60-the-verge-ai",
       "platform_id": "the-verge-ai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:30:50.793055Z",
+      "last_checked_at": "2026-11-28T15:45:43.594295Z",
       "cooldown_until": null,
-      "etag": "W/\"2bf8fb449c37134e3b186f2cd21ebe90\""
+      "etag": "W/\"e7b29b9c04f605301d49e260eacaa74b\""
     },
     "https://zenn.dev/topics/claudecode/feed": {
       "source_id": "seed-28-zenn",
       "platform_id": "zenn",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:50.422808Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:45:42.112312Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 05:39:33 GMT"
+      "last_modified": "Sat, 28 Nov 2026 12:18:14 GMT"
     },
     "https://zenn.dev/topics/llm/feed": {
       "source_id": "seed-27-zenn",
       "platform_id": "zenn",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:30:47.916253Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:45:39.969055Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 07:03:37 GMT"
+      "last_modified": "Sat, 28 Nov 2026 11:48:58 GMT"
     }
   },
   "translations": {
@@ -9608,6 +9608,14 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-23T10:38:34.521684Z"
     },
+    "https://zenn.dev/aizangyobu/articles/claude-code-doctor-audit": {
+      "original_title": "claude doctorを実測する：CLIの接続診断と、セッション内でやるprompt-audit",
+      "title_ko": "claude doctor 실제 측정: CLI 연결 진단과 세션 내 prompt-audit 활용법",
+      "body_ko": "터미널에서 실행하는 claude doctor CLI는 설치 상태와 API 연결 진단을 제공하며 로그인 없이도 실행할 수 있습니다. 다만 CLAUDE.md 감사 기능은 CLI에서 직접 실행되지 않으며, 감사를 포함한 완전한 진단은 Claude Code 세션 내에서 /doctor 명령어를 실행해야 합니다.",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:47:14.581243Z",
+      "why_ko": "Claude Code 진단 도구의 CLI와 세션 내 명령어의 차이점과 정확한 사용법을 안내합니다."
+    },
     "https://zenn.dev/alexanderdetkov/articles/1912bc6d19fed7": {
       "original_title": "AIエージェントはパソコンでは全然ダメなのに、スマホではすごく使える",
       "title_ko": "AI 에이전트, PC 환경보다 스마트폰에서 더 유용한 이유",
@@ -9623,6 +9631,14 @@
       "provider": "gemini_batch",
       "cached_at": "2026-11-28T14:32:16.122081Z",
       "why_ko": "주요 AI 코딩 도구들의 모델 구성과 비용 효율성을 한눈에 비교할 수 있는 가이드를 제공하기 때문입니다."
+    },
+    "https://zenn.dev/aria3/articles/claude-code-landmine-hook-skill-memory": {
+      "original_title": "一度踏んだ地雷を Claude Code に二度と踏ませない ── Hook・スキル・メモリの使い分け",
+      "title_ko": "Claude Code가 동일한 실수를 반복하지 않도록 방지하는 Hook, 스킬, 메모리 활용법",
+      "body_ko": "Claude Code와 함께 개인 개발 앱을 다수 운용하면서 발생하는 사고를 방지하기 위한 경험을 공유합니다. 세션이 바뀌면 이전의 교훈을 잊어버리는 특성을 보완하기 위해, 개발 과정에서 얻은 교훈을 Hook, 스킬, 메모리 등 적절한 위치에 기록하여 실수를 방지하는 방법을 설명합니다.",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:47:14.581243Z",
+      "why_ko": "LLM 기반 도구의 한계를 극복하고 반복적인 개발 실수를 방지하기 위한 체계적인 대응 방안을 제시합니다."
     },
     "https://zenn.dev/automation_lab/articles/claude-code-4-layers": {
       "original_title": "Claude Codeに自動化を作らせるとき、最初に決めるべき「4つの層」— 取得・変換・生成・書き出し",
@@ -9863,6 +9879,14 @@
       "provider": "deep_translator",
       "cached_at": "2026-11-23T10:35:04.678747Z"
     },
+    "https://zenn.dev/itoken_lab/articles/talk-slides-presentation-test": {
+      "original_title": "AI に10分の発表を作らせたら、原稿は5分ぶんで、スライドは1枚100字だった。人の資料から作った手順で比較した",
+      "title_ko": "AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교",
+      "body_ko": "",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:47:14.581243Z",
+      "why_ko": "업무 자동화 과정에서 AI가 생성하는 프레젠테이션 자료의 실제 품질과 보완이 필요한 지점을 조명합니다."
+    },
     "https://zenn.dev/jinno_ai/books/scicode-gpt-oss-eval-report": {
       "original_title": "gpt-oss-120B を SciCode tas で測った全記録 — 61step・決定性・effort 感度・3体対照",
       "title_ko": "gpt-oss-120B를 SciCode tas로 측정 한 전체 기록 - 61step, 결정성, effort 감도",
@@ -9925,6 +9949,14 @@
       "body_ko": "저는 개인적으로 개발 작업을 하고 있으며, 일상적으로 여러 AI 세션에 작업을 맡기고 있습니다. 의뢰하고, 돌아온 것을 확인하고, 고치고, 또 다음을 부탁한다. 그 반복으로 일을 돌리고 있습니다. 그 중 가장 큰 고민은 번거롭지 않습니다. 의뢰한 것이 잘 되어 있지 않은 것입니다. 「할 수 있었습니다」라고 돌아온다. 하지만 실제로 만져 보면, 부탁한 것과 조금 다르다. 움직이지만 내용이 다르다. 확인했다고 하면서, 중요한 점은 확인되지 않았다. 그런 어긋남이 매일처럼 일어납니다. 이 기사에서는, 그 어긋남과 사귀기 위해서 내가 결정하고 있는 「수락 작법」을 씁니다. 특별한 기술 이야기가 아니라 작법 이야기입니다. 어긋남이 일어나 ...",
       "provider": "deep_translator",
       "cached_at": "2026-11-27T18:17:58.723205Z"
+    },
+    "https://zenn.dev/kreutzer000/articles/e5b1a14ca68344": {
+      "original_title": "Claude Code向けMCPサーバーからSkillsを配る前に知っておきたい3つの実測：更新・承認・シェル",
+      "title_ko": "Claude Code용 MCP 서버에서 Skills 배포 시 확인해야 할 3가지 실제 측정 포인트",
+      "body_ko": "MCP 서버를 통해 SKILL.md나 보조 파일을 업데이트하여 배포할 때 Claude Code 측에서 발생하는 변화를 점검합니다. 다이제스트가 변경되면 재승인이 필요하며, 승인 화면 및 셸 실행의 전제 조건이 로컬 환경과 다릅니다. Claude Code 2.1.332 버전을 기준으로 업데이트와 재승인, 승인 전제 조건 등을 상세히 확인합니다.",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:47:14.581243Z",
+      "why_ko": "Claude Code 환경에서 MCP 서버를 통한 파일 배포와 승인 프로세스의 실무적 주의사항을 전달합니다."
     },
     "https://zenn.dev/lecto/articles/bc5f934f14c2ab": {
       "original_title": "重みが -1・0・+1 だけの 27B モデル「Ternary Bonsai 2.5」を、Mac の llama.cpp で動かしてみた",
@@ -10237,6 +10269,14 @@
       "body_ko": "역시 앱 개발과 제품 제작은 즐겁네요. 위키백과 문서의 연결 고리를 그래프로 보면서 읽을 수 있는 iPhone·iPad 앱 'Ariagraph'를 공개했습니다. 이 글은 Claude Code와 함께 Ariagraph를 만든 기록입니다. 무엇을 만들었는지, 어떤 규칙으로 만들었는지, 어떻게 Claude Code에 맡겼는지 순서대로 설명하겠습니다. 어떤 앱인가요? 관심 있는 글을 열고 본문의 링크를 탭하면 그래프에 새로운 노드가 추가됩니다. 어떤 문서에서 어디로 이동했는지 지도로 표시되므로 검색 도중에 길을 잃지 않습니다. 다음과 같은 작업을 수행할 수 있습니다. Wik...",
       "provider": "deep_translator",
       "cached_at": "2026-11-21T09:34:35.733263Z"
+    },
+    "https://zenn.dev/sisisin/articles/20261128-record-instruction-fact-discussion": {
+      "original_title": "Coding Agentの調査結果を「指示」「事実」「考察」の項目に分けて書かせると具合が良い",
+      "title_ko": "코딩 Agent의 조사 결과를 지시, 사실, 3가지 항목으로 나누어 작성하게 하는 방법",
+      "body_ko": "코딩 Agent와 대화하며 결과를 기록하고 설계나 계획을 진행할 때, Agent가 임의로 생성한 가상의 증언을 바탕으로 설계가 미궁에 빠지는 경우가 있습니다. 이를 방지하기 위해 기록 작성용 skill을 활용하여 지시, 사실, 고찰 항목을 명확히 구분해 작성하도록 유도하는 방안을 다룹니다.",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:47:14.581243Z",
+      "why_ko": "코딩 Agent와의 협업 시 발생하는 환각 및 오류를 줄이고 기록의 정확성을 높이는 실용적인 팁을 공유합니다."
     },
     "https://zenn.dev/sk8jp/articles/8727ce1072b8b9": {
       "original_title": "Security Hub CSPM を有効にせず、Claude Code と FSBP の 363 項目を「1 つずつ」点検する計画を立てた",
@@ -10841,13 +10881,13 @@
       "image": null,
       "checked_at": "2026-11-28T14:02:19.856932Z"
     },
-    "https://zenn.dev/aono/articles/d3c4142f91c29a": {
-      "image": "https://res.cloudinary.com/zenn/image/upload/s--QkoP4Ghx--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Codex%25E3%2583%25BBClaude%2520Code%25E3%2583%25BBAntigravity%2520%25E3%2581%25A7%25E4%25BD%25BF%25E3%2581%2588%25E3%2582%258B%25E3%2583%25A2%25E3%2583%2587%25E3%2583%25AB%25E4%25B8%2580%25E8%25A6%25A7%25E3%2581%25A8%25E4%25BD%258D%25E7%25BD%25AE%25E3%2581%25A5%25E3%2581%2591%25E3%2583%259E%25E3%2583%2583%25E3%2583%2597%25EF%25BC%25882026%25E5%25B9%25B411%25E6%259C%2588%25E6%2599%2582%25E7%2582%25B9%25EF%25BC%2589%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:aono%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzRmOTM2NmMxZTEuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
-      "checked_at": "2026-11-28T14:32:16.122081Z"
+    "https://zenn.dev/aizangyobu/articles/claude-code-doctor-audit": {
+      "image": "https://res.cloudinary.com/zenn/image/upload/s--qMnYQegg--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:claude%2520doctor%25E3%2582%2592%25E5%25AE%259F%25E6%25B8%25AC%25E3%2581%2599%25E3%2582%258B%25EF%25BC%259ACLI%25E3%2581%25AE%25E6%258E%25A5%25E7%25B6%259A%25E8%25A8%25BA%25E6%2596%25AD%25E3%2581%25A8%25E3%2580%2581%25E3%2582%25BB%25E3%2583%2583%25E3%2582%25B7%25E3%2583%25A7%25E3%2583%25B3%25E5%2586%2585%25E3%2581%25A7%25E3%2582%2584%25E3%2582%258Bprompt-audit%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:AI%25E6%25AE%258B%25E6%25A5%25AD%25E9%2583%25A8%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzM5ODc3YTYyMDUuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
+      "checked_at": "2026-11-28T15:47:14.581243Z"
     },
-    "https://zenn.dev/bachikawa/articles/0697977b8003c7": {
-      "image": "https://res.cloudinary.com/zenn/image/upload/s--ckfMa5ne--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Claude%2520Code%2520%25E3%2581%25AE%25E8%25A8%25AD%25E5%25AE%259A%25E3%2582%2592%25E3%2583%2580%25E3%2582%25A4%25E3%2582%25A8%25E3%2583%2583%25E3%2583%2588%25E3%2581%2597%25E3%2581%259F%25E8%25A9%25B1%2520%25E2%2580%2594%2520%25E5%25B8%25B8%25E9%25A7%2590%25E3%2581%2595%25E3%2581%259B%25E3%2582%258B%25E3%2581%25AE%25E3%2581%25AF%25E7%259B%25AE%25E6%25AC%25A1%25E3%2581%25A0%25E3%2581%2591%25E3%2581%25AB%25E3%2581%2599%25E3%2582%258B%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2581%25B0%25E3%2581%25A1%25E3%2581%25A1%25E3%2582%2583%25E3%2582%2593%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzA2ZDcxZDRjZTIuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
-      "checked_at": "2026-11-28T14:32:16.122081Z"
+    "https://zenn.dev/aria3/articles/claude-code-landmine-hook-skill-memory": {
+      "image": "https://res.cloudinary.com/zenn/image/upload/s--EyBFKu9M--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E4%25B8%2580%25E5%25BA%25A6%25E8%25B8%258F%25E3%2582%2593%25E3%2581%25A0%25E5%259C%25B0%25E9%259B%25B7%25E3%2582%2592%2520Claude%2520Code%2520%25E3%2581%25AB%25E4%25BA%258C%25E5%25BA%25A6%25E3%2581%25A8%25E8%25B8%258F%25E3%2581%25BE%25E3%2581%259B%25E3%2581%25AA%25E3%2581%2584%2520%25E2%2594%2580%25E2%2594%2580%2520Hook%25E3%2583%25BB%25E3%2582%25B9%25E3%2582%25AD%25E3%2583%25AB%25E3%2583%25BB%25E3%2583%25A1%25E3%2583%25A2%25E3%2583%25AA%25E3%2581%25AE%25E4%25BD%25BF%25E3%2581%2584%25E5%2588%2586%25E3%2581%2591%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2582%25A2%25E3%2583%25AA%25E3%2583%2598%25E3%2582%25A4%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzNmODMwMDU2MTEuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
+      "checked_at": "2026-11-28T15:47:14.581243Z"
     },
     "https://zenn.dev/claire_ai/books/doubutsu-rensai-matome-3": {
       "image": null,
@@ -10861,10 +10901,6 @@
       "image": "https://res.cloudinary.com/zenn/image/upload/s--Zww89HCw--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Claude%2520Code%2520%25E3%2581%25AE%25E3%2583%2595%25E3%2583%2583%25E3%2582%25AF%25E3%2581%258C%25E8%25B5%25B7%25E5%258B%2595%25E3%2581%25A7%25E3%2581%258D%25E3%2581%25AA%25E3%2581%2584%25E3%2581%25A8%25E3%2581%258D%25E3%2580%2581%25E6%25AD%25A2%25E3%2582%2581%25E3%2582%258B%25E3%2581%25AF%25E3%2581%259A%25E3%2581%25AE%25E6%2593%258D%25E4%25BD%259C%25E3%2581%258C%25E9%2580%259A%25E3%2582%258A%25E3%2581%2586%25E3%2582%258B%25E3%2580%25822.1.326%2520%25E3%2581%25AE%2520127%2520%25E3%2581%25A8%2520o...%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:HandaLab%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyL2U0ZjdjZDM1ODUuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
       "checked_at": "2026-11-28T14:32:16.122081Z"
     },
-    "https://zenn.dev/heftykoo/articles/f1416cac537209": {
-      "image": "https://res.cloudinary.com/zenn/image/upload/s--IAhcD6IM--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:AI%25E3%2582%25A8%25E3%2583%25BC%25E3%2582%25B8%25E3%2582%25A7%25E3%2583%25B3%25E3%2583%2588%25E3%2581%25AE%25E8%25B2%25BB%25E7%2594%25A8%25E5%258F%25B0%25E5%25B8%25B3%25E3%2581%25A7%25E3%2581%25AF%25E3%2580%2581%25E3%2580%258C0%25E5%2586%2586%25E3%2580%258D%25E3%2581%25A8%25E3%2580%258C%25E6%259C%25AA%25E8%25A8%2588%25E6%25B8%25AC%25E3%2580%258D%25E3%2582%2592%25E5%2588%2586%25E3%2581%2591%25E3%2582%258B%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:heftykoo%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyL2UzMjg5NzNmZjUuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
-      "checked_at": "2026-11-28T15:02:11.362046Z"
-    },
     "https://zenn.dev/histonoby/books/5f5c4979a2a017": {
       "image": null,
       "checked_at": "2026-11-28T14:32:16.122081Z"
@@ -10873,9 +10909,13 @@
       "image": "https://res.cloudinary.com/zenn/image/upload/s---MqJdbwK--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E3%2580%258C%25E6%2597%25A5%25E6%259C%25AC%25E8%25AA%259E%25E3%2581%25A7%25E3%2580%258D%25E3%2581%25A8%25E6%258C%2587%25E7%25A4%25BA%25E3%2581%2597%25E3%2581%25A6%25E3%2582%2582%25E8%258B%25B1%25E8%25AA%259E%25E3%2581%25AB%25E6%2588%25BB%25E3%2582%258BClaude%2520Code%25E3%2581%25AB%25E3%2580%2581Stop%25E3%2583%2595%25E3%2583%2583%25E3%2582%25AF%25E3%2581%25A7%25E5%25AF%25BE%25E5%2587%25A6%25E3%2581%2597%25E3%2581%25A6%25E3%2581%25BF%25E3%2581%259F%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2581%25B2%25E3%2581%25A8%25E3%2582%258APM%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzVlNTMxMTZkMzguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
       "checked_at": "2026-11-28T14:02:19.856932Z"
     },
-    "https://zenn.dev/mametools/articles/16042a48e794f4": {
-      "image": "https://res.cloudinary.com/zenn/image/upload/s--2lquYupY--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E5%25B0%258F%25E5%25AD%25A6%25E7%2594%259F%25E5%2590%2591%25E3%2581%2591%25E5%25AD%25A6%25E7%25BF%2592%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%2588%25E3%2581%25A7%25E3%2580%258C%25E6%25AD%25A3%25E8%25A7%25A3%25E3%2581%25AF%25E5%25BF%2585%25E3%2581%259A%25E3%2582%25B3%25E3%2583%25BC%25E3%2583%2589%25E3%2581%258C%25E6%25B1%25BA%25E3%2582%2581%25E3%2582%258B%25E3%2580%258D%25E3%2582%2592%25E5%25AE%2588%25E3%2582%258B%25E3%2581%259F%25E3%2582%2581%25E3%2581%25AB%25E3%2582%2584%25E3%2581%25A3%25E3%2581%259F%25E3%2581%2593%25E3%2581%25A8%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2581%25BE%25E3%2581%25AA%25E3%2581%25B3%25E3%2583%25A9%25E3%2583%259C%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jS25nR094dTk2dUFkaEM5anF2TXZhT3R6MEV0LUpLLUQ0aXhJTzFGYlB1VkNXYUtBPXMyNTAtYw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
-      "checked_at": "2026-11-28T14:32:16.122081Z"
+    "https://zenn.dev/itoken_lab/articles/talk-slides-presentation-test": {
+      "image": null,
+      "checked_at": "2026-11-28T15:47:14.581243Z"
+    },
+    "https://zenn.dev/kreutzer000/articles/e5b1a14ca68344": {
+      "image": "https://res.cloudinary.com/zenn/image/upload/s--hHq35dIA--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Claude%2520Code%25E5%2590%2591%25E3%2581%2591MCP%25E3%2582%25B5%25E3%2583%25BC%25E3%2583%2590%25E3%2583%25BC%25E3%2581%258B%25E3%2582%2589Skills%25E3%2582%2592%25E9%2585%258D%25E3%2582%258B%25E5%2589%258D%25E3%2581%25AB%25E7%259F%25A5%25E3%2581%25A3%25E3%2581%25A6%25E3%2581%258A%25E3%2581%258D%25E3%2581%259F%25E3%2581%25843%25E3%2581%25A4%25E3%2581%25AE%25E5%25AE%259F%25E6%25B8%25AC%25EF%25BC%259A%25E6%259B%25B4%25E6%2596%25B0%25E3%2583%25BB%25E6%2589%25BF%25E8%25AA%258D%25E3%2583%25BB%25E3%2582%25B7%25E3%2582%25A7%25E3%2583%25AB%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:T.Kato%2520%2540CData%25EF%25BD%259CAI%25C3%2597%25E3%2583%259E...%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyL2E2MTgzYzkxN2UuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
+      "checked_at": "2026-11-28T15:47:14.581243Z"
     },
     "https://zenn.dev/miraizuk/articles/ae8db2bc3ff561": {
       "image": "https://res.cloudinary.com/zenn/image/upload/s--72Al507j--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E5%258F%25A4%25E3%2581%2584%2520PHP%2520%252F%2520Laravel%2520%25E3%2581%25AE%25E8%2584%2586%25E5%25BC%25B1%25E6%2580%25A7%25E5%25AF%25BE%25E5%25BF%259C%25E3%2581%25AF%25E3%2580%2581Rector%2520%25E3%2581%25A8%2520AI%2520%25E3%2581%25A7%25E3%2581%25A0%25E3%2581%2584%25E3%2581%259F%25E3%2581%2584%25E7%25B0%25A1%25E5%258D%2598%25E3%2581%25AB%25E7%25B5%2582%25E3%2582%258F%25E3%2582%258B%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:Kenichi%2520Yoshida%2Cx_90%2Cy_121/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
@@ -10885,10 +10925,6 @@
       "image": "https://res.cloudinary.com/zenn/image/upload/s--Y91bzdB4--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E5%259C%258F%25E5%25A4%2596%25E3%2581%25AE%25E5%25BB%25BA%25E8%25A8%25AD%25E7%258F%25BE%25E5%25A0%25B4%25E3%2581%25A7%25E4%25B8%2580%25E6%2597%25A5%25E4%25B8%25AD%25E8%2581%259E%25E3%2581%2584%25E3%2581%25A6%25E3%2581%258F%25E3%2582%258C%25E3%2582%258B%25E3%2580%258C%25E7%258F%25BE%25E5%25A0%25B4%25E6%2589%258B%25E5%25B8%25B3%25E3%2580%258D%25E3%2580%2580%25EF%25BD%259E%25E3%2583%25AD%25E3%2583%25BC%25E3%2582%25AB%25E3%2583%25ABLLM%25E3%2581%25A8%25E3%2582%25AF%25E3%2583%25A9%25E3%2582%25A6%25E3%2583%2589AI%25E3%2581%25AE%25E3%2583%258F%25E3%2582%25A4%25E3%2583%2596%25E3%2583%25AA%25E3%2583%2583%25E3%2583%2589%25E6%25A7%258B%25E6%2588%2590%25EF%25BD%259E%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2581%2597%25E3%2582%258D%25E3%2581%258F%25E3%2581%25BE%25EF%25BC%2588Hiroki%252C%2520Nomura%25EF%25BC%2589%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzU1ZjczNGRhYTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
       "checked_at": "2026-11-28T14:02:19.856932Z"
     },
-    "https://zenn.dev/ojisan_ai_lab/articles/claude-code-pre-skill-shell-command-20261128": {
-      "image": "https://res.cloudinary.com/zenn/image/upload/s--PB9qDH3F--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Claude%2520Code%25E3%2581%25AE%25E3%2582%25B9%25E3%2582%25AD%25E3%2583%25AB%25E3%2581%25AB%25E6%259B%25B8%25E3%2581%2584%25E3%2581%259F%25E3%2582%25B3%25E3%2583%259E%25E3%2583%25B3%25E3%2583%2589%25E3%2581%25AF%25E3%2583%2595%25E3%2583%2583%25E3%2582%25AF%25E3%2581%25A7%25E6%25AD%25A2%25E3%2581%25BE%25E3%2582%258B%25EF%25BC%259F%2520PreToolUse%25E3%2581%25AF3%25E5%259B%259E%25E3%2581%25A8%25E3%2582%2582%25E8%25B5%25B0%25E3%2582%258A%25E3%2580%25812.1.33...%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E3%2581%258A%25E3%2581%2598%25E3%2581%2595%25E3%2582%2593AI%25E3%2583%25A9%25E3%2583%259C%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzZhYjlkMjRhMmYuanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
-      "checked_at": "2026-11-28T14:32:16.122081Z"
-    },
     "https://zenn.dev/parsetree/articles/claude-artifact-install-as-app-ai-office": {
       "image": "https://res.cloudinary.com/zenn/image/upload/s---bdaP1I6--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Claude%25E3%2581%25AE%25E3%2580%258CInstall%2520as%2520app%25E3%2580%258D%25E3%2581%25A7Artifact%25E3%2582%2592Mac%25E3%2582%25A2%25E3%2583%2597%25E3%2583%25AA%25E3%2581%25AB%25E3%2581%2597%25E3%2581%259F%25E3%2580%2582%25E8%25A8%25B1%25E5%258F%25AF%25E3%2581%25AF%25E6%259B%25B4%25E6%2596%25B0%25E3%2581%25A7%25E8%2581%259E%25E3%2581%258D%25E7%259B%25B4%25E3%2581%2595%25E3%2582%258C%25E3%2581%259F%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:parsetree_biz%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdGF0aWMuemVubi5zdHVkaW8vdXNlci11cGxvYWQvYXZhdGFyLzJhNTRkMWU0NDUuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:Parsetree%2520Tech%2520Blog%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVl4SF83dHVMV0ZLOWRYeG01eF9DWmUzeWY0akRzVGJQS1pYdVhMMGw5SWNCcWp1UW49czI1MC1j%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
       "checked_at": "2026-11-28T14:32:16.122081Z"
@@ -10896,6 +10932,10 @@
     "https://zenn.dev/qsuke/articles/0af78575b1db39": {
       "image": "https://res.cloudinary.com/zenn/image/upload/s--frvBL_z0--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:AI%25E3%2581%25AB%25E3%2580%258C%25E5%258B%259D%25E6%2589%258B%25E3%2581%25AB%25E6%25B1%25BA%25E3%2582%2581%25E3%2581%259F%25E3%2581%2593%25E3%2581%25A8%25E3%2580%258D%25E3%2582%2592%25E7%2599%25BD%25E7%258A%25B6%25E3%2581%2595%25E3%2581%259B%25E3%2582%258B%25EF%25BC%259A%25E5%25AE%259F%25E8%25A3%2585%25E3%2581%258B%25E3%2582%2589%25E9%2580%2586%25E7%25AE%2597%25E3%2581%2599%25E3%2582%258B%25E8%25A8%25AD%25E8%25A8%2588%25E8%25A3%259C%25E5%258A%25A9%25E3%2581%25AE%25E6%2589%258B%25E6%25B3%2595%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:%25E4%25B9%2585%25E5%258A%25A9%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSmV6NmhpMWdOLUJNbUZEX21PbVE4NTd2cUNwWEZ2dm93MTBMVnh2SXJJQ0luR3l3PXMyNTAtYw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
       "checked_at": "2026-11-28T14:02:19.856932Z"
+    },
+    "https://zenn.dev/sisisin/articles/20261128-record-instruction-fact-discussion": {
+      "image": "https://res.cloudinary.com/zenn/image/upload/s--MJnWxHQC--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Coding%2520Agent%25E3%2581%25AE%25E8%25AA%25BF%25E6%259F%25BB%25E7%25B5%2590%25E6%259E%259C%25E3%2582%2592%25E3%2580%258C%25E6%258C%2587%25E7%25A4%25BA%25E3%2580%258D%25E3%2580%258C%25E4%25BA%258B%25E5%25AE%259F%25E3%2580%258D%25E3%2580%258C%25E8%2580%2583%25E5%25AF%259F%25E3%2580%258D%25E3%2581%25AE%25E9%25A0%2585%25E7%259B%25AE%25E3%2581%25AB%25E5%2588%2586%25E3%2581%2591%25E3%2581%25A6%25E6%259B%25B8%25E3%2581%258B%25E3%2581%259B%25E3%2582%258B%25E3%2581%25A8%25E5%2585%25B7%25E5%2590%2588%25E3%2581%258C%25E8%2589%25AF%25E3%2581%2584%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:sisisin%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2htRENlcFlkUklOY1dtcEJaclNnMC1FaS1xOTJVemF1bDF5SGp3PXMyNTAtYw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png?_a=BACMTiAE",
+      "checked_at": "2026-11-28T15:47:14.581243Z"
     }
   },
   "image_verdicts": {
@@ -11339,10 +11379,10 @@
     },
     "https://aitimes.com/news/articleView.html?idxno=217899": {
       "title_ko": "전기차 가격으로 휴머노이드 로봇을 출시하겠다는 샤오펑의 계획이에요",
-      "vision_ko": "앞으로 고가의 휴머노이드 로봇이 대중화되면서 일상이나 산업 현장에서 로봇을 도입하는 비용 부담이 크게 줄어들 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산 비용을 낮추는 데 기여하는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 로봇 생산 비용을 낮추고 소프트웨어 구독을 결합하는 방식으로 로봇 대중화가 빨라질 수 있어요. 우리는 자동차 사업의 기술과 부품 공급망을 활용한 양산 전략에 주목해 볼 수 있어요.",
       "src": "8bdfc1e4fb80448e",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:32:24.365105Z"
+      "at": "2026-11-28T15:47:14.581243Z"
     },
     "https://aitimes.com/news/articleView.html?idxno=217900": {
       "title_ko": "유발 하라리가 경고한 인류의 최대 위협은 무엇일까요?",
@@ -11986,10 +12026,10 @@
         }
       ],
       "title_ko": "클로드 듀엣 연구 미리보기 서비스가 해외로 넓혀졌어요",
-      "vision_ko": "앞으로 국내외 더 많은 사용자가 최신 AI 에이전트 기능을 직접 써보며 일상적인 업무를 더 빠르게 처리할 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떤 사용자 반응을 이끌어내는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 앤스로픽의 인공지능 에이전트 서비스를 미국 외 지역에서도 더욱 다양하게 활용할 수 있어요. 우리는 유료 구독 사용자들을 중심으로 일본에서 시작된 연구 미리보기 서비스의 확산에 주목해 볼 수 있어요.",
       "src": "b0af9e6b2f0f111b",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:32:24.365105Z"
+      "at": "2026-11-28T15:47:14.581243Z"
     },
     "https://itmedia.co.jp/aiplus/article/2611/26/2000003490": {
       "src": "e4f8ad39f6594323",
@@ -12504,16 +12544,18 @@
       "vision_ko": "앞으로 국산 하드웨어를 활용한 대규모 인공지능 모델 연구와 학습 접근성이 한층 높아질 수 있어요. 우리는 대규모 칩 연동과 오픈소스 모델 학습 과정의 구체적 지표에 주목해 볼 수 있어요."
     },
     "https://qiita.com/Mt-yutto/items/059e6e489bb9dd3d427f": {
-      "src": "c53b18a87f6760d3",
-      "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:32:24.365105Z",
       "glossary": [
         {
           "term": "MCP",
-          "desc": "AI가 외부 도구와 파일을 쉽게 연결해서 쓰도록 도와주는 표준 규격이에요."
+          "desc": "AI가 내 파일이나 외부 앱을 직접 연결해 쓰도록 만든 표준 플러그 규격이에요."
         }
       ],
-      "title_ko": "패러렐 MCP 인증 경로와 설정 효과를 살펴볼까요?"
+      "title_ko": "패러렐 MCP 인증 경로와 설정 효과를 살펴볼까요?",
+      "src": "c53b18a87f6760d3",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:47:14.581243Z",
+      "easy_summary_ko": "패러렐 웹 시스템즈는 AI 에이전트를 위한 웹 검색 기반 시설로, 호스트형 MCP 서버를 통해 web_search 및 web_fetch 등의 도구를 제공해요. 로컬 검증 환경에서 인증이 없는 연결과 인증이 포함된 연결의 성능을 비교 점검했어요.",
+      "vision_ko": "앞으로 MCP 서버의 인증 방식에 따른 차이를 정확히 파악하면 에이전트 통합 생산성을 더욱 높일 수 있어요. 우리는 실제 개발 환경에서 어떤 설정이 가장 안정적으로 동작하는지 주목해 볼 수 있어요."
     },
     "https://qiita.com/Sidejob/items/372e1cbfd5a22d8800ce": {
       "src": "e629bfc7f9e131bc",
@@ -13083,27 +13125,41 @@
       "easy_summary_ko": "효율적인 사전 훈련을 위해 중간 레이어를 두 번 루프하고 게이트로 개조한 GLM-5.4 모델이 나왔어요. 일반화된 코딩 작업 성능을 높이기 위해 개발된 루프형 트랜스포머예요.",
       "vision_ko": "앞으로 복잡한 프로그래밍 작업을 더 정확하고 빠르게 처리하는 코딩 에이전트를 활용할 수 있게 돼요. 우리는 이 루프 변환기 구조가 실제 개발자의 작업 속도를 얼마나 개선하는지 주목해 볼 수 있어요."
     },
-    "https://zenn.dev/aono/articles/d3c4142f91c29a": {
-      "src": "1aff8db0f7f2462a",
+    "https://zenn.dev/aizangyobu/articles/claude-code-doctor-audit": {
+      "src": "5d78cf4c39bbfcc8",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T14:32:16.122081Z",
-      "title_ko": "주요 코딩 도구의 모델 목록과 위치 맵이 공개됐어요.",
-      "easy_summary_ko": "다양한 AI 코딩 도구에서 활용할 수 있는 모델들의 구성과 비용 효율성을 한눈에 비교할 수 있는 가이드가 나왔어요. 개발 환경에 맞는 최적의 모델을 선택하고 작업 과정을 효율적으로 정리하는 방법을 다뤄요.",
-      "vision_ko": "앞으로 개발자는 프로젝트 성격과 예산에 맞춰 가장 알맞은 AI 모델을 골라 쓸 수 있어요. 우리는 다양한 코딩 도구의 특성과 실제 성능 차이에 주목해 볼 수 있어요."
+      "at": "2026-11-28T15:47:14.581243Z",
+      "glossary": [
+        {
+          "term": "CLI",
+          "desc": "마우스 대신 글자를 입력해 컴퓨터를 조작하는 까만 화면의 명령창이에요."
+        },
+        {
+          "term": "API",
+          "desc": "프로그램끼리 서로 대화하고 데이터를 주고받을 수 있게 만든 규칙이에요."
+        }
+      ],
+      "title_ko": "claude doctor 실제 측정: CLI 연결 진단과 세션 내 prompt-audit 활용법",
+      "easy_summary_ko": "터미널에서 실행하는 claude doctor CLI는 설치 상태와 API 연결 진단을 제공하며 로그인 없이도 실행할 수 있어요. 다만 CLAUDE.md 감사 기능은 CLI에서 직접 실행되지 않으며, 감사를 포함한 완전한 진단은 Claude Code 세션 내에서 /doctor 명령어를 실행해야 해요.",
+      "vision_ko": "앞으로 진단 도구의 CLI와 세션 내 명령어의 차이점을 정확히 파악하여 오류를 빠르게 해결할 수 있어요. 우리는 로그인 없이 실행 가능한 연결 진단과 세션 내 명령어의 활용법에 주목해 볼 수 있어요."
     },
-    "https://zenn.dev/bachikawa/articles/0697977b8003c7": {
-      "src": "24bdaed45f33a48a",
+    "https://zenn.dev/aria3/articles/claude-code-landmine-hook-skill-memory": {
+      "src": "ecff282051dcf60b",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T14:32:16.122081Z",
+      "at": "2026-11-28T15:47:14.581243Z",
       "glossary": [
         {
           "term": "Claude Code",
-          "desc": "터미널 환경에서 직접 코드를 수정하고 관리하는 AI 코딩 도구예요."
+          "desc": "터미널에서 직접 AI와 소통하며 코드를 수정하고 관리하는 개발자용 도구예요."
+        },
+        {
+          "term": "LLM",
+          "desc": "방대한 텍스트를 학습해 사람처럼 글을 쓰고 대답하는 대형 언어 모델이에요."
         }
       ],
-      "title_ko": "Claude Code 설정 최적화로 상주 프롬프트 간소화하기예요.",
-      "easy_summary_ko": "Claude Code를 장기간 사용하면서 비대해진 설정 파일과 Skill 구조를 목차 중심의 최소한의 형태로 개편했어요. 불필요한 규칙을 상주시키지 않고 작업 효율을 높이는 설정을 다뤄요.",
-      "vision_ko": "앞으로 복잡한 AI 코딩 환경 설정을 가볍게 유지해 도구의 반응 속도와 작업 효율을 높일 수 있어요. 우리는 AI 도구의 설정 파일 관리와 성능을 최적화하는 팁에 주목해 볼 수 있어요."
+      "title_ko": "Claude Code가 동일한 실수를 반복하지 않도록 방지하는 Hook, 스킬, 메모리 활용법",
+      "easy_summary_ko": "Claude Code와 함께 개인 개발 앱을 다수 운용하면서 발생하는 사고를 방지하기 위한 경험을 공유해요. 세션이 바뀌면 이전의 교훈을 잊어버리는 특성을 보완하기 위해, 개발 과정에서 얻은 교훈을 Hook, 스킬, 메모리 등 적절한 위치에 기록하여 실수를 방지하는 방법을 설명해요.",
+      "vision_ko": "앞으로 LLM 기반 도구의 한계를 극복하고 반복적인 개발 실수를 체계적으로 방지할 수 있어요. 우리는 개발 과정에서 얻은 교훈을 Hook과 메모리에 기록하는 방식에 주목해 볼 수 있어요."
     },
     "https://zenn.dev/claire_ai/books/doubutsu-rensai-matome-3": {
       "src": "c0f6dedbac8ca630",
@@ -13141,20 +13197,6 @@
       "easy_summary_ko": "개발 도구의 훅 기능이 제대로 작동하지 않을 때 발생하는 예외 상황과 대처법을 다뤘어요. 버전 2.1.326 업데이트에서 동작 방식이 어떻게 달라졌는지 상세한 분석을 확인할 수 있어요.",
       "vision_ko": "앞으로 자동화 도구의 세부 버전에 따른 동작 오류를 미리 파악하고 안정적으로 관리할 수 있어요. 우리는 개발 환경 업데이트 시 발생할 수 있는 예외 처리 메커니즘에 주목해 볼 수 있어요."
     },
-    "https://zenn.dev/heftykoo/articles/f1416cac537209": {
-      "src": "a248cf376bbd304e",
-      "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:02:11.362046Z",
-      "glossary": [
-        {
-          "term": "AI 에이전트",
-          "desc": "주어진 목표를 달성하기 위해 스스로 판단하고 행동하는 자율형 인공지능 프로그램이에요."
-        }
-      ],
-      "title_ko": "AI 에이전트 비용 관리에서 0원과 미측정 항목을 분리해야 하는 이유는?",
-      "easy_summary_ko": "AI 에이전트 비용 화면에 0원이 찍혀 있어도 실제로 비용이 발생하지 않은 것은 아닐 수 있어요. 단가 설정 누락이나 호출 경로 누락을 구분하여 태스크 단위로 비용을 정확히 추적해야 해요.",
-      "vision_ko": "앞으로 대규모 AI 에이전트를 운영할 때 숨겨진 비용 누락을 방지하고 예산 관리의 정확도를 높일 수 있어요. 우리는 태스크 단위로 비용을 정밀하게 추적하는 에이전트 비용 관리 체계에 주목해 볼 수 있어요."
-    },
     "https://zenn.dev/histonoby/books/5f5c4979a2a017": {
       "src": "6ce8fe29f36b8118",
       "model": "gemini-3.5-flash-lite",
@@ -13177,19 +13219,31 @@
       "easy_summary_ko": "일본어로 답변을 지시했음에도 인공지능이 계속 영어로 대답하는 문제가 발생했어요. 음성 읽기 시스템에서 영어가 재생되는 오류를 막기 위해 정지 기능을 도입했어요.",
       "vision_ko": "앞으로 언어 설정 오류로 인한 번거로움을 줄여 더욱 정확한 다국어 음성 안내를 구현할 수 있게 돼요. 우리는 인공지능의 예상치 못한 오작동을 실시간으로 제어하는 방법에 주목해 볼 수 있어요."
     },
-    "https://zenn.dev/mametools/articles/16042a48e794f4": {
-      "src": "54471e3efe485513",
+    "https://zenn.dev/itoken_lab/articles/talk-slides-presentation-test": {
+      "src": "b8cca1be4dbb8c71",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T14:32:16.122081Z",
+      "at": "2026-11-28T15:47:14.581243Z",
+      "title_ko": "AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교",
+      "easy_summary_ko": "Zenn 개발 생태계에서 AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교 구현 방식과 실전 적용 사례가 공개됐어요. 업무 자동화 과정에서 AI가 생성하는 프레젠테이션 자료의 실제 품질과 보완이 필요한 지점을 조명해요.",
+      "vision_ko": "앞으로 업무 자동화 과정에서 AI가 만든 프레젠테이션 자료의 실제 품질을 가늠하고 효율적으로 보완할 수 있어요. 우리는 AI가 작성한 원고 분량과 슬라이드의 특징을 비교한 실전 적용 사례에 주목해 볼 수 있어요."
+    },
+    "https://zenn.dev/kreutzer000/articles/e5b1a14ca68344": {
+      "src": "745d5169913e277f",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:47:14.581243Z",
       "glossary": [
         {
+          "term": "MCP",
+          "desc": "AI가 내 파일이나 외부 앱을 직접 연결해 쓰도록 만든 표준 플러그 규격이에요."
+        },
+        {
           "term": "Claude Code",
-          "desc": "터미널 환경에서 직접 코드를 수정하고 관리하는 AI 코딩 도구예요."
+          "desc": "터미널에서 직접 AI와 소통하며 코드를 수정하고 관리하는 개발자용 도구예요."
         }
       ],
-      "title_ko": "초등학생 학습 사이트 개발 시 정답 판정 자동화 규칙 적용기예요.",
-      "easy_summary_ko": "개인 개발 중인 초등학생 학습 사이트에서 계산 및 정답 판정을 AI가 아닌 코드가 직접 담당하도록 설정한 규칙을 설명해요. Claude Code를 활용한 개발 과정에서 교육 콘텐츠의 정확성을 확보하기 위한 방안을 공유해요.",
-      "vision_ko": "앞으로 정확성이 생명인 교육용 서비스에서는 AI와 전통적인 코딩의 역할을 명확히 나누어 개발할 수 있어요. 우리는 AI 활용 시 도메인 특성에 맞게 원칙을 세우는 방법에 주목해 볼 수 있어요."
+      "title_ko": "Claude Code용 MCP 서버에서 Skills 배포 시 확인해야 할 3가지 실제 측정 포인트",
+      "easy_summary_ko": "MCP 서버를 통해 SKILL.md나 보조 파일을 업데이트하여 배포할 때 Claude Code 측에서 발생하는 변화를 점검해요. Claude Code 2.1.332 버전을 기준으로 업데이트와 재승인, 승인 전제 조건 등을 상세히 확인해요.",
+      "vision_ko": "앞으로 Claude Code 환경에서 파일 배포와 승인 프로세스의 실무적 주의사항을 미리 파악하면 작업 단계를 크게 단순화할 수 있어요. 우리는 2.1.332 버전 기준의 업데이트와 재승인 조건에 주목해 볼 수 있어요."
     },
     "https://zenn.dev/miraizuk/articles/ae8db2bc3ff561": {
       "src": "b2ebc079e7529936",
@@ -13206,20 +13260,6 @@
       "title_ko": "통신망이 닿지 않는 건설 현장을 위한 현장 수첩 서비스 구상이에요",
       "easy_summary_ko": "통신 환경이 원활하지 않은 건설 현장에서 활용할 수 있는 로컬 LLM과 클라우드 AI의 하이브리드 구성 방안을 다뤄요. 현장 관리와 업무 지원을 위해 실무 의견을 반영한 데모 아이디어를 소개하고 있어요.",
       "vision_ko": "앞으로 인터넷 연결이 불안정한 환경에서도 인공지능을 활용한 현장 업무 지원이 활성화돼요. 우리는 통신 제약 환경에서 AI를 실무에 적용하는 아키텍처에 주목해 볼 수 있어요."
-    },
-    "https://zenn.dev/ojisan_ai_lab/articles/claude-code-pre-skill-shell-command-20261128": {
-      "src": "f25cbfda29a9520c",
-      "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T14:32:16.122081Z",
-      "glossary": [
-        {
-          "term": "PreToolUse",
-          "desc": "AI가 특정 도구나 명령어를 실행하기 직전에 가로채서 실행 여부를 검사하고 통제하는 기능이에요."
-        }
-      ],
-      "title_ko": "Claude Code 스킬 명령어와 PreToolUse 훅의 동작 관계를 분석했어요",
-      "easy_summary_ko": "사용자가 직접 작성한 명령어가 훅을 통해 어떻게 제어되는지 상세한 작동 방식을 다뤘어요. 최신 버전에서 PreToolUse 훅이 어떻게 동작하며 명령을 통제하는지 살펴볼 수 있어요.",
-      "vision_ko": "앞으로 AI 개발 도구 내부의 세부 실행 단계를 정밀하게 제어하고 차단하는 규칙을 세울 수 있어요. 우리는 도구 호출 전후를 감시하는 훅 메커니즘을 이용한 작업 안전성에 주목해 볼 수 있어요."
     },
     "https://zenn.dev/parsetree/articles/claude-artifact-install-as-app-ai-office": {
       "src": "3ae0b2436bba789d",
@@ -13242,6 +13282,20 @@
       "title_ko": "AI 시스템 개발에서 사양 명확화를 위한 설계 보조 기법이에요",
       "easy_summary_ko": "LLM을 활용한 개발에서 세부 규칙이 누락되면 AI가 임의로 판단하는 문제를 방지하기 위한 설계 보조 접근법을 설명해요. 입력 사양이 모호할 때 발생하는 원인을 짚어주고 프롬프트와 요구사항 정의의 중요성을 다루고 있어요.",
       "vision_ko": "앞으로 인공지능 코딩 도구를 사용할 때 명확한 입력 사양을 정의하여 원하는 결과를 정확하게 도출할 수 있어요. 우리는 설계 보조 기법이 개발 워크플로에 미치는 영향에 주목해 볼 수 있어요."
+    },
+    "https://zenn.dev/sisisin/articles/20261128-record-instruction-fact-discussion": {
+      "src": "ec8c56db9d5a40e2",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:47:14.581243Z",
+      "glossary": [
+        {
+          "term": "Agent",
+          "desc": "사람의 개입 없이 스스로 판단하고 도구를 사용해 목표를 달성하는 AI 프로그램이에요."
+        }
+      ],
+      "title_ko": "코딩 Agent의 조사 결과를 지시, 사실, 3가지 항목으로 나누어 작성하게 하는 법",
+      "easy_summary_ko": "코딩 Agent와 대화하며 결과를 기록하고 설계나 계획을 진행할 때, Agent가 임의로 생성한 가상의 증언을 바탕으로 설계가 미궁에 빠지는 경우가 있어요. 이를 방지하기 위해 기록 작성용 skill을 활용하여 지시, 사실, 고찰 항목을 명확히 구분해 작성하도록 유도하는 방안을 다뤄요.",
+      "vision_ko": "앞으로 코딩 Agent와의 협업 시 발생하는 환각 및 오류를 줄이고 기록의 정확성을 높일 수 있어요. 우리는 기록 작성용 skill을 활용해 지시와 사실을 명확히 구분하는 방법에 주목해 볼 수 있어요."
     }
   }
 }

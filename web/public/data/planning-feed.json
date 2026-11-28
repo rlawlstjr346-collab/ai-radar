@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T15:32:24.365105Z",
+  "generated_at": "2026-11-28T15:47:14.581243Z",
   "item_count": 200,
   "signals": [
     {
@@ -20,7 +20,7 @@
       "highlight_summary": "패러렐 웹 시스템즈는 AI 에이전트를 위한 웹 검색 기반 시설로, 호스트형 MCP 서버를 통해 web_search 및 web_fetch 등의 도구를 제공해요. 로컬 검증 환경에서 인증이 없는 연결과 인증이 포함된 연결의 성능을 비교 점검했어요.",
       "image_url": null,
       "easy_summary_ko": "패러렐 웹 시스템즈는 AI 에이전트를 위한 웹 검색 기반 시설로, 호스트형 MCP 서버를 통해 web_search 및 web_fetch 등의 도구를 제공해요. 로컬 검증 환경에서 인증이 없는 연결과 인증이 포함된 연결의 성능을 비교 점검했어요.",
-      "vision_ko": "이런 변화가 이어지면, 앞으로 AI와 함께 일하는 방식이 개발자의 기본 업무 습관이 될 거예요. 우리는 내 업무 중 어떤 단계를 바로 AI에게 넘길 수 있는지에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 MCP 서버의 인증 방식에 따른 차이를 정확히 파악하면 에이전트 통합 생산성을 더욱 높일 수 있어요. 우리는 실제 개발 환경에서 어떤 설정이 가장 안정적으로 동작하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "dev_workflow",
@@ -416,6 +416,65 @@
       ]
     },
     {
+      "id": "live-faa9ee896317",
+      "title_ko": "Claude Code용 MCP 서버에서 Skills 배포 시 확인해야 할 3가지 실제 측정 포인트",
+      "original_title": "Claude Code向けMCPサーバーからSkillsを配る前に知っておきたい3つの実測：更新・承認・シェル",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/kreutzer000/articles/e5b1a14ca68344",
+      "published_at": "2026-11-28T12:06:33Z",
+      "fetched_at": "2026-11-28T15:47:14.581243Z",
+      "importance_score": 27.0,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "MCP 서버를 통해 SKILL.md나 보조 파일을 업데이트하여 배포할 때 Claude Code 측에서 발생하는 변화를 점검해요. Claude Code 2.1.332 버전을 기준으로 업데이트와 재승인, 승인 전제 조건 등을 상세히 확인해요.",
+      "image_url": null,
+      "easy_summary_ko": "MCP 서버를 통해 SKILL.md나 보조 파일을 업데이트하여 배포할 때 Claude Code 측에서 발생하는 변화를 점검해요. Claude Code 2.1.332 버전을 기준으로 업데이트와 재승인, 승인 전제 조건 등을 상세히 확인해요.",
+      "vision_ko": "앞으로 Claude Code 환경에서 파일 배포와 승인 프로세스의 실무적 주의사항을 미리 파악하면 작업 단계를 크게 단순화할 수 있어요. 우리는 2.1.332 버전 기준의 업데이트와 재승인 조건에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Code",
+        "Claude"
+      ]
+    },
+    {
+      "id": "live-d836efb76e8c",
+      "title_ko": "코딩 Agent의 조사 결과를 지시, 사실, 3가지 항목으로 나누어 작성하게 하는 법",
+      "original_title": "Coding Agentの調査結果を「指示」「事実」「考察」の項目に分けて書かせると具合が良い",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/sisisin/articles/20261128-record-instruction-fact-discussion",
+      "published_at": "2026-11-28T11:59:56Z",
+      "fetched_at": "2026-11-28T15:47:14.581243Z",
+      "importance_score": 26.98,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "코딩 Agent와 대화하며 결과를 기록하고 설계나 계획을 진행할 때, Agent가 임의로 생성한 가상의 증언을 바탕으로 설계가 미궁에 빠지는 경우가 있어요. 이를 방지하기 위해 기록 작성용 skill을 활용하여 지시, 사실, 고찰 항목을 명확히 구분해 작성하도록 유도하는 방안을 다뤄요.",
+      "image_url": null,
+      "easy_summary_ko": "코딩 Agent와 대화하며 결과를 기록하고 설계나 계획을 진행할 때, Agent가 임의로 생성한 가상의 증언을 바탕으로 설계가 미궁에 빠지는 경우가 있어요. 이를 방지하기 위해 기록 작성용 skill을 활용하여 지시, 사실, 고찰 항목을 명확히 구분해 작성하도록 유도하는 방안을 다뤄요.",
+      "vision_ko": "앞으로 코딩 Agent와의 협업 시 발생하는 환각 및 오류를 줄이고 기록의 정확성을 높일 수 있어요. 우리는 기록 작성용 skill을 활용해 지시와 사실을 명확히 구분하는 방법에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
       "id": "live-575cd9bc6ca6",
       "title_ko": "클로드가 인공지능 연구를 고의로 방해했다는 주장이 나왔어요",
       "original_title": "Claude被指蓄意破坏AI研究 - Sohu",
@@ -441,6 +500,36 @@
         "actionable_idea": "Claude의 'Synced · 기기지심 포착 — Claude 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
+        "Claude"
+      ]
+    },
+    {
+      "id": "live-2397fdb7ab0e",
+      "title_ko": "claude doctor 실제 측정: CLI 연결 진단과 세션 내 prompt-audit 활용법",
+      "original_title": "claude doctorを実測する：CLIの接続診断と、セッション内でやるprompt-audit",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/aizangyobu/articles/claude-code-doctor-audit",
+      "published_at": "2026-11-28T11:37:34Z",
+      "fetched_at": "2026-11-28T15:47:14.581243Z",
+      "importance_score": 26.93,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "터미널에서 실행하는 claude doctor CLI는 설치 상태와 API 연결 진단을 제공하며 로그인 없이도 실행할 수 있어요. 다만 CLAUDE.md 감사 기능은 CLI에서 직접 실행되지 않으며, 감사를 포함한 완전한 진단은 Claude Code 세션 내에서 /doctor 명령어를 실행해야 해요.",
+      "image_url": null,
+      "easy_summary_ko": "터미널에서 실행하는 claude doctor CLI는 설치 상태와 API 연결 진단을 제공하며 로그인 없이도 실행할 수 있어요. 다만 CLAUDE.md 감사 기능은 CLI에서 직접 실행되지 않으며, 감사를 포함한 완전한 진단은 Claude Code 세션 내에서 /doctor 명령어를 실행해야 해요.",
+      "vision_ko": "앞으로 진단 도구의 CLI와 세션 내 명령어의 차이점을 정확히 파악하여 오류를 빠르게 해결할 수 있어요. 우리는 로그인 없이 실행 가능한 연결 진단과 세션 내 명령어의 활용법에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Code",
         "Claude"
       ]
     },
@@ -503,6 +592,36 @@
       ]
     },
     {
+      "id": "live-329ef47bef55",
+      "title_ko": "Claude Code가 동일한 실수를 반복하지 않도록 방지하는 Hook, 스킬, 메모리 활용법",
+      "original_title": "一度踏んだ地雷を Claude Code に二度と踏ませない ── Hook・スキル・メモリの使い分け",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/aria3/articles/claude-code-landmine-hook-skill-memory",
+      "published_at": "2026-11-28T11:00:06Z",
+      "fetched_at": "2026-11-28T15:47:14.581243Z",
+      "importance_score": 26.83,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "Claude Code와 함께 개인 개발 앱을 다수 운용하면서 발생하는 사고를 방지하기 위한 경험을 공유해요. 세션이 바뀌면 이전의 교훈을 잊어버리는 특성을 보완하기 위해, 개발 과정에서 얻은 교훈을 Hook, 스킬, 메모리 등 적절한 위치에 기록하여 실수를 방지하는 방법을 설명해요.",
+      "image_url": null,
+      "easy_summary_ko": "Claude Code와 함께 개인 개발 앱을 다수 운용하면서 발생하는 사고를 방지하기 위한 경험을 공유해요. 세션이 바뀌면 이전의 교훈을 잊어버리는 특성을 보완하기 위해, 개발 과정에서 얻은 교훈을 Hook, 스킬, 메모리 등 적절한 위치에 기록하여 실수를 방지하는 방법을 설명해요.",
+      "vision_ko": "앞으로 LLM 기반 도구의 한계를 극복하고 반복적인 개발 실수를 체계적으로 방지할 수 있어요. 우리는 개발 과정에서 얻은 교훈을 Hook과 메모리에 기록하는 방식에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Code",
+        "Claude"
+      ]
+    },
+    {
       "id": "live-563c6c64f11a",
       "title_ko": "350만이 읽은 유명 딥러닝 교재를 저자가 직접 판매 중단했어요",
       "original_title": "350万人读过的深度学习教材，被作者亲手下架 - Sohu",
@@ -529,6 +648,35 @@
       },
       "entities": [
         "Synced · 기기지심"
+      ]
+    },
+    {
+      "id": "live-d058bc1eaef2",
+      "title_ko": "AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교",
+      "original_title": "AI に10分の発表を作らせたら、原稿は5分ぶんで、スライドは1枚100字だった。人の資料から作った手順で比較した",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/itoken_lab/articles/talk-slides-presentation-test",
+      "published_at": "2026-11-28T10:49:45Z",
+      "fetched_at": "2026-11-28T15:47:14.581243Z",
+      "importance_score": 26.8,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "Zenn 개발 생태계에서 AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교 구현 방식과 실전 적용 사례가 공개됐어요. 업무 자동화 과정에서 AI가 생성하는 프레젠테이션 자료의 실제 품질과 보완이 필요한 지점을 조명해요.",
+      "image_url": null,
+      "easy_summary_ko": "Zenn 개발 생태계에서 AI에게 10분 분량 발표 자료 작성을 맡겼을 때 나타나는 원고 분량과 슬라이드 특징 비교 구현 방식과 실전 적용 사례가 공개됐어요. 업무 자동화 과정에서 AI가 생성하는 프레젠테이션 자료의 실제 품질과 보완이 필요한 지점을 조명해요.",
+      "vision_ko": "앞으로 업무 자동화 과정에서 AI가 만든 프레젠테이션 자료의 실제 품질을 가늠하고 효율적으로 보완할 수 있어요. 우리는 AI가 작성한 원고 분량과 슬라이드의 특징을 비교한 실전 적용 사례에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
       ]
     },
     {
@@ -600,7 +748,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 32.02,
+      "importance_score": 32.33,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -1077,7 +1225,7 @@
       "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 고가의 휴머노이드 로봇이 대중화되면서 일상이나 산업 현장에서 로봇을 도입하는 비용 부담이 크게 줄어들 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산 비용을 낮추는 데 기여하는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 로봇 생산 비용을 낮추고 소프트웨어 구독을 결합하는 방식으로 로봇 대중화가 빨라질 수 있어요. 우리는 자동차 사업의 기술과 부품 공급망을 활용한 양산 전략에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -1087,66 +1235,6 @@
       },
       "entities": [
         "AI타임스"
-      ]
-    },
-    {
-      "id": "live-18e1be744671",
-      "title_ko": "Claude Code 스킬 명령어와 PreToolUse 훅의 동작 관계를 분석했어요",
-      "original_title": "Claude Codeのスキルに書いたコマンドはフックで止まる？ PreToolUseは3回とも走り、2.1.332の新フックで止まりました",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/ojisan_ai_lab/articles/claude-code-pre-skill-shell-command-20261128",
-      "published_at": "2026-11-28T09:02:16Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 26.72,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "사용자가 직접 작성한 명령어가 훅을 통해 어떻게 제어되는지 상세한 작동 방식을 다뤘어요. 최신 버전에서 PreToolUse 훅이 어떻게 동작하며 명령을 통제하는지 살펴볼 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "사용자가 직접 작성한 명령어가 훅을 통해 어떻게 제어되는지 상세한 작동 방식을 다뤘어요. 최신 버전에서 PreToolUse 훅이 어떻게 동작하며 명령을 통제하는지 살펴볼 수 있어요.",
-      "vision_ko": "앞으로 AI 개발 도구 내부의 세부 실행 단계를 정밀하게 제어하고 차단하는 규칙을 세울 수 있어요. 우리는 도구 호출 전후를 감시하는 훅 메커니즘을 이용한 작업 안전성에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-ba5315b3b272",
-      "title_ko": "주요 코딩 도구의 모델 목록과 위치 맵이 공개됐어요.",
-      "original_title": "Codex・Claude Code・Antigravity で使えるモデル一覧と位置づけマップ（2026年11月時点）",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/aono/articles/d3c4142f91c29a",
-      "published_at": "2026-11-28T09:01:46Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 26.72,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "다양한 AI 코딩 도구에서 활용할 수 있는 모델들의 구성과 비용 효율성을 한눈에 비교할 수 있는 가이드가 나왔어요. 개발 환경에 맞는 최적의 모델을 선택하고 작업 과정을 효율적으로 정리하는 방법을 다뤄요.",
-      "image_url": null,
-      "easy_summary_ko": "다양한 AI 코딩 도구에서 활용할 수 있는 모델들의 구성과 비용 효율성을 한눈에 비교할 수 있는 가이드가 나왔어요. 개발 환경에 맞는 최적의 모델을 선택하고 작업 과정을 효율적으로 정리하는 방법을 다뤄요.",
-      "vision_ko": "앞으로 개발자는 프로젝트 성격과 예산에 맞춰 가장 알맞은 AI 모델을 골라 쓸 수 있어요. 우리는 다양한 코딩 도구의 특성과 실제 성능 차이에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
       ]
     },
     {
@@ -1237,36 +1325,6 @@
       ]
     },
     {
-      "id": "live-0901671f2763",
-      "title_ko": "초등학생 학습 사이트 개발 시 정답 판정 자동화 규칙 적용기예요.",
-      "original_title": "小学生向け学習サイトで「正解は必ずコードが決める」を守るためにやったこと",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/mametools/articles/16042a48e794f4",
-      "published_at": "2026-11-28T08:13:53Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 26.61,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "개인 개발 중인 초등학생 학습 사이트에서 계산 및 정답 판정을 AI가 아닌 코드가 직접 담당하도록 설정한 규칙을 설명해요. Claude Code를 활용한 개발 과정에서 교육 콘텐츠의 정확성을 확보하기 위한 방안을 공유해요.",
-      "image_url": null,
-      "easy_summary_ko": "개인 개발 중인 초등학생 학습 사이트에서 계산 및 정답 판정을 AI가 아닌 코드가 직접 담당하도록 설정한 규칙을 설명해요. Claude Code를 활용한 개발 과정에서 교육 콘텐츠의 정확성을 확보하기 위한 방안을 공유해요.",
-      "vision_ko": "앞으로 정확성이 생명인 교육용 서비스에서는 AI와 전통적인 코딩의 역할을 명확히 나누어 개발할 수 있어요. 우리는 AI 활용 시 도메인 특성에 맞게 원칙을 세우는 방법에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
       "id": "live-a122bb33fbfe",
       "title_ko": "실제 업무 패턴을 담은 새로운 에이전트 평가 도구가 나왔어요",
       "original_title": "ShellBench - 실제 에이전트 사용 패턴으로 만든 업무형 에이전트 벤치마크",
@@ -1296,36 +1354,6 @@
       ]
     },
     {
-      "id": "live-48cb5d3c146b",
-      "title_ko": "Claude Code 설정 최적화로 상주 프롬프트 간소화하기예요.",
-      "original_title": "Claude Code の設定をダイエットした話 — 常駐させるのは目次だけにする",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/bachikawa/articles/0697977b8003c7",
-      "published_at": "2026-11-28T07:53:16Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 26.55,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Claude Code를 장기간 사용하면서 비대해진 설정 파일과 Skill 구조를 목차 중심의 최소한의 형태로 개편했어요. 불필요한 규칙을 상주시키지 않고 작업 효율을 높이는 설정을 다뤄요.",
-      "image_url": null,
-      "easy_summary_ko": "Claude Code를 장기간 사용하면서 비대해진 설정 파일과 Skill 구조를 목차 중심의 최소한의 형태로 개편했어요. 불필요한 규칙을 상주시키지 않고 작업 효율을 높이는 설정을 다뤄요.",
-      "vision_ko": "앞으로 복잡한 AI 코딩 환경 설정을 가볍게 유지해 도구의 반응 속도와 작업 효율을 높일 수 있어요. 우리는 AI 도구의 설정 파일 관리와 성능을 최적화하는 팁에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
       "id": "live-bd2ac073cdcb",
       "title_ko": "가벼운 대형 모델을 위한 시각 처리 방식을 정리했어요",
       "original_title": "【轻量化复刻大模型 / KIMI K3】MoonViT-V2 视觉处理梳理",
@@ -1352,35 +1380,6 @@
       },
       "entities": [
         "Juejin · 굴진"
-      ]
-    },
-    {
-      "id": "live-95ff132aba4c",
-      "title_ko": "AI 에이전트 비용 관리에서 0원과 미측정 항목을 분리해야 하는 이유는?",
-      "original_title": "AIエージェントの費用台帳では、「0円」と「未計測」を分ける",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/heftykoo/articles/f1416cac537209",
-      "published_at": "2026-11-28T07:41:48Z",
-      "fetched_at": "2026-11-28T15:02:11.362046Z",
-      "importance_score": 26.46,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "AI 에이전트 비용 화면에 0원이 찍혀 있어도 실제로 비용이 발생하지 않은 것은 아닐 수 있어요. 단가 설정 누락이나 호출 경로 누락을 구분하여 태스크 단위로 비용을 정확히 추적해야 해요.",
-      "image_url": null,
-      "easy_summary_ko": "AI 에이전트 비용 화면에 0원이 찍혀 있어도 실제로 비용이 발생하지 않은 것은 아닐 수 있어요. 단가 설정 누락이나 호출 경로 누락을 구분하여 태스크 단위로 비용을 정확히 추적해야 해요.",
-      "vision_ko": "앞으로 대규모 AI 에이전트를 운영할 때 숨겨진 비용 누락을 방지하고 예산 관리의 정확도를 높일 수 있어요. 우리는 태스크 단위로 비용을 정밀하게 추적하는 에이전트 비용 관리 체계에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Zenn — 0원 기반 성능·효율 지표",
-        "actionable_idea": "Zenn의 'Zenn — 0원 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Zenn"
       ]
     },
     {
@@ -5569,7 +5568,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 국내외 더 많은 사용자가 최신 AI 에이전트 기능을 직접 써보며 일상적인 업무를 더 빠르게 처리할 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떤 사용자 반응을 이끌어내는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 앤스로픽의 인공지능 에이전트 서비스를 미국 외 지역에서도 더욱 다양하게 활용할 수 있어요. 우리는 유료 구독 사용자들을 중심으로 일본에서 시작된 연구 미리보기 서비스의 확산에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
