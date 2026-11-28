@@ -1,14 +1,15 @@
+import { isAiItem } from "./ai-gate";
 import type { EdgeEnv } from "./cf-types";
 import {
   MAX_BASE_CHUNKS,
   SEEN_CAP,
   assembleFeed,
-  chunkText,
   edgeInnerOf,
   extractItemsInner,
   laterIso,
   parseMeta,
   readRows,
+  splitEven,
   titleKey,
   upsert,
   urlKey,
@@ -17,12 +18,12 @@ import {
 
 const CACHE_HEADERS = {
   "Content-Type": "application/json; charset=utf-8",
-  "Cache-Control": "public, max-age=0, s-maxage=25, stale-while-revalidate=25",
+  "Cache-Control": "public, max-age=0, s-maxage=30, stale-while-revalidate=30",
   "Access-Control-Allow-Origin": "*",
 };
-const ISOLATE_TTL_MS = 20_000;
+const ISOLATE_TTL_MS = 30_000;
 
-/** 같은 isolate 안에서는 20초 동안 조립된 응답을 재사용 → 몰려도 D1 읽기 0행 */
+/** 같은 isolate 안에서는 30초 동안 조립된 응답을 재사용 → 몰려도 D1 읽기 0행 */
 let memo: { at: number; meta: MetaRow; body: string } | null = null;
 
 export function resetMemo(): void {
@@ -78,10 +79,14 @@ interface IngestMeta {
  * POST /api/live-feed/ingest  (Authorization: Bearer FEED_INGEST_SECRET)
  * 본문 = 1행 작은 메타 JSON + "\n" + live-feed.json 전체 텍스트. 큰 JSON 은 파싱하지 않고 조각으로 원자 저장한다.
  */
-export async function handleIngest(request: Request, env: EdgeEnv, now = new Date()): Promise<Response> {
+/** 운영자 전용 경로(ingest·수동 스캔)의 Bearer 비밀키 검사 */
+export function authorized(request: Request, env: EdgeEnv): boolean {
   const secret = env.FEED_INGEST_SECRET ?? "";
-  const auth = request.headers.get("authorization") ?? "";
-  if (!secret || !safeEqual(auth, `Bearer ${secret}`)) return new Response("unauthorized", { status: 401 });
+  return Boolean(secret) && safeEqual(request.headers.get("authorization") ?? "", `Bearer ${secret}`);
+}
+
+export async function handleIngest(request: Request, env: EdgeEnv, now = new Date()): Promise<Response> {
+  if (!authorized(request, env)) return new Response("unauthorized", { status: 401 });
 
   const text = await request.text();
   const nl = text.indexOf("\n");
@@ -94,7 +99,7 @@ export async function handleIngest(request: Request, env: EdgeEnv, now = new Dat
   }
   const inner = extractItemsInner(text.slice(nl + 1));
   if (!inner || typeof im.generated_at !== "string" || !Array.isArray(im.urls)) return new Response("bad feed", { status: 400 });
-  const chunks = chunkText(inner);
+  const chunks = splitEven(inner);
   if (chunks.length > MAX_BASE_CHUNKS) return new Response("feed too large", { status: 413 });
 
   const nowIso = now.toISOString();
@@ -103,14 +108,15 @@ export async function handleIngest(request: Request, env: EdgeEnv, now = new Dat
   const baseKeys = new Set(im.urls);
 
   // 엣지 속보 중 이번 심층 스냅샷에 들어온 기사는 빼서 중복 노출을 막는다 (엣지 행은 40건 이하라 파싱 비용이 작다)
-  let edge: Array<{ canonical_url?: string; original_title?: string }> = [];
+  let edge: Array<{ canonical_url?: string; original_title?: string; platform_id?: string }> = [];
   try {
     edge = JSON.parse(rows.get("edge") ?? "[]");
   } catch {
     edge = [];
   }
+  // 엣지 속보 중 비AI 글(종합 IT 소스에서 새어 든 일반 개발·보안 글)도 이 시점에 함께 걷어낸다
   const keptEdge = edge.filter(
-    (it) => it.canonical_url && !baseKeys.has(urlKey(it.canonical_url)) && !baseKeys.has(titleKey(it.original_title ?? "")),
+    (it) => it.canonical_url && !baseKeys.has(urlKey(it.canonical_url)) && !baseKeys.has(titleKey(it.original_title ?? "")) && isAiItem(it),
   );
   let seen: string[] = [];
   try {

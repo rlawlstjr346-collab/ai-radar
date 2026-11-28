@@ -13,7 +13,7 @@ import logging
 import os
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, Callable, Optional
 
 from pipeline.enrich import STOCK_PHRASE_RE, SENT_SPLIT_RE, _body_candidates, clean_text
@@ -25,6 +25,7 @@ EDITOR_VERSION = 2
 BATCH_SIZE = 8
 BATCH_GAP_SEC = 4.0
 DEFAULT_MAX_BATCHES = 16
+NOT_AI_KEEP_DAYS = 30          # is_ai_related=false 판정 URL 보관 기간 (재수집 시 Gemini 없이 즉시 탈락)
 
 CJK_FOREIGN_RE = re.compile(r"[぀-ヿ一-鿿ｦ-ﾟ]")
 BRACKET_HEAD_RE = re.compile(r"^\s*[\[【〔(（<〈「『]")
@@ -43,8 +44,10 @@ PROMPT_HEAD = """너는 AI 뉴스를 처음 보는 사람에게 설명하는 한
 3) vision: 이 기사만의 미래 이야기 2문장. 첫 문장은 '앞으로 ~' 로 시작해 이 변화로 일상이나 업무에서 무엇이 가능해지는지,
    둘째 문장은 '우리는 ~에 주목해 볼 수 있어요.' 형태로 이 기사에 맞는 구체적인 관찰 포인트.
 금지 표현: 벤더, 원가, 생태계 지형, 시그널, 패러다임, 인사이트, '쉽게 말해', '~에 따르면', '~를 발표했다' 같은 번역투, 다른 기사와 똑같은 문장.
+4) is_ai_related: 기사가 AI(모델·에이전트·AI 제품·AI 연구·AI 산업·AI 정책)와 직접 관련 있으면 true,
+   AI 와 무관한 일반 개발 도구·디스크 정리 같은 유틸리티·일반 보안 사건·단순 하드웨어 소식이면 false (false 면 나머지 필드는 빈 문자열).
 
-출력은 JSON 배열만: [{"id": "...", "title_ko": "...", "summary": "...", "vision": "..."}]
+출력은 JSON 배열만: [{"id": "...", "is_ai_related": true, "title_ko": "...", "summary": "...", "vision": "..."}]
 
 기사 목록:
 """
@@ -153,8 +156,12 @@ def edit_items(
     names = names or {}
     max_batches = max_batches if max_batches is not None else int(os.getenv("EDITOR_MAX_BATCHES", DEFAULT_MAX_BATCHES))
     stats = {"cached": 0, "edited": 0, "rejected_fields": 0, "batches": 0, "failed_batches": 0}
+    stats["not_ai"] = 0
     todo = []
     for it in items:
+        if (cache.get(str(it.get("canonical_url") or "")) or {}).get("not_ai"):
+            stats["not_ai"] += 1                        # 이미 비AI 판정 → Gemini 다시 부르지 않음 (호출부가 탈락시킴)
+            continue
         if apply_cached(it, cache):
             stats["cached"] += 1
         else:
@@ -181,6 +188,10 @@ def edit_items(
             r = by_id.get(str(it.get("id")))
             if not r:
                 continue
+            if r.get("is_ai_related") is False:
+                cache[str(it.get("canonical_url") or "")] = {"src": source_hash(it), "model": model, "at": now_iso, "not_ai": True}
+                stats["not_ai"] += 1
+                continue
             source = _source_blob(it)
             entry: dict[str, Any] = {"src": source_hash(it), "model": model, "at": now_iso}
             title, summary, vision = (clean_text(r.get(k)) for k in ("title_ko", "summary", "vision"))
@@ -202,6 +213,17 @@ def edit_items(
                 stats["edited"] += 1
 
     live = {str(it.get("canonical_url") or "") for it in items}
-    for key in [k for k in cache if k not in live]:
+    block_cutoff = now - timedelta(days=NOT_AI_KEEP_DAYS)
+
+    def _keep_block(entry: Any) -> bool:
+        # 비AI 판정은 피드에서 빠진 뒤에도 30일 보관 → 같은 글이 다시 수집돼도 Gemini 호출 없이 바로 탈락
+        if not (isinstance(entry, dict) and entry.get("not_ai")):
+            return False
+        try:
+            return datetime.fromisoformat(str(entry.get("at")).replace("Z", "+00:00")) >= block_cutoff
+        except ValueError:
+            return False
+
+    for key in [k for k in cache if k not in live and not _keep_block(cache[k])]:
         cache.pop(key, None)
     return stats

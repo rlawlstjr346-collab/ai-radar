@@ -16,6 +16,8 @@ export interface EdgeEnv {
   DB: D1Database;
   FEED_INGEST_SECRET?: string;
   GEMINI_API_KEY?: string;
+  /** GitHub Actions collect.yml workflow_dispatch 전용 토큰 (Worker 시크릿) */
+  GH_DISPATCH_TOKEN?: string;
 }
 export interface ScheduledController {
   scheduledTime: number;

@@ -874,7 +874,38 @@ values
  '중동 국가가 공개 모델 경쟁에 뛰어든 대표 사례라 AI의 지정학을 볼 때 좋아요.',
  'https://falconllm.tii.ae', '#C9A227',
  '공개 모델은 허깅페이스에서 받을 수 있어요. 라이선스를 확인하세요.',
- 'directory_only', 'eu')
+ 'directory_only', 'eu'),
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- [EDGE] Cloudflare 5분 엣지 3교대 스캔 전용 1차 AI 진원지 4곳
+-- ─────────────────────────────────────────────────────────────────────────────
+('google-ai', 'Google AI Blog', 'industry',
+ '구글이 제미나이·검색·안드로이드 등 제품에 넣는 AI 기능과 연구를 직접 알리는 공식 블로그예요.',
+ '새 제미나이 기능이 실제 서비스에 언제 어떻게 들어오는지 구글이 가장 먼저 밝히는 곳이에요.',
+ 'https://blog.google/innovation-and-ai/technology/ai/', '#4285F4',
+ '무료로 읽을 수 있어요.',
+ 'active', 'global'),
+
+('lobsters', 'Lobsters (ai)', 'social',
+ '초대제로 운영되는 개발자 커뮤니티 로브스터스의 AI 태그 게시판이에요.',
+ '홍보보다 기술 토론 위주라 개발자들이 AI 도구를 실제로 어떻게 평가하는지 볼 수 있어요.',
+ 'https://lobste.rs/t/ai', '#AC130D',
+ '무료로 읽을 수 있어요. AI 관련 글만 골라 와요.',
+ 'active', 'global'),
+
+('venturebeat-ai', 'VentureBeat AI', 'industry',
+ '기업용 AI 도입·투자·제품 소식을 빠르게 전하는 미국 테크 매체 벤처비트예요.',
+ '회사들이 AI 에이전트와 모델을 업무에 어떻게 들이는지 실무 관점 기사가 많아요.',
+ 'https://venturebeat.com/category/ai', '#E0262D',
+ '무료로 읽을 수 있어요. AI 관련 글만 골라 와요.',
+ 'active', 'global'),
+
+('marktechpost', 'MarkTechPost', 'research',
+ '새로 나온 AI 논문과 공개 모델을 매일 짧게 정리해 주는 AI 연구 뉴스 사이트예요.',
+ '어려운 논문을 핵심만 요약해 줘서, 연구 흐름을 빠르게 따라가기 좋아요.',
+ 'https://www.marktechpost.com', '#0F766E',
+ '무료로 읽을 수 있어요.',
+ 'active', 'global')
 
 on conflict (id) do update set
   name         = excluded.name,

@@ -9,7 +9,7 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  // 완성 피드 스냅샷 저장소 (요청당 1~5행 읽기, KV 쓰기 0건)
+  // 완성 피드 스냅샷 저장소 (요청당 1~6행 읽기, KV 쓰기 0건)
   "d1_databases": [
     { "binding": "DB", "database_name": "ai-radar-live", "database_id": "e0d2b5ee-3d01-4abb-8008-649b06e3904e", "migrations_dir": "migrations" }
   ],

@@ -37,9 +37,9 @@ describe("splitByTerms", () => {
 describe("sample data", () => {
   const platforms = samplePlatforms as Platform[];
 
-  it("has all 145 seed platforms (26 base + 115 regional + 2 Substack + 2 CN builders, 58 active + 87 directory_only) across 7 categories", () => {
-    expect(platforms).toHaveLength(145);
-    expect(platforms.filter((p) => p.collect_status === "active")).toHaveLength(58);
+  it("has all 149 seed platforms (26 base + 115 regional + 2 Substack + 2 CN builders + 4 edge sources, 62 active + 87 directory_only) across 7 categories", () => {
+    expect(platforms).toHaveLength(149);
+    expect(platforms.filter((p) => p.collect_status === "active")).toHaveLength(62);
     expect(platforms.filter((p) => p.collect_status === "directory_only")).toHaveLength(87);
     expect(new Set(platforms.map((p) => p.category))).toEqual(new Set(CATEGORY_ORDER));
     // 기존 26곳은 그대로 남아 있다
@@ -154,7 +154,7 @@ describe("data loading", () => {
     expect(getSupabaseEnv()).toBeNull();
     const data = await loadRadarData();
     expect(data.source).toBe("sample");
-    expect(data.platforms).toHaveLength(145);
+    expect(data.platforms).toHaveLength(149);
     expect(data.items.length).toBeGreaterThanOrEqual(SAMPLE_FEED.length);
     expect(Number.isNaN(Date.parse(data.generatedAt))).toBe(false);
     expect(data.notice).toBeTruthy();
@@ -307,12 +307,12 @@ describe("card face helpers, directory filters, sharing", () => {
     expect(SAMPLE_FEED.find((i) => i.id === "sample-anthropic-ipo")!.source_platforms).toEqual(["anthropic", "hacker-news"]);
   });
 
-  it("directory quick filters narrow the 145 platforms by trait", async () => {
+  it("directory quick filters narrow the 149 platforms by trait", async () => {
     const { matchesPlatformFilter } = await import("@/lib/platform-traits");
     const platforms = samplePlatforms as Platform[];
     const count = (f: "all" | "live" | "free" | "open_local") => platforms.filter((p) => matchesPlatformFilter(p, f)).length;
-    expect(count("all")).toBe(145);
-    expect(count("live")).toBe(58);
+    expect(count("all")).toBe(149);
+    expect(count("live")).toBe(62);
     expect(count("free")).toBe(27);
     expect(count("open_local")).toBe(21);
     expect(platforms.some((p) => p.id === "midjourney" && matchesPlatformFilter(p, "free"))).toBe(false);

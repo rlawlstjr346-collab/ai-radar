@@ -16,7 +16,7 @@ import { CategoryNav, Masthead } from "./newsroom/Masthead";
 import type { TitleLang } from "./Sidebar";
 
 const CLOCK_TICK_MS = 30_000;
-const LIVE_POLL_INTERVAL_MS = 30_000;
+const LIVE_POLL_INTERVAL_MS = 60_000; // 일 10만 요청 한도 방어 (탭 포커스·복귀 시에는 즉시 조회)
 const LIVE_REFRESH_MIN_GAP_MS = 15_000;
 const AUTO_MERGE_SCROLL_Y = 240;
 const PILL_VISIBLE_MS = 7_000;

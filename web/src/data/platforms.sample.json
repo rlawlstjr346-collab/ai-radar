@@ -384,6 +384,18 @@
     "region": "global"
   },
   {
+    "id": "juejin",
+    "name": "Juejin · 굴진",
+    "category": "dev",
+    "one_liner_ko": "중국 최대 개발자 기술 커뮤니티 쥐진(掘金)의 AI·LLM 실전 아티클 채널이에요.",
+    "why_visit_ko": "Qwen·DeepSeek·Claude Code·MCP 로컬 연동과 에이전트 실측 벤치마크 같은 중국 현업 엔지니어의 실전 노하우가 매일 올라와요.",
+    "url": "https://juejin.cn/ai",
+    "theme_color": "#1E80FF",
+    "access_note": "무료로 읽을 수 있어요. AI·에이전트·오픈소스 글만 골라 한국어로 정리해 드려요.",
+    "collect_status": "active",
+    "region": "cn"
+  },
+  {
     "id": "line-engineering",
     "name": "LINE Engineering",
     "category": "dev",
@@ -1068,18 +1080,6 @@
     "region": "global"
   },
   {
-    "id": "ahead-of-ai",
-    "name": "Substack · Ahead of AI",
-    "category": "research",
-    "one_liner_ko": "연구자 세바스찬 라슈카가 LLM 원리를 그림과 함께 풀어 쓰는 뉴스레터예요.",
-    "why_visit_ko": "LLM이 속에서 어떻게 돌아가는지 차근차근 설명해 줘서, 원리를 공부하고 싶을 때 좋아요.",
-    "url": "https://magazine.sebastianraschka.com",
-    "theme_color": "#0EA5E9",
-    "access_note": "대부분 무료로 읽을 수 있어요.",
-    "collect_status": "active",
-    "region": "global"
-  },
-  {
     "id": "apple-ml",
     "name": "Apple ML Research",
     "category": "research",
@@ -1100,6 +1100,54 @@
     "url": "https://deepmind.google",
     "theme_color": "#4285F4",
     "access_note": "블로그는 로그인 없이 무료예요. 논문 링크가 많지만 블로그 본문만 읽어도 충분히 이해돼요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "marktechpost",
+    "name": "MarkTechPost",
+    "category": "research",
+    "one_liner_ko": "새로 나온 AI 논문과 공개 모델을 매일 짧게 정리해 주는 AI 연구 뉴스 사이트예요.",
+    "why_visit_ko": "어려운 논문을 핵심만 요약해 줘서, 연구 흐름을 빠르게 따라가기 좋아요.",
+    "url": "https://www.marktechpost.com",
+    "theme_color": "#0F766E",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "microsoft-research",
+    "name": "Microsoft Research",
+    "category": "research",
+    "one_liner_ko": "마이크로소프트의 연구소예요. AI·의료·과학 연구 소식을 공개해요.",
+    "why_visit_ko": "코파일럿 같은 제품 뒤에 있는 연구와, 작고 효율적인 모델 연구 소식을 먼저 볼 수 있어요.",
+    "url": "https://www.microsoft.com/en-us/research",
+    "theme_color": "#0078D4",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "sakana-ai",
+    "name": "Sakana AI",
+    "category": "research",
+    "one_liner_ko": "구글 출신 연구자들이 도쿄에 세운 AI 연구 회사예요. 자연에서 영감을 얻은 새로운 방식의 AI를 연구해요.",
+    "why_visit_ko": "여러 모델을 합치거나 AI가 스스로 연구하게 하는 독특한 연구로 주목받아서, 일본 AI의 최전선을 보기 좋아요.",
+    "url": "https://sakana.ai",
+    "theme_color": "#E11D48",
+    "access_note": "무료로 읽을 수 있어요. 연구 결과 일부는 코드도 공개돼요.",
+    "collect_status": "active",
+    "region": "jp"
+  },
+  {
+    "id": "ahead-of-ai",
+    "name": "Substack · Ahead of AI",
+    "category": "research",
+    "one_liner_ko": "연구자 세바스찬 라슈카가 LLM 원리를 그림과 함께 풀어 쓰는 뉴스레터예요.",
+    "why_visit_ko": "LLM이 속에서 어떻게 돌아가는지 차근차근 설명해 줘서, 원리를 공부하고 싶을 때 좋아요.",
+    "url": "https://magazine.sebastianraschka.com",
+    "theme_color": "#0EA5E9",
+    "access_note": "대부분 무료로 읽을 수 있어요.",
     "collect_status": "active",
     "region": "global"
   },
@@ -1128,28 +1176,16 @@
     "region": "global"
   },
   {
-    "id": "microsoft-research",
-    "name": "Microsoft Research",
+    "id": "jiqizhixin",
+    "name": "Synced · 기기지심",
     "category": "research",
-    "one_liner_ko": "마이크로소프트의 연구소예요. AI·의료·과학 연구 소식을 공개해요.",
-    "why_visit_ko": "코파일럿 같은 제품 뒤에 있는 연구와, 작고 효율적인 모델 연구 소식을 먼저 볼 수 있어요.",
-    "url": "https://www.microsoft.com/en-us/research",
-    "theme_color": "#0078D4",
+    "one_liner_ko": "중국의 AI 연구·산업 전문 매체 지치즈신(机器之心)이에요.",
+    "why_visit_ko": "중국어권 논문 해설과 연구자 인터뷰가 많아서 중국 AI 연구 흐름을 보기 좋아요.",
+    "url": "https://www.jiqizhixin.com",
+    "theme_color": "#0EA5E9",
     "access_note": "무료로 읽을 수 있어요.",
     "collect_status": "active",
-    "region": "global"
-  },
-  {
-    "id": "sakana-ai",
-    "name": "Sakana AI",
-    "category": "research",
-    "one_liner_ko": "구글 출신 연구자들이 도쿄에 세운 AI 연구 회사예요. 자연에서 영감을 얻은 새로운 방식의 AI를 연구해요.",
-    "why_visit_ko": "여러 모델을 합치거나 AI가 스스로 연구하게 하는 독특한 연구로 주목받아서, 일본 AI의 최전선을 보기 좋아요.",
-    "url": "https://sakana.ai",
-    "theme_color": "#E11D48",
-    "access_note": "무료로 읽을 수 있어요. 연구 결과 일부는 코드도 공개돼요.",
-    "collect_status": "active",
-    "region": "jp"
+    "region": "cn"
   },
   {
     "id": "arxiv",
@@ -1210,18 +1246,6 @@
     "access_note": "공개 모델은 허깅페이스에서 받을 수 있어요. 라이선스를 확인하세요.",
     "collect_status": "directory_only",
     "region": "eu"
-  },
-  {
-    "id": "jiqizhixin",
-    "name": "Synced · 기기지심",
-    "category": "research",
-    "one_liner_ko": "중국의 AI 연구·산업 전문 매체 지치즈신(机器之心)이에요.",
-    "why_visit_ko": "중국어권 논문 해설과 연구자 인터뷰가 많아서 중국 AI 연구 흐름을 보기 좋아요.",
-    "url": "https://www.jiqizhixin.com",
-    "theme_color": "#0EA5E9",
-    "access_note": "무료로 읽을 수 있어요.",
-    "collect_status": "active",
-    "region": "cn"
   },
   {
     "id": "lg-exaone",
@@ -1308,6 +1332,18 @@
     "region": "kr"
   },
   {
+    "id": "36kr-ai",
+    "name": "36Kr AI",
+    "category": "industry",
+    "one_liner_ko": "중국 대표 스타트업·테크 매체 36Kr의 AI 관련 기사예요.",
+    "why_visit_ko": "중국 AI 스타트업 투자·출시 소식을 볼 수 있어요.",
+    "url": "https://36kr.com",
+    "theme_color": "#2B6DE5",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "cn"
+  },
+  {
     "id": "aitimes",
     "name": "AI타임스",
     "category": "industry",
@@ -1344,6 +1380,18 @@
     "region": "global"
   },
   {
+    "id": "google-ai",
+    "name": "Google AI Blog",
+    "category": "industry",
+    "one_liner_ko": "구글이 제미나이·검색·안드로이드 등 제품에 넣는 AI 기능과 연구를 직접 알리는 공식 블로그예요.",
+    "why_visit_ko": "새 제미나이 기능이 실제 서비스에 언제 어떻게 들어오는지 구글이 가장 먼저 밝히는 곳이에요.",
+    "url": "https://blog.google/innovation-and-ai/technology/ai/",
+    "theme_color": "#4285F4",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
     "id": "itmedia-aiplus",
     "name": "ITmedia AI+",
     "category": "industry",
@@ -1354,30 +1402,6 @@
     "access_note": "무료로 읽을 수 있어요.",
     "collect_status": "active",
     "region": "jp"
-  },
-  {
-    "id": "latent-space",
-    "name": "Substack · Latent Space",
-    "category": "industry",
-    "one_liner_ko": "AI 엔지니어를 위한 팟캐스트·뉴스레터예요. 현업 리더 인터뷰가 많아요.",
-    "why_visit_ko": "AI 제품을 만드는 회사들이 실제로 어떻게 일하는지 깊은 인터뷰로 들을 수 있어요.",
-    "url": "https://www.latent.space",
-    "theme_color": "#6B21A8",
-    "access_note": "대부분 무료로 읽고 들을 수 있어요.",
-    "collect_status": "active",
-    "region": "global"
-  },
-  {
-    "id": "one-useful-thing",
-    "name": "Substack · One Useful Thing",
-    "category": "industry",
-    "one_liner_ko": "와튼 스쿨 이선 몰릭 교수가 AI 실무 활용과 조직 변화를 실험·분석하는 Substack 뉴스레터예요.",
-    "why_visit_ko": "신규 AI 모델을 실제 업무·교육·기획에 써 본 구체적인 실험 결과와 통찰을 읽기 쉽게 풀어 줘요.",
-    "url": "https://www.oneusefulthing.org",
-    "theme_color": "#F56300",
-    "access_note": "무료로 읽고 구독할 수 있어요.",
-    "collect_status": "active",
-    "region": "global"
   },
   {
     "id": "mit-tech-review",
@@ -1440,6 +1464,30 @@
     "region": "cn"
   },
   {
+    "id": "latent-space",
+    "name": "Substack · Latent Space",
+    "category": "industry",
+    "one_liner_ko": "AI 엔지니어를 위한 팟캐스트·뉴스레터예요. 현업 리더 인터뷰가 많아요.",
+    "why_visit_ko": "AI 제품을 만드는 회사들이 실제로 어떻게 일하는지 깊은 인터뷰로 들을 수 있어요.",
+    "url": "https://www.latent.space",
+    "theme_color": "#6B21A8",
+    "access_note": "대부분 무료로 읽고 들을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
+    "id": "one-useful-thing",
+    "name": "Substack · One Useful Thing",
+    "category": "industry",
+    "one_liner_ko": "와튼 스쿨 이선 몰릭 교수가 AI 실무 활용과 조직 변화를 실험·분석하는 Substack 뉴스레터예요.",
+    "why_visit_ko": "신규 AI 모델을 실제 업무·교육·기획에 써 본 구체적인 실험 결과와 통찰을 읽기 쉽게 풀어 줘요.",
+    "url": "https://www.oneusefulthing.org",
+    "theme_color": "#F56300",
+    "access_note": "무료로 읽고 구독할 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
     "id": "techcrunch-ai",
     "name": "TechCrunch AI",
     "category": "industry",
@@ -1464,16 +1512,16 @@
     "region": "global"
   },
   {
-    "id": "36kr-ai",
-    "name": "36Kr AI",
+    "id": "venturebeat-ai",
+    "name": "VentureBeat AI",
     "category": "industry",
-    "one_liner_ko": "중국 대표 스타트업·테크 매체 36Kr의 AI 관련 기사예요.",
-    "why_visit_ko": "중국 AI 스타트업 투자·출시 소식을 볼 수 있어요.",
-    "url": "https://36kr.com",
-    "theme_color": "#2B6DE5",
-    "access_note": "무료로 읽을 수 있어요.",
+    "one_liner_ko": "기업용 AI 도입·투자·제품 소식을 빠르게 전하는 미국 테크 매체 벤처비트예요.",
+    "why_visit_ko": "회사들이 AI 에이전트와 모델을 업무에 어떻게 들이는지 실무 관점 기사가 많아요.",
+    "url": "https://venturebeat.com/category/ai",
+    "theme_color": "#E0262D",
+    "access_note": "무료로 읽을 수 있어요. AI 관련 글만 골라 와요.",
     "collect_status": "active",
-    "region": "cn"
+    "region": "global"
   },
   {
     "id": "ainow",
@@ -1620,6 +1668,18 @@
     "region": "jp"
   },
   {
+    "id": "lobsters",
+    "name": "Lobsters (ai)",
+    "category": "social",
+    "one_liner_ko": "초대제로 운영되는 개발자 커뮤니티 로브스터스의 AI 태그 게시판이에요.",
+    "why_visit_ko": "홍보보다 기술 토론 위주라 개발자들이 AI 도구를 실제로 어떻게 평가하는지 볼 수 있어요.",
+    "url": "https://lobste.rs/t/ai",
+    "theme_color": "#AC130D",
+    "access_note": "무료로 읽을 수 있어요. AI 관련 글만 골라 와요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
     "id": "pytorch-kr",
     "name": "PyTorch 한국 사용자 모임",
     "category": "social",
@@ -1654,6 +1714,18 @@
     "access_note": "무료로 읽을 수 있어요. (자동 수집은 레딧 접속 제한으로 가끔 실패할 수 있어요)",
     "collect_status": "active",
     "region": "global"
+  },
+  {
+    "id": "v2ex",
+    "name": "V2EX · 인디빌더",
+    "category": "social",
+    "one_liner_ko": "중국 개발자·1인 빌더들이 직접 만든 신규 AI 웹·앱·확장프로그램과 오픈소스를 가장 먼저 올리는 런칭 포럼이에요.",
+    "why_visit_ko": "중국 인디빌더들이 실제로 출시한 AI 도구와 GitHub 데모, 현업 개발자 피드백을 실시간으로 포착할 수 있어요.",
+    "url": "https://www.v2ex.com/go/create",
+    "theme_color": "#334155",
+    "access_note": "무료로 읽을 수 있어요. AI·신규 런칭 글만 엄선해 한국어로 풀어 와요.",
+    "collect_status": "active",
+    "region": "cn"
   },
   {
     "id": "x",
@@ -1714,29 +1786,5 @@
     "access_note": "로그인 없이도 읽을 수 있어요. 가끔 수위 있는 이미지가 있으니 계정 설정의 성인 콘텐츠 필터를 확인하세요.",
     "collect_status": "directory_only",
     "region": "global"
-  },
-  {
-    "id": "v2ex",
-    "name": "V2EX · 인디빌더",
-    "category": "social",
-    "one_liner_ko": "중국 개발자·1인 빌더들이 직접 만든 신규 AI 웹·앱·확장프로그램과 오픈소스를 가장 먼저 올리는 런칭 포럼이에요.",
-    "why_visit_ko": "중국 인디빌더들이 실제로 출시한 AI 도구와 GitHub 데모, 현업 개발자 피드백을 실시간으로 포착할 수 있어요.",
-    "url": "https://www.v2ex.com/go/create",
-    "theme_color": "#334155",
-    "access_note": "무료로 읽을 수 있어요. AI·신규 런칭 글만 엄선해 한국어로 풀어 와요.",
-    "collect_status": "active",
-    "region": "cn"
-  },
-  {
-    "id": "juejin",
-    "name": "Juejin · 굴진",
-    "category": "dev",
-    "one_liner_ko": "중국 최대 개발자 기술 커뮤니티 쥐진(掘金)의 AI·LLM 실전 아티클 채널이에요.",
-    "why_visit_ko": "Qwen·DeepSeek·Claude Code·MCP 로컬 연동과 에이전트 실측 벤치마크 같은 중국 현업 엔지니어의 실전 노하우가 매일 올라와요.",
-    "url": "https://juejin.cn/ai",
-    "theme_color": "#1E80FF",
-    "access_note": "무료로 읽을 수 있어요. AI·에이전트·오픈소스 글만 골라 한국어로 정리해 드려요.",
-    "collect_status": "active",
-    "region": "cn"
   }
 ]

@@ -2,7 +2,7 @@ import type { D1Database, D1PreparedStatement } from "./cf-types";
 
 /**
  * D1 피드 스냅샷 저장소 — Worker 가 큰 JSON 을 절대 파싱하지 않도록 문자열 조각으로 저장·조립한다.
- * 요청당 D1 쿼리 1~2회, 읽기 1~5행. (Free: 쿼리 50회/호출, 읽기 500만 행/일, 쓰기 10만 행/일)
+ * 요청당 D1 쿼리 1~2회, 읽기 1~6행. (Free: 쿼리 50회/호출, 읽기 500만 행/일, 쓰기 10만 행/일)
  */
 
 export interface MetaRow {
@@ -41,6 +41,15 @@ export function chunkText(text: string, size = CHUNK_CHARS): string[] {
   const out: string[] = [];
   for (let i = 0; i < text.length; i += size) out.push(text.slice(i, i + size));
   return out.length > 0 ? out : [""];
+}
+
+/**
+ * 200건 피드를 항상 MAX_BASE_CHUNKS(4)개 행으로 고르게 나눈다 → 행당 크기를 1/4 로 낮춰 D1 행 한도(2MB)에 여유를 둔다.
+ * 한 조각이 CHUNK_CHARS 를 넘을 만큼 크면 그대로 CHUNK_CHARS 단위로 자르고(→ 4개 초과 시 호출자가 413), 이어 붙이면 원문과 같다.
+ */
+export function splitEven(text: string, parts = MAX_BASE_CHUNKS, max = CHUNK_CHARS): string[] {
+  const size = Math.max(1, Math.ceil(text.length / parts));
+  return chunkText(text, Math.min(size, max));
 }
 
 /** {"version":1, ..., "items": [ ... ]} 텍스트에서 items 배열 안쪽만 잘라낸다 (파싱 없이 indexOf 만) */

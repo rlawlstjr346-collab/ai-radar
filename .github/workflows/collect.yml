@@ -1,12 +1,14 @@
 name: collect
 
-# 15분 주기 자동 수집 (공개 저장소라 Actions 무료) — 글로벌 뉴스·Substack·X·커뮤니티·GitHub·중국 5대 소스:
+# 15분 정각 자동 수집 (공개 저장소라 Actions 무료) — 글로벌 뉴스·Substack·X·커뮤니티·GitHub·중국 5대 소스:
+# - 주 트리거: Cloudflare 5분 크론의 Shard 0(00·15·30·45분)이 workflow_dispatch 로 정각에 직접 호출 (스케줄러 지연 없음)
+# - 백업 트리거: 아래 schedule 은 1시간 1회뿐이며, 직전 20분 안에 dispatch 실행이 있었으면 즉시 건너뛴다 (중복 낭비 0)
 # - 새 기사/실질 변경이 0건이면 커밋을 스킵(No-op)
 # - 웹은 재배포 없이 브라우저가 60초마다 GitHub Raw live-feed.json 을 조회해 generated_at 이 더 최신이면 즉시 병합
 # - GitHub 핫 오픈소스·릴리즈는 API 예의상 내부 1시간 게이트 유지
 on:
   schedule:
-    - cron: "*/15 * * * *"   # 15분 주기 (하루 96회)
+    - cron: "7 * * * *"      # 백업용 1시간 주기 (엣지 dispatch 가 멈췄을 때만 실제로 돈다)
   workflow_dispatch:
     inputs:
       dry_run:
@@ -20,10 +22,12 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
+# 중복 실행 방지: 같은 시각에 두 번 불려도 하나씩만 돈다 (진행 중인 커밋·D1 반영을 중간에 끊지 않고, 대기 중 1건만 유지)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   pipeline:
@@ -31,15 +35,26 @@ jobs:
     timeout-minutes: 12
     permissions:
       contents: write
+      actions: read
     steps:
       - name: Decide run mode
         id: gate
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: |
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            last=$(gh run list -R "$GITHUB_REPOSITORY" --workflow collect.yml --event workflow_dispatch --limit 1 --json createdAt -q '.[0].createdAt' 2>/dev/null || true)
+            if [ -n "$last" ] && [ $(( $(date -u +%s) - $(date -u -d "$last" +%s) )) -lt 1200 ]; then
+              echo "mode=skip" >> "$GITHUB_OUTPUT"
+              echo "::notice title=backup skipped::엣지 15분 정각 dispatch 가 $last 에 이미 돌아 백업 스케줄을 건너뜁니다."
+              exit 0
+            fi
+          fi
           if [ "$DRY_RUN" = "true" ]; then
             echo "mode=dry-run" >> "$GITHUB_OUTPUT"
             echo "수동 dry-run 요청 → DB/LLM/커밋 없이 수집·점수만 확인합니다."
@@ -54,24 +69,29 @@ jobs:
           fi
 
       - uses: actions/checkout@v4
+        if: steps.gate.outputs.mode != 'skip'
         with:
           ref: main
           fetch-depth: 1
 
       - uses: actions/setup-python@v5
+        if: steps.gate.outputs.mode != 'skip'
         with:
           python-version: "3.11"
           cache: pip
           cache-dependency-path: worker/requirements.txt
 
       - name: Install
+        if: steps.gate.outputs.mode != 'skip'
         run: pip install -r worker/requirements.txt
 
       - name: Unit tests
+        if: steps.gate.outputs.mode != 'skip'
         working-directory: worker
         run: python -m pytest -q
 
       - name: Run pipeline
+        if: steps.gate.outputs.mode != 'skip'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

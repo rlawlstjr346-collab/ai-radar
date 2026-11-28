@@ -26,7 +26,7 @@ from pipeline.curator import (
     is_blocked_noise,
     polish_korean_headline,
 )
-from adapters.rss import ai_relevant
+from pipeline.ai_gate import is_ai_candidate, is_ai_item
 from pipeline.enrich import FALLBACK_SUFFIX_RE, IMAGE_CACHE_KEY, clean_text, enrich_snapshot_items
 from pipeline.gemini_client import GeminiClient
 from pipeline.gemini_editor import EDITOR_CACHE_KEY
@@ -49,10 +49,10 @@ RETENTION_DAYS = 30
 HOT_DAYS = 7
 HOT_FRESH_CUTOFF_HOURS = 48.0
 MAX_CONSECUTIVE_SAME_SOURCE = 2
-MAX_SNAPSHOT_ITEMS = 100
-MAX_HOT_ITEMS = 70
-MAX_WARM_ITEMS = 30
-PER_PLATFORM_MAX = 6
+MAX_SNAPSHOT_ITEMS = 200   # 활성 피드 보관 상한 (D1 은 4개 행으로 고르게 나눠 저장)
+MAX_HOT_ITEMS = 140
+MAX_WARM_ITEMS = 60
+PER_PLATFORM_MAX = 12
 
 VALID_HTTPS_RE = re.compile(r"^https://[^/\s]+\.[^/\s]+")
 BAD_HOST_RE = re.compile(r"(?:^|//)(?:[^/]*\.)?(?:example\.(?:com|org)|localhost|127\.0\.0\.1)(?:[:/]|$)", re.I)
@@ -540,8 +540,8 @@ def candidate_to_snapshot_item(
         return None
     if c.platform_id in {"bluesky", "x"} and len(raw_title) < 12:
         return None
-    if c.platform_id == "bluesky" and not ai_relevant(raw_title, c.body or ""):
-        return None                                        # 연구자 계정의 일상 잡담(운전·선물 추천 등) 제외
+    if not is_ai_candidate(c.platform_id, raw_title, c.body or ""):
+        return None                                        # 종합 IT 소스의 비AI 글·연구자 계정의 일상 잡담 제외
     if c.platform_id == "aitimes" and not KR_AI_NEWS_RE.search(f"{raw_title} {c.body[:300]}"):
         return None
 
@@ -1091,6 +1091,11 @@ def build_and_save_snapshot(
     cutoff = now - timedelta(days=RETENTION_DAYS)
     by_url: dict[str, dict[str, Any]] = {}
     by_id: dict[str, dict[str, Any]] = {}
+    # Gemini 에디터가 is_ai_related=false 로 판정한 URL (영구 차단 목록, 30일 보관)
+    _editor_prev = _load_meta_key(meta_path, EDITOR_CACHE_KEY) if meta_path is not None else {}
+    not_ai_urls = {u for u, e in (_editor_prev.items() if isinstance(_editor_prev, dict) else []) if isinstance(e, dict) and e.get("not_ai")}
+    # 이번 수집에도 원문(번역 전 제목·본문)으로 게이트를 통과한 URL — 번역된 한국어 요약만으로 다시 재지 않는다
+    gate_ok_urls = {c.canonical_url for c in candidates if is_ai_candidate(c.platform_id, c.title, c.body or "")}
 
     # 1) 기존 스냅샷 중 30일 이내 + 유효 + 비노이즈 항목 유지 (30일 초과 자동 정리)
     for item in existing_items:
@@ -1100,8 +1105,8 @@ def build_and_save_snapshot(
             continue
         if is_blocked_noise(str(item.get("hook_title") or item.get("original_title") or ""), str(item.get("what_ko") or ""), url):
             continue
-        if pid == "bluesky" and not ai_relevant(str(item.get("original_title") or ""), str(item.get("what_ko") or "")):
-            continue
+        if url in not_ai_urls or (url not in gate_ok_urls and not is_ai_item(item)):
+            continue                                       # 종합 IT 소스의 비AI 글은 기존 스냅샷에서도 영구 제거
         created_dt = _parse_iso(item.get("published_at")) or _parse_iso(item.get("created_at"))
         if not created_dt or created_dt < cutoff:
             continue
@@ -1125,6 +1130,8 @@ def build_and_save_snapshot(
     metrics_by_url: dict[str, dict[str, Any]] = {}
     llm_urls: set[str] = set()
     for c in candidates:
+        if c.canonical_url in not_ai_urls:
+            continue
         llm_sum = summaries_by_dedup.get(c.dedup_key)
         built = candidate_to_snapshot_item(
             c,
@@ -1417,6 +1424,8 @@ def build_and_save_snapshot(
         editor_cache=editor_cache,
         names=names,
     )
+    # Gemini 에디터가 AI 무관으로 판정한 기사는 즉시 탈락 (스키마는 그대로, 아이템만 빠진다)
+    selected = [it for it in selected if not (editor_cache.get(str(it.get("canonical_url") or "")) or {}).get("not_ai")]
     if meta_path is not None:
         _save_meta_key(meta_path, IMAGE_CACHE_KEY, dict(sorted(image_cache.items())))
         _save_meta_key(meta_path, VERDICT_CACHE_KEY, dict(sorted(image_verdicts.items())))

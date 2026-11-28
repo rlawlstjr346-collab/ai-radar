@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T10:52:26.909567Z",
-  "item_count": 100,
+  "generated_at": "2026-11-28T13:43:33Z",
+  "item_count": 96,
   "signals": [
     {
       "id": "live-a0f3f6cb51f8",
@@ -323,35 +323,6 @@
       },
       "entities": [
         "AI타임스"
-      ]
-    },
-    {
-      "id": "live-0a3f7dc8fac1",
-      "title_ko": "맥 디스크 정리와 파일 검색을 돕는 오픈소스 도구가 나왔어요",
-      "original_title": "分享一个开源磁盘清理、文件搜索工具",
-      "platform_id": "v2ex",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1260583",
-      "published_at": "2026-11-28T08:36:18Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 28.24,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "맥 디스크 공간이 부족해질 때 깊게 분산된 파일들을 쉽게 찾고 정리할 수 있는 오픈소스 도구가 개발되었어요. 검색과 빠른 미리보기 기능을 통해 사용자가 무엇이 삭제되는지 정확히 확인하고 결정을 내릴 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "맥 디스크 공간이 부족해질 때 깊게 분산된 파일들을 쉽게 찾고 정리할 수 있는 오픈소스 도구가 개발되었어요. 검색과 빠른 미리보기 기능을 통해 사용자가 무엇이 삭제되는지 정확히 확인하고 결정을 내릴 수 있어요.",
-      "vision_ko": "앞으로 복잡하게 얽힌 로컬 파일을 에이전트의 도움을 받아 더 안전하고 직관적으로 관리할 수 있어요. 우리는 자동화된 도구가 사용자의 최종 결정을 방해하지 않고 어떻게 효율성을 높이는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 오픈소스·GitHub 공개",
-        "actionable_idea": "V2EX · 인디빌더의 '중국 인디빌더 오픈소스·GitHub 공개' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "V2EX · 인디빌더"
       ]
     },
     {
@@ -1088,35 +1059,6 @@
       ]
     },
     {
-      "id": "live-37b89f04a051",
-      "title_ko": "노래를 네 개의 트랙으로 분할하는 도구가 나왔어요",
-      "original_title": "做了个小工具，可以把一首歌拆成四轨",
-      "platform_id": "v2ex",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1260529",
-      "published_at": "2026-11-28T03:34:04Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.69,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "노래를 업로드하면 보컬, 드럼, 베이스 및 기타 악기의 4개 트랙으로 분할해 주는 StemSplitter라는 도구가 만들어졌어요. 각 트랙을 개별적으로 듣고 음소거하거나 다운로드하며 한 번의 클릭으로 패키지화할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "노래를 업로드하면 보컬, 드럼, 베이스 및 기타 악기의 4개 트랙으로 분할해 주는 StemSplitter라는 도구가 만들어졌어요. 각 트랙을 개별적으로 듣고 음소거하거나 다운로드하며 한 번의 클릭으로 패키지화할 수 있어요.",
-      "vision_ko": "앞으로 음악 연습이나 오디오 편집 작업에서 원하는 악기 소리만 골라 듣는 과정이 훨씬 간편해질 거예요. 우리는 개인 개발자가 만든 실용적인 로컬 도구가 일상적인 음악 학습을 어떻게 바꾸는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 1개 반응)",
-        "actionable_idea": "V2EX · 인디빌더의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 1개 반응)' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "V2EX · 인디빌더"
-      ]
-    },
-    {
       "id": "live-3715b114f7ca",
       "title_ko": "구글 딥크로스어텐션으로 모델 품질을 빠르게 높여요",
       "original_title": "Google DeepCrossAttention, 최대 3배 빠르게 동등한 모델 품질 달성",
@@ -1146,35 +1088,6 @@
       ]
     },
     {
-      "id": "live-3af4c2ccc997",
-      "title_ko": "투명도 손실 없이 PNG 파일을 압축할 수 있어요",
-      "original_title": "压缩PNG不损失透明：只量化RGB、alpha原样留的减色流程",
-      "platform_id": "juejin",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7712966444409733154",
-      "published_at": "2026-11-28T03:32:44Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.54,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "양자화된 RGB와 알파만 그대로 남겨서 가장자리 오류를 없애고 볼륨을 무손실 재압축보다 줄이는 감색 프로세스가 소개되었어요. 투명 샘플의 가장자리 오류를 0으로 유지하면서 PNG-8로 저장할 수 없는 한계를 보완해요.",
-      "image_url": null,
-      "easy_summary_ko": "양자화된 RGB와 알파만 그대로 남겨서 가장자리 오류를 없애고 볼륨을 무손실 재압축보다 줄이는 감색 프로세스가 소개되었어요. 투명 샘플의 가장자리 오류를 0으로 유지하면서 PNG-8로 저장할 수 없는 한계를 보완해요.",
-      "vision_ko": "앞으로 웹페이지나 이미지 자원을 다룰 때 화질 저하와 용량 부담을 동시에 해결할 수 있는 작업 환경이 넓어질 거예요. 우리는 이미지 처리 과정에서 투명도를 완벽하게 지키면서 용량을 줄이는 구체적인 방식에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Juejin · 굴진 — 32% 기반 성능·효율 지표",
-        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 — 32% 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Juejin · 굴진"
-      ]
-    },
-    {
       "id": "live-a6e82d0a37ba",
       "title_ko": "추상적인 분야에서도 AI의 영향력이 커지고 있어요",
       "original_title": "Outside of whatever is happening in cryptography, I suspect we are going to see more cases where AI progress in seemi…",
@@ -1201,35 +1114,6 @@
       },
       "entities": [
         "Bluesky"
-      ]
-    },
-    {
-      "id": "live-872d441829fc",
-      "title_ko": "안드로이드용 무료 방해 방지 도구인 Ripple이 나왔어요",
-      "original_title": "受够锁机软件收费和冲动卸载，给安卓写了个免费无广的防冲动戒手机工具：涟漪（Ripple）",
-      "platform_id": "v2ex",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://v2ex.com/t/1260525",
-      "published_at": "2026-11-28T03:17:27Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.79,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "안드로이드 기기에서 무분별한 스마트폰 사용을 막아주는 무료 광고 차단 도구인 Ripple이 개발되었어요. 계정 등록이나 복잡한 유료 멤버십 가입 없이 로컬 시스템에서 안전하게 시간 제한과 차단 규칙을 설정할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "안드로이드 기기에서 무분별한 스마트폰 사용을 막아주는 무료 광고 차단 도구인 Ripple이 개발되었어요. 계정 등록이나 복잡한 유료 멤버십 가입 없이 로컬 시스템에서 안전하게 시간 제한과 차단 규칙을 설정할 수 있어요.",
-      "vision_ko": "앞으로 개인 스마트폰 사용 습관을 스스로 관리하고 방해 요소를 줄이는 도구 활용이 더 쉬워져요. 우리는 불필요한 기능 없이 꼭 필요한 차단 기능만 담은 개인 개발 프로젝트들의 유용성에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 2개 반응)",
-        "actionable_idea": "V2EX · 인디빌더의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭 (댓글 2개 반응)' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "V2EX · 인디빌더"
       ]
     },
     {
