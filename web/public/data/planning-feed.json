@@ -1,8 +1,37 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T16:17:18.270674Z",
+  "generated_at": "2026-11-28T16:32:17.144614Z",
   "item_count": 200,
   "signals": [
+    {
+      "id": "live-388da13fa0ce",
+      "title_ko": "그림 커미션 잡무를 1분 만에 끝내는 무료 웹툴을 만들었어요",
+      "original_title": "커미션 작가 잡무를 1분으로 줄이는 무료 웹툴을 혼자 만들었습니다 (가격표·수수료 계산기 제작기)",
+      "platform_id": "gpters",
+      "author_handle": null,
+      "category": "llm_chat",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://gpters.org/vibe-coding/post/커미션-작가-잡무를-1분으로-줄이는-무료-웹툴을-혼자-만들었습니다-가격표수수료-계산기-제작기-mx0l0oht",
+      "published_at": "2026-11-28T15:45:30Z",
+      "fetched_at": "2026-11-28T16:32:17.144614Z",
+      "importance_score": 27.46,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
+      "image_url": null,
+      "easy_summary_ko": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
+      "vision_ko": "앞으로 창작자들은 반복적인 서류 정리나 가격 계산에 들이는 시간을 줄이고 창작에 집중할 수 있어요. 우리는 AI 코딩 도구를 활용해 혼자서 실무형 웹툴을 만드는 개발 사례에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "chatbot-productivity",
+        "benchmark_point": "GPTers — 3.3% 기반 성능·효율 지표",
+        "actionable_idea": "GPTers의 'GPTers — 3.3% 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "GPTers"
+      ]
+    },
     {
       "id": "live-6c6528fbb1a1",
       "title_ko": "네온 성능 향상으로 다양한 AI 모델을 자유롭게 쓸 수 있어요",
@@ -14,7 +43,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 18.82,
+      "importance_score": 20.25,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -807,7 +836,7 @@
     },
     {
       "id": "live-60069764fe70",
-      "title_ko": "Hugging Face에서 악성코드 포함된 GGUF 모델로 2400명 피해가 발생했어요",
+      "title_ko": "Hugging Face의 일부 GGUF 모델에서 악성코드가 발견되었어요",
       "original_title": "GGUF LLM Models with Hidden Malware on Hugging Face Reached 2400 Victims",
       "platform_id": "hacker-news",
       "author_handle": null,
@@ -816,13 +845,13 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 27.44,
+      "importance_score": 27.99,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "Hugging Face에 올라온 일부 GGUF 형식의 LLM 모델에 숨겨진 악성코드로 인해 많은 사용자가 피해를 입었어요. 오픈소스 AI 모델 플랫폼을 이용할 때 보안 위협에 주의해야 해요.",
+      "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
       "image_url": null,
-      "easy_summary_ko": "Hugging Face에 올라온 일부 GGUF 형식의 LLM 모델에 숨겨진 악성코드로 인해 많은 사용자가 피해를 입었어요. 오픈소스 AI 모델 플랫폼을 이용할 때 보안 위협에 주의해야 해요.",
-      "vision_ko": "앞으로 외부에서 AI 모델을 내려받아 사용할 때 보안 검증 절차가 더욱 중요해져요. 우리는 오픈소스 플랫폼에서 안전한 모델을 구별하기 위한 보안 대책에 주목해 볼 수 있어요.",
+      "easy_summary_ko": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
+      "vision_ko": "앞으로 AI 모델을 다운로드하여 사용할 때 보안 검증 절차가 더욱 중요해질 거예요. 우리는 오픈소스 플랫폼에서 유통되는 파일의 안전성을 확인하는 보안 관찰 포인트에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "dev_workflow",
@@ -991,7 +1020,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 32.86,
+      "importance_score": 33.03,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -1320,7 +1349,7 @@
       "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 일상에서 접하는 휴머노이드 로봇의 가격 부담이 줄어들어 대중화가 빨라질 수 있어요. 우리는 자동차 제조 기술과 AI 로봇 양산이 결합할 때 발생하는 비용 절감 효과에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 휴머노이드 로봇이 대중화되면서 일상과 산업 현장에서 로봇을 도입하는 비용 부담이 크게 낮아질 수 있어요. 우리는 자동차 기술이 로봇 양산과 수익화 과정에 어떻게 적용되는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -3972,35 +4001,6 @@
       ]
     },
     {
-      "id": "live-e1af0b5717f6",
-      "title_ko": "Agent와 소통할 때 충분히 구체적인 지시가 필요한 이유는 무엇인가요?",
-      "original_title": "@mike64_t: i think a lot of people just don't communicate what they want very clearly to their agent. the examples people…",
-      "platform_id": "x",
-      "author_handle": "@mike64_t",
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://x.com/mike64_t/status/2126420692405285146",
-      "published_at": "2026-11-27T00:00:00Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 25.08,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "사용자가 Agent에게 의도를 모호하게 전달하여 문제가 발생하는 경우가 많다고 지적했어요. 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언해요.",
-      "image_url": null,
-      "easy_summary_ko": "사용자가 Agent에게 의도를 모호하게 전달하여 문제가 발생하는 경우가 많다고 지적했어요. 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언해요.",
-      "vision_ko": "앞으로 고성능 AI 모델과 대화할 때 명확한 프롬프트 작성 능력이 업무 생산성을 좌우하는 핵심 역량이 될 수 있어요. 우리는 AI의 성능을 최대로 끌어내는 구체적인 소통 요령에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "builder_signal",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "X의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "X"
-      ]
-    },
-    {
       "id": "live-39053b011cb3",
       "title_ko": "코덱스와 아스트라로 외계 행성을 어떻게 찾을 수 있을까요?",
       "original_title": "Searching for distant planets with Astra",
@@ -5302,7 +5302,7 @@
       "canonical_url": "https://arxiv.org/abs/2611.34813",
       "published_at": "2026-11-25T00:00:00Z",
       "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 25.21,
+      "importance_score": 25.23,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "비디오 생성 모델과 달리 코딩 기반 Agent가 시각적 추론 작업에서 더 우수한 성능을 보여주고 있어요. 시각 매체 내에서 직접 추론하는 방식보다 코딩을 활용하는 방식이 강점을 드러내고 있어요.",
@@ -5575,7 +5575,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 국내에서도 해외처럼 새로운 AI 에이전트 기능을 빠르게 체험할 수 있는 기회가 늘어날 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 글로벌 시장에서 어떻게 활용 범위를 넓혀가는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내 사용자들도 더 다양한 글로벌 AI 에이전트 기능을 안정적으로 체험할 수 있게 될 거예요. 우리는 해외 시장에서 에이전트 서비스가 어떤 방식으로 기능을 확장해 나가는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",

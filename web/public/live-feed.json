@@ -1,8 +1,106 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T16:17:18.270674Z",
+  "generated_at": "2026-11-28T16:32:17.144614Z",
   "item_count": 200,
   "items": [
+    {
+      "id": "live-388da13fa0ce",
+      "dedup_key": "url:7b121a23e30f4127999fa338",
+      "platform_id": "gpters",
+      "category": "llm_chat",
+      "canonical_url": "https://gpters.org/vibe-coding/post/커미션-작가-잡무를-1분으로-줄이는-무료-웹툴을-혼자-만들었습니다-가격표수수료-계산기-제작기-mx0l0oht",
+      "thumbnail_url": null,
+      "importance_score": 27.46,
+      "source_count": 1,
+      "source_platforms": [
+        "gpters"
+      ],
+      "author_handle": null,
+      "lifecycle_status": "hot",
+      "published_at": "2026-11-28T15:45:30Z",
+      "fetched_at": "2026-11-28T16:32:17.144614Z",
+      "first_seen_at": "2026-11-28T16:32:17.144614Z",
+      "created_at": "2026-11-28T15:45:30Z",
+      "original_title": "커미션 작가 잡무를 1분으로 줄이는 무료 웹툴을 혼자 만들었습니다 (가격표·수수료 계산기 제작기)",
+      "title_ko": "그림 커미션 잡무를 1분 만에 끝내는 무료 웹툴을 만들었어요",
+      "hook_title": "그림 커미션 잡무를 1분 만에 끝내는 무료 웹툴을 만들었어요",
+      "benefit_tag": null,
+      "context_ko": "GPTers (지피터스)에서 공개된 챗봇·생산성 분야 핵심 소식이에요.",
+      "what_ko": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
+      "analogy_ko": null,
+      "why_ko": "대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요.",
+      "caveats_ko": "한국어 원문 소식이에요. 세부 맥락과 도표·코드 예시는 원문 링크에서 바로 확인할 수 있어요.",
+      "highlight_summary": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, ==3.3%==가 빠진 금액과 5월 종합소득세를 다시 확인합니다. 대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요.",
+      "utility_tip": {
+        "when_needed": "문서 요약·고객 응대·리서치 자동화처럼 대화형 AI의 정확도와 비용 효율을 함께 높여야 할 때",
+        "work_utility": "웹·앱 내 AI 비서 응답 품질을 끌어올리거나, 모델 교체만으로 토큰 단가와 대기 시간을 줄일 수 있어요.",
+        "practical_tip": "자주 쓰는 사내 프롬프트 3~5개를 동일 입력으로 돌려 응답 품질·속도·가격을 기존 모델과 나란히 비교해 보세요."
+      },
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "chatbot-productivity",
+        "benchmark_point": "GPTers — 3.3% 기반 성능·효율 지표",
+        "actionable_idea": "GPTers의 'GPTers — 3.3% 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "difficulty": 1,
+      "terms": [
+        {
+          "term": "토큰",
+          "easy": "AI가 글을 읽고 쓸 때 쪼개는 최소 글자·단어 조각 단위예요."
+        }
+      ],
+      "entities": [
+        {
+          "name": "GPTers",
+          "kind": "platform",
+          "tags": [
+            "llm-chat"
+          ]
+        }
+      ],
+      "easy_original_ready": true,
+      "easy_original": {
+        "sections": [
+          {
+            "heading": "배경: GPTers (지피터스)에서 이 소식이 나온 맥락",
+            "body": "GPTers (지피터스)에서 공개된 챗봇·생산성 분야 핵심 소식이에요. 이 소식은 최근 챗봇·생산성 분야에서 활발히 논의되는 'GPTers' 생태계 흐름 속에서 '커미션 작가 잡무를 1분으로 줄이는 무료 웹툴을 혼자 만들었습니다 (가격표·수수료 계산기 제작기)' 주제를 중심으로 제기된 업데이트예요. 짧은 헤드라인만 보면 핵심 맥락을 놓치기 쉬우므로, 어떤 배경에서 이 변화가 나왔고 기존 방식과 무엇이 달라졌는지 원문 흐름에 따라 차근차근 풀어드릴게요.",
+            "quote": null
+          },
+          {
+            "heading": "핵심 내용: 원문이 전하는 변화와 요지",
+            "body": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인합니다. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었습니다. 요약하자면 X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인합니다. 대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요. 원문에서는 특히 이 변화가 실제 사용자와 개발자의 작업 단계에서 어떤 차이를 만드는지 구체적인 맥락으로 설명하고 있어요.",
+            "quote": "그림 커미션을 받는 작가분들은 그림보다 잡무에 시간을 더 쓰는 경우가 많습니다. X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른"
+          },
+          {
+            "heading": "상세 해독: 원문 핵심 문단과 기술 포인트",
+            "body": "원문 본문에 담긴 세부 내용을 흐름대로 정리하면 다음과 같아요. 그림 커미션을 받는 작가분들은 그림보다 잡무에 시간을 더 쓰는 경우가 많습니다. X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인합니다. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었습니다. 이름은 냥손 스튜디오(nyangson.com)이고, 회원가입 없이 열면 바로 씁니다. AI 코딩 도구와 함께 혼자 만든 도구라, 비슷하게 만들어 보려는 분들께 과정과 시행착오를 남깁니다. 무엇을 만들었나 네 가지입니다. 첫째, 가격표 생성. 활동 닉네임과 그림 종류별 가격만 넣으면 1200×900 크기의 X용 커미션 가격표가 나옵니다. 샘플 그림을 1~3장 넣을 수 있고, 같은 톤으로 타래 두 번째 장(환불 규정·작업 기간·저작권·수정 횟수)까지 만들어집니다. 둘째, 워터마크. 닉네임·샘플 표시·재사용 금지·AI 학습 금지 문구를 골라 PNG로 저장합니다. 여기서 하나를 정했습니다. 남의 그림을 다루... 이처럼 원문은 단순한 선언에 그치지 않고 구체적인 구현 맥락과 적용 조건을 함께 제시하고 있어요.",
+            "quote": null
+          },
+          {
+            "heading": "실전 적용: 내 업무와 서비스에 주는 의미",
+            "body": "대화형 AI의 응답 품질·토큰 단가 선택에 직접 연결되는 변화라 기존 도구와 비교해 두면 실무 효율이 빨라져요. 실무나 서비스 기획 관점에서 보면 문서 요약·고객 응대·리서치 자동화처럼 대화형 AI의 정확도와 비용 효율을 함께 높여야 할 때 특히 유용하게 쓰일 수 있어요. 웹·앱 내 AI 비서 응답 품질을 끌어올리거나, 모델 교체만으로 토큰 단가와 대기 시간을 줄일 수 있어요. 실제로 적용해 보고 싶다면 자주 쓰는 사내 프롬프트 3~5개를 동일 입력으로 돌려 응답 품질·속도·가격을 기존 모델과 나란히 비교해 보세요. 기획·벤치마킹 관점에서는 GPTers의 'GPTers — 3.3% 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증 방향으로 확장해 볼 수 있어요.",
+            "quote": null
+          },
+          {
+            "heading": "읽기 마무리: 알아 둘 용어와 체크할 한계점",
+            "body": "한국어 원문 소식이에요. 세부 맥락과 도표·코드 예시는 원문 링크에서 바로 확인할 수 있어요. 본문에 등장하는 핵심 용어를 쉽게 짚고 넘어가면, '토큰'은(는) AI가 글을 읽고 쓸 때 쪼개는 최소 글자·단어 조각 단위예요. 도입이나 공유 전에는 실제 요금 정책, 라이선스 조건, 지원 언어·환경 제약이 내 프로젝트 기준과 맞는지 한 번 더 확인하는 것이 안전해요.",
+            "quote": null
+          }
+        ],
+        "watch_points": [
+          "핵심 주제('커미션 작가 잡무를 1분으로 줄이는 무료 웹툴을 혼자 만들었습니다 (가격표·수수료 계산기 제작기)')와 첫 문단·결론부를 먼저 연결해 읽으면 전체 논지가 한눈에 들어와요.",
+          "'GPTers' 관련 구체적 수치·비교 조건·버전 정보와 커뮤니티 댓글 반응은 아래 원문 링크에서 직접 확인해 보세요."
+        ],
+        "source_note": "GPTers (지피터스) 원문의 핵심 논지와 배경·실전 적용 포인트를 읽기 편한 매거진 아티클 흐름으로 정리했어요.",
+        "generated_at": "2026-11-28T16:32:17.144614Z",
+        "model": "ai-radar magazine reader formatter v3"
+      },
+      "vision_ko": "앞으로 창작자들은 반복적인 서류 정리나 가격 계산에 들이는 시간을 줄이고 창작에 집중할 수 있어요. 우리는 AI 코딩 도구를 활용해 혼자서 실무형 웹툴을 만드는 개발 사례에 주목해 볼 수 있어요.",
+      "easy_summary_ko": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
+      "image_url": null,
+      "related_articles": [],
+      "cluster_size": 1
+    },
     {
       "id": "live-6c6528fbb1a1",
       "dedup_key": "url:1fbf7ccfe7f957e10581c139",
@@ -10,7 +108,7 @@
       "category": "social",
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "thumbnail_url": null,
-      "importance_score": 18.82,
+      "importance_score": 20.25,
       "source_count": 1,
       "source_platforms": [
         "bluesky"
@@ -3086,7 +3184,7 @@
       "category": "dev",
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "thumbnail_url": null,
-      "importance_score": 27.44,
+      "importance_score": 27.99,
       "source_count": 1,
       "source_platforms": [
         "hacker-news"
@@ -3098,8 +3196,8 @@
       "first_seen_at": "2026-11-28T16:17:18.270674Z",
       "created_at": "2026-11-28T11:57:04Z",
       "original_title": "GGUF LLM Models with Hidden Malware on Hugging Face Reached 2400 Victims",
-      "title_ko": "Hugging Face에서 악성코드 포함된 GGUF 모델로 2400명 피해가 발생했어요",
-      "hook_title": "Hugging Face에서 악성코드 포함된 GGUF 모델로 2400명 피해가 발생했어요",
+      "title_ko": "Hugging Face의 일부 GGUF 모델에서 악성코드가 발견되었어요",
+      "hook_title": "Hugging Face의 일부 GGUF 모델에서 악성코드가 발견되었어요",
       "benefit_tag": null,
       "context_ko": "Hacker News에서 공개된 코딩·에이전트 분야 핵심 소식이에요.",
       "what_ko": "Hugging Face에 업로드된 일부 GGUF 형식의 LLM 모델에 숨겨진 악성코드로 인해 2400명이 피해를 입었어요.",
@@ -3180,19 +3278,19 @@
         "generated_at": "2026-11-28T16:17:18.270674Z",
         "model": "ai-radar magazine reader formatter v3"
       },
-      "vision_ko": "앞으로 외부에서 AI 모델을 내려받아 사용할 때 보안 검증 절차가 더욱 중요해져요. 우리는 오픈소스 플랫폼에서 안전한 모델을 구별하기 위한 보안 대책에 주목해 볼 수 있어요.",
-      "easy_summary_ko": "Hugging Face에 올라온 일부 GGUF 형식의 LLM 모델에 숨겨진 악성코드로 인해 많은 사용자가 피해를 입었어요. 오픈소스 AI 모델 플랫폼을 이용할 때 보안 위협에 주의해야 해요.",
+      "vision_ko": "앞으로 AI 모델을 다운로드하여 사용할 때 보안 검증 절차가 더욱 중요해질 거예요. 우리는 오픈소스 플랫폼에서 유통되는 파일의 안전성을 확인하는 보안 관찰 포인트에 주목해 볼 수 있어요.",
+      "easy_summary_ko": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
       "image_url": null,
       "related_articles": [],
       "cluster_size": 1,
       "glossary": [
         {
           "term": "GGUF",
-          "desc": "개인용 컴퓨터나 로컬 환경에서 대형 언어 모델을 실행하기 위해 사용하는 파일 형식이에요."
+          "desc": "개인 컴퓨터에서도 거대 언어 모델을 원활하게 실행할 수 있도록 압축하고 최적화한 파일 형식이에요."
         },
         {
           "term": "LLM",
-          "desc": "방대한 텍스트를 학습해 사람처럼 글을 쓰고 대화하는 거대 언어 모델이에요."
+          "desc": "사람의 언어를 이해하고 글을 작성할 수 있는 대규모 인공지능 모델이에요."
         }
       ]
     },
@@ -3711,7 +3809,7 @@
       "category": "dev",
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "thumbnail_url": null,
-      "importance_score": 32.86,
+      "importance_score": 33.03,
       "source_count": 1,
       "source_platforms": [
         "hacker-news"
@@ -4888,7 +4986,7 @@
         "generated_at": "2026-11-28T09:34:41.829259Z",
         "model": "ai-radar magazine reader formatter v3"
       },
-      "vision_ko": "앞으로 일상에서 접하는 휴머노이드 로봇의 가격 부담이 줄어들어 대중화가 빨라질 수 있어요. 우리는 자동차 제조 기술과 AI 로봇 양산이 결합할 때 발생하는 비용 절감 효과에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 휴머노이드 로봇이 대중화되면서 일상과 산업 현장에서 로봇을 도입하는 비용 부담이 크게 낮아질 수 있어요. 우리는 자동차 기술이 로봇 양산과 수익화 과정에 어떻게 적용되는지 주목해 볼 수 있어요.",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "related_articles": [],
@@ -7781,7 +7879,7 @@
       "related_articles": [
         {
           "id": "live-0d5e3028de70",
-          "title_ko": "구글 Tibo가 직접 알려주는 Gemini 4 Neon 내부 활용법과 초기화 절차",
+          "title_ko": "구글 Tibo가 전하는 Gemini 4 Neon 활용법과 초기화 절약법은?",
           "platform_id": "qbitai",
           "canonical_url": "https://qbitai.com/2026/11/513555.html",
           "published_at": "2026-11-28T14:29:15Z"
@@ -12886,7 +12984,7 @@
       "related_articles": [
         {
           "id": "live-0d5e3028de70",
-          "title_ko": "구글 Tibo가 직접 알려주는 Gemini 4 Neon 내부 활용법과 초기화 절차",
+          "title_ko": "구글 Tibo가 전하는 Gemini 4 Neon 활용법과 초기화 절약법은?",
           "platform_id": "qbitai",
           "canonical_url": "https://qbitai.com/2026/11/513555.html",
           "published_at": "2026-11-28T14:29:15Z"
@@ -14327,110 +14425,6 @@
       "related_articles": [],
       "cluster_size": 3,
       "first_seen_at": "2026-11-25T02:43:16.872187Z"
-    },
-    {
-      "id": "live-e1af0b5717f6",
-      "dedup_key": "url:9dd52695286841a9c89d20b4",
-      "platform_id": "x",
-      "category": "social",
-      "canonical_url": "https://x.com/mike64_t/status/2126420692405285146",
-      "thumbnail_url": null,
-      "importance_score": 25.08,
-      "source_count": 1,
-      "source_platforms": [
-        "x"
-      ],
-      "author_handle": "@mike64_t",
-      "lifecycle_status": "hot",
-      "published_at": "2026-11-27T00:00:00Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "first_seen_at": "2026-11-28T14:32:16.122081Z",
-      "created_at": "2026-11-27T00:00:00Z",
-      "original_title": "@mike64_t: i think a lot of people just don't communicate what they want very clearly to their agent. the examples people…",
-      "title_ko": "Agent와 소통할 때 충분히 구체적인 지시가 필요한 이유는 무엇인가요?",
-      "hook_title": "Agent와 소통할 때 충분히 구체적인 지시가 필요한 이유는 무엇인가요?",
-      "benefit_tag": null,
-      "context_ko": "X 실시간 타임라인의 @mike64_t가 공개한 커뮤니티·화제 최신 시그널이에요.",
-      "what_ko": "사용자가 Agent에게 의도를 모호하게 전달하여 발생하는 문제를 지적하며, 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언해요.",
-      "analogy_ko": null,
-      "why_ko": "AI Agent 활용 시 프롬프트 작성과 소통 요령을 짚어줘요.",
-      "caveats_ko": "영문 원문을 한국어로 자동 번역·정리했어요. 세부 수치·벤치마크 조건과 전체 맥락은 원문 링크에서 확인하세요.",
-      "highlight_summary": "==사용자가 Agent에게 의도를 모호하게 전달하여== 발생하는 문제를 지적하며, 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언합니다. AI Agent 활용 시 프롬프트 작성과 소통 요령을 짚어줍니다.",
-      "utility_tip": {
-        "when_needed": "@mike64_t처럼 최전선 AI 빌더의 신기능·서비스 런칭을 빠르게 캐치할 때",
-        "work_utility": "신규 AI 웹·앱의 문제 해결 방식과 초기 데모 UX를 벤치마킹해 우리 서비스 기획안에 바로 녹여낼 수 있어요.",
-        "practical_tip": "원문 데모 링크와 댓글 피드백에서 '사용자가 열광한 핵심 기능 1가지'를 메모해 기획 소재로 써 보세요."
-      },
-      "planning_meta": {
-        "signal_type": "builder_signal",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "X의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "difficulty": 1,
-      "terms": [
-        {
-          "term": "벤치마크",
-          "easy": "여러 AI 모델의 실력을 같은 시험 문제로 비교해 점수 매기는 표준 평가예요."
-        }
-      ],
-      "entities": [
-        {
-          "name": "X",
-          "kind": "platform",
-          "tags": [
-            "social"
-          ]
-        }
-      ],
-      "easy_original_ready": true,
-      "easy_original": {
-        "sections": [
-          {
-            "heading": "배경: X (AI 커뮤니티)에서 이 소식이 나온 맥락",
-            "body": "X 실시간 타임라인의 @mike64_t가 공개한 커뮤니티·화제 최신 시그널이에요. 이 소식은 최근 커뮤니티·화제 분야에서 활발히 논의되는 'X' 생태계 흐름 속에서 'Agent와의 명확한 소통의 중요성과 Opus 모델 활용법' 주제를 중심으로 제기된 업데이트예요. 짧은 헤드라인만 보면 핵심 맥락을 놓치기 쉬우므로, 어떤 배경에서 이 변화가 나왔고 기존 방식과 무엇이 달라졌는지 원문 흐름에 따라 차근차근 풀어드릴게요.",
-            "quote": null
-          },
-          {
-            "heading": "핵심 내용: 원문이 전하는 변화와 요지",
-            "body": "사용자가 Agent에게 의도를 모호하게 전달하여 발생하는 문제를 지적하며, 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언합니다. 요약하자면 사용자가 Agent에게 의도를 모호하게 전달하여 발생하는 문제를 지적하며, 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언합니다. AI Agent 활용 시 프롬프트 작성과 소통 요령을 짚어줍니다. 원문에서는 특히 이 변화가 실제 사용자와 개발자의 작업 단계에서 어떤 차이를 만드는지 구체적인 맥락으로 설명하고 있어요.",
-            "quote": "사용자가 Agent에게 의도를 모호하게 전달하여 발생하는 문제를 지적하며, 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로"
-          },
-          {
-            "heading": "상세 해독: 원문 본문과 세부 포인트",
-            "body": "원문은 'Agent와의 명확한 소통의 중요성과 Opus 모델 활용법'와 관련해 X 환경에서의 실제 변화와 비교 지점(글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응)을 중심으로 서술해요. 특히 기존 방식에서 번거롭거나 비용이 많이 들던 단계를 어떤 식으로 단순화했는지, 그리고 어떤 조건·버전·환경에서 가장 안정적으로 동작하는지가 원문 세부 문단의 핵심이에요. 공개 피드에 요약된 내용 외의 도표·스크린샷·코드 스니펫은 하단 원문 링크에서 이어서 확인할 수 있어요.",
-            "quote": null
-          },
-          {
-            "heading": "실전 적용: 내 업무와 서비스에 주는 의미",
-            "body": "AI Agent 활용 시 프롬프트 작성과 소통 요령을 짚어줍니다. 실무나 서비스 기획 관점에서 보면 @mike64_t처럼 최전선 AI 빌더의 신기능·서비스 런칭을 빠르게 캐치할 때 특히 유용하게 쓰일 수 있어요. 신규 AI 웹·앱의 문제 해결 방식과 초기 데모 UX를 벤치마킹해 우리 서비스 기획안에 바로 녹여낼 수 있어요. 실제로 적용해 보고 싶다면 원문 데모 링크와 댓글 피드백에서 '사용자가 열광한 핵심 기능 1가지'를 메모해 기획 소재로 써 보세요. 기획·벤치마킹 관점에서는 X의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증 방향으로 확장해 볼 수 있어요.",
-            "quote": null
-          },
-          {
-            "heading": "읽기 마무리: 알아 둘 용어와 체크할 한계점",
-            "body": "영문 원문을 한국어로 자동 번역·정리했어요. 세부 수치·벤치마크 조건과 전체 맥락은 원문 링크에서 확인하세요. 본문에 등장하는 핵심 용어를 쉽게 짚고 넘어가면, '벤치마크'은(는) 여러 AI 모델의 실력을 같은 시험 문제로 비교해 점수 매기는 표준 평가예요. 도입이나 공유 전에는 실제 요금 정책, 라이선스 조건, 지원 언어·환경 제약이 내 프로젝트 기준과 맞는지 한 번 더 확인하는 것이 안전해요.",
-            "quote": null
-          }
-        ],
-        "watch_points": [
-          "핵심 주제('Agent와의 명확한 소통의 중요성과 Opus 모델 활용법')와 첫 문단·결론부를 먼저 연결해 읽으면 전체 논지가 한눈에 들어와요.",
-          "'X' 관련 구체적 수치·비교 조건·버전 정보와 커뮤니티 댓글 반응은 아래 원문 링크에서 직접 확인해 보세요."
-        ],
-        "source_note": "X (AI 커뮤니티) 원문을 한국어로 자연스럽게 풀어 배경·세부 내용·실전 적용·용어 해설까지 완독형으로 정리했어요.",
-        "generated_at": "2026-11-28T14:32:16.122081Z",
-        "model": "ai-radar magazine reader formatter v3"
-      },
-      "vision_ko": "앞으로 고성능 AI 모델과 대화할 때 명확한 프롬프트 작성 능력이 업무 생산성을 좌우하는 핵심 역량이 될 수 있어요. 우리는 AI의 성능을 최대로 끌어내는 구체적인 소통 요령에 주목해 볼 수 있어요.",
-      "easy_summary_ko": "사용자가 Agent에게 의도를 모호하게 전달하여 문제가 발생하는 경우가 많다고 지적했어요. 충분히 구체적인 지시와 여유 있는 표현을 사용할 때 Opus 모델의 성능을 제대로 이끌어낼 수 있다고 조언해요.",
-      "image_url": null,
-      "related_articles": [],
-      "cluster_size": 1,
-      "glossary": [
-        {
-          "term": "Opus",
-          "desc": "복잡한 추론과 코딩 작업에 뛰어난 성능을 발휘하는 대형 언어 모델의 버전이에요."
-        }
-      ]
     },
     {
       "id": "live-39053b011cb3",
@@ -15972,7 +15966,7 @@
       "related_articles": [
         {
           "id": "live-0d5e3028de70",
-          "title_ko": "구글 Tibo가 직접 알려주는 Gemini 4 Neon 내부 활용법과 초기화 절차",
+          "title_ko": "구글 Tibo가 전하는 Gemini 4 Neon 활용법과 초기화 절약법은?",
           "platform_id": "qbitai",
           "canonical_url": "https://qbitai.com/2026/11/513555.html",
           "published_at": "2026-11-28T14:29:15Z"
@@ -18215,7 +18209,7 @@
       "related_articles": [
         {
           "id": "live-0d5e3028de70",
-          "title_ko": "구글 Tibo가 직접 알려주는 Gemini 4 Neon 내부 활용법과 초기화 절차",
+          "title_ko": "구글 Tibo가 전하는 Gemini 4 Neon 활용법과 초기화 절약법은?",
           "platform_id": "qbitai",
           "canonical_url": "https://qbitai.com/2026/11/513555.html",
           "published_at": "2026-11-28T14:29:15Z"
@@ -19084,7 +19078,7 @@
       "category": "research",
       "canonical_url": "https://arxiv.org/abs/2611.34813",
       "thumbnail_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2611.34813.png",
-      "importance_score": 25.21,
+      "importance_score": 25.23,
       "source_count": 1,
       "source_platforms": [
         "huggingface"
@@ -19622,7 +19616,7 @@
       "related_articles": [
         {
           "id": "live-0d5e3028de70",
-          "title_ko": "구글 Tibo가 직접 알려주는 Gemini 4 Neon 내부 활용법과 초기화 절차",
+          "title_ko": "구글 Tibo가 전하는 Gemini 4 Neon 활용법과 초기화 절약법은?",
           "platform_id": "qbitai",
           "canonical_url": "https://qbitai.com/2026/11/513555.html",
           "published_at": "2026-11-28T14:29:15Z"
@@ -20165,15 +20159,15 @@
         "generated_at": "2026-11-28T14:02:19.856932Z",
         "model": "ai-radar magazine reader formatter v3"
       },
-      "vision_ko": "앞으로 국내에서도 해외처럼 새로운 AI 에이전트 기능을 빠르게 체험할 수 있는 기회가 늘어날 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 글로벌 시장에서 어떻게 활용 범위를 넓혀가는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내 사용자들도 더 다양한 글로벌 AI 에이전트 기능을 안정적으로 체험할 수 있게 될 거예요. 우리는 해외 시장에서 에이전트 서비스가 어떤 방식으로 기능을 확장해 나가는지 주목해 볼 수 있어요.",
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "related_articles": [],
       "cluster_size": 1,
       "glossary": [
         {
-          "term": "Agent",
-          "desc": "사람의 구체적인 지시를 받아 스스로 판단하고 계획을 세워 작업을 수행하는 AI 프로그램이에요."
+          "term": "Claude",
+          "desc": "다양한 대화와 문서 작업을 도와주는 앤스로픽의 인공지능 모델이에요."
         }
       ]
     },
