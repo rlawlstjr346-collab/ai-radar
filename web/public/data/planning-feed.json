@@ -1,8 +1,185 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T09:34:41.829259Z",
+  "generated_at": "2026-11-28T10:52:26.909567Z",
   "item_count": 100,
   "signals": [
+    {
+      "id": "live-a0f3f6cb51f8",
+      "title_ko": "타입스크립트용 qwen-code SDK v0.1.40 버전 나왔어요",
+      "original_title": "qwen-code SDK TypeScript Release v0.1.40",
+      "platform_id": "qwen",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://github.com/QwenLM/qwen-code/releases/tag/sdk-typescript-v0.1.40",
+      "published_at": "2026-11-28T10:41:24Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 25.82,
+      "source_count": 1,
+      "benefit_tag": "새 정식 버전 릴리스",
+      "highlight_summary": "qwen-code 소프트웨어 개발 키트가 최신 정식 버전인 v0.1.40을 새롭게 공개했어요. 이번 버전에는 최신 명령 라인 인터페이스 버전들이 소스 빌드 방식으로 번들링되어 포함되었어요.",
+      "image_url": null,
+      "easy_summary_ko": "qwen-code 소프트웨어 개발 키트가 최신 정식 버전인 v0.1.40을 새롭게 공개했어요. 이번 버전에는 최신 명령 라인 인터페이스 버전들이 소스 빌드 방식으로 번들링되어 포함되었어요.",
+      "vision_ko": "앞으로 개발 환경에서 최신 도구를 더 간편하게 묶음으로 불러와 작업 속도를 높일 수 있어요. 우리는 이번 버전에 포함된 소스 빌드 번들링 방식이 실제 개발 단계에서 어떤 편리함을 주는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "새 정식 버전 릴리스",
+        "actionable_idea": "Qwen의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Qwen"
+      ]
+    },
+    {
+      "id": "live-70778c0e8dbd",
+      "title_ko": "AI에게 말 한 줄 바꿨더니 백테스트 결과가 크게 달라졌어요",
+      "original_title": "같은 AI에 말 한 줄만 바꿨더니 백테스트가 +576% → −20% — Claude Code로 백테스트 207개를 짜게 해 본 결과",
+      "platform_id": "gpters",
+      "author_handle": null,
+      "category": "llm_chat",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://gpters.org/vibe-coding/post/같은-ai에-말-한-줄만-바꿨더니-백테스트가-576-20-claude-code로-백테스트-207개를-짜게-해-mx09r9qj",
+      "published_at": "2026-11-28T10:30:16Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.53,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "바이브 코딩으로 자동매매 백테스트 코드를 작성할 때 AI에 건네는 말을 살짝 바꿨더니 결과가 크게 달라졌어요. 삼성전자 일봉 데이터를 활용해 세 가지 전략을 실험해 본 결과 첫 코드는 깔끔했지만 세부적인 조건에 따라 결과가 크게 출렁였어요.",
+      "image_url": null,
+      "easy_summary_ko": "바이브 코딩으로 자동매매 백테스트 코드를 작성할 때 AI에 건네는 말을 살짝 바꿨더니 결과가 크게 달라졌어요. 삼성전자 일봉 데이터를 활용해 세 가지 전략을 실험해 본 결과 첫 코드는 깔끔했지만 세부적인 조건에 따라 결과가 크게 출렁였어요.",
+      "vision_ko": "앞으로 대화형 AI를 활용해 금융 전략 코드를 짤 때 명령어 작성 방식이 결과에 미치는 영향을 미리 점검할 수 있어요. 우리는 AI 모델별로 프롬프트 한 줄이 결과물에 어떤 변화를 만들어내는지 구체적인 차이에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "chatbot-productivity",
+        "benchmark_point": "Claude Code — 576% 기반 성능·효율 지표",
+        "actionable_idea": "Claude Code의 'Claude Code — 576% 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Code",
+        "Claude"
+      ]
+    },
+    {
+      "id": "live-0a5a0fd4a845",
+      "title_ko": "대기업에서 Dify 엔터프라이즈 도입할 때 권한 설계 어떻게 할까요?",
+      "original_title": "Dify Enterprise 社内展開——権限設計と3つの注意点（2026年）",
+      "platform_id": "qiita",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qiita.com/Sidejob/items/372e1cbfd5a22d8800ce",
+      "published_at": "2026-11-28T10:30:04Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.53,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "대규모 조직에서 대화형 업무 흐름 시스템을 구축할 때 마주하기 쉬운 권한 설계의 난제들을 정리했어요. 여러 팀이 함께 시스템을 쓸 때 미리 알아두어야 할 실무적인 주의사항들을 살펴볼 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "대규모 조직에서 대화형 업무 흐름 시스템을 구축할 때 마주하기 쉬운 권한 설계의 난제들을 정리했어요. 여러 팀이 함께 시스템을 쓸 때 미리 알아두어야 할 실무적인 주의사항들을 살펴볼 수 있어요.",
+      "vision_ko": "앞으로 기업 내부에서 AI 시스템을 안전하고 체계적으로 여러 부서에 나누어 쓸 수 있어요. 우리는 대규모 조직 환경에서 권한을 어떻게 나누고 설계하는지가 실무 도입 성공에 미치는 영향에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Qiita"
+      ]
+    },
+    {
+      "id": "live-f5c7a00c08e4",
+      "title_ko": "qwen-code v0.29.0 업데이트로 무엇이 달라졌나요?",
+      "original_title": "qwen-code Release v0.29.0",
+      "platform_id": "qwen",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://github.com/QwenLM/qwen-code/releases/tag/v0.29.0",
+      "published_at": "2026-11-28T10:02:10Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 25.71,
+      "source_count": 1,
+      "benefit_tag": "새 정식 버전 릴리스",
+      "highlight_summary": "중계기 장애가 복구된 뒤 중단되었던 작업을 다시 이어갈 수 있는 기능이 추가되었어요. 또한 웹 셸 대화 기록을 로컬에서 검색하고 정렬할 수 있으며 인증 메뉴에서 다양한 모델 후보를 자동으로 불러올 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "중계기 장애가 복구된 뒤 중단되었던 작업을 다시 이어갈 수 있는 기능이 추가되었어요. 또한 웹 셸 대화 기록을 로컬에서 검색하고 정렬할 수 있으며 인증 메뉴에서 다양한 모델 후보를 자동으로 불러올 수 있어요.",
+      "vision_ko": "앞으로 작업 중에 갑자기 연결이 끊겨도 이어서 원활하게 개발 업무를 진행할 수 있어요. 우리는 장애 복구 기능과 모델 자동 불러오기 기능이 실제 개발자들의 작업 흐름을 얼마나 편하게 만드는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "새 정식 버전 릴리스",
+        "actionable_idea": "Cursor의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Cursor",
+        "OpenAI",
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "live-61226ee63532",
+      "title_ko": "AI타임스가 전하는 밥의 휴먼러닝 이야기 궁금하지 않나요?",
+      "original_title": "[AI카툰] Bob, Senior IT guy - 밥, 휴먼러닝하기",
+      "platform_id": "aitimes",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217895",
+      "published_at": "2026-11-28T10:00:00Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 29.92,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "시니어 IT 전문가 밥의 이야기를 다룬 AI 카툰 콘텐츠가 새롭게 공개되었어요. 이번 이야기는 급변하는 글로벌 IT 시장과 서비스 전략의 흐름을 흥미롭게 풀어내고 있어요.",
+      "image_url": "https://cdn.aitimes.com/news/photo/202611/217895_222292_501.png",
+      "easy_summary_ko": "시니어 IT 전문가 밥의 이야기를 다룬 AI 카툰 콘텐츠가 새롭게 공개되었어요. 이번 이야기는 급변하는 글로벌 IT 시장과 서비스 전략의 흐름을 흥미롭게 풀어내고 있어요.",
+      "vision_ko": "앞으로 기술 현장의 일상을 다룬 콘텐츠를 통해 업계의 변화 방향을 부드럽게 이해할 수 있어요. 우리는 IT 현업 인물의 이야기를 통해 현재 인공지능 업계가 마주한 고민을 어떻게 읽어내야 할지 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "AI타임스"
+      ]
+    },
+    {
+      "id": "live-28dd6cea4b88",
+      "title_ko": "에이전트 하네스 평가 지표와 벤치마크 현황 살펴보기",
+      "original_title": "Agent Harness 也有 benchmark：评分榜与评测工作台现状",
+      "platform_id": "juejin",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://juejin.cn/post/7712786049819377664",
+      "published_at": "2026-11-28T09:47:35Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.27,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "인공지능 모델뿐만 아니라 에이전트 하네스를 평가하는 다양한 벤치마크 종류와 순위표를 소개해요. 현재 활용할 수 있는 평가 과정을 제품화한 작업대의 최신 동향을 함께 살펴볼 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "인공지능 모델뿐만 아니라 에이전트 하네스를 평가하는 다양한 벤치마크 종류와 순위표를 소개해요. 현재 활용할 수 있는 평가 과정을 제품화한 작업대의 최신 동향을 함께 살펴볼 수 있어요.",
+      "vision_ko": "앞으로 다양한 에이전트 성능을 객관적인 지표로 비교하고 측정하는 기준이 더 뚜렷해져요. 우리는 에이전트 하네스를 평가하는 작업대와 순위표가 앞으로 실무 선택에 어떤 기준으로 작용할지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널",
+        "actionable_idea": "Juejin · 굴진의 'Juejin · 굴진 포착 — Juejin · 굴진 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Juejin · 굴진"
+      ]
+    },
     {
       "id": "live-f813d9809383",
       "title_ko": "유발 하라리가 경고한 인류의 최대 위협은 무엇일까요?",
@@ -121,7 +298,7 @@
     },
     {
       "id": "live-c8f5163f19cd",
-      "title_ko": "전기차 가격으로 휴머노이드 로봇을 출시하겠다는 샤오펑의 계획은?",
+      "title_ko": "전기차 가격으로 휴머노이드 로봇 출시하겠다는 샤오펑의 계획",
       "original_title": "샤오펑 \"휴머노이드 가격 전기차 수준\"...자동차 기술로 양산·수익화",
       "platform_id": "aitimes",
       "author_handle": null,
@@ -136,7 +313,7 @@
       "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 휴머노이드 로봇이 전기차처럼 대중화되면서 일상이나 업무 현장에서 로봇을 더 쉽게 만나볼 수 있게 돼요. 우리는 샤오펑이 자동차 기술을 로봇 생산에 어떻게 적용하고 가격 경쟁력을 확보해 나가는지에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 일상에서 접할 수 있는 휴머노이드 로봇이 더 합리적인 가격으로 보급될 수 있는 가능성이 열려요. 우리는 자동차 제조 기술이 로봇 양산과 수익화 과정에서 어떤 경쟁력을 만들어내는지에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -178,29 +355,29 @@
       ]
     },
     {
-      "id": "live-5a1625b1bb87",
-      "title_ko": "서방 주요 기관을 잇단 사이버 공격이 흔들고 있어요",
-      "original_title": "미국·유럽 잇단 사이버 공격…AI 시대 디지털 인프라 취약성 드러나",
+      "id": "live-085047b6c6c8",
+      "title_ko": "앤트로픽 주가 11% 급등하며 공모가 회복했어요",
+      "original_title": "앤트로픽, 주가 11% 급등해 공모가 회복…12월 보호예수 해제가 변수",
       "platform_id": "aitimes",
       "author_handle": null,
       "category": "industry",
       "lifecycle_status": "hot",
-      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217888",
-      "published_at": "2026-11-28T08:22:12Z",
-      "fetched_at": "2026-11-28T09:34:41.829259Z",
-      "importance_score": 29.87,
+      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217898",
+      "published_at": "2026-11-28T08:25:00Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 30.07,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "미국 공군과 재무부, 영국 정부 부처 등 서방 주요 기관에서 사이버 공격과 시스템 장애가 잇따르고 있어요. AI의 소프트웨어 취약점 발견 능력이 발전하면서 공격자와 방어자 간의 보안 경쟁이 더욱 치열해지고 있어요.",
-      "image_url": "https://cdn.aitimes.com/news/photo/202611/217888_222274_4837.jpg",
-      "easy_summary_ko": "미국 공군과 재무부, 영국 정부 부처 등 서방 주요 기관에서 사이버 공격과 시스템 장애가 잇따르고 있어요. AI의 소프트웨어 취약점 발견 능력이 발전하면서 공격자와 방어자 간의 보안 경쟁이 더욱 치열해지고 있어요.",
-      "vision_ko": "앞으로 디지털 인프라의 보안 취약성을 노린 지능형 공격이 국가 기반 시설을 위협하는 주요 변수가 될 수 있어요. 우리는 노후한 시스템을 보호하기 위해 AI 기반의 방어 체계가 얼마나 빠르게 고도화되는지 주목해 볼 수 있어요.",
+      "highlight_summary": "앤트로픽 주가가 약 11% 오르면서 이틀 동안 밑돌았던 공모가를 다시 회복했어요. 추수감사절 이후 단축 거래에서 기술주 전반이 상승세를 탄 가운데 다음 달 예정된 보호예수 해제가 다음 변수로 꼽혀요.",
+      "image_url": "https://cdn.aitimes.com/news/photo/202611/217898_222294_2253.jpg",
+      "easy_summary_ko": "앤트로픽 주가가 약 11% 오르면서 이틀 동안 밑돌았던 공모가를 다시 회복했어요. 추수감사절 이후 단축 거래에서 기술주 전반이 상승세를 탄 가운데 다음 달 예정된 보호예수 해제가 다음 변수로 꼽혀요.",
+      "vision_ko": "앞으로 주요 인공지능 관련 기업들의 주가 흐름과 내부자 주식 보호예수 해제 일정이 시장에 미치는 영향을 지켜볼 수 있어요. 우리는 기술주 전반의 반등 분위기 속에서 개별 기업의 주가 변동성을 어떤 시각으로 바라봐야 할지에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "industry_shift",
         "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "AI타임스의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "benchmark_point": "AI타임스 — 11% 기반 성능·효율 지표",
+        "actionable_idea": "AI타임스의 'AI타임스 — 11% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
         "AI타임스"
@@ -265,35 +442,6 @@
       ]
     },
     {
-      "id": "live-27909cd4a740",
-      "title_ko": "스페이스X의 우주 데이터센터 위성 승인에 과학계가 반발했어요",
-      "original_title": "스페이스X 우주 데이터센터 100만기 승인에 과학계 반발",
-      "platform_id": "aitimes",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://aitimes.com/news/articleView.html?idxno=217897",
-      "published_at": "2026-11-28T08:09:45Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 30.07,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "미국 연방통신위원회(FCC)가 우주 데이터센터용 위성 배치를 승인하면서 논란이 커졌어요. 천체 관측 방해와 대기 오염 등 환경 문제뿐만 아니라 실현 가능성에도 의문이 제기되었어요.",
-      "image_url": "https://cdn.aitimes.com/news/photo/202611/217897_222293_229.png",
-      "easy_summary_ko": "미국 연방통신위원회(FCC)가 우주 데이터센터용 위성 배치를 승인하면서 논란이 커졌어요. 천체 관측 방해와 대기 오염 등 환경 문제뿐만 아니라 실현 가능성에도 의문이 제기되었어요.",
-      "vision_ko": "앞으로 우주 공간을 활용한 인프라 사업이 환경과 과학계에 미치는 영향이 중요한 쟁점이 될 거예요. 우리는 대규모 위성 발사가 가져올 사회적 논의와 규제 변화에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI타임스 — 100만 기반 성능·효율 지표",
-        "actionable_idea": "AI타임스의 'AI타임스 — 100만 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "AI타임스"
-      ]
-    },
-    {
       "id": "live-bd2ac073cdcb",
       "title_ko": "가벼운 대형 모델을 위한 시각 처리 방식을 정리했어요",
       "original_title": "【轻量化复刻大模型 / KIMI K3】MoonViT-V2 视觉处理梳理",
@@ -320,6 +468,64 @@
       },
       "entities": [
         "Juejin · 굴진"
+      ]
+    },
+    {
+      "id": "live-b8f25dac8ab9",
+      "title_ko": "데이터 보존 정책 예외 사례와 프롬프트 링크 노출 문제",
+      "original_title": "Someone Opened Links From \"Zero Data Retention\" Prompts Days Later",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/neotechpark/articles/ab8de45074873e",
+      "published_at": "2026-11-28T07:41:51Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.08,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "데이터 무보존 정책을 내건 제공 업체를 사용해 에이전트에 오류 로그를 붙여넣었으나 로그 내 토큰이 포함된 URL이 며칠 뒤 외부에 노출되는 문제가 발생했어요. 이는 AI 활용 시 보안 및 프라이버시 관리의 허점을 지적하는 사례예요.",
+      "image_url": null,
+      "easy_summary_ko": "데이터 무보존 정책을 내건 제공 업체를 사용해 에이전트에 오류 로그를 붙여넣었으나 로그 내 토큰이 포함된 URL이 며칠 뒤 외부에 노출되는 문제가 발생했어요. 이는 AI 활용 시 보안 및 프라이버시 관리의 허점을 지적하는 사례예요.",
+      "vision_ko": "앞으로 개발 환경에서 외부 서비스를 연동할 때 보안 정책의 실제 작동 방식을 더 꼼꼼하게 검토할 수 있어요. 우리는 데이터가 실제로 처리되고 보존되는 세부적인 과정을 어떻게 관리하고 있는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-95ff132aba4c",
+      "title_ko": "AI 에이전트 비용 관리에서 0원과 미측정 항목 분리하기",
+      "original_title": "AIエージェントの費用台帳では、「0円」と「未計測」を分ける",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/heftykoo/articles/f1416cac537209",
+      "published_at": "2026-11-28T07:41:48Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.08,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "AI 에이전트 비용 화면에 0원이 찍혀 있다고 해서 실제로 비용이 발생하지 않은 것은 아니에요. 단가 설정 누락이나 호출 경로 누락을 구분하여 태스크 단위로 비용을 정확히 추적해야 해요.",
+      "image_url": null,
+      "easy_summary_ko": "AI 에이전트 비용 화면에 0원이 찍혀 있다고 해서 실제로 비용이 발생하지 않은 것은 아니에요. 단가 설정 누락이나 호출 경로 누락을 구분하여 태스크 단위로 비용을 정확히 추적해야 해요.",
+      "vision_ko": "앞으로 운영 비용 관리 시 발생할 수 있는 데이터 누락 문제를 방지하여 예산 편성을 더 정확하게 할 수 있어요. 우리는 비용 모니터링 화면에서 미측정 항목이 어떻게 분류되고 있는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "Zenn — 0원 기반 성능·효율 지표",
+        "actionable_idea": "Zenn의 'Zenn — 0원 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
       ]
     },
     {
@@ -381,6 +587,35 @@
       ]
     },
     {
+      "id": "live-ec4d68cc5ddc",
+      "title_ko": "AI 에이전트 시대의 보안을 위한 실행 경계와 샌드박스 설계",
+      "original_title": "「エージェントの権限」ではなく「実行の境界」で守る：AIエージェント時代のサンドボックス設計メモ",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/vakeeshmoorthy/articles/f83d093a7bc6e4",
+      "published_at": "2026-11-28T07:32:10Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 27.05,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "프롬프트 인젝션 대책뿐만 아니라 더 하위 계층인 실행 경계의 중요성을 다뤄요. 코딩 에이전트가 코드를 직접 실행하는 환경에서 가상 머신 기반의 샌드박스를 구축하는 방법을 설명해요.",
+      "image_url": null,
+      "easy_summary_ko": "프롬프트 인젝션 대책뿐만 아니라 더 하위 계층인 실행 경계의 중요성을 다뤄요. 코딩 에이전트가 코드를 직접 실행하는 환경에서 가상 머신 기반의 샌드박스를 구축하는 방법을 설명해요.",
+      "vision_ko": "앞으로 에이전트가 코드를 자동으로 실행할 때 필요한 안전장치를 마련해 더욱 안전한 개발 환경을 구축할 수 있어요. 우리는 코딩 에이전트가 작동하는 하위 계층의 격리 환경 설계 방식에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
       "id": "live-1366f0a16c85",
       "title_ko": "개발 생태계에서 코딩과 에이전트 최신 소식을 전해드려요",
       "original_title": "今年は何を手探りするのか",
@@ -407,6 +642,93 @@
       },
       "entities": [
         "Qiita"
+      ]
+    },
+    {
+      "id": "live-4c5d2e73f9e5",
+      "title_ko": "기술 문서를 작성할 때 AI를 유용하게 활용하는 법",
+      "original_title": "i think i’ve finally figured out how to use AI for technical writing (and it be a good use of time and not slop)",
+      "platform_id": "bluesky",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://bsky.app/profile/timkellogg.me/post/3n3e4zgvzpc2k",
+      "published_at": "2026-11-28T07:01:26.713000Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 17.59,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "기술 문서 작성 과정에서 AI를 시간 낭비 없이 실질적으로 활용하는 방식에 대한 고민과 노하우를 공유해요. 생산성 향상을 위한 AI 글쓰기 활용 팁을 전달해요.",
+      "image_url": null,
+      "easy_summary_ko": "기술 문서 작성 과정에서 AI를 시간 낭비 없이 실질적으로 활용하는 방식에 대한 고민과 노하우를 공유해요. 생산성 향상을 위한 AI 글쓰기 활용 팁을 전달해요.",
+      "vision_ko": "앞으로 기술 문서를 작성할 때 AI를 도구로 삼아 작업 시간을 단축하고 문서의 완성도를 높일 수 있어요. 우리는 반복적인 글쓰기 작업에서 어떤 방식을 통해 AI의 효율성을 이끌어내는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Bluesky의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Bluesky"
+      ]
+    },
+    {
+      "id": "live-fef09bee9318",
+      "title_ko": "AI 에이전트, PC 환경보다 스마트폰에서 더 유용한 이유",
+      "original_title": "AIエージェントはパソコンでは全然ダメなのに、スマホではすごく使える",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/alexanderdetkov/articles/1912bc6d19fed7",
+      "published_at": "2026-11-28T06:56:35Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 26.96,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "PC 환경에서 작동하는 AI 에이전트는 실무에서 활용하기 어려웠지만 동일한 모델이 스마트폰 환경에서는 매우 원활하게 작동하는 것으로 나타났어요. 캘린더나 이메일 등 분산된 정보를 수집해 양식을 채우고 인증까지 마치는 작업이 효율적으로 수행돼요.",
+      "image_url": null,
+      "easy_summary_ko": "PC 환경에서 작동하는 AI 에이전트는 실무에서 활용하기 어려웠지만 동일한 모델이 스마트폰 환경에서는 매우 원활하게 작동하는 것으로 나타났어요. 캘린더나 이메일 등 분산된 정보를 수집해 양식을 채우고 인증까지 마치는 작업이 효율적으로 수행돼요.",
+      "vision_ko": "앞으로 출장 경비 정산 같은 복잡한 잔무를 스마트폰 환경에서 AI 에이전트를 통해 스스로 처리하도록 만들 수 있어요. 우리는 다양한 모바일 앱과 로그인 세션이 집중된 환경에서 AI가 복합적 업무를 수행하는 방식에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
+      ]
+    },
+    {
+      "id": "live-49ff7841faef",
+      "title_ko": "로컬 LLM을 활용한 캔버스 애니메이션 오류 검출",
+      "original_title": "ローカル LLM の Bonsai に canvas アニメの「重なりのまちがい」を探させてみた (と、描く命令を数える道具)",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/lecto/articles/beb76fdd452cb0",
+      "published_at": "2026-11-28T06:37:12Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 26.91,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "캔버스로 2차원 애니메이션을 제작할 때 객체의 전후 순서가 잘못되는 시각적 오류를 찾기 위해 이미지 인식이 가능한 로컬 LLM을 활용했어요. 모든 프레임을 확대해서 확인하기 어려운 문제를 해결하기 위해 LLM에 프레임 이미지를 입력해 오류를 찾게 하거나 드로잉 명령어를 기록해 분석하는 도구를 시도했어요.",
+      "image_url": null,
+      "easy_summary_ko": "캔버스로 2차원 애니메이션을 제작할 때 객체의 전후 순서가 잘못되는 시각적 오류를 찾기 위해 이미지 인식이 가능한 로컬 LLM을 활용했어요. 모든 프레임을 확대해서 확인하기 어려운 문제를 해결하기 위해 LLM에 프레임 이미지를 입력해 오류를 찾게 하거나 드로잉 명령어를 기록해 분석하는 도구를 시도했어요.",
+      "vision_ko": "앞으로 세밀한 시각적 확인이 어려운 2차원 애니메이션 오류를 로컬 LLM으로 자동 검증하여 작업 효율을 높일 수 있어요. 우리는 이미지 인식 기능과 드로잉 명령어 기록을 결합한 실용적인 검증 방식에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
       ]
     },
     {
@@ -465,6 +787,35 @@
       },
       "entities": [
         "Claude"
+      ]
+    },
+    {
+      "id": "live-6d96387dd127",
+      "title_ko": "AI에게 분량 채우기를 지시했을 때 발생한 사실 왜곡 문제",
+      "original_title": "AIに「字数を埋めろ」と指示したら、事実を捏造した",
+      "platform_id": "zenn",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://zenn.dev/taketake36/articles/81bc84da2d9878",
+      "published_at": "2026-11-28T05:52:38Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 32.8,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "여러 매체용 홍보 문구를 자동 생성하는 도구를 개발하면서 글자 수 지정을 명시했을 때 발생한 문제점을 공유했어요. 지정된 글자 수에 도달할 때까지 작성하라고 지시한 결과 AI가 부족한 분량을 채우기 위해 사실을 지어내는 현상이 확인되어 검증 프로세스 구축에 집중하게 됐어요.",
+      "image_url": null,
+      "easy_summary_ko": "여러 매체용 홍보 문구를 자동 생성하는 도구를 개발하면서 글자 수 지정을 명시했을 때 발생한 문제점을 공유했어요. 지정된 글자 수에 도달할 때까지 작성하라고 지시한 결과 AI가 부족한 분량을 채우기 위해 사실을 지어내는 현상이 확인되어 검증 프로세스 구축에 집중하게 됐어요.",
+      "vision_ko": "앞으로 AI에게 글쓰기를 지시할 때 분량을 강제로 늘리려다 발생하는 환각 현상을 사전에 방지하는 검증 단계를 도입할 수 있어요. 우리는 텍스트 생성 과정에서 분량 제약이 AI의 정확도에 미치는 영향과 방지 대책에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Zenn"
       ]
     },
     {
@@ -909,388 +1260,6 @@
       "entities": [
         "Claude Code",
         "Claude"
-      ]
-    },
-    {
-      "id": "live-4374b74e0911",
-      "title_ko": "LLM API 입력 토큰의 43%가 같은 문장 재전송이었어요",
-      "original_title": "LLM APIの入力トークン、43%が「同じ文章の再送」だった — 実測して月額を54%削った話",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/nonstopleo7/articles/zenn-llm-cost-batching",
-      "published_at": "2026-11-28T03:00:05Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.7,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "실제 데이터를 다시 세어본 결과 LLM API 입력 토큰의 상당 부분이 같은 문장의 재전송으로 채워져 있었어요. 이를 실측하여 분석한 결과 API 월 사용 비용을 크게 절감할 수 있다는 사실이 확인되었어요.",
-      "image_url": null,
-      "easy_summary_ko": "실제 데이터를 다시 세어본 결과 LLM API 입력 토큰의 상당 부분이 같은 문장의 재전송으로 채워져 있었어요. 이를 실측하여 분석한 결과 API 월 사용 비용을 크게 절감할 수 있다는 사실이 확인되었어요.",
-      "vision_ko": "앞으로 개발자들이 API 호출 과정의 불필요한 토큰 낭비를 점검하여 비용을 효율적으로 아끼게 될 거예요. 우리는 무심코 지나치기 쉬운 API 청구 내역 속에서 데이터 재전송 패턴을 분석하는 태도에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Zenn — 43% 기반 성능·효율 지표",
-        "actionable_idea": "Zenn의 'Zenn — 43% 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Zenn"
-      ]
-    },
-    {
-      "id": "live-cd04f0b64240",
-      "title_ko": "퇴근 시간을 알려주는 비번 벨 플러그인이 나왔어요",
-      "original_title": "一款运行在 （DSH）DeepSeek Harness 中的定时下班提醒插件--下班铃",
-      "platform_id": "juejin",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7713045907343818778",
-      "published_at": "2026-11-28T02:54:17Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.56,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "시간을 설정해 두면 정해진 때에 알림과 애니메이션, 출근 달력까지 보여주는 도구예요. 개발 도구 안에서 소소하게 퇴근을 챙겨주는 재미있는 기능을 더해줘요.",
-      "image_url": null,
-      "easy_summary_ko": "시간을 설정해 두면 정해진 때에 알림과 애니메이션, 출근 달력까지 보여주는 도구예요. 개발 도구 안에서 소소하게 퇴근을 챙겨주는 재미있는 기능을 더해줘요.",
-      "vision_ko": "앞으로 개발 환경에서 소소한 편의 기능을 직접 붙여 쓰는 일이 더 편해져요. 우리는 작은 플러그인이 개발자의 일상적인 몰입에 어떤 영향을 주는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Juejin · 굴진 포착 — DeepSeek 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "DeepSeek의 'Juejin · 굴진 포착 — DeepSeek 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "DeepSeek"
-      ]
-    },
-    {
-      "id": "live-f192c8ae54ca",
-      "title_ko": "안 쓰는 코드를 알아서 지워주는 정리 도구가 나왔어요",
-      "original_title": "shrink-anything: 내 테스트가 통과할 때만 죽은 코드와 안 쓰는 의존성을 지우는 정리 도구",
-      "platform_id": "pytorch-kr",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://discuss.pytorch.kr/t/shrink-anything/12675",
-      "published_at": "2026-11-28T02:30:13Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.63,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "프로젝트에서 호출되지 않는 함수나 파일, 이미지를 삭제한 뒤 테스트가 정상적으로 통과하는지 확인해 주는 도구예요. 테스트가 깨지면 삭제를 되돌리면서 안전하게 불필요한 코드를 정리할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "프로젝트에서 호출되지 않는 함수나 파일, 이미지를 삭제한 뒤 테스트가 정상적으로 통과하는지 확인해 주는 도구예요. 테스트가 깨지면 삭제를 되돌리면서 안전하게 불필요한 코드를 정리할 수 있어요.",
-      "vision_ko": "앞으로 코드가 늘어나도 자동으로 군더더기를 덜어내어 빌드 용량을 관리할 수 있어요. 우리는 테스트 기반의 자동 정리가 실제 대형 프로젝트에서 얼마나 안전하게 작동하는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "Claude Code — 39% 기반 성능·효율 지표",
-        "actionable_idea": "Claude Code의 'Claude Code — 39% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-8fa1f91e4d0f",
-      "title_ko": "인공지능이 스스로 발전할 때 무엇을 기준으로 삼을까요?",
-      "original_title": "AIが自分を改良するとき、誰が合格を出すのか：自己進化エージェント、RSI、封印された審査、科学ハーネスをめぐる10本",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/redreamality/items/077830ab78d40238c923",
-      "published_at": "2026-11-28T02:23:39Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.61,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "최근 인공지능 연구에서 스스로 학습하고 개선하는 재귀적 자기 개선 방식이 자주 다뤄지고 있어요. 모델이 답을 고치거나 학습 과정을 빠르게 만드는 다양한 시도들이 이어지고 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "최근 인공지능 연구에서 스스로 학습하고 개선하는 재귀적 자기 개선 방식이 자주 다뤄지고 있어요. 모델이 답을 고치거나 학습 과정을 빠르게 만드는 다양한 시도들이 이어지고 있어요.",
-      "vision_ko": "앞으로 스스로 발전하는 인공지능의 성능을 객관적으로 검증하는 기준이 더욱 중요해져요. 우리는 인공지능이 스스로를 평가하고 발전시키는 과정에서 어떤 안전장치가 필요한지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qiita"
-      ]
-    },
-    {
-      "id": "live-e2d4ca37e674",
-      "title_ko": "클로드 코드 팀은 어떻게 코드 검토를 진행할까요?",
-      "original_title": "Claude Code 团队是如何做代码审查的",
-      "platform_id": "juejin",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://juejin.cn/post/7712880724412137513",
-      "published_at": "2026-11-28T02:05:53Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.32,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "대다수의 코드가 인공지능으로 작성되고 병합되는 과정에서 여러 겹의 검사 방어선과 빠른 롤백을 활용했어요. 이를 통해 무한 루프에 빠지지 않는 인공지능 검토 환경을 만들고 롤백 비율을 크게 줄였어요.",
-      "image_url": null,
-      "easy_summary_ko": "대다수의 코드가 인공지능으로 작성되고 병합되는 과정에서 여러 겹의 검사 방어선과 빠른 롤백을 활용했어요. 이를 통해 무한 루프에 빠지지 않는 인공지능 검토 환경을 만들고 롤백 비율을 크게 줄였어요.",
-      "vision_ko": "앞으로 인공지능이 쓴 코드를 검토하고 관리하는 체계적인 방안이 표준이 될 수 있어요. 우리는 복잡한 개발 과정에서 인공지능의 실수를 안전하게 걸러내는 검토 구조에 주목해 볼 수 있어요.",
-      "cluster_size": 2,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Claude Code — 90% 기반 성능·효율 지표",
-        "actionable_idea": "Claude Code의 'Claude Code — 90% 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-865db5aa10b9",
-      "title_ko": "클로드 때문에 인공지능 연구가 방해받고 있다고요?",
-      "original_title": "Claude暗中破坏AI研究？开发者怒了",
-      "platform_id": "36kr-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://36kr.com/p/4088741898058371",
-      "published_at": "2026-11-28T01:52:17.099000Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 27.77,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "클로드의 작동 방식이나 정책 변화가 인공지능 연구 과정에 예상치 못한 영향을 주고 있어요. 이로 인해 관련 개발자들이 불편을 겪으며 여러 반응이 나오고 있어요.",
-      "image_url": "https://img.36krcdn.com/hsossms/20261128/v2_8c69ddd481a24a54bd3b5356c1e9e384@000000@ai_oswg143423oswg1248oswg1872_img_000~tplv-1marlgjv7f-ai-v3:600:400:600:400:q70.jpg",
-      "easy_summary_ko": "클로드의 작동 방식이나 정책 변화가 인공지능 연구 과정에 예상치 못한 영향을 주고 있어요. 이로 인해 관련 개발자들이 불편을 겪으며 여러 반응이 나오고 있어요.",
-      "vision_ko": "앞으로 주요 인공지능 서비스의 정책 변화가 개발자들의 연구 환경에 즉각적인 영향을 미치게 돼요. 우리는 도구의 정책 변화에 대응하는 개발 생태계의 움직임에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "36Kr AI 포착 — Claude 중국 AI 생태계 최신 기술·제품 시그널",
-        "actionable_idea": "Claude의 '36Kr AI 포착 — Claude 중국 AI 생태계 최신 기술·제품 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-849d493deffe",
-      "title_ko": "집주인의 인공지능 비서 말만 믿었다가 쫓겨난 사연은?",
-      "original_title": "Woman evicted after landlord's AI assistant told her she could delay rent",
-      "platform_id": "hacker-news",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://drmahfouz.substack.com/p/woman-evicted-after-landlords-ai",
-      "published_at": "2026-11-28T01:32:56Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 29.1,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "집주인의 인공지능 비서가 집세를 연기해도 된다고 잘못 안내하는 바람에 세입자가 쫓겨나는 일이 발생했어요. 인공지능의 답변을 그대로 믿었다가 실제 주거 문제로 이어진 사례예요.",
-      "image_url": null,
-      "easy_summary_ko": "집주인의 인공지능 비서가 집세를 연기해도 된다고 잘못 안내하는 바람에 세입자가 쫓겨나는 일이 발생했어요. 인공지능의 답변을 그대로 믿었다가 실제 주거 문제로 이어진 사례예요.",
-      "vision_ko": "앞으로 일상 영역에 도입된 인공지능 비서의 권한과 책임 범위를 명확히 설정해야 해요. 우리는 자동화된 상담이나 안내가 사용자의 실제 삶에 미치는 위험성에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Hacker News의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hacker News"
-      ]
-    },
-    {
-      "id": "live-fe64aced74a8",
-      "title_ko": "멋진 디자인과 규칙을 한 번에 만든 RPG 룰북이 나왔어요",
-      "original_title": "Gemini 4 Neon one-shots a novel RPG rulebook that is nicely laid-out and illustrated, and with a unique game mechanic...",
-      "platform_id": "bluesky",
-      "author_handle": null,
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://bsky.app/profile/emollick.bsky.social/post/3n3djifx6fk2b",
-      "published_at": "2026-11-28T01:11:54.182000Z",
-      "fetched_at": "2026-11-28T01:31:34.765850Z",
-      "importance_score": 23.66,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "인공지능 모델이 레이아웃과 그림, 독특한 게임 규칙을 갖춘 새로운 RPG 룰북을 한 번에 완성해 냈어요. 독창적인 설정과 공명에 관한 이야기를 담은 독특한 결과물이에요.",
-      "image_url": null,
-      "easy_summary_ko": "인공지능 모델이 레이아웃과 그림, 독특한 게임 규칙을 갖춘 새로운 RPG 룰북을 한 번에 완성해 냈어요. 독창적인 설정과 공명에 관한 이야기를 담은 독특한 결과물이에요.",
-      "vision_ko": "앞으로 복잡한 기획 문서나 창작물 전체를 인공지능으로 한 번에 제작하는 시도가 늘어나요. 우리는 창작 도구가 만들어내는 결과물의 완성도와 독창성에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Gemini 4 Neon의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Gemini 4 Neon",
-        "Gemini 4",
-        "Gemini"
-      ]
-    },
-    {
-      "id": "live-3fd8ec8d43f7",
-      "title_ko": "설정에 적어두어도 클로드 코드가 멈추지 않는 이유는?",
-      "original_title": "CLAUDE.md に書いても止まらない：Claude Code のお願いと強制の違いを実行して比べる",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/charge0315/articles/claude-code-claudemd-vs-permissions",
-      "published_at": "2026-11-28T01:00:59Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.41,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "설정 파일에 확인 후 실행하라고 적어두었지만 실제 상황에서는 다르게 작동하는 경우가 있어요. 부탁하는 방식이나 도구의 규칙에 따라 작업이 멈추거나 그대로 진행되는 차이가 나타나요.",
-      "image_url": null,
-      "easy_summary_ko": "설정 파일에 확인 후 실행하라고 적어두었지만 실제 상황에서는 다르게 작동하는 경우가 있어요. 부탁하는 방식이나 도구의 규칙에 따라 작업이 멈추거나 그대로 진행되는 차이가 나타나요.",
-      "vision_ko": "앞으로 개발 도구의 규칙을 세밀하게 제어하고 원하는 대로 동작하게 만드는 요령이 중요해져요. 우리는 인공지능 코딩 도구의 명령어와 실제 강제 실행 사이의 차이를 주목해 볼 수 있어요.",
-      "cluster_size": 2,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude Code의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-a87c32191d2c",
-      "title_ko": "Soft Prompt 기술은 왜 더할 수 없는지 궁금하신가요?",
-      "original_title": "Soft Promptのスキルは、なぜ足し算できないのか",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/ai_practitioner/articles/4c4f0fbc5f8bc6",
-      "published_at": "2026-11-28T00:58:05Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.41,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "동결된 언어 모델에 서로 다른 Soft Prompt를 따로 학습시켜 조합할 때 발생하는 문제를 다루고 있어요. 여러 개의 스킬을 동시에 실행할 때 단순한 덧셈처럼 결과를 합치기 어렵다는 점을 실험을 통해 보여줘요.",
-      "image_url": null,
-      "easy_summary_ko": "동결된 언어 모델에 서로 다른 Soft Prompt를 따로 학습시켜 조합할 때 발생하는 문제를 다루고 있어요. 여러 개의 스킬을 동시에 실행할 때 단순한 덧셈처럼 결과를 합치기 어렵다는 점을 실험을 통해 보여줘요.",
-      "vision_ko": "앞으로 여러 조작 방식을 조합해 모델을 다룰 때 예상치 못한 오류를 미리 방지할 수 있어요. 우리는 복수 어댑터를 운용할 때 평가 항목이 어떻게 설계되었는지에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Zenn의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Zenn"
-      ]
-    },
-    {
-      "id": "live-d72f1af124f6",
-      "title_ko": "대규모 언어 모델이란 무엇인지 쉽게 알아볼까요?",
-      "original_title": "【LLMのしくみ入門 第1回】大規模言語モデルとは何か ―「次の言葉を予測する」だけで、なぜここまでできるのか",
-      "platform_id": "qiita",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://qiita.com/syantien/items/b4779d22386d477756bf",
-      "published_at": "2026-11-28T00:46:44Z",
-      "fetched_at": "2026-11-28T01:31:34.765850Z",
-      "importance_score": 27.47,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "다음 단어를 예측하는 원리만으로 채팅 AI가 어떻게 다양한 작업을 해내는지 설명하는 입문서 연재예요. 수식을 거의 사용하지 않아 초보자도 부담 없이 대형 언어 모델의 구조를 이해할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "다음 단어를 예측하는 원리만으로 채팅 AI가 어떻게 다양한 작업을 해내는지 설명하는 입문서 연재예요. 수식을 거의 사용하지 않아 초보자도 부담 없이 대형 언어 모델의 구조를 이해할 수 있어요.",
-      "vision_ko": "앞으로 인공지능의 기본 작동 원리를 바탕으로 일상에서 AI 도구를 더 효과적으로 활용할 수 있어요. 우리는 일상적인 프롬프트 작성 시 모델이 다음에 올 단어를 예측하는 방식을 어떻게 이해하면 좋을지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Claude의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude"
-      ]
-    },
-    {
-      "id": "live-05522bad6485",
-      "title_ko": "쓰기시 LLM 호출이 없는 Rust 메모리 엔진이 나왔어요",
-      "original_title": "書き込み時 LLM 呼び出しゼロ・常駐約 75 MB の Rust メモリエンジンで 5 大長期記憶ベンチマーク計 10,957 問を実測・",
-      "platform_id": "zenn",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://zenn.dev/zeroos_fidwell/articles/da273e977ad336",
-      "published_at": "2026-11-28T00:51:27Z",
-      "fetched_at": "2026-11-28T08:40:07.015333Z",
-      "importance_score": 26.39,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "장기 기억을 다룰 때 발생하는 비용과 메모리 문제를 해결하기 위해 기록과 검색을 분리한 단일 바이너리 엔진이에요. 쓰기 과정에서 LLM을 호출하지 않고도 5대 장기 기억 벤치마크 테스트를 실측했어요.",
-      "image_url": null,
-      "easy_summary_ko": "장기 기억을 다룰 때 발생하는 비용과 메모리 문제를 해결하기 위해 기록과 검색을 분리한 단일 바이너리 엔진이에요. 쓰기 과정에서 LLM을 호출하지 않고도 5대 장기 기억 벤치마크 테스트를 실측했어요.",
-      "vision_ko": "앞으로 AI 에이전트가 방대한 대화 기록을 유지하면서도 속도와 비용 문제를 동시에 해결할 수 있어요. 우리는 기입 시 비파괴적 영속화와 검색 시 멀티패스 추출 구조가 어떻게 구현되었는지에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "Zenn — 75 M 기반 성능·효율 지표",
-        "actionable_idea": "Zenn의 'Zenn — 75 M 기반 성능·효율 지표' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Zenn"
-      ]
-    },
-    {
-      "id": "live-af302b74d51c",
-      "title_ko": "ComfyUI v0.46.4 새 버전 공개됐어요",
-      "original_title": "ComfyUI v0.46.4",
-      "platform_id": "comfyui",
-      "author_handle": null,
-      "category": "image_design",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.4",
-      "published_at": "2026-11-28T00:43:23Z",
-      "fetched_at": "2026-11-28T01:31:34.765850Z",
-      "importance_score": 25.72,
-      "source_count": 1,
-      "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "안정화 패치와 신규 기능이 포함된 새로운 정식 버전이 배포되었어요. 이를 통해 프로젝트 작업에 필요한 수정 사항들을 즉시 적용할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "안정화 패치와 신규 기능이 포함된 새로운 정식 버전이 배포되었어요. 이를 통해 프로젝트 작업에 필요한 수정 사항들을 즉시 적용할 수 있어요.",
-      "vision_ko": "앞으로 이미지 생성 작업 환경에서 더 안정적인 기능을 활용해 작업 속도를 높일 수 있어요. 우리는 이번 업데이트가 실제 작업 단계에서 어떤 부분을 편리하게 바꿨는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "image-design-studio",
-        "benchmark_point": "새 정식 버전 릴리스",
-        "actionable_idea": "ComfyUI의 '새 정식 버전 릴리스' 요소를 참고해, 우리 image-design-studio 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "ComfyUI"
       ]
     },
     {
@@ -1790,33 +1759,61 @@
       ]
     },
     {
-      "id": "live-e44779f7182e",
-      "title_ko": "트랜스포머스 v5.24.1 패치가 릴리스되었어요",
-      "original_title": "transformers Patch release v5.24.1",
-      "platform_id": "github",
+      "id": "live-81341e7e565b",
+      "title_ko": "인텐트풀의 아리아는 어떻게 성장을 위한 시간을 만들어 줄까요?",
+      "original_title": "How Intentful uses dots to make more time for growth",
+      "platform_id": "openai",
       "author_handle": null,
-      "category": "dev",
+      "category": "industry",
       "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/huggingface/transformers/releases/tag/v5.24.1",
-      "published_at": "2026-11-24T16:13:08Z",
-      "fetched_at": "2026-11-28T08:46:34.897011Z",
-      "importance_score": 19.12,
+      "canonical_url": "https://openai.com/business/customer-stories/intentful-dots",
+      "published_at": "2026-11-25T02:43:16.872187Z",
+      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "importance_score": 26.65,
       "source_count": 1,
-      "benefit_tag": "새 정식 버전 릴리스",
-      "highlight_summary": "트랜스포머스 라이브러리가 vLLM 관련 문제와 배포 오류를 수정하는 패치 릴리스 v5.24.1을 공개했어요. llama4와 dory 등 일부 모델의 수정 사항과 캐시 관련 하위 호환성이 개선되었어요.",
-      "image_url": null,
-      "easy_summary_ko": "트랜스포머스 라이브러리가 vLLM 관련 문제와 배포 오류를 수정하는 패치 릴리스 v5.24.1을 공개했어요. llama4와 dory 등 일부 모델의 수정 사항과 캐시 관련 하위 호환성이 개선되었어요.",
-      "vision_ko": "앞으로 대형 언어 모델을 배포하고 최신 모델을 연동하는 개발 과정에서 오류가 줄어들고 안정성이 높아질 거예요. 우리는 오픈소스 라이브러리의 세부적인 패치 내역과 모델 지원 범주에 주목해 볼 수 있어요.",
+      "benefit_tag": null,
+      "highlight_summary": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
+      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/2DH2aby1xmlzvADCraI7Xi/bbe8b8956578492f2c3fd7326ecbd9e1/intentful-dots-social-c.png?w=1600&h=900&fit=fill",
+      "easy_summary_ko": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
+      "vision_ko": "앞으로 일상적인 웹 조사와 제안서 작성 같은 반복 업무를 AI 도구가 대신 처리해 업무 효율이 크게 높아져요. 우리는 AI 에이전트가 사용자의 메시지 관리와 문제 해결을 얼마나 정확하게 보조하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "새 정식 버전 릴리스",
-        "actionable_idea": "vLLM의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "vLLM",
-        "PyTorch"
+        "OpenAI News"
+      ]
+    },
+    {
+      "id": "live-3f30f05896e1",
+      "title_ko": "아이푸드는 15000개의 저장소에서 어떻게 코딩 에이전트를 쓸까요?",
+      "original_title": "How iFood scales coding agents across 15,000 repositories",
+      "platform_id": "openai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://openai.com/business/customer-stories/ifood",
+      "published_at": "2026-11-25T02:43:16.872187Z",
+      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "importance_score": 26.65,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "아이푸드가 방대한 규모의 저장소 환경에서 코딩 에이전트를 확장하며 글로벌 서비스 전략에 변화를 주고 있어요. 수많은 코드 저장소를 다루는 개발 환경에서 AI 에이전트를 도입하는 구체적인 모습을 보여줘요.",
+      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/4Ts7RsLLSU4iEOxQwBkGgg/cbf56c075004a9ae2c41af4d5f7b428b/ifood-customer-story-social.png?w=1600&h=900&fit=fill",
+      "easy_summary_ko": "아이푸드가 방대한 규모의 저장소 환경에서 코딩 에이전트를 확장하며 글로벌 서비스 전략에 변화를 주고 있어요. 수많은 코드 저장소를 다루는 개발 환경에서 AI 에이전트를 도입하는 구체적인 모습을 보여줘요.",
+      "vision_ko": "앞으로 대규모 소프트웨어 개발 환경에서도 AI 코딩 에이전트를 통해 작업 범위를 넓히고 생산성을 높일 수 있게 돼요. 우리는 수많은 저장소를 관리하는 현장에서 AI가 개발 단계를 어떻게 단순화하는지 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI News"
       ]
     },
     {
@@ -1846,6 +1843,36 @@
       },
       "entities": [
         "X"
+      ]
+    },
+    {
+      "id": "live-e44779f7182e",
+      "title_ko": "트랜스포머스 v5.24.1 패치가 릴리스되었어요",
+      "original_title": "transformers Patch release v5.24.1",
+      "platform_id": "github",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://github.com/huggingface/transformers/releases/tag/v5.24.1",
+      "published_at": "2026-11-24T16:13:08Z",
+      "fetched_at": "2026-11-28T08:46:34.897011Z",
+      "importance_score": 19.12,
+      "source_count": 1,
+      "benefit_tag": "새 정식 버전 릴리스",
+      "highlight_summary": "트랜스포머스 라이브러리가 vLLM 관련 문제와 배포 오류를 수정하는 패치 릴리스 v5.24.1을 공개했어요. llama4와 dory 등 일부 모델의 수정 사항과 캐시 관련 하위 호환성이 개선되었어요.",
+      "image_url": null,
+      "easy_summary_ko": "트랜스포머스 라이브러리가 vLLM 관련 문제와 배포 오류를 수정하는 패치 릴리스 v5.24.1을 공개했어요. llama4와 dory 등 일부 모델의 수정 사항과 캐시 관련 하위 호환성이 개선되었어요.",
+      "vision_ko": "앞으로 대형 언어 모델을 배포하고 최신 모델을 연동하는 개발 과정에서 오류가 줄어들고 안정성이 높아질 거예요. 우리는 오픈소스 라이브러리의 세부적인 패치 내역과 모델 지원 범주에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "새 정식 버전 릴리스",
+        "actionable_idea": "vLLM의 '새 정식 버전 릴리스' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "vLLM",
+        "PyTorch"
       ]
     },
     {
@@ -1936,64 +1963,6 @@
       ]
     },
     {
-      "id": "live-81341e7e565b",
-      "title_ko": "인텐트풀의 아리아는 어떻게 성장을 위한 시간을 만들어 줄까요?",
-      "original_title": "How Intentful uses dots to make more time for growth",
-      "platform_id": "openai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://openai.com/business/customer-stories/intentful-dots",
-      "published_at": "2026-11-24T00:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.65,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
-      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/2DH2aby1xmlzvADCraI7Xi/bbe8b8956578492f2c3fd7326ecbd9e1/intentful-dots-social-c.png?w=1600&h=900&fit=fill",
-      "easy_summary_ko": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
-      "vision_ko": "앞으로 일상적인 웹 조사와 제안서 작성 같은 반복 업무를 AI 도구가 대신 처리해 업무 효율이 크게 높아져요. 우리는 AI 에이전트가 사용자의 메시지 관리와 문제 해결을 얼마나 정확하게 보조하는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI News"
-      ]
-    },
-    {
-      "id": "live-3f30f05896e1",
-      "title_ko": "아이푸드는 15000개의 저장소에서 어떻게 코딩 에이전트를 쓸까요?",
-      "original_title": "How iFood scales coding agents across 15,000 repositories",
-      "platform_id": "openai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://openai.com/business/customer-stories/ifood",
-      "published_at": "2026-11-24T00:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.65,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "아이푸드가 방대한 규모의 저장소 환경에서 코딩 에이전트를 확장하며 글로벌 서비스 전략에 변화를 주고 있어요. 수많은 코드 저장소를 다루는 개발 환경에서 AI 에이전트를 도입하는 구체적인 모습을 보여줘요.",
-      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/4Ts7RsLLSU4iEOxQwBkGgg/cbf56c075004a9ae2c41af4d5f7b428b/ifood-customer-story-social.png?w=1600&h=900&fit=fill",
-      "easy_summary_ko": "아이푸드가 방대한 규모의 저장소 환경에서 코딩 에이전트를 확장하며 글로벌 서비스 전략에 변화를 주고 있어요. 수많은 코드 저장소를 다루는 개발 환경에서 AI 에이전트를 도입하는 구체적인 모습을 보여줘요.",
-      "vision_ko": "앞으로 대규모 소프트웨어 개발 환경에서도 AI 코딩 에이전트를 통해 작업 범위를 넓히고 생산성을 높일 수 있게 돼요. 우리는 수많은 저장소를 관리하는 현장에서 AI가 개발 단계를 어떻게 단순화하는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI News"
-      ]
-    },
-    {
       "id": "live-f22dad31bb1e",
       "title_ko": "앤트로픽이 공개한 AI와 함께 일하는 방법에 대해 알아보세요",
       "original_title": "Anthropic Research: Working With AI",
@@ -2043,6 +2012,35 @@
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Substack · Import AI의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Substack · Import AI"
+      ]
+    },
+    {
+      "id": "live-620b4bb88c21",
+      "title_ko": "화웨이 칩 커널 벤치마크 및 공공 연구소의 AI 과학 벤치마크 소식",
+      "original_title": "Import AI 482: Huawei kernel benchmarks; airborne drone detection; and a national lab’s AI science benchmark",
+      "platform_id": "import-ai",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://jack-clark.net/2026/11/23/import-ai-482-huawei-kernel-benchmarks-airborne-drone-detection-and-a-national-labs-ai-science-benchmark",
+      "published_at": "2026-11-23T14:11:17Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 21.53,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "중국 연구원들이 화웨이 칩의 성능을 최적화하기 위해 커널 최적화 벤치마크를 개발하고 공개했어요. 이는 중국 내 자체적인 인공지능 연구 개발 역량을 강화하기 위한 시도의 일환이에요.",
+      "image_url": null,
+      "easy_summary_ko": "중국 연구원들이 화웨이 칩의 성능을 최적화하기 위해 커널 최적화 벤치마크를 개발하고 공개했어요. 이는 중국 내 자체적인 인공지능 연구 개발 역량을 강화하기 위한 시도의 일환이에요.",
+      "vision_ko": "앞으로 하드웨어와 연계된 인공지능 연구 동향을 파악하여 특정 칩 환경에 맞는 최적화 전략을 세울 수 있어요. 우리는 커널 최적화 도구 공개가 관련 연구 생태계에 미치는 실질적인 영향에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
         "product_domain": "ai-research-model",
         "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
         "actionable_idea": "Substack · Import AI의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
@@ -2316,32 +2314,32 @@
       ]
     },
     {
-      "id": "live-f5a7802ecd7f",
-      "title_ko": "과학 발전을 이끄는 인공지능과 스타트업의 도전",
-      "original_title": "Import AI 480: Self-sustaining space economies; AI for science progress, and Meta builds perfect hands for a superintelligence",
+      "id": "live-9db39f627cfb",
+      "title_ko": "인공지능이 스스로 돈을 쓰며 성능을 높이는 실험이 나왔어요",
+      "original_title": "Import AI 481: AI sub-contractors; a wet lab for AI; and subterfuge during development",
       "platform_id": "import-ai",
       "author_handle": null,
       "category": "research",
       "lifecycle_status": "warm",
-      "canonical_url": "https://importai.substack.com/p/import-ai-480-self-sustaining-space",
-      "published_at": "2026-11-09T13:31:34Z",
-      "fetched_at": "2026-11-23T13:31:11.993521Z",
-      "importance_score": 20.84,
+      "canonical_url": "https://jack-clark.net/2026/11/16/import-ai-481-ai-sub-contractors-a-wet-lab-for-ai-and-subterfuge-during-development",
+      "published_at": "2026-11-16T14:01:15Z",
+      "fetched_at": "2026-11-28T10:52:26.909567Z",
+      "importance_score": 20.85,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "양자 컴퓨팅의 추측을 입증해 온 인공지능 과학 스타트업의 최신 사례가 소개되었어요. 컴퓨터가 인간 지식의 범위를 확장하는 속도가 점점 빨라지고 있어요.",
+      "highlight_summary": "인공지능이 예산을 직접 활용해 스스로 하청 작업을 맡기고 성능을 개선하는 능력이 향상되었어요. 연구진은 인공지능이 자본을 투입해 얼마나 효율적으로 발전할 수 있는지 측정하는 새로운 도구를 개발했어요.",
       "image_url": null,
-      "easy_summary_ko": "양자 컴퓨팅의 추측을 입증해 온 인공지능 과학 스타트업의 최신 사례가 소개되었어요. 컴퓨터가 인간 지식의 범위를 확장하는 속도가 점점 빨라지고 있어요.",
-      "vision_ko": "앞으로 복잡한 과학적 가설을 검증하고 새로운 지식을 발견하는 데 인공지능의 역할이 커져요. 우리는 이 과학 전문 인공지능 스타트업들이 실제 연구 성과를 얼마나 만들어내는지 주목해 볼 수 있어요.",
+      "easy_summary_ko": "인공지능이 예산을 직접 활용해 스스로 하청 작업을 맡기고 성능을 개선하는 능력이 향상되었어요. 연구진은 인공지능이 자본을 투입해 얼마나 효율적으로 발전할 수 있는지 측정하는 새로운 도구를 개발했어요.",
+      "vision_ko": "앞으로 인공지능이 복잡한 작업 과정을 스스로 나누고 해결하면서 개발 속도가 훨씬 빨라질 수 있어요. 우리는 인공지능이 자원을 효율적으로 관리하며 스스로 똑똑해지는 과정에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "research_breakthrough",
         "product_domain": "ai-research-model",
         "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
-        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "actionable_idea": "Substack · Import AI의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Anthropic"
+        "Substack · Import AI"
       ]
     },
     {
@@ -2476,7 +2474,7 @@
       "canonical_url": "https://huggingface.co/SulphurAI/Sulphur-3",
       "published_at": "2026-10-31T20:31:01Z",
       "fetched_at": "2026-11-23T10:35:04.678747Z",
-      "importance_score": 30.71,
+      "importance_score": 30.72,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "허깅페이스 개발 생태계에 설퍼AI의 설퍼 3 오픈 모델이 새롭게 등록되어 공개되었어요. 개발 워크플로와 생산성에 영향을 미치는 모델이라 실제 도입 가능성을 가늠해 볼 수 있어요.",
