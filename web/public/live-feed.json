@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T17:32:18.377193Z",
+  "generated_at": "2026-11-28T17:47:14.275495Z",
   "item_count": 200,
   "items": [
     {
@@ -10,7 +10,7 @@
       "category": "social",
       "canonical_url": "https://v2ex.com/t/1260649",
       "thumbnail_url": null,
-      "importance_score": 27.31,
+      "importance_score": 27.42,
       "source_count": 1,
       "source_platforms": [
         "v2ex"
@@ -231,7 +231,7 @@
       "category": "social",
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "thumbnail_url": null,
-      "importance_score": 21.97,
+      "importance_score": 22.16,
       "source_count": 1,
       "source_platforms": [
         "bluesky"
@@ -1568,7 +1568,7 @@
       "category": "social",
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3eurgzd4y2r",
       "thumbnail_url": null,
-      "importance_score": 17.03,
+      "importance_score": 17.19,
       "source_count": 1,
       "source_platforms": [
         "bluesky"
@@ -4037,7 +4037,7 @@
       "category": "dev",
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "thumbnail_url": null,
-      "importance_score": 34.05,
+      "importance_score": 34.23,
       "source_count": 1,
       "source_platforms": [
         "hacker-news"
@@ -20310,8 +20310,8 @@
       "first_seen_at": "2026-11-28T14:02:19.856932Z",
       "created_at": "2026-11-26T05:09:57Z",
       "original_title": "「Claude Duet」日本でも開始 AnthropicのAIエージェント、研究プレビューを米国外に拡大",
-      "title_ko": "앤스로픽의 AI 에이전트 서비스 이용 지역이 미국 외로 확대됐어요",
-      "hook_title": "앤스로픽의 AI 에이전트 서비스 이용 지역이 미국 외로 확대됐어요",
+      "title_ko": "앤스로픽의 새로운 AI 에이전트 서비스 이용 지역이 미국 외로 넓어졌어요",
+      "hook_title": "앤스로픽의 새로운 AI 에이전트 서비스 이용 지역이 미국 외로 넓어졌어요",
       "benefit_tag": null,
       "context_ko": "ITmedia AI+에서 공개된 빅테크·트렌드 분야 핵심 소식이에요.",
       "what_ko": "유료 구독 사용자들을 대상으로 '클로드 듀엣'의 초대장이 발송되기 시작했으며, 일본 내 이용자들의 접속 보고가 이어지고 있어요.",
@@ -20400,8 +20400,12 @@
       "cluster_size": 1,
       "glossary": [
         {
+          "term": "Claude",
+          "desc": "다양한 질문에 답하고 글을 작성해 주는 인공지능 모델이에요."
+        },
+        {
           "term": "Anthropic",
-          "desc": "다양한 AI 모델과 서비스를 개발하는 인공지능 회사예요."
+          "desc": "인공지능 모델인 Claude를 개발하고 서비스하는 회사예요."
         }
       ]
     },

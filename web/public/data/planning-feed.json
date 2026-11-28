@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T17:32:18.377193Z",
+  "generated_at": "2026-11-28T17:47:14.275495Z",
   "item_count": 200,
   "signals": [
     {
@@ -14,7 +14,7 @@
       "canonical_url": "https://v2ex.com/t/1260649",
       "published_at": "2026-11-28T17:19:50Z",
       "fetched_at": "2026-11-28T17:32:18.377193Z",
-      "importance_score": 27.31,
+      "importance_score": 27.42,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "PC에 전용 프로그램을 설치하고 페어링을 마치면 외출 중에도 스마트폰으로 작업 상태를 모니터링할 수 있어요. 기존 대화창에 메시지를 추가하는 등 추가 지시를 내리는 실용적인 연동 기능이 포함되어 있어요.",
@@ -74,7 +74,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 21.97,
+      "importance_score": 22.16,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -404,7 +404,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3eurgzd4y2r",
       "published_at": "2026-11-28T14:06:28.171000Z",
       "fetched_at": "2026-11-28T17:02:16.211320Z",
-      "importance_score": 17.03,
+      "importance_score": 17.19,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "인공지능의 추론 능력과 Agent 기능에서 앞으로 몇 차례의 큰 발전이 일어날 전망이에요. 이는 기존에 인공지능이 다루기 어려웠던 영역까지 영향을 미칠 것으로 보여요.",
@@ -1080,7 +1080,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 34.05,
+      "importance_score": 34.23,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -5620,7 +5620,7 @@
     },
     {
       "id": "live-f24c7032e0f3",
-      "title_ko": "앤스로픽의 AI 에이전트 서비스 이용 지역이 미국 외로 확대됐어요",
+      "title_ko": "앤스로픽의 새로운 AI 에이전트 서비스 이용 지역이 미국 외로 넓어졌어요",
       "original_title": "「Claude Duet」日本でも開始 AnthropicのAIエージェント、研究プレビューを米国外に拡大",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
