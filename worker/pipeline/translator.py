@@ -25,6 +25,8 @@ from typing import Any, Callable, Optional
 
 import httpx
 
+from pipeline.ko_restore import ORIGINAL_FORM_RULE
+
 log = logging.getLogger("ai_radar.translator")
 
 HANGUL_THRESHOLD = 0.20
@@ -565,6 +567,7 @@ class ArticleTranslator:
             prompt = (
                 "다음 외국어 AI 뉴스 제목과 본문 발췌를 입문자가 읽기 쉬운 자연스러운 한국어로 번역·정리해 주세요.\n"
                 "고유명사(OpenAI, Claude, Gemini, vLLM 등)는 유지하고, 과장 표현(혁신적, 획기적, 충격 등)은 쓰지 마세요.\n"
+                f"{ORIGINAL_FORM_RULE}\n"
                 '반드시 JSON 객체만 출력하세요: {"title_ko": "...", "body_ko": "...", "why_ko": "..."}\n\n'
                 f"제목: {title}\n"
                 f"본문: {body[:MAX_TRANSLATE_BODY_CHARS]}"
@@ -608,6 +611,7 @@ class ArticleTranslator:
                 "다음 외국어 AI 뉴스 제목과 본문 발췌를 입문자가 읽기 쉬운 자연스러운 한국어로 번역·정리해 주세요.\n"
                 "중국어 한자나 일본어 가나는 절대 남기지 말고 100% 자연스러운 한글로 바꾸세요.\n"
                 "고유명사(OpenAI, Claude, Gemini, Qwen, DeepSeek, Kimi, GLM, vLLM 등)는 유지하고, 과장 표현(혁신적, 획기적, 충격 등)은 쓰지 마세요.\n"
+                f"{ORIGINAL_FORM_RULE}\n"
                 '반드시 JSON 객체만 출력하세요: {"title_ko": "...", "body_ko": "...", "why_ko": "..."}\n\n'
                 f"제목: {title}\n"
                 f"본문: {body[:MAX_TRANSLATE_BODY_CHARS]}"
@@ -656,6 +660,7 @@ class ArticleTranslator:
                 "1) 한자(중국어)나 일본어 가나는 1글자도 남기지 말고 100% 한글로 번역하세요.\n"
                 "2) 고유 AI 모델·기업명(OpenAI, Anthropic, Claude, Gemini, Qwen, DeepSeek, Kimi, GLM, MCP 등)은 자연스럽게 유지하세요.\n"
                 "3) 과장 표현(혁신적, 획기적, 충격, 역대급)은 쓰지 마세요.\n"
+                f"4) {ORIGINAL_FORM_RULE}\n"
                 '반드시 JSON 객체만 출력하세요: {"items": [{"idx": 0, "title_ko": "...", "body_ko": "...", "why_ko": "..."}]}\n\n'
                 f"입력: {json.dumps(compact_in, ensure_ascii=False)}"
             )

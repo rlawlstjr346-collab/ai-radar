@@ -68,3 +68,14 @@ def is_ai_item(item: Mapping[str, Any]) -> bool:
     title = str(item.get("original_title") or item.get("title_ko") or "")
     body = f"{item.get('title_ko') or ''} {item.get('what_ko') or item.get('easy_summary_ko') or ''}"
     return is_ai_signal(title, body)
+
+
+# Hugging Face 모델·스페이스 업로드 페이지 (개인 데모 앱·모델 파일 업로드 로그) — 속보가 아니라 피드에서 뺀다.
+# 논문(/papers)·블로그·문서·데이터셋 안내는 유지 (web/edge/ai-gate.ts isHfUpload 와 동일)
+_HF_UPLOAD_RE = re.compile(
+    r"^https://huggingface\.co/(?!(?:papers|blog|docs|learn|datasets|collections|posts)/)(?:spaces/)?[^/?#]+/[^/?#]+/?$", re.I
+)
+
+
+def is_hf_upload(url: str) -> bool:
+    return bool(_HF_UPLOAD_RE.match(url or ""))

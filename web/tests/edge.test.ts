@@ -4,9 +4,10 @@ import { handleIngest, handleLiveFeedGet, resetMemo } from "../edge/api";
 import type { D1Database, D1PreparedStatement } from "../edge/cf-types";
 import samplePlatforms from "@/data/platforms.sample.json";
 
-import { isAiItem, isAiSignal } from "../edge/ai-gate";
+import { isAiItem, isAiSignal, isHfUpload } from "../edge/ai-gate";
+import { restoreItem, restoreOriginals } from "../edge/restore";
 import { assembleFeed, chunkText, extractItemsInner, splitEven, titleKey, urlKey } from "../edge/feed-store";
-import { EDGE_SOURCES, koSentence, parseDate, parseFeed, runEdgeScan, shardOf, sourcesFor, validEdit } from "../edge/scan";
+import { EDGE_SOURCES, koSentence, parseDate, parseFeed, runEdgeScan, shardOf, sourcesFor, validEdit, validGlossary } from "../edge/scan";
 
 /** 엣지 코드가 쓰는 4가지 SQL 모양만 흉내 내는 메모리 D1 */
 function fakeD1() {
@@ -231,10 +232,10 @@ describe("30개 엣지 수맥 3교대", () => {
     const hf = EDGE_SOURCES.find((s) => s.id === "hf-papers")!;
     const papers = JSON.stringify([{ paper: { id: "2611.1", title: "LoopLM", summary: "A looped transformer.", submittedOnDailyAt: "2026-11-28T09:00:00.000Z" } }]);
     expect(parseFeed(papers, hf)[0]).toMatchObject({ title: "LoopLM", link: "https://huggingface.co/papers/2611.1", published: Date.parse("2026-11-28T09:00:00Z") });
-    const models = EDGE_SOURCES.find((s) => s.id === "hf-models")!;
-    const m = parseFeed(JSON.stringify([{ id: "org/Model-7B", likes: 9, pipeline_tag: "text-generation", tags: ["transformers", "license:mit"] }]), models)[0];
-    expect(m.link).toBe("https://huggingface.co/org/Model-7B");
-    expect(m.published).toBeNull(); // 트렌딩 → 처음 포착한 시각
+    const mistral = EDGE_SOURCES.find((s) => s.id === "mistral")!;
+    const m = parseFeed(JSON.stringify([{ id: "mistralai/Model-7B", likes: 9, pipeline_tag: "text-generation", tags: ["transformers"], createdAt: "2026-11-28T08:00:00.000Z" }]), mistral)[0];
+    expect(m.link).toBe("https://huggingface.co/mistralai/Model-7B");
+    expect(m.published).toBe(Date.parse("2026-11-28T08:00:00Z")); // 실제 공개 시각
     const jj = EDGE_SOURCES.find((s) => s.id === "juejin")!;
     const j = JSON.stringify({ data: [{ content: { content_id: "77", title: "Claude Code 智能体实战", ctime: "0" } }, { content: { content_id: "78", title: "压缩PNG不损失透明：只量化RGB", brief: "" } }] });
     expect(parseFeed(j, jj).map((e) => e.link)).toEqual(["https://juejin.cn/post/77"]);
@@ -310,5 +311,93 @@ describe("200건 피드 4행 분할", () => {
     const res = await ingest({ DB: db, FEED_INGEST_SECRET: "s3cret" });
     expect(res.status).toBe(200);
     expect(JSON.parse(rows.get("edge")!).map((it: { canonical_url: string }) => it.canonical_url)).toEqual(["https://www.v2ex.com/t/10"]);
+  });
+});
+
+describe("HF 업로드 로그 제거 · 발행 시각 명확한 AI 매체 교체", () => {
+  it("HF Trending Models·Spaces 수맥이 없고 The Decoder·SiliconANGLE 이 들어 있다 (HF 논문은 유지)", () => {
+    const ids = EDGE_SOURCES.map((s) => s.id);
+    expect(ids).not.toContain("hf-models");
+    expect(ids).not.toContain("hf-spaces");
+    expect(EDGE_SOURCES.some((s) => s.url.includes("huggingface.co/api/spaces") || s.url.includes("trendingScore"))).toBe(false);
+    expect(ids).toEqual(expect.arrayContaining(["the-decoder", "siliconangle", "hf-papers"]));
+  });
+
+  it("모델·스페이스 업로드 페이지만 HF 업로드로 본다", () => {
+    expect(isHfUpload("https://huggingface.co/spaces/JCisHERE/wan2-2-i2v-v3")).toBe(true);
+    expect(isHfUpload("https://huggingface.co/unsloth/Inkling-2-Mini-GGUF")).toBe(true);
+    expect(isHfUpload("https://huggingface.co/papers/2611.33885")).toBe(false);
+    expect(isHfUpload("https://huggingface.co/blog/some-post")).toBe(false);
+    expect(isHfUpload("https://arxiv.org/abs/2611.1")).toBe(false);
+  });
+});
+
+describe("억지 한글 음차 → 영문 약어·숫자 원형 복원", () => {
+  it.each([
+    ["허깅페이스에 공개된 잉클링 투 미니 지지유에프가 나왔어요", "Hugging Face에 공개된 잉클링 투 미니 GGUF가 나왔어요"],
+    ["그라디오와 엠시피 서버 기술을 활용했어요", "그라디오와 MCP 서버 기술을 활용했어요"],
+    ["알리바바가 내부에서 이 년 동안 쓴 코드 검토 도구예요", "알리바바가 내부에서 2년 동안 쓴 코드 검토 도구예요"],
+    ["오픈에이아이가 에스디케이와 에이피아이를 열었어요", "OpenAI가 SDK와 API를 열었어요"],
+    ["속도가 열 배 빨라지고 비용은 70퍼센트 줄었어요", "속도가 10배 빨라지고 비용은 70% 줄었어요"],
+    ["지피유 브이램이 부족해도 엘엘엠을 돌려요", "GPU VRAM이 부족해도 LLM을 돌려요"],
+  ])("%s", (before, after) => {
+    expect(restoreOriginals(before)).toBe(after);
+  });
+
+  it("다른 낱말·자연스러운 문장은 건드리지 않는다", () => {
+    for (const t of ["이 배터리는 오래가요", "세 배터리 제조사", "이 년도 계획", "2년 만에 나왔어요", "일주일 동안 써 봤어요", "MCP 서버"]) {
+      expect(restoreOriginals(t)).toBe(t);
+    }
+  });
+
+  it("아이템 복원은 원문 제목·URL 을 건드리지 않고 키 구조를 그대로 둔다", () => {
+    const it0 = { id: "x", original_title: "에이아이 raw", canonical_url: "https://a.b/에이아이", title_ko: "에이아이 소식", terms: [{ term: "엠시피", easy: "엠시피 설명이에요." }] };
+    const out = restoreItem(it0);
+    expect(Object.keys(out)).toEqual(Object.keys(it0));
+    expect(out).toMatchObject({ original_title: "에이아이 raw", canonical_url: "https://a.b/에이아이", title_ko: "AI 소식", terms: [{ term: "MCP", easy: "MCP 설명이에요." }] });
+  });
+
+  it("Gemini glossary 는 4개까지, '~요.' 쉬운 풀이만 남기고 음차는 원형으로", () => {
+    const g = validGlossary([
+      { term: "엠시피", desc: "AI가 외부 앱을 연결해 쓰도록 만든 표준 플러그예요." },
+      { term: "GGUF", desc: "짧음" },
+      { term: "RAG", desc: "AI가 먼저 문서를 찾아보고 답하는 방식이에요." },
+      { term: "RAG", desc: "중복된 용어 풀이는 하나만 남겨요." },
+      { term: "MoE", desc: "질문마다 일부 전문가만 골라 쓰는 구조예요." },
+      { term: "LoRA", desc: "작은 부품만 덧붙여 맞춤 학습하는 기법이에요." },
+      { term: "CUDA", desc: "엔비디아 GPU 계산용 개발 플랫폼이에요." },
+    ]);
+    expect(g.map((x) => x.term)).toEqual(["MCP", "RAG", "MoE", "LoRA"]);
+  });
+
+  it("Gemini 응답의 음차는 복원되고 glossary 는 live-feed 선택 필드로 실린다", async () => {
+    const { db, rows } = fakeD1();
+    const en = `<rss><item><title>Qwen ships an MCP SDK</title><link>https://www.theverge.com/2026/11/28/m/</link><pubDate>Sat, 28 Nov 2026 10:10:00 GMT</pubDate></item></rss>`;
+    const f = (async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("generativelanguage")) {
+        return Response.json({
+          output_text: JSON.stringify([{ i: 0, ai: true, title_ko: "큐원이 엠시피 에스디케이를 냈어요", summary: "에이아이 앱을 이 년 걸려 만들었어요. 이제 누구나 써 볼 수 있어요.", vision: null, glossary: [{ term: "MCP", desc: "AI가 외부 앱을 연결해 쓰도록 만든 표준 플러그 규격이에요." }] }]),
+        });
+      }
+      return url.includes("theverge") ? new Response(en) : new Response("", { status: 500 });
+    }) as typeof fetch;
+    const r = await runEdgeScan({ DB: db, GEMINI_API_KEY: "k" }, new Date("2026-11-28T10:30:00Z"), f, { dispatch: false });
+    expect(r.published).toBe(1);
+    const item = JSON.parse(rows.get("edge")!)[0];
+    expect(item.title_ko).toBe("큐원이 MCP SDK를 냈어요");
+    expect(item.easy_summary_ko).toBe("AI 앱을 2년 걸려 만들었어요. 이제 누구나 써 볼 수 있어요.");
+    expect(item.glossary).toEqual([{ term: "MCP", desc: "AI가 외부 앱을 연결해 쓰도록 만든 표준 플러그 규격이에요." }]);
+  });
+
+  it("ingest 는 엣지 행의 HF 업로드를 빼고 남은 기사의 음차를 복원한다", async () => {
+    const { db, rows } = fakeD1();
+    rows.set("edge", JSON.stringify([
+      { canonical_url: "https://huggingface.co/spaces/JCisHERE/wan2-2-i2v-v3", platform_id: "huggingface", original_title: "JCisHERE/wan2-2-i2v-v3", title_ko: "허깅페이스 데모" },
+      { canonical_url: "https://www.theverge.com/x", platform_id: "the-verge-ai", original_title: "Alibaba code review", title_ko: "알리바바가 이 년 동안 쓴 엠시피 도구" },
+    ]));
+    await ingest({ DB: db, FEED_INGEST_SECRET: "s3cret" });
+    const edge = JSON.parse(rows.get("edge")!);
+    expect(edge.map((x: { title_ko: string }) => x.title_ko)).toEqual(["알리바바가 2년 동안 쓴 MCP 도구"]);
   });
 });

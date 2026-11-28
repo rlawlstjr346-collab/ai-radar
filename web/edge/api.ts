@@ -1,5 +1,6 @@
-import { isAiItem } from "./ai-gate";
+import { isAiItem, isHfUpload } from "./ai-gate";
 import type { EdgeEnv } from "./cf-types";
+import { restoreItem } from "./restore";
 import {
   MAX_BASE_CHUNKS,
   SEEN_CAP,
@@ -114,10 +115,17 @@ export async function handleIngest(request: Request, env: EdgeEnv, now = new Dat
   } catch {
     edge = [];
   }
-  // 엣지 속보 중 비AI 글(종합 IT 소스에서 새어 든 일반 개발·보안 글)도 이 시점에 함께 걷어낸다
-  const keptEdge = edge.filter(
-    (it) => it.canonical_url && !baseKeys.has(urlKey(it.canonical_url)) && !baseKeys.has(titleKey(it.original_title ?? "")) && isAiItem(it),
-  );
+  // 엣지 속보 중 비AI 글·HF 업로드 로그도 이 시점에 함께 걷어내고, 억지 한글 음차(엠시피·이 년)는 원형으로 복원한다
+  const keptEdge = edge
+    .filter(
+      (it) =>
+        it.canonical_url &&
+        !baseKeys.has(urlKey(it.canonical_url)) &&
+        !baseKeys.has(titleKey(it.original_title ?? "")) &&
+        isAiItem(it) &&
+        !isHfUpload(it.canonical_url),
+    )
+    .map((it) => restoreItem(it));
   let seen: string[] = [];
   try {
     seen = JSON.parse(rows.get("seen") ?? "[]");

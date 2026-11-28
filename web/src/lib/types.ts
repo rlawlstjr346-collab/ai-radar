@@ -86,6 +86,8 @@ export interface FeedItem {
   planning_meta?: PlanningMeta | null;
   difficulty: Difficulty;
   terms: Term[];
+  /** Gemini 가 기사별로 뽑은 초보자 난해 용어 풀이 (최대 4개, 선택 필드) */
+  glossary?: Term[];
   entities: Entity[];
   /** [원본 쉽게 읽기] 해설이 이미 준비돼 있는지 (샘플 데이터 또는 DB 캐시) */
   easy_original_ready: boolean;

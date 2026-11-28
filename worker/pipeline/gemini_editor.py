@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from typing import Any, Callable, Optional
 
 from pipeline.enrich import STOCK_PHRASE_RE, SENT_SPLIT_RE, _body_candidates, clean_text
+from pipeline.ko_restore import ORIGINAL_FORM_RULE, restore_originals
 
 logger = logging.getLogger("ai_radar.editor")
 
@@ -33,7 +34,7 @@ JARGON_RE = re.compile(r"(벤더|원가|생태계 지형|시그널이라|기준�
 LITERAL_RE = re.compile(r"(의 만드는|을 를|를 을|에 대한 에 대한|하는 것을 하는|이 가 )")
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 
-PROMPT_HEAD = """너는 AI 뉴스를 처음 보는 사람에게 설명하는 한국어 뉴스 에디터야.
+PROMPT_HEAD = f"""너는 AI 뉴스를 처음 보는 사람에게 설명하는 한국어 뉴스 에디터야.
 아래 JSON 배열의 기사마다 다음 3가지를 써 줘. 반드시 원문(original_title, title_ko, body)에 있는 사실만 써.
 본문이 짧으면 제목과 출처·분야 정보만으로 '무슨 소식인지'를 풀어 쓰고, 숫자·이름·날짜를 지어내지 마.
 
@@ -46,8 +47,11 @@ PROMPT_HEAD = """너는 AI 뉴스를 처음 보는 사람에게 설명하는 한
 금지 표현: 벤더, 원가, 생태계 지형, 시그널, 패러다임, 인사이트, '쉽게 말해', '~에 따르면', '~를 발표했다' 같은 번역투, 다른 기사와 똑같은 문장.
 4) is_ai_related: 기사가 AI(모델·에이전트·AI 제품·AI 연구·AI 산업·AI 정책)와 직접 관련 있으면 true,
    AI 와 무관한 일반 개발 도구·디스크 정리 같은 유틸리티·일반 보안 사건·단순 하드웨어 소식이면 false (false 면 나머지 필드는 빈 문자열).
+5) glossary: 이 기사에 나온, 초보자가 어려워할 영문 약어·기술 개념 최대 4개. term 은 기사 표기 그대로,
+   desc 는 '~요.'로 끝나는 쉬운 비유 1문장 (없으면 []).
+표기 원칙: {ORIGINAL_FORM_RULE}
 
-출력은 JSON 배열만: [{"id": "...", "is_ai_related": true, "title_ko": "...", "summary": "...", "vision": "..."}]
+출력은 JSON 배열만: [{{"id": "...", "is_ai_related": true, "title_ko": "...", "summary": "...", "vision": "...", "glossary": [{{"term": "MCP", "desc": "AI가 내 파일이나 외부 앱을 직접 연결해 쓰도록 만든 표준 플러그 규격이에요."}}]}}]
 
 기사 목록:
 """
@@ -114,6 +118,26 @@ def valid_vision(v: str, source: str) -> bool:
     )
 
 
+def valid_glossary(raw: Any) -> list[dict[str, str]]:
+    """Gemini glossary 검증: 최대 4개, 용어 1~30자, 쉬운 풀이 8~140자 '~요.' 로 끝, 한자·가나 없음."""
+    out: list[dict[str, str]] = []
+    for g in raw if isinstance(raw, list) else []:
+        if not isinstance(g, dict):
+            continue
+        term = restore_originals(clean_text(g.get("term")))
+        desc = restore_originals(clean_text(g.get("desc")))
+        if not term or len(term) > 30 or CJK_FOREIGN_RE.search(term) or CJK_FOREIGN_RE.search(desc):
+            continue
+        if not (8 <= len(desc) <= 140) or not desc.rstrip(".!").endswith("요"):
+            continue
+        if any(x["term"].lower() == term.lower() for x in out):
+            continue
+        out.append({"term": term, "desc": desc})
+        if len(out) >= 4:
+            break
+    return out
+
+
 def apply_cached(item: dict[str, Any], cache: dict[str, Any]) -> bool:
     entry = cache.get(str(item.get("canonical_url") or ""))
     if not isinstance(entry, dict) or entry.get("src") != source_hash(item):
@@ -124,6 +148,8 @@ def apply_cached(item: dict[str, Any], cache: dict[str, Any]) -> bool:
         item["easy_summary_ko"] = entry["easy_summary_ko"]
     if entry.get("vision_ko"):
         item["vision_ko"] = entry["vision_ko"]
+    if entry.get("glossary"):
+        item["glossary"] = entry["glossary"]          # live-feed 선택 필드 (planning-feed 스키마에는 넣지 않는다)
     # 세 필드가 모두 검증 통과했을 때만 '완료' — 일부만 통과했으면 다음 실행에서 다시 다듬는다
     return all(entry.get(k) for k in ("title_ko", "easy_summary_ko", "vision_ko"))
 
@@ -194,7 +220,11 @@ def edit_items(
                 continue
             source = _source_blob(it)
             entry: dict[str, Any] = {"src": source_hash(it), "model": model, "at": now_iso}
-            title, summary, vision = (clean_text(r.get(k)) for k in ("title_ko", "summary", "vision"))
+            # 억지 한글 음차(엠시피·이 년)는 검증 전에 원형(MCP·2년)으로 되돌린다
+            title, summary, vision = (restore_originals(clean_text(r.get(k))) for k in ("title_ko", "summary", "vision"))
+            glossary = valid_glossary(r.get("glossary"))
+            if glossary:
+                entry["glossary"] = glossary
             for key, value, ok in (
                 ("title_ko", title, valid_title(title, source)),
                 ("easy_summary_ko", summary, valid_summary(summary, source)),
@@ -204,10 +234,10 @@ def edit_items(
                     entry[key] = value
                 else:
                     stats["rejected_fields"] += 1
-            if len(entry) > 3:
+            if any(k in entry for k in ("title_ko", "easy_summary_ko", "vision_ko")):
                 prev = cache.get(str(it.get("canonical_url") or "")) or {}
                 if prev.get("src") == entry["src"]:
-                    entry = {**{k: v for k, v in prev.items() if k in ("title_ko", "easy_summary_ko", "vision_ko")}, **entry}
+                    entry = {**{k: v for k, v in prev.items() if k in ("title_ko", "easy_summary_ko", "vision_ko", "glossary")}, **entry}
                 cache[str(it.get("canonical_url") or "")] = entry
                 apply_cached(it, cache)
                 stats["edited"] += 1

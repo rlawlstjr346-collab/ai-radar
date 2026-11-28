@@ -8,10 +8,11 @@
  */
 import { GATED_PLATFORMS, isAiSignal } from "./ai-gate";
 import type { EdgeEnv } from "./cf-types";
+import { restoreOriginals } from "./restore";
 import { SEEN_CAP, laterIso, parseMeta, readRows, titleKey, upsert, urlKey, type MetaRow } from "./feed-store";
 import { resetMemo } from "./api";
 
-export type SourceKind = "rss" | "hn" | "hf_papers" | "hf_models" | "hf_spaces" | "juejin" | "v2ex";
+export type SourceKind = "rss" | "hn" | "hf_papers" | "hf_models" | "juejin" | "v2ex";
 
 export interface EdgeSource {
   id: string;
@@ -29,8 +30,6 @@ export interface EdgeSource {
   maxText?: number;
   /** 종합 피드: AI 순도 게이트 통과 글만 */
   aiOnly?: boolean;
-  /** 트렌딩 목록: 발행 시각 대신 '처음 포착한 시각'을 쓴다 (새로 순위에 오른 것만 신규) */
-  firstSeen?: boolean;
 }
 
 const HN = "https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=points%3E15&hitsPerPage=8&query=";
@@ -41,6 +40,8 @@ const HN = "https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilte
  *           QbitAI(3.5초 타임아웃) → ITmedia AI+, 36Kr(403) → V2EX 핫토픽, VentureBeat 본 피드(429) → 공식 feedburner 피드,
  *           Anthropic(공식 RSS 없음) → 공개 RSS 미러, Meta AI(블로그 RSS 404) → Meta Engineering AI Research,
  *           Mistral(공식 RSS 없음) → Hugging Face mistralai 신규 모델 API
+ * 2026-11-28 HF Trending Models·Spaces(개인 데모·모델 파일 업로드 로그) 제거 → 발행 시각이 명확한 AI 전문 매체
+ *           The Decoder · SiliconANGLE AI 로 교체 (엣지 HTTP 200 실측)
  */
 export const EDGE_SOURCES: EdgeSource[] = [
   // ── Shard 0 (00·05 이후 15분 간격: 00, 15, 30, 45분) ──
@@ -57,7 +58,7 @@ export const EDGE_SOURCES: EdgeSource[] = [
   // ── Shard 1 (05, 20, 35, 50분) ──
   { id: "anthropic", platform: "anthropic", category: "industry", kind: "rss", lang: "en", shard: 1, limit: 4, url: "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_news.xml" },
   { id: "deepmind", platform: "google-deepmind", category: "research", kind: "rss", lang: "en", shard: 1, limit: 4, url: "https://deepmind.google/blog/rss.xml" },
-  { id: "hf-models", platform: "huggingface", category: "dev", kind: "hf_models", lang: "en", shard: 1, limit: 3, firstSeen: true, maxText: 60_000, url: "https://huggingface.co/api/models?sort=trendingScore&limit=6" },
+  { id: "the-decoder", platform: "the-decoder", category: "industry", kind: "rss", lang: "en", shard: 1, limit: 4, maxText: 30_000, url: "https://the-decoder.com/feed/" },
   { id: "msr", platform: "microsoft-research", category: "research", kind: "rss", lang: "en", shard: 1, limit: 3, aiOnly: true, maxText: 45_000, url: "https://www.microsoft.com/en-us/research/feed/" },
   { id: "qwen", platform: "qwen", category: "llm_chat", kind: "rss", lang: "en", shard: 1, limit: 3, url: "https://qwenlm.github.io/blog/index.xml" },
   { id: "hn-llm", platform: "hacker-news", category: "dev", kind: "hn", lang: "en", shard: 1, limit: 4, aiOnly: true, maxText: 60_000, url: `${HN}LLM` },
@@ -66,7 +67,7 @@ export const EDGE_SOURCES: EdgeSource[] = [
   { id: "latent-space", platform: "latent-space", category: "industry", kind: "rss", lang: "en", shard: 1, limit: 2, maxText: 60_000, url: "https://latent.space/feed" },
   { id: "venturebeat", platform: "venturebeat-ai", category: "industry", kind: "rss", lang: "en", shard: 1, limit: 4, aiOnly: true, url: "https://feeds.feedburner.com/venturebeat/SZYF" },
   // ── Shard 2 (10, 25, 40, 55분) ──
-  { id: "hf-spaces", platform: "huggingface", category: "dev", kind: "hf_spaces", lang: "en", shard: 2, limit: 2, firstSeen: true, maxText: 60_000, url: "https://huggingface.co/api/spaces?sort=trendingScore&limit=6" },
+  { id: "siliconangle", platform: "siliconangle-ai", category: "industry", kind: "rss", lang: "en", shard: 2, limit: 4, maxText: 30_000, url: "https://siliconangle.com/category/ai/feed/" },
   { id: "meta-ai", platform: "meta-ai", category: "research", kind: "rss", lang: "en", shard: 2, limit: 3, maxText: 45_000, url: "https://engineering.fb.com/category/ai-research/feed/" },
   { id: "lobsters", platform: "lobsters", category: "social", kind: "rss", lang: "en", shard: 2, limit: 4, aiOnly: true, url: "https://lobste.rs/t/ai.rss" },
   { id: "pytorch-kr", platform: "pytorch-kr", category: "social", kind: "rss", lang: "ko", shard: 2, limit: 4, aiOnly: true, maxText: 45_000, url: "https://discuss.pytorch.kr/latest.rss" },
@@ -171,15 +172,14 @@ function parseJson(body: string, source: EdgeSource): Array<Omit<RawEntry, "sour
         };
       });
     case "hf_models":
-    case "hf_spaces":
       return arr(data).map((m) => {
         const id = str(m.id);
         const tags = Array.isArray(m.tags) ? (m.tags as unknown[]).map(String) : [];
-        const kind = source.kind === "hf_spaces" ? "Hugging Face Space (AI demo app)" : `Hugging Face AI model${m.pipeline_tag ? ` · ${str(m.pipeline_tag)}` : ""}`;
+        const kind = `Hugging Face AI model${m.pipeline_tag ? ` · ${str(m.pipeline_tag)}` : ""}`;
         return {
           title: id,
-          link: `https://huggingface.co/${source.kind === "hf_spaces" ? "spaces/" : ""}${id}`,
-          published: source.firstSeen ? null : isoMs(m.createdAt),
+          link: `https://huggingface.co/${id}`,
+          published: isoMs(m.createdAt),
           description: `${kind} · likes ${Number(m.likes) || 0} · ${tags.filter((t) => !t.includes(":")).slice(0, 6).join(", ")}`,
           publisher: null,
         };
@@ -323,19 +323,44 @@ export function ruleSummary(e: RawEntry): string | null {
 }
 
 // ── Gemini 1회 배치 ───────────────────────────────────────────────────────
+export interface GlossaryEntry {
+  term: string;
+  desc: string;
+}
+
 export interface Edited {
   title_ko: string;
   summary: string;
   vision: string | null;
+  glossary?: GlossaryEntry[];
+}
+
+/** Gemini glossary 검증: 최대 4개, 용어 1~30자, 쉬운 풀이 8~140자 '~요.' 로 끝, 한자·가나 없음 */
+export function validGlossary(raw: unknown): GlossaryEntry[] {
+  if (!Array.isArray(raw)) return [];
+  const out: GlossaryEntry[] = [];
+  for (const g of raw as Array<Record<string, unknown>>) {
+    const term = typeof g?.term === "string" ? restoreOriginals(g.term.trim()) : "";
+    const desc = typeof g?.desc === "string" ? restoreOriginals(g.desc.trim()) : "";
+    if (!term || term.length > 30 || CJK_FOREIGN.test(term) || CJK_FOREIGN.test(desc)) continue;
+    if (desc.length < 8 || desc.length > 140 || !/요[.!]?$/.test(desc)) continue;
+    if (out.some((x) => x.term.toLowerCase() === term.toLowerCase())) continue;
+    out.push({ term, desc });
+    if (out.length >= 4) break;
+  }
+  return out;
 }
 
 const PROMPT = `너는 AI 뉴스를 처음 보는 사람에게 설명하는 한국어 뉴스 에디터야. 아래 기사마다 원문(title, description)에 있는 사실만으로 써 줘.
-숫자·이름을 지어내지 말고, 일본어 가나·중국어 한자는 쓰지 마(고유명사는 영문 또는 한글).
+숫자·이름을 지어내지 말고, 일본어 가나·중국어 한자는 쓰지 마.
+영문 모델명·회사·제품명과 기술 약어(MCP, GGUF, SDK, API, LLM, RAG, GPU, NPU, VRAM, CLI, MoE, LoRA, Agent, CUDA 등)는 '엠시피'·'지지유에프'처럼 한글 소리로 옮기지 말고 영문 대소문자 원형 그대로 써.
+숫자도 '이 년'·'열 배'처럼 한글로 풀지 말고 2년·10배·30B·70% 처럼 아라비아 숫자 원형 그대로 써.
 - title_ko: 자연스러운 한국어 헤드라인 18~45자, 친근한 대화체(~했어요/~나왔어요/~예요/궁금증 ?), 말머리([ ]) 금지
 - summary: 초보자용 쉬운 대화체 2문장, 둘 다 '~요.'로 끝. 제목 반복·'쉽게 말해'·번역투 금지
 - vision: 2문장. '앞으로 ~'로 시작해 이 변화로 일상·업무에서 무엇이 가능해지는지 + '우리는 ~에 주목해 볼 수 있어요.'
 - ai: 기사가 AI(모델·에이전트·AI 제품·AI 연구·AI 산업·AI 정책)와 직접 관련 있으면 true, AI 와 무관한 일반 개발·보안 사건·하드웨어·앱 소식이면 false (false 면 다른 필드는 빈 문자열)
-JSON 배열만 출력: [{"i":0,"ai":true,"title_ko":"...","summary":"...","vision":"..."}]
+- glossary: 이 기사에 나온, 초보자가 어려워할 영문 약어·기술 개념 최대 4개. term 은 기사 표기 그대로, desc 는 '~요.'로 끝나는 쉬운 비유 1문장 (없으면 [])
+JSON 배열만 출력: [{"i":0,"ai":true,"title_ko":"...","summary":"...","vision":"...","glossary":[{"term":"MCP","desc":"AI가 내 파일이나 외부 앱을 직접 연결해 쓰도록 만든 표준 플러그 규격이에요."}]}]
 기사:
 `;
 
@@ -383,15 +408,22 @@ export async function geminiEdit(entries: RawEntry[], key: string, fetchImpl: ty
       const rows = JSON.parse(text.slice(text.indexOf("["), text.lastIndexOf("]") + 1)) as Array<Partial<Edited> & { i?: number }>;
       const edits = new Map<number, Edited>();
       const notAi = new Set<number>();
-      for (const r of rows as Array<Partial<Edited> & { i?: number; ai?: unknown }>) {
-        const idx = r.i;
-        if (typeof idx === "number" && r.ai === false) {
+      for (const raw of rows as Array<Partial<Edited> & { i?: number; ai?: unknown; glossary?: unknown }>) {
+        const idx = raw.i;
+        if (typeof idx === "number" && raw.ai === false) {
           notAi.add(idx);
           continue;
         }
+        // 억지 한글 음차(엠시피·이 년)는 검증 전에 원형(MCP·2년)으로 되돌린다
+        const r = {
+          ...raw,
+          title_ko: typeof raw.title_ko === "string" ? restoreOriginals(raw.title_ko) : raw.title_ko,
+          summary: typeof raw.summary === "string" ? restoreOriginals(raw.summary) : raw.summary,
+          vision: typeof raw.vision === "string" ? restoreOriginals(raw.vision) : raw.vision,
+        };
         if (typeof idx === "number" && validEdit(r)) {
           const vision = typeof r.vision === "string" && r.vision.startsWith("앞으로") && !CJK_FOREIGN.test(r.vision) ? r.vision.trim() : null;
-          edits.set(idx, { title_ko: r.title_ko.trim(), summary: r.summary.trim(), vision });
+          edits.set(idx, { title_ko: r.title_ko.trim(), summary: r.summary.trim(), vision, glossary: validGlossary(raw.glossary) });
         }
       }
       return { edits, notAi, calls, model };
@@ -411,8 +443,10 @@ async function shortHash(s: string): Promise<string> {
 }
 
 export async function buildEdgeItem(e: RawEntry, edit: Edited | null, nowIso: string): Promise<Record<string, unknown> | null> {
-  const title = edit?.title_ko ?? (e.source.lang === "ko" ? e.title : null);
-  const summary = edit?.summary ?? (e.source.lang === "ko" ? ruleSummary(e) : null);
+  const rawTitle = edit?.title_ko ?? (e.source.lang === "ko" ? e.title : null);
+  const rawSummary = edit?.summary ?? (e.source.lang === "ko" ? ruleSummary(e) : null);
+  const title = rawTitle ? restoreOriginals(rawTitle) : null;
+  const summary = rawSummary ? restoreOriginals(rawSummary) : null;
   if (!title || !summary || CJK_FOREIGN.test(title)) return null;
   const published = e.published !== null && e.published <= Date.parse(nowIso) + 5 * 60_000 ? new Date(Math.min(e.published, Date.parse(nowIso))).toISOString() : nowIso;
   const h = await shortHash(urlKey(e.link));
@@ -452,6 +486,7 @@ export async function buildEdgeItem(e: RawEntry, edit: Edited | null, nowIso: st
     related_articles: [],
     cluster_size: 1,
     edge: true,
+    ...(edit?.glossary && edit.glossary.length > 0 ? { glossary: edit.glossary } : {}),
   };
 }
 

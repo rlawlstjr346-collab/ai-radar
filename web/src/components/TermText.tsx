@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { Languages } from "lucide-react";
 import { createPortal } from "react-dom";
 
 import { easyOriginalSegments, highlightSegments, stripHighlightMarks } from "@/lib/highlight";
@@ -10,7 +9,8 @@ import type { Entity, Term } from "@/lib/types";
 
 import XLogo from "./XLogo";
 
-const POPOVER_WIDTH = 280;
+/** 툴팁 폭: 루트 글자 크기를 따라 FHD 280px → 4K 약 455px 로 함께 커진다 */
+const POPOVER_WIDTH_REM = 17.5;
 const GAP = 8;
 const MATH_X_GLYPH = "\uD835\uDD4F"; // 𝕏 (U+1D54F)
 
@@ -37,12 +37,17 @@ export function SafeXText({ text, className }: { text: string; className?: strin
   return <span className={className}>{renderSafeX(text)}</span>;
 }
 
-/** 외계어 밑줄 + 풀이 팝오버. 데스크톱은 마우스 오버/포커스, 모바일은 탭으로 연다. */
+/**
+ * 전문용어 점선 밑줄 + 리퀴드 글래스 풀이 툴팁.
+ * - 데스크톱: 마우스 오버/키보드 포커스로 열림, 모바일: 탭으로 고정 토글
+ * - 카드 링크·모달 안에서도 쓰이므로 트리거는 <span role="button"> 이고, 탭/클릭은 전파를 막아 카드·모달이 열리지 않는다
+ * - body 포털 + 매 프레임 위치 동기화로 화면 좌우·상하 잘림을 자동 보정
+ */
 export function TermTooltip({ term, children }: { term: Term; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
   const [pos, setPos] = useState<{ top: number; left: number; placement: "above" | "below" } | null>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLSpanElement>(null);
   const popRef = useRef<HTMLSpanElement>(null);
   const id = useId();
 
@@ -51,7 +56,8 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
     if (!el) return;
     const r = el.getBoundingClientRect();
     const vw = window.innerWidth;
-    const width = Math.min(POPOVER_WIDTH, vw - 16);
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const width = popRef.current?.offsetWidth || Math.min(POPOVER_WIDTH_REM * rem, vw - 16);
     const left = Math.max(8, Math.min(r.left + r.width / 2 - width / 2, vw - width - 8));
     const popH = popRef.current?.offsetHeight ?? 110;
     const below = r.bottom + GAP + popH < window.innerHeight || r.top < popH + GAP;
@@ -96,51 +102,57 @@ export function TermTooltip({ term, children }: { term: Term; children: React.Re
     };
   }, [open]);
 
+  const toggle = (e: React.SyntheticEvent) => {
+    // 카드 링크(전면 ::after)·모달 클릭 핸들러로 번지지 않게
+    e.preventDefault();
+    e.stopPropagation();
+    if (pinned) {
+      setPinned(false);
+      setOpen(false);
+    } else {
+      setPinned(true);
+      setOpen(true);
+    }
+  };
+
   return (
     <>
-      <button
+      <span
         ref={triggerRef}
-        type="button"
+        role="button"
+        tabIndex={0}
         aria-expanded={open}
         aria-describedby={open ? id : undefined}
-        onClick={() => {
-          // 탭/클릭: 고정(pinned) 토글. 고정되면 마우스가 떠나도 유지
-          if (pinned) {
-            setPinned(false);
-            setOpen(false);
-          } else {
-            setPinned(true);
-            setOpen(true);
-          }
-        }}
+        data-term={term.term}
+        className="term-hint"
+        onClick={toggle}
+        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggle(e)}
         onPointerEnter={(e) => e.pointerType !== "touch" && setOpen(true)}
         onPointerLeave={(e) => e.pointerType !== "touch" && !pinned && setOpen(false)}
         onFocus={() => setOpen(true)}
         onBlur={() => !pinned && setOpen(false)}
-        className="inline cursor-help rounded-sm text-inherit underline decoration-fg-3 decoration-dotted decoration-[1.5px] underline-offset-[5px] transition-colors duration-100 hover:bg-elevated hover:decoration-accent focus-visible:bg-elevated focus-visible:decoration-accent focus-visible:outline-none"
       >
         {children}
-      </button>
+      </span>
       {/* body 로 포털: 바텀시트(transform) 안에서도 position:fixed 가 화면 기준이 되도록 */}
       {open && createPortal(
         <span
           ref={popRef}
           id={id}
           role="tooltip"
+          data-placement={pos?.placement ?? "below"}
           style={{
             position: "fixed",
             top: pos?.top ?? -9999,
             left: pos?.left ?? -9999,
-            width: `min(${POPOVER_WIDTH}px, calc(100vw - 16px))`,
+            width: `min(${POPOVER_WIDTH_REM}rem, calc(100vw - 16px))`,
           }}
-          className="animate-fade-in z-[80] block select-none rounded-lg bg-fg p-3.5 text-left"
+          className="term-glass"
           onPointerEnter={() => setOpen(true)}
           onPointerLeave={(e) => e.pointerType !== "touch" && !pinned && setOpen(false)}
         >
-          <span className="mb-1 flex items-center gap-1.5 text-[12.5px] font-semibold text-canvas opacity-75">
-            <Languages className="h-3.5 w-3.5" strokeWidth={1.8} aria-hidden /> 외계어 번역기 · {term.term}
-          </span>
-          <span className="block text-[14px] font-normal leading-relaxed text-canvas">{term.easy}</span>
+          <span className="term-glass-term">{term.term}</span>
+          <span className="term-glass-desc">{term.easy}</span>
         </span>,
         document.body,
       )}

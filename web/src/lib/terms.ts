@@ -7,7 +7,11 @@ export type Segment = { text: string; term?: Term };
  * - 긴 용어부터 매칭 (예: "MIT 라이선스"가 "MIT"보다 우선)
  * - 같은 용어는 한 블록에서 첫 등장만 밑줄 (읽기 방해 최소화)
  * - 대소문자 구분 없이 매칭하되, 화면엔 원문 표기를 그대로 둔다
+ * - 영문 용어는 앞뒤가 영문·숫자가 아닐 때만 (예: "RAG" 가 "storage" 안에서 잡히지 않게)
  */
+const ASCII_WORD = /[A-Za-z0-9]/;
+const isAsciiTerm = (t: string) => /^[\x20-\x7e]+$/.test(t);
+
 export function splitByTerms(text: string, terms: Term[]): Segment[] {
   if (!text) return [];
   const usable = [...terms]
@@ -24,6 +28,10 @@ export function splitByTerms(text: string, terms: Term[]): Segment[] {
       const idx = lower.indexOf(needle, from);
       if (idx === -1) break;
       const end = idx + needle.length;
+      if (isAsciiTerm(needle) && (ASCII_WORD.test(text[idx - 1] ?? "") || ASCII_WORD.test(text[end] ?? ""))) {
+        from = idx + 1;
+        continue;
+      }
       const overlaps = taken.some((r) => idx < r.end && end > r.start);
       if (!overlaps) {
         taken.push({ start: idx, end, term: t });

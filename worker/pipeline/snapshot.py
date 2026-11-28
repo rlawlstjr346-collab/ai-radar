@@ -26,7 +26,8 @@ from pipeline.curator import (
     is_blocked_noise,
     polish_korean_headline,
 )
-from pipeline.ai_gate import is_ai_candidate, is_ai_item
+from pipeline.ai_gate import is_ai_candidate, is_ai_item, is_hf_upload
+from pipeline.ko_restore import restore_item
 from pipeline.enrich import FALLBACK_SUFFIX_RE, IMAGE_CACHE_KEY, clean_text, enrich_snapshot_items
 from pipeline.gemini_client import GeminiClient
 from pipeline.gemini_editor import EDITOR_CACHE_KEY
@@ -1105,7 +1106,7 @@ def build_and_save_snapshot(
             continue
         if is_blocked_noise(str(item.get("hook_title") or item.get("original_title") or ""), str(item.get("what_ko") or ""), url):
             continue
-        if url in not_ai_urls or (url not in gate_ok_urls and not is_ai_item(item)):
+        if url in not_ai_urls or is_hf_upload(url) or (url not in gate_ok_urls and not is_ai_item(item)):
             continue                                       # 종합 IT 소스의 비AI 글은 기존 스냅샷에서도 영구 제거
         created_dt = _parse_iso(item.get("published_at")) or _parse_iso(item.get("created_at"))
         if not created_dt or created_dt < cutoff:
@@ -1130,7 +1131,7 @@ def build_and_save_snapshot(
     metrics_by_url: dict[str, dict[str, Any]] = {}
     llm_urls: set[str] = set()
     for c in candidates:
-        if c.canonical_url in not_ai_urls:
+        if c.canonical_url in not_ai_urls or is_hf_upload(c.canonical_url):
             continue
         llm_sum = summaries_by_dedup.get(c.dedup_key)
         built = candidate_to_snapshot_item(
@@ -1426,6 +1427,8 @@ def build_and_save_snapshot(
     )
     # Gemini 에디터가 AI 무관으로 판정한 기사는 즉시 탈락 (스키마는 그대로, 아이템만 빠진다)
     selected = [it for it in selected if not (editor_cache.get(str(it.get("canonical_url") or "")) or {}).get("not_ai")]
+    # 억지 한글 음차(엠시피·지지유에프·이 년)를 원형(MCP·GGUF·2년)으로 — 이미 저장된 기사까지 매 실행 정화 (키 구조 불변)
+    selected = [restore_item(it) for it in selected]
     if meta_path is not None:
         _save_meta_key(meta_path, IMAGE_CACHE_KEY, dict(sorted(image_cache.items())))
         _save_meta_key(meta_path, VERDICT_CACHE_KEY, dict(sorted(image_verdicts.items())))

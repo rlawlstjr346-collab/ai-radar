@@ -4,8 +4,10 @@ import { memo, useEffect, useRef, useState, type MouseEvent } from "react";
 
 import { freshness } from "@/lib/filter";
 import { coverage, itemTime, plainSummary, sourceLabel, type FrontPageLayout } from "@/lib/front-page";
+import { tooltipTerms } from "@/lib/glossary";
 import type { FeedItem, Platform } from "@/lib/types";
 
+import TermText from "../TermText";
 import StoryImage, { useImageAvailable } from "./StoryImage";
 
 export type CardVariant = "hero" | "side" | "wire" | "feature" | "stream";
@@ -98,7 +100,7 @@ const StoryCard = memo(function StoryCard({ item, variant, ctx }: { item: FeedIt
             {item.hook_title}
           </a>
         </Title>
-        {summary && <p className="story-summary">{summary}</p>}
+        {summary && <TermText text={summary} terms={tooltipTerms(item)} className="story-summary" />}
         <Meta item={item} ctx={ctx} showCluster={variant !== "hero"} />
       </div>
     </article>

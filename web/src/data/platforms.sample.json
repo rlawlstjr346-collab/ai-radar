@@ -1464,6 +1464,18 @@
     "region": "cn"
   },
   {
+    "id": "siliconangle-ai",
+    "name": "SiliconANGLE AI",
+    "category": "industry",
+    "one_liner_ko": "기업용 AI·클라우드·인프라 소식을 깊이 있게 다루는 미국 테크 매체 실리콘앵글의 AI 섹션이에요.",
+    "why_visit_ko": "빅테크와 스타트업이 AI 인프라에 어떻게 투자하고 제품을 내는지 업계 흐름을 읽기 좋아요.",
+    "url": "https://siliconangle.com/category/ai",
+    "theme_color": "#D9232E",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "global"
+  },
+  {
     "id": "latent-space",
     "name": "Substack · Latent Space",
     "category": "industry",
@@ -1498,6 +1510,18 @@
     "access_note": "무료로 읽을 수 있어요.",
     "collect_status": "active",
     "region": "global"
+  },
+  {
+    "id": "the-decoder",
+    "name": "The Decoder",
+    "category": "industry",
+    "one_liner_ko": "새 AI 모델·연구·업계 소식을 매일 빠르게 정리하는 독일발 AI 전문 뉴스 매체예요.",
+    "why_visit_ko": "발행 시각이 분명한 짧은 속보가 많아서, 지금 막 나온 AI 소식을 확인하기 좋아요.",
+    "url": "https://the-decoder.com",
+    "theme_color": "#1F2937",
+    "access_note": "무료로 읽을 수 있어요.",
+    "collect_status": "active",
+    "region": "eu"
   },
   {
     "id": "the-verge-ai",

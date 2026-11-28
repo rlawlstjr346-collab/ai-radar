@@ -26,7 +26,7 @@ def test_seed_uses_only_seven_categories_and_covers_all():
     sources = load_seed_sources()
     assert {s.default_category for s in sources} <= SEVEN
     names = load_seed_platform_names()
-    assert len(names) == 149                                    # 기존 26곳 + 6개 권역 확장 115곳 + Substack 2곳 + CN 인디빌더 2곳 + 엣지 4곳
+    assert len(names) == 151                                    # 기존 26곳 + 6개 권역 확장 115곳 + Substack 2곳 + CN 인디빌더 2곳 + 엣지 6곳
     base = load_seed_platform_names(SEED_SQL)
     assert len(base) == 26 and set(base) <= set(names)          # 기존 26곳 보존
 

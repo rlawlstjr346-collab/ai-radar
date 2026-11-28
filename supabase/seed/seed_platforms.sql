@@ -239,12 +239,13 @@ values
   ('huggingface', 'HF Daily Papers',
    'https://huggingface.co/api/daily_papers',
    'api', 'research', true),
+  -- 트렌딩 모델·스페이스는 개인 데모·모델 파일 업로드 로그가 '최신 속보'를 도배해 수집 중단 (논문 Daily Papers 만 유지)
   ('huggingface', 'HF Trending Models',
    'https://huggingface.co/api/models?sort=trendingScore&limit=50',
-   'api', 'dev', true),
+   'api', 'dev', false),
   ('huggingface', 'HF Trending Spaces',
-   'https://huggingface.co/api/spaces?sort=trendingScore&limit=50',      -- 이미지/영상/오디오 태그 필터는 어댑터에서
-   'api', 'image_design', true),
+   'https://huggingface.co/api/spaces?sort=trendingScore&limit=50',
+   'api', 'image_design', false),
 
   -- 공식 블로그 RSS
   ('openai', 'OpenAI News',

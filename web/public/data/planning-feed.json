@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T14:02:19.856932Z",
-  "item_count": 199,
+  "generated_at": "2026-11-28T14:10:19Z",
+  "item_count": 187,
   "signals": [
     {
       "id": "live-10a34d02da30",
@@ -1286,7 +1286,7 @@
     },
     {
       "id": "live-d5262fe9761a",
-      "title_ko": "오픈에이아이의 새로운 업데이트에 개발자들이 화난 이유는?",
+      "title_ko": "OpenAI의 새로운 업데이트에 개발자들이 화난 이유는?",
       "original_title": "奥特曼宣布：OpenAI推出隐私推理，GPT-6.2修正额度错误，开发者却怒了",
       "platform_id": "36kr-ai",
       "author_handle": null,
@@ -1298,9 +1298,9 @@
       "importance_score": 28.32,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "오픈에이아이가 개인 정보 추론 기능을 시작하고 오류를 수정했지만 크레딧이 더 빨리 차감되도록 바뀌었어요. 재설정 기능이 제공되지만 사용 크레딧이 빠르게 줄어들면서 개발자들의 불만이 나왔어요.",
+      "highlight_summary": "OpenAI가 개인 정보 추론 기능을 시작하고 오류를 수정했지만 크레딧이 더 빨리 차감되도록 바뀌었어요. 재설정 기능이 제공되지만 사용 크레딧이 빠르게 줄어들면서 개발자들의 불만이 나왔어요.",
       "image_url": "https://img.36krcdn.com/hsossms/20261128/v2_ad3f260adc1d4b0eaf1aa0c8dbaf9380@000000@ai_oswg294454oswg2048oswg1152_img_000~tplv-1marlgjv7f-ai-v3:600:400:600:400:q70.jpg",
-      "easy_summary_ko": "오픈에이아이가 개인 정보 추론 기능을 시작하고 오류를 수정했지만 크레딧이 더 빨리 차감되도록 바뀌었어요. 재설정 기능이 제공되지만 사용 크레딧이 빠르게 줄어들면서 개발자들의 불만이 나왔어요.",
+      "easy_summary_ko": "OpenAI가 개인 정보 추론 기능을 시작하고 오류를 수정했지만 크레딧이 더 빨리 차감되도록 바뀌었어요. 재설정 기능이 제공되지만 사용 크레딧이 빠르게 줄어들면서 개발자들의 불만이 나왔어요.",
       "vision_ko": "앞으로 인공지능 서비스의 가격 정책과 사용량 차감 방식이 개발자들의 선택에 큰 영향을 미칠 수 있어요. 우리는 기능 향상에 따른 비용 부담이 어떻게 조정되는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -1701,36 +1701,6 @@
       ]
     },
     {
-      "id": "live-f192c8ae54ca",
-      "title_ko": "shrink-anything: 내 테스트가 통과할 때만 죽은 코드와 안 쓰는 의존성을 지우는 정리 도구",
-      "original_title": "shrink-anything: 내 테스트가 통과할 때만 죽은 코드와 안 쓰는 의존성을 지우는 정리 도구",
-      "platform_id": "pytorch-kr",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://discuss.pytorch.kr/t/shrink-anything/12675",
-      "published_at": "2026-11-28T02:30:13Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 25.88,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "shrink-anything은 아무도 부르지 않는 함수와 파일, 패키지를 지운 뒤 프로젝트의 테스트 명령을 다시 실행하는 정리 도구예요. 테스트가 통과한 삭제만 남기고 테스트를 깨뜨린 삭제는 하나씩 찾아 되돌려요.",
-      "image_url": null,
-      "easy_summary_ko": "shrink-anything은 아무도 부르지 않는 함수와 파일, 패키지를 지운 뒤 프로젝트의 테스트 명령을 다시 실행하는 정리 도구예요. 테스트가 통과한 삭제만 남기고 테스트를 깨뜨린 삭제는 하나씩 찾아 되돌려요.",
-      "vision_ko": "앞으로 코딩 에이전트로 인해 늘어난 코드를 자동으로 정리해 빌드 크기와 배포 부담을 줄일 수 있어요. 우리는 테스트 통과 여부를 검증하며 불필요한 코드를 안전하게 제거하는 자동화 기법에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "Claude Code — 39% 기반 성능·효율 지표",
-        "actionable_idea": "Claude Code의 'Claude Code — 39% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
       "id": "live-e2d4ca37e674",
       "title_ko": "Claude Code 팀이 코드 검토를 수행하는 법",
       "original_title": "Claude Code 团队是如何做代码审查的",
@@ -1744,9 +1714,9 @@
       "importance_score": 25.8,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "코드의 90%가 Claude에 의해 작성되고 병합된 PR 수가 두 배로 늘어났을 때, Claude Code 팀은 검사 방어선과 무한 루프에 빠지지 않는 AI 검토를 도입했어요. 이를 통해 빠른 롤백 메커니즘을 거쳐 롤백율을 40% 이상 줄였어요.",
+      "highlight_summary": "코드의 90%가 Claude에 의해 작성되고 병합된 PR 수가 2배로 늘어났을 때, Claude Code 팀은 검사 방어선과 무한 루프에 빠지지 않는 AI 검토를 도입했어요. 이를 통해 빠른 롤백 메커니즘을 거쳐 롤백율을 40% 이상 줄였어요.",
       "image_url": null,
-      "easy_summary_ko": "코드의 90%가 Claude에 의해 작성되고 병합된 PR 수가 두 배로 늘어났을 때, Claude Code 팀은 검사 방어선과 무한 루프에 빠지지 않는 AI 검토를 도입했어요. 이를 통해 빠른 롤백 메커니즘을 거쳐 롤백율을 40% 이상 줄였어요.",
+      "easy_summary_ko": "코드의 90%가 Claude에 의해 작성되고 병합된 PR 수가 2배로 늘어났을 때, Claude Code 팀은 검사 방어선과 무한 루프에 빠지지 않는 AI 검토를 도입했어요. 이를 통해 빠른 롤백 메커니즘을 거쳐 롤백율을 40% 이상 줄였어요.",
       "vision_ko": "앞으로 AI가 작성한 코드가 늘어나는 환경에서 안전하게 검토하고 품질을 유지하는 체계적인 방어선 구축이 중요해져요. 우리는 AI 검토 과정에서 무한 루프를 방지하고 롤백율을 낮추는 팀의 운영 방식에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -1967,7 +1937,7 @@
     },
     {
       "id": "live-e5dd12192241",
-      "title_ko": "구글 에이아이 스튜디오 프로 체험판 초기화 및 기기 식별 도구예요",
+      "title_ko": "구글 AI 스튜디오 프로 체험판 초기화 및 기기 식별 도구예요",
       "original_title": "IrisFrancois697/google-ai-studio: Google AI Studio — Google Studio Pro Trial Reset & Machine ID",
       "platform_id": "github",
       "author_handle": null,
@@ -1979,9 +1949,9 @@
       "importance_score": 30.49,
       "source_count": 1,
       "benefit_tag": "GitHub 급상승 ★179",
-      "highlight_summary": "구글 에이아이 스튜디오의 프로 체험판 초기화와 관련된 기능을 다루는 저장소예요. 기기 식별 문제를 다루는 코드가 포함되어 있어요.",
+      "highlight_summary": "구글 AI 스튜디오의 프로 체험판 초기화와 관련된 기능을 다루는 저장소예요. 기기 식별 문제를 다루는 코드가 포함되어 있어요.",
       "image_url": null,
-      "easy_summary_ko": "구글 에이아이 스튜디오의 프로 체험판 초기화와 관련된 기능을 다루는 저장소예요. 기기 식별 문제를 다루는 코드가 포함되어 있어요.",
+      "easy_summary_ko": "구글 AI 스튜디오의 프로 체험판 초기화와 관련된 기능을 다루는 저장소예요. 기기 식별 문제를 다루는 코드가 포함되어 있어요.",
       "vision_ko": "앞으로 개발 환경에서 특정 플랫폼의 체험판 이용과 관련된 설정을 다루는 데 참고할 수 있어요. 우리는 이 도구가 어떤 방식으로 기기를 식별하고 초기화를 돕는지에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -2066,9 +2036,9 @@
       "importance_score": 24.86,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "고사양 노트북이 없어도 웹 브라우저만 열면 텍스트로 영상을 만들고 검수할 수 있는 킹 에이아이 도구 사용법이 공유되었어요. 프롬프트를 세부적으로 나누어 작성하면 결과물의 편차를 줄이고 원하는 장면을 더 쉽게 얻을 수 있어요.",
+      "highlight_summary": "고사양 노트북이 없어도 웹 브라우저만 열면 텍스트로 영상을 만들고 검수할 수 있는 킹 AI 도구 사용법이 공유되었어요. 프롬프트를 세부적으로 나누어 작성하면 결과물의 편차를 줄이고 원하는 장면을 더 쉽게 얻을 수 있어요.",
       "image_url": null,
-      "easy_summary_ko": "고사양 노트북이 없어도 웹 브라우저만 열면 텍스트로 영상을 만들고 검수할 수 있는 킹 에이아이 도구 사용법이 공유되었어요. 프롬프트를 세부적으로 나누어 작성하면 결과물의 편차를 줄이고 원하는 장면을 더 쉽게 얻을 수 있어요.",
+      "easy_summary_ko": "고사양 노트북이 없어도 웹 브라우저만 열면 텍스트로 영상을 만들고 검수할 수 있는 킹 AI 도구 사용법이 공유되었어요. 프롬프트를 세부적으로 나누어 작성하면 결과물의 편차를 줄이고 원하는 장면을 더 쉽게 얻을 수 있어요.",
       "vision_ko": "앞으로 별도의 무거운 설치 프로그램 없이 웹에서 바로 고품질 영상을 제작하고 공유하는 워크플로가 대중화돼요. 우리는 숏폼 콘텐츠를 제작할 때 다양한 인공지능 모델을 브라우저 환경에서 얼마나 효율적으로 조합하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -4428,35 +4398,6 @@
       ]
     },
     {
-      "id": "live-4014c500a43e",
-      "title_ko": "이미지와 텍스트를 함께 다루는 잉클링 2 미니 모델",
-      "original_title": "thinkingmachines/Inkling-2-Mini",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
-      "published_at": "2026-11-17T00:26:57Z",
-      "fetched_at": "2026-11-24T04:07:31.785611Z",
-      "importance_score": 34.67,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "허깅페이스에 이미지와 텍스트를 동시에 처리하는 잉클링 2 미니 대화형 모델이 새롭게 등록되었어요. 아파치 2.0 라이선스를 바탕으로 많은 사용자들이 다운로드하며 활발하게 활용하고 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "허깅페이스에 이미지와 텍스트를 동시에 처리하는 잉클링 2 미니 대화형 모델이 새롭게 등록되었어요. 아파치 2.0 라이선스를 바탕으로 많은 사용자들이 다운로드하며 활발하게 활용하고 있어요.",
-      "vision_ko": "앞으로 이미지 분석과 텍스트 대화가 결합된 기능을 개인 프로젝트나 서비스에 쉽게 더할 수 있게 돼요. 우리는 이 멀티모달 모델이 실제 대화형 인터페이스에서 얼마나 정확한 응답을 보여주는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Hugging Face의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
       "id": "live-c1d6bcc53c47",
       "title_ko": "LLM 에이전트의 실제 작동 방식과 개발자들의 고민",
       "original_title": "LLM agents work for their parent companies, not for you",
@@ -4483,151 +4424,6 @@
       },
       "entities": [
         "Hacker News"
-      ]
-    },
-    {
-      "id": "live-333374591041",
-      "title_ko": "설퍼AI의 새로운 오픈 모델 설퍼 3가 공개됐어요",
-      "original_title": "SulphurAI/Sulphur-3",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "dev",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/SulphurAI/Sulphur-3",
-      "published_at": "2026-10-31T20:31:01Z",
-      "fetched_at": "2026-11-23T10:35:04.678747Z",
-      "importance_score": 30.74,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "허깅페이스 개발 생태계에 설퍼AI의 설퍼 3 오픈 모델이 새롭게 등록되어 공개되었어요. 개발 워크플로와 생산성에 영향을 미치는 모델이라 실제 도입 가능성을 가늠해 볼 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "허깅페이스 개발 생태계에 설퍼AI의 설퍼 3 오픈 모델이 새롭게 등록되어 공개되었어요. 개발 워크플로와 생산성에 영향을 미치는 모델이라 실제 도입 가능성을 가늠해 볼 수 있어요.",
-      "vision_ko": "앞으로 다양한 오픈소스 모델을 활용해 개발 환경을 자동화하고 업무 효율을 높일 수 있어요. 우리는 새롭게 공개된 오픈 모델들이 실제 개발 현장에서 얼마나 유용하게 쓰이는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "dev_workflow",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
-        "actionable_idea": "Hugging Face의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-7f7496fe5dfd",
-      "title_ko": "허깅페이스 잉클링-2-미니 양자화 모델 리포지토리",
-      "original_title": "ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/ISTA-DASLab/Inkling-2-Mini-GSQ-RCO-GGUF",
-      "published_at": "2026-11-26T13:01:01Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 29.9,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "텍스트 생성 작업을 위한 허깅페이스 모델 저장소로, 다양한 양자화 및 혼합 정밀도 기법이 적용된 모델 정보를 제공해요. 새롭게 공개된 오픈소스 인공지능 모델 및 양자화 버전 공유 소식이에요.",
-      "image_url": null,
-      "easy_summary_ko": "텍스트 생성 작업을 위한 허깅페이스 모델 저장소로, 다양한 양자화 및 혼합 정밀도 기법이 적용된 모델 정보를 제공해요. 새롭게 공개된 오픈소스 인공지능 모델 및 양자화 버전 공유 소식이에요.",
-      "vision_ko": "우리는 실제로 써 봤을 때 시간을 얼마나 아껴 주는지에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Hugging Face의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-37d58ebcd2b9",
-      "title_ko": "애플의 뎁스프로 2 오픈 모델이 새롭게 공개됐어요",
-      "original_title": "apple/DepthPro2",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "video_audio",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/apple/DepthPro2",
-      "published_at": "2026-11-03T16:55:03Z",
-      "fetched_at": "2026-11-23T10:35:04.678747Z",
-      "importance_score": 27.85,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "허깅페이스를 통해 애플의 뎁스프로 2 오픈 모델이 공개되며 멀티모달 영상 및 음성 활용 가능성이 넓어졌어요. 제작 자동화와 관련된 새로운 기능들을 데모를 통해 살펴볼 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "허깅페이스를 통해 애플의 뎁스프로 2 오픈 모델이 공개되며 멀티모달 영상 및 음성 활용 가능성이 넓어졌어요. 제작 자동화와 관련된 새로운 기능들을 데모를 통해 살펴볼 수 있어요.",
-      "vision_ko": "앞으로 영상과 음성을 다루는 멀티모달 콘텐츠 제작 과정이 한결 수월해지고 작업 시간이 줄어들어요. 우리는 애플의 오픈 모델이 실제 미디어 제작 현장에서 어느 정도의 처리 속도를 보여주는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "video-audio-media",
-        "benchmark_point": "멀티모달 생성 자연스러움·실시간 처리 속도",
-        "actionable_idea": "Hugging Face의 '멀티모달 생성 자연스러움·실시간 처리 속도' 요소를 참고해, 우리 video-audio-media 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-d8e3cc90b026",
-      "title_ko": "히구라시 AI의 하루 4B 음성 전이중 모델 공개",
-      "original_title": "higurashi-ai/Haru-4B",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "video_audio",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/higurashi-ai/Haru-4B",
-      "published_at": "2026-11-12T11:05:59Z",
-      "fetched_at": "2026-11-23T10:35:04.678747Z",
-      "importance_score": 27.32,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "허깅페이스에 오디오-오디오 작업이 가능한 하루 4B 모델이 등록되어 많은 다운로드를 기록하고 있어요. 전이중 음성 대화를 지원하며 아파치 2.0 라이선스로 배포되었어요.",
-      "image_url": null,
-      "easy_summary_ko": "허깅페이스에 오디오-오디오 작업이 가능한 하루 4B 모델이 등록되어 많은 다운로드를 기록하고 있어요. 전이중 음성 대화를 지원하며 아파치 2.0 라이선스로 배포되었어요.",
-      "vision_ko": "앞으로 음성 기반의 실시간 양방향 소통 서비스를 구현하는 개발 작업이 더욱 활발해져요. 우리는 여러 언어를 지원하는 이 오디오 모델이 실제 음성 대화에서 얼마나 자연스러운지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "video-audio-media",
-        "benchmark_point": "Hugging Face — 4B 기반 성능·효율 지표",
-        "actionable_idea": "Hugging Face의 'Hugging Face — 4B 기반 성능·효율 지표' 요소를 참고해, 우리 video-audio-media 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-24ed86737d1f",
-      "title_ko": "이미지와 텍스트를 함께 다루는 새로운 잉클링 모델이 나왔어요.",
-      "original_title": "strata-engine/Inkling-2-Mini-Strata",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/strata-engine/Inkling-2-Mini-Strata",
-      "published_at": "2026-11-21T18:46:06Z",
-      "fetched_at": "2026-11-28T01:31:34.765850Z",
-      "importance_score": 26.81,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "포옹 얼굴 모델 저장소에 대화와 이미지-텍스트 작업을 지원하는 새로운 모델이 등록되었어요. 양자화와 루프 트랜스포머 기술을 바탕으로 다양한 환경에서 활용할 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "포옹 얼굴 모델 저장소에 대화와 이미지-텍스트 작업을 지원하는 새로운 모델이 등록되었어요. 양자화와 루프 트랜스포머 기술을 바탕으로 다양한 환경에서 활용할 수 있어요.",
-      "vision_ko": "앞으로 멀티모달 대화형 모델을 활용해 복잡한 이미지와 텍스트 분석 작업을 훨씬 효율적으로 처리할 수 있게 돼요. 우리는 이 모델이 실제 개발 환경에서 보여주는 처리 속도와 자원 효율성에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Hugging Face의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
       ]
     },
     {
@@ -4835,96 +4631,6 @@
       ]
     },
     {
-      "id": "live-1c3f1900f41d",
-      "title_ko": "큐원-이미지-2.1-스튜디오 웹 데모 앱",
-      "original_title": "Qwen-Image-2.1-Studio",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "image_design",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/spaces/xyzanonimous5/Qwen-Image-2.1-Studio",
-      "published_at": "2026-11-06T18:41:50Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 19.49,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "큐원-이미지 2.1 모델을 활용해 이미지 편집, 교체, 일괄 생성을 지원하는 그라디오 기반의 웹 데모 애플리케이션이에요. 이미지 생성 및 편집 모델의 실습용 웹 데모 공개 소식이에요.",
-      "image_url": null,
-      "easy_summary_ko": "큐원-이미지 2.1 모델을 활용해 이미지 편집, 교체, 일괄 생성을 지원하는 그라디오 기반의 웹 데모 애플리케이션이에요. 이미지 생성 및 편집 모델의 실습용 웹 데모 공개 소식이에요.",
-      "vision_ko": "Qwen 소식처럼 이런 변화가 이어지면, 앞으로 번역·요약·글쓰기처럼 손이 많이 가던 일을 AI가 더 정확하게 대신해 줄 거예요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "image-design-studio",
-        "benchmark_point": "시각 생성 품질·일관성·편집 제어력",
-        "actionable_idea": "Qwen의 '시각 생성 품질·일관성·편집 제어력' 요소를 참고해, 우리 image-design-studio 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qwen",
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-497ebe475049",
-      "title_ko": "큐웬 이미지 2.1 언센서드 올인원 로라 스튜디오 공개됐어요",
-      "original_title": "Qwen Image 2.1 Uncensored All-In-One LoRA Studio",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "image_design",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/spaces/X-HighVoltage-X/qwen-image-2.1-uncensored-aio-loras",
-      "published_at": "2026-11-08T04:16:21Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 15.03,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "허깅페이스 스페이스에 제약이 해제된 큐웬 2.1 모델 기반의 올인원 로라 스튜디오 웹 데모가 등록됐어요. 큐웬 모델을 활용한 커스텀 이미지 생성 및 로라 적용 도구의 등장과 오픈소스 커뮤니티의 관련 동향을 전달해요.",
-      "image_url": null,
-      "easy_summary_ko": "허깅페이스 스페이스에 제약이 해제된 큐웬 2.1 모델 기반의 올인원 로라 스튜디오 웹 데모가 등록됐어요. 큐웬 모델을 활용한 커스텀 이미지 생성 및 로라 적용 도구의 등장과 오픈소스 커뮤니티의 관련 동향을 전달해요.",
-      "vision_ko": "Qwen 소식처럼 이런 변화가 이어지면, 앞으로 휴대폰과 노트북에서도 지금보다 빠르고 똑똑한 AI 비서를 쓰게 될 거예요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "image-design-studio",
-        "benchmark_point": "시각 생성 품질·일관성·편집 제어력",
-        "actionable_idea": "Qwen의 '시각 생성 품질·일관성·편집 제어력' 요소를 참고해, 우리 image-design-studio 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qwen",
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-b17e07a2d617",
-      "title_ko": "미니맥스 H3 터보 로라 언센서드 워크플로 등장했어요",
-      "original_title": "MiniMax H3 Turbo Lora UNCENSORED Workflow",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "video_audio",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/spaces/kazufusa/MiniMax-H3-Turbo-Lora-UNCENSORED-Workflow",
-      "published_at": "2026-11-07T06:59:51Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 14.91,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "동기화된 사운드트랙과 함께 비디오를 생성할 수 있는 미니맥스 H3 터보 로라 언센서드 워크플로가 허깅페이스 스페이스에 공개됐어요. 음향 동기화 비디오 생성 기능을 갖춘 새로운 미니맥스 워크플로의 공개 소식을 전해요.",
-      "image_url": null,
-      "easy_summary_ko": "동기화된 사운드트랙과 함께 비디오를 생성할 수 있는 미니맥스 H3 터보 로라 언센서드 워크플로가 허깅페이스 스페이스에 공개됐어요. 음향 동기화 비디오 생성 기능을 갖춘 새로운 미니맥스 워크플로의 공개 소식을 전해요.",
-      "vision_ko": "MiniMax 소식처럼 이런 변화가 이어지면, 앞으로 반복되는 귀찮은 일을 버튼 하나로 맡기는 게 자연스러워질 거예요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "video-audio-media",
-        "benchmark_point": "멀티모달 생성 자연스러움·실시간 처리 속도",
-        "actionable_idea": "MiniMax의 '멀티모달 생성 자연스러움·실시간 처리 속도' 요소를 참고해, 우리 video-audio-media 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "MiniMax",
-        "Hugging Face"
-      ]
-    },
-    {
       "id": "live-eee68a2c1b21",
       "title_ko": "시스템을 멈추지 않고 방어하는 리눅스 런타임 Shirudo가 나왔어요.",
       "original_title": "@OpenAI: We’re introducing Shirudo, an open-source Linux runtime allowing agents to defend systems without downtime. It…",
@@ -4938,9 +4644,9 @@
       "importance_score": 44.21,
       "source_count": 1,
       "benefit_tag": "오픈소스 공개 소식",
-      "highlight_summary": "오픈에이아이에서 시스템 가동 중단 없이 작동하는 오픈 소스 리눅스 런타임 Shirudo를 공개했어요. 에이전트가 직접 시스템을 방어할 수 있도록 돕는 기능이에요.",
+      "highlight_summary": "OpenAI에서 시스템 가동 중단 없이 작동하는 오픈 소스 리눅스 런타임 Shirudo를 공개했어요. 에이전트가 직접 시스템을 방어할 수 있도록 돕는 기능이에요.",
       "image_url": null,
-      "easy_summary_ko": "오픈에이아이에서 시스템 가동 중단 없이 작동하는 오픈 소스 리눅스 런타임 Shirudo를 공개했어요. 에이전트가 직접 시스템을 방어할 수 있도록 돕는 기능이에요.",
+      "easy_summary_ko": "OpenAI에서 시스템 가동 중단 없이 작동하는 오픈 소스 리눅스 런타임 Shirudo를 공개했어요. 에이전트가 직접 시스템을 방어할 수 있도록 돕는 기능이에요.",
       "vision_ko": "앞으로 서버 운영 중단 걱정 없이 시스템 보안을 자동으로 관리할 수 있게 돼요. 우리는 이 도구가 실제 현업 서버에서 얼마나 안정적으로 작동하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -4967,9 +4673,9 @@
       "importance_score": 43.95,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "오픈에이아이에서 지역 인공지능 전문가에게 자금을 지원하는 OpenWorks 프로그램을 시작했어요. 중소기업들이 필요한 기술과 도구를 직접 개발하도록 돕는 역할을 해요.",
+      "highlight_summary": "OpenAI에서 지역 인공지능 전문가에게 자금을 지원하는 OpenWorks 프로그램을 시작했어요. 중소기업들이 필요한 기술과 도구를 직접 개발하도록 돕는 역할을 해요.",
       "image_url": null,
-      "easy_summary_ko": "오픈에이아이에서 지역 인공지능 전문가에게 자금을 지원하는 OpenWorks 프로그램을 시작했어요. 중소기업들이 필요한 기술과 도구를 직접 개발하도록 돕는 역할을 해요.",
+      "easy_summary_ko": "OpenAI에서 지역 인공지능 전문가에게 자금을 지원하는 OpenWorks 프로그램을 시작했어요. 중소기업들이 필요한 기술과 도구를 직접 개발하도록 돕는 역할을 해요.",
       "vision_ko": "앞으로 지역 소상공인과 중소기업들도 전문적인 인공지능 도구를 손쉽게 도입할 수 있게 돼요. 우리는 이 프로그램이 중소기업들의 실제 업무 효율을 얼마나 높여주는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -5039,66 +4745,6 @@
       "entities": [
         "Gemini 4",
         "Gemini"
-      ]
-    },
-    {
-      "id": "live-a89245cd06a1",
-      "title_ko": "unsloth/Inkling-2-Mini-GGUF 오픈 모델 공개됐어요",
-      "original_title": "unsloth/Inkling-2-Mini-GGUF",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/unsloth/Inkling-2-Mini-GGUF",
-      "published_at": "2026-11-20T13:09:48Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 32.83,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Hugging Face에 올라온 대화형 AI 소식이에요.",
-      "image_url": null,
-      "easy_summary_ko": "Hugging Face에 올라온 대화형 AI 소식이에요.",
-      "vision_ko": "우리는 내 일에 바로 붙여 쓸 수 있는지에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Hugging Face의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Hugging Face"
-      ]
-    },
-    {
-      "id": "live-c874bf071795",
-      "title_ko": "프리즘 엠엘, Ternary-Bonsai-2.5-27B-GGUF 모델 공개됐어요",
-      "original_title": "prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
-      "platform_id": "huggingface",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2.5-27B-GGUF",
-      "published_at": "2026-11-24T16:32:20Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 31.74,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "큐웬 기반의 27B 모델을 양자화한 텍스트 생성용 모델 리포지토리가 공개됐어요.",
-      "image_url": null,
-      "easy_summary_ko": "큐웬 기반의 27B 모델을 양자화한 텍스트 생성용 모델 리포지토리가 공개됐어요.",
-      "vision_ko": "우리는 무료로 어디까지 써 볼 수 있는지에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "Qwen — 27B 기반 성능·효율 지표",
-        "actionable_idea": "Qwen의 'Qwen — 27B 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Qwen",
-        "Llama",
-        "Hugging Face"
       ]
     },
     {
@@ -5367,7 +5013,7 @@
     },
     {
       "id": "live-34bf6a8c473d",
-      "title_ko": "오픈에이아이, 비용 관리 모드 전환 가능성 제기",
+      "title_ko": "OpenAI, 비용 관리 모드 전환 가능성 제기",
       "original_title": "OpenAI may be in cost control mode",
       "platform_id": "hacker-news",
       "author_handle": null,
@@ -5379,9 +5025,9 @@
       "importance_score": 28.11,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "오픈에이아이가 최근 운영 비용을 절감하고 효율성을 높이는 비용 관리 체제로 전환하고 있다는 관측이 나오고 있어요. 인공지능 기업의 운영 전략 변화 가능성을 짚어봐요.",
+      "highlight_summary": "OpenAI가 최근 운영 비용을 절감하고 효율성을 높이는 비용 관리 체제로 전환하고 있다는 관측이 나오고 있어요. 인공지능 기업의 운영 전략 변화 가능성을 짚어봐요.",
       "image_url": null,
-      "easy_summary_ko": "오픈에이아이가 최근 운영 비용을 절감하고 효율성을 높이는 비용 관리 체제로 전환하고 있다는 관측이 나오고 있어요. 인공지능 기업의 운영 전략 변화 가능성을 짚어봐요.",
+      "easy_summary_ko": "OpenAI가 최근 운영 비용을 절감하고 효율성을 높이는 비용 관리 체제로 전환하고 있다는 관측이 나오고 있어요. 인공지능 기업의 운영 전략 변화 가능성을 짚어봐요.",
       "vision_ko": "우리는 내 업무 중 어떤 단계를 바로 AI에게 넘길 수 있는지에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -5572,7 +5218,7 @@
     },
     {
       "id": "live-fc757801334e",
-      "title_ko": "지피티-6.2 사용량 계산 오류 수정… 아스트라 버전 한도 조기 도달 예상",
+      "title_ko": "GPT-6.2 사용량 계산 오류 수정… 아스트라 버전 한도 조기 도달 예상",
       "original_title": "GPT-6.2の使用量「誤って割引されていた」 修正後はAstraで上限に40％早く達する見込み",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5584,9 +5230,9 @@
       "importance_score": 24.65,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "오픈에이아이의 제품 책임자 티보 소티오는 엑스를 통해 지피티-6.2 아스트라와 솔 모델의 사용량 계산에 오류가 있어 실제보다 적게 집계되었다고 밝혔어요. 수정 이후 아스트라 모델은 40% 빠르게 사용량 한도에 도달할 것으로 보여요.",
+      "highlight_summary": "OpenAI의 제품 책임자 티보 소티오는 엑스를 통해 GPT-6.2 아스트라와 솔 모델의 사용량 계산에 오류가 있어 실제보다 적게 집계되었다고 밝혔어요. 수정 이후 아스트라 모델은 40% 빠르게 사용량 한도에 도달할 것으로 보여요.",
       "image_url": null,
-      "easy_summary_ko": "오픈에이아이의 제품 책임자 티보 소티오는 엑스를 통해 지피티-6.2 아스트라와 솔 모델의 사용량 계산에 오류가 있어 실제보다 적게 집계되었다고 밝혔어요. 수정 이후 아스트라 모델은 40% 빠르게 사용량 한도에 도달할 것으로 보여요.",
+      "easy_summary_ko": "OpenAI의 제품 책임자 티보 소티오는 엑스를 통해 GPT-6.2 아스트라와 솔 모델의 사용량 계산에 오류가 있어 실제보다 적게 집계되었다고 밝혔어요. 수정 이후 아스트라 모델은 40% 빠르게 사용량 한도에 도달할 것으로 보여요.",
       "vision_ko": "GPT-6 소식처럼 이런 변화가 이어지면, 앞으로 번역·요약·글쓰기처럼 손이 많이 가던 일을 AI가 더 정확하게 대신해 줄 거예요.",
       "cluster_size": 1,
       "planning_meta": {
@@ -5690,7 +5336,7 @@
     },
     {
       "id": "live-d0e3ac22d240",
-      "title_ko": "인공지능 도입으로 취약점 발견 건수 1년 만에 두 배 이상 급증",
+      "title_ko": "인공지능 도입으로 취약점 발견 건수 1년 만에 2배 이상 급증",
       "original_title": "脆弱性の発見数、1年で2倍超 Microsoft製品も月100件から1000件超に……AIで一変",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5719,7 +5365,7 @@
     },
     {
       "id": "live-392c74c4c06e",
-      "title_ko": "미국 41개주와 워싱턴DC, 캐릭터에이아이의 채팅 기록 경매에 공식 이의 제기",
+      "title_ko": "미국 41개주와 워싱턴DC, 캐릭터AI의 채팅 기록 경매에 공식 이의 제기",
       "original_title": "Character.AIのチャット履歴競売に41州とワシントンD.C.が異議 未成年者の約210万アカウント分も対象",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5731,9 +5377,9 @@
       "importance_score": 24.48,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "파산 절차를 밟는 '캐릭터에이아이'의 자산 경매에 미성년자 계정 210만 개를 포함한 2100만 건 이상의 채팅 기록이 포함된 가운데, 데이터 보호 의무 부재를 이유로 매각 철회를 요구하고 있어요. 기업 파산 시 대규모 민감 이용자 데이터 매각에 대한 규제 기관의 법적 대응 움직임을 다루고 있어요.",
+      "highlight_summary": "파산 절차를 밟는 '캐릭터AI'의 자산 경매에 미성년자 계정 210만 개를 포함한 2100만 건 이상의 채팅 기록이 포함된 가운데, 데이터 보호 의무 부재를 이유로 매각 철회를 요구하고 있어요. 기업 파산 시 대규모 민감 이용자 데이터 매각에 대한 규제 기관의 법적 대응 움직임을 다루고 있어요.",
       "image_url": null,
-      "easy_summary_ko": "파산 절차를 밟는 '캐릭터에이아이'의 자산 경매에 미성년자 계정 210만 개를 포함한 2100만 건 이상의 채팅 기록이 포함된 가운데, 데이터 보호 의무 부재를 이유로 매각 철회를 요구하고 있어요. 기업 파산 시 대규모 민감 이용자 데이터 매각에 대한 규제 기관의 법적 대응 움직임을 다루고 있어요.",
+      "easy_summary_ko": "파산 절차를 밟는 '캐릭터AI'의 자산 경매에 미성년자 계정 210만 개를 포함한 2100만 건 이상의 채팅 기록이 포함된 가운데, 데이터 보호 의무 부재를 이유로 매각 철회를 요구하고 있어요. 기업 파산 시 대규모 민감 이용자 데이터 매각에 대한 규제 기관의 법적 대응 움직임을 다루고 있어요.",
       "vision_ko": "우리는 내 일과 내가 쓰는 서비스에 어떤 변화가 생기는지에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {

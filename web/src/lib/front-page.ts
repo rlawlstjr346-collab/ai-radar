@@ -37,6 +37,40 @@ export function itemTime(item: Pick<FeedItem, "published_at" | "created_at" | "f
   return Number.isFinite(fallback) ? Math.min(fallback, now) : 0;
 }
 
+/**
+ * 원문 발행 시각이 검증된 기사인지 — 발행 시각을 모르는 기사(트렌딩 목록·날짜만 있는 글)는
+ * 수집기가 published_at 을 수집 시각(fetched_at)과 똑같이 채우므로 둘이 같으면 '검증 안 됨'으로 본다.
+ */
+export function hasVerifiedPublishTime(item: Pick<FeedItem, "published_at" | "fetched_at">): boolean {
+  const pub = item.published_at ? Date.parse(item.published_at) : Number.NaN;
+  if (!Number.isFinite(pub)) return false;
+  const fetched = item.fetched_at ? Date.parse(item.fetched_at) : Number.NaN;
+  return !Number.isFinite(fetched) || fetched !== pub;
+}
+
+/**
+ * 속보 와이어: 발행 시각이 검증된 기사만 순수 최신순, 같은 출처는 최대 2건.
+ * 검증된 기사가 6건이 안 될 때만 나머지 최신 기사로 빈칸을 채운다 (출처 상한은 그대로 지킨다).
+ */
+export function pickWire(chrono: FeedItem[], now: number, count = WIRE_COUNT, maxPerSource = WIRE_MAX_PER_SOURCE): FeedItem[] {
+  const picked: FeedItem[] = [];
+  const perSource = new Map<string, number>();
+  const take = (pool: FeedItem[], capped: boolean) => {
+    for (const i of pool) {
+      if (picked.length >= count) return;
+      if (picked.includes(i)) continue;
+      const n = perSource.get(i.platform_id) ?? 0;
+      if (capped && n >= maxPerSource) continue;
+      picked.push(i);
+      perSource.set(i.platform_id, n + 1);
+    }
+  };
+  take(chrono.filter(hasVerifiedPublishTime), true);
+  take(chrono, true);
+  take(chrono, false);
+  return newestFirst(picked, now);
+}
+
 /** 같은 사건을 다룬 매체 수 (웹 클러스터 · 워커 묶음 · 동일 URL 다중 포착 중 최댓값) */
 export function coverage(item: FeedItem): number {
   return Math.max(1 + (item.relatedArticles?.length ?? 0), item.cluster_size ?? 1, item.source_count ?? 1);
@@ -60,6 +94,8 @@ export interface FrontPageLayout {
 }
 
 export const WIRE_COUNT = 6;
+/** 속보 와이어 상위 6칸 안에서 같은 출처는 최대 2건 (출처 다양성 가드레일) */
+export const WIRE_MAX_PER_SOURCE = 2;
 export const SIDE_COUNT = 2;
 export const FEATURE_COUNT = 2;
 /** 1면 포토 슬롯(히어로 + 좌측 2선) 신선도 창: 30시간 → 부족하면 48시간 → 전체 */
@@ -88,7 +124,7 @@ function byPhotoScore(items: FeedItem[], now: number): FeedItem[] {
 /**
  * BBC식 1면 배치.
  * - 히어로 + 좌측 2선: 최근 30시간 기사 중 감쇠 점수 순 (모자랄 때만 48시간 → 전체로 넓힘)
- * - 속보 와이어: 가중치 없이 순수 최신 시간순 6건
+ * - 속보 와이어: 원문 발행 시각이 검증된 기사만 순수 최신 시간순 6건 (같은 출처 최대 2건)
  * - 중단 포토 피처 2건: 사진이 있는 다음 최신 기사
  * - 스트림: 위에 안 나온 나머지 전부 시간순
  */
@@ -103,7 +139,7 @@ export function buildFrontPage(items: FeedItem[], now: number): FrontPageLayout 
   const heroPool = within(heroWindow);
   const hero = byPhotoScore(heroPool.some(hasImage) ? heroPool.filter(hasImage) : heroPool, now)[0] ?? chrono[0];
 
-  const wire = chrono.filter((i) => i.id !== hero.id).slice(0, WIRE_COUNT);
+  const wire = pickWire(chrono.filter((i) => i.id !== hero.id), now);
   const used = new Set<string>([hero.id, ...wire.map((i) => i.id)]);
 
   const side: FeedItem[] = [];

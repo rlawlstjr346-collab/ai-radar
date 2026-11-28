@@ -6,8 +6,10 @@ import { createPortal } from "react-dom";
 import { copyText } from "@/lib/clipboard";
 import { formatDate, freshness } from "@/lib/filter";
 import { coverage, itemTime, plainSummary, sourceLabel } from "@/lib/front-page";
+import { itemTerms, tooltipTerms } from "@/lib/glossary";
 import type { FeedItem, Platform } from "@/lib/types";
 
+import TermText from "../TermText";
 import StoryImage, { useImageAvailable } from "./StoryImage";
 
 interface RelatedRow {
@@ -215,6 +217,9 @@ export default function BriefingModal({
   const related = relatedRows(current, knownIds);
   const vision = visionText(current);
   const story = plainSummary(current);
+  // 본문 호버 툴팁(기사 용어 + 내장 사전)과 하단 '용어 쉽게 풀기'(기사 용어 + Gemini glossary)가 같은 풀이를 공유
+  const ownTerms = itemTerms(current);
+  const hintTerms = tooltipTerms(current);
 
   const share = async () => {
     const url = `${window.location.origin}${window.location.pathname}?item=${encodeURIComponent(current.id)}`;
@@ -278,22 +283,22 @@ export default function BriefingModal({
           {story && (
             <GlassCard index={0} label="한눈에 보는 이야기">
               <h3>한눈에 보는 이야기</h3>
-              <p>{story}</p>
+              <TermText text={story} terms={hintTerms} />
             </GlassCard>
           )}
 
           {vision && (
             <GlassCard index={story ? 1 : 0} className="briefing-vision" label="여기서 얻을 미래 비전 & 기회">
               <h3>여기서 얻을 미래 비전 & 기회</h3>
-              <p>{vision}</p>
+              <TermText text={vision} terms={hintTerms} />
             </GlassCard>
           )}
 
-          {current.terms.length > 0 && (
+          {ownTerms.length > 0 && (
             <section className="briefing-list" aria-labelledby="b-terms">
               <h3 id="b-terms">어려운 용어 쉽게 풀기</h3>
               <dl>
-                {current.terms.slice(0, 4).map((t) => (
+                {ownTerms.slice(0, 4).map((t) => (
                   <div key={t.term}>
                     <dt>{t.term}</dt>
                     <dd>{t.easy}</dd>

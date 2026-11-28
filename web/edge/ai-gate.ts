@@ -51,3 +51,13 @@ export function isAiItem(item: { platform_id?: unknown; original_title?: unknown
   const title = String(item.original_title ?? item.title_ko ?? "");
   return isAiSignal(title, `${item.title_ko ?? ""} ${item.what_ko ?? item.easy_summary_ko ?? ""}`);
 }
+
+/**
+ * Hugging Face 모델·스페이스 업로드 페이지 (개인 데모 앱·모델 파일 업로드 로그) — 속보가 아니라서 피드에서 뺀다.
+ * 논문(/papers)·블로그·문서·데이터셋 안내는 유지.
+ */
+const HF_UPLOAD_RE = /^https:\/\/huggingface\.co\/(?!(?:papers|blog|docs|learn|datasets|collections|posts)\/)(?:spaces\/)?[^/?#]+\/[^/?#]+\/?$/i;
+
+export function isHfUpload(url: string): boolean {
+  return HF_UPLOAD_RE.test(url);
+}
