@@ -81,6 +81,9 @@ jobs:
           FORCE_GITHUB_COLLECT: ${{ inputs.force_github == true && '1' || '0' }}
           SUMMARY_TOP_N: ${{ vars.SUMMARY_TOP_N || '4' }}
           DAILY_SUMMARY_CAP: ${{ vars.DAILY_SUMMARY_CAP || '96' }}
+          # 15분 크론 1회당 Gemini 호출 상한 (12분 타임아웃·무료 한도 방어, 나머지는 다음 실행이 캐시 이어받음)
+          EDITOR_MAX_BATCHES: ${{ vars.EDITOR_MAX_BATCHES || '4' }}
+          IMAGE_VISION_MAX: ${{ vars.IMAGE_VISION_MAX || '12' }}
         run: |
           if [ "${{ steps.gate.outputs.mode }}" = "dry-run" ]; then
             python worker/run_pipeline.py --dry-run

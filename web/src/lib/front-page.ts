@@ -97,8 +97,11 @@ export function buildFrontPage(items: FeedItem[], now: number): FrontPageLayout 
   const chrono = newestFirst(items, now);
   const within = (h: number) => chrono.filter((i) => ageHours(i, now) <= h);
 
-  const heroWindow = PHOTO_SLOT_WINDOWS_H.find((h) => within(h).length >= PHOTO_SLOTS) ?? Number.POSITIVE_INFINITY;
-  const hero = byPhotoScore(within(heroWindow), now)[0] ?? chrono[0];
+  // 포토 슬롯은 검증된 사진이 있는 기사로만 채운다 (창 안에 사진 기사가 하나도 없을 때만 텍스트 히어로)
+  const heroWindow =
+    PHOTO_SLOT_WINDOWS_H.find((h) => within(h).filter(hasImage).length >= PHOTO_SLOTS) ?? Number.POSITIVE_INFINITY;
+  const heroPool = within(heroWindow);
+  const hero = byPhotoScore(heroPool.some(hasImage) ? heroPool.filter(hasImage) : heroPool, now)[0] ?? chrono[0];
 
   const wire = chrono.filter((i) => i.id !== hero.id).slice(0, WIRE_COUNT);
   const used = new Set<string>([hero.id, ...wire.map((i) => i.id)]);
@@ -111,11 +114,6 @@ export function buildFrontPage(items: FeedItem[], now: number): FrontPageLayout 
       used.add(i.id);
     }
     if (side.length >= SIDE_COUNT) break;
-  }
-  for (const i of byPhotoScore(chrono.filter((x) => !used.has(x.id)), now)) {
-    if (side.length >= SIDE_COUNT) break;
-    side.push(i);
-    used.add(i.id);
   }
 
   const features = chrono.filter((i) => !used.has(i.id) && hasImage(i)).slice(0, FEATURE_COUNT);

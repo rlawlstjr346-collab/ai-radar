@@ -332,6 +332,7 @@ class ArticleTranslator:
         self._google_blocked = False
         self._mymemory_blocked = False
         self._gemini_blocked = False
+        self._gemini = None
         self._google_translators: dict[str, Any] = {}
         self._mymemory_translators: dict[str, Any] = {}
         self.stats: dict[str, int] = {"cache_hits": 0, "translated": 0, "skipped_ko": 0, "fallbacks": 0}
@@ -585,12 +586,24 @@ class ArticleTranslator:
             log.warning("Anthropic translation failed, falling back: %s", exc)
         return None
 
+    def _gemini_text(self, prompt: str) -> Optional[str]:
+        """공용 GeminiClient(키 형식·엔드포인트 자동 감지 + 모델 체인)로 JSON 텍스트를 받는다. 쿼터·장애 시 이후 호출 차단."""
+        from pipeline.gemini_client import GeminiClient, GeminiUnavailable
+
+        if self._gemini is None:
+            self._gemini = GeminiClient(api_key=self.gemini_api_key)
+        try:
+            text, _model = self._gemini.generate([{"text": prompt}], json_mode=True)
+            return text
+        except GeminiUnavailable as exc:
+            self._gemini_blocked = True
+            log.warning("Gemini unavailable, falling back to keyless translator: %s", exc)
+            return None
+
     def _translate_with_gemini(self, title: str, body: str) -> Optional[dict[str, str]]:
         if not self.gemini_api_key or self._gemini_blocked:
             return None
         try:
-            model = os.getenv("TRANSLATOR_GEMINI_MODEL", "gemini-2.5-flash")
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
             prompt = (
                 "다음 외국어 AI 뉴스 제목과 본문 발췌를 입문자가 읽기 쉬운 자연스러운 한국어로 번역·정리해 주세요.\n"
                 "중국어 한자나 일본어 가나는 절대 남기지 말고 100% 자연스러운 한글로 바꾸세요.\n"
@@ -599,24 +612,9 @@ class ArticleTranslator:
                 f"제목: {title}\n"
                 f"본문: {body[:MAX_TRANSLATE_BODY_CHARS]}"
             )
-            resp = httpx.post(
-                url,
-                params={"key": self.gemini_api_key},
-                json={
-                    "contents": [{"parts": [{"text": prompt}]}],
-                    "generationConfig": {"responseMimeType": "application/json", "temperature": 0.2},
-                },
-                timeout=20.0,
-            )
-            if resp.status_code == 429:
-                self._gemini_blocked = True
-                log.warning("Gemini API rate-limited (429), falling back to keyless translator")
+            raw_text = self._gemini_text(prompt)
+            if raw_text is None:
                 return None
-            resp.raise_for_status()
-            data = resp.json()
-            cands = data.get("candidates") or []
-            parts = ((cands[0].get("content") or {}).get("parts") or []) if cands else []
-            raw_text = "".join(str(p.get("text") or "") for p in parts)
             parsed = _extract_json_object(raw_text)
             if parsed and parsed.get("title_ko"):
                 return {
@@ -639,8 +637,6 @@ class ArticleTranslator:
         if not pending:
             return 0
 
-        model = os.getenv("TRANSLATOR_GEMINI_MODEL", "gemini-2.5-flash")
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         saved = 0
         for i in range(0, len(pending), batch_size):
             if self._gemini_blocked:
@@ -664,24 +660,10 @@ class ArticleTranslator:
                 f"입력: {json.dumps(compact_in, ensure_ascii=False)}"
             )
             try:
-                resp = httpx.post(
-                    url,
-                    params={"key": self.gemini_api_key},
-                    json={
-                        "contents": [{"parts": [{"text": prompt}]}],
-                        "generationConfig": {"responseMimeType": "application/json", "temperature": 0.2},
-                    },
-                    timeout=25.0,
-                )
-                if resp.status_code == 429:
-                    self._gemini_blocked = True
-                    log.warning("Gemini batch rate-limited (429), switching remaining items to keyless translator")
+                raw_text = self._gemini_text(prompt)
+                if raw_text is None:
                     break
-                resp.raise_for_status()
-                data = resp.json()
-                cands = data.get("candidates") or []
-                parts = ((cands[0].get("content") or {}).get("parts") or []) if cands else []
-                parsed = _extract_json_object("".join(str(p.get("text") or "") for p in parts))
+                parsed = _extract_json_object(raw_text)
                 rows = parsed.get("items") if isinstance(parsed, dict) and isinstance(parsed.get("items"), list) else []
                 for row in rows:
                     if not isinstance(row, dict):

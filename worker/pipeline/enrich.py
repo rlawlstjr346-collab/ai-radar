@@ -222,6 +222,7 @@ def assign_images(
     client_factory: Callable[[], httpx.Client] = make_image_client,
     fetch_og: bool = True,
     max_fetch: int = OG_MAX_FETCH_PER_RUN,
+    gate: Any = None,
 ) -> dict[str, int]:
     """각 아이템에 image_url 을 채운다. cache 는 {canonical_url: {image, checked_at}} 로 제자리 갱신."""
     now_iso = now.isoformat().replace("+00:00", "Z")
@@ -256,13 +257,26 @@ def assign_images(
             it["image_url"] = img
             cache[str(it["canonical_url"])] = {"image": img, "checked_at": now_iso}
 
+    # 글자판·로고판 게이트: 실사 사진·풍부한 일러스트만 남긴다 (판정은 이미지 URL 캐시)
+    rejected = 0
+    if gate is not None:
+        for it in items:
+            if it.get("image_url") and not gate.allow(str(it["image_url"])):
+                it["image_url"] = None
+                rejected += 1
+        live_images = {str(it.get("thumbnail_url") or "") for it in items} | {
+            str((cache.get(str(it.get("canonical_url"))) or {}).get("image") or "") for it in items
+        } | {str(it.get("image_url") or "") for it in items}
+        for key in [k for k in gate.verdicts if k not in live_images]:
+            gate.verdicts.pop(key, None)
+
     # 캐시는 현재 피드에 남은 URL 만 유지 (메타 파일 비대화 방지)
     live_urls = {str(it.get("canonical_url") or "") for it in items}
     for key in [k for k in cache if k not in live_urls]:
         cache.pop(key, None)
 
     with_image = sum(1 for it in items if it.get("image_url"))
-    return {"items": len(items), "with_image": with_image, "fetched": len(todo)}
+    return {"items": len(items), "with_image": with_image, "fetched": len(todo), "rejected": rejected}
 
 
 # ---------------------------------------------------------------- 대화체 정제
@@ -702,6 +716,50 @@ def assign_clusters(items: list[dict[str, Any]]) -> int:
 # ---------------------------------------------------------------- 진입점
 
 
+CJK_FOREIGN_RE = re.compile(r"[\u3040-\u30ff\u4e00-\u9fff\uff66-\uff9f]")
+BRACKET_HEAD_RE = re.compile(r"^\s*[\[【〔「『]\s*[^\]】〕」』]{0,40}[\]】〕」』]\s*")
+CATEGORY_PLAIN = {
+    "llm_chat": "대화형 AI", "dev": "개발 도구", "image_design": "이미지 AI", "video_audio": "영상·음성 AI",
+    "research": "AI 연구", "industry": "AI 업계", "social": "AI 커뮤니티",
+}
+
+
+def clean_title_text(title: str) -> str:
+    """대괄호 말머리 제거 + 가나·미번역 한자 제거(고유명사 영문은 유지)."""
+    t = BRACKET_HEAD_RE.sub("", title or "").strip()
+    t = CJK_FOREIGN_RE.sub("", t)
+    return SPACE_RE.sub(" ", re.sub(r"\s+([,.!?])", r"\1", t)).strip(" ·,-—")
+
+
+def meta_brief(item: dict[str, Any], names: dict[str, str]) -> str:
+    """본문이 없을 때(그리고 LLM도 실패했을 때)의 2문장 설명 — 제목 반복 없이 출처·분야·주제만으로."""
+    src = names.get(str(item.get("platform_id")), str(item.get("platform_id") or "해외 매체"))
+    kind = CATEGORY_PLAIN.get(str(item.get("category")), "AI")
+    subject = _subject(item)
+    first = f"{src}에 올라온 {kind} 소식이에요." if not subject else f"{subject} 관련 {kind} 소식이 {src}에 올라왔어요."
+    return f"{first} 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요."
+
+
+def dedupe_sentences(items: list[dict[str, Any]], key: str) -> int:
+    """여러 기사에 같은 문장이 반복되면 두 번째 기사부터 그 문장을 뺀다 (최소 1문장은 남김)."""
+    seen: set[str] = set()
+    removed = 0
+    for it in items:
+        sents = [x for x in SENT_SPLIT_RE.split(str(it.get(key) or "")) if x.strip()]
+        kept = []
+        dropped = 0
+        for x in sents:
+            k = _norm(x)[:40]
+            if k in seen and len(sents) - dropped > 1:
+                dropped += 1
+                continue
+            seen.add(k)
+            kept.append(x.strip())
+        it[key] = " ".join(kept)
+        removed += dropped
+    return removed
+
+
 def enrich_snapshot_items(
     items: list[dict[str, Any]],
     *,
@@ -709,12 +767,17 @@ def enrich_snapshot_items(
     now: Optional[datetime] = None,
     fetch_og: bool = True,
     client_factory: Callable[[], httpx.Client] = make_image_client,
+    gemini: Any = None,
+    image_verdicts: Optional[dict[str, Any]] = None,
+    editor_cache: Optional[dict[str, Any]] = None,
+    names: Optional[dict[str, str]] = None,
 ) -> dict[str, int]:
     now = now or datetime.now(timezone.utc)
+    names = names or {}
     for it in items:
         for key in ("hook_title", "title_ko"):
             if it.get(key):
-                it[key] = conversational_title(str(it[key]))
+                it[key] = clean_title_text(conversational_title(str(it[key]))) or str(it[key])
         for key in ("what_ko", "why_ko", "context_ko"):
             if it.get(key):
                 it[key] = conversational_paragraph(it[key])
@@ -722,6 +785,49 @@ def enrich_snapshot_items(
     boilerplate = find_boilerplate(items)
     for it in items:
         it["easy_summary_ko"] = easy_summary(it, boilerplate)
-    stats = assign_images(items, image_cache, now=now, client_factory=client_factory, fetch_og=fetch_og)
+
+    gate = None
+    gate_client = None
+    if image_verdicts is not None:
+        from pipeline.image_gate import ImageGate
+
+        gate_client = client_factory()
+        gate = ImageGate(image_verdicts, client=gate_client, gemini=gemini, now=now)
+    try:
+        stats = assign_images(items, image_cache, now=now, client_factory=client_factory, fetch_og=fetch_og, gate=gate)
+    finally:
+        if gate_client is not None:
+            gate_client.close()
+    if gate is not None:
+        stats["gate"] = dict(gate.stats)
     stats["clusters"] = assign_clusters(items)
+
+    # 같은 사건 묶음 안에 검증된 실사 사진이 있으면 사진 없는 기사의 대표 사진으로 승격
+    by_id = {str(it.get("id")): it for it in items}
+    promoted = 0
+    for it in items:
+        if it.get("image_url"):
+            continue
+        for ref in it.get("related_articles") or []:
+            other = by_id.get(str(ref.get("id")))
+            if other and other.get("image_url"):
+                it["image_url"] = other["image_url"]
+                promoted += 1
+                break
+    stats["promoted_images"] = promoted
+
+    if editor_cache is not None:
+        from pipeline.gemini_editor import edit_items
+
+        stats["editor"] = edit_items(items, editor_cache, gemini, now=now, names=names)
+
+    # 최종 안전망: 빈 요약 0건 · 기사 간 중복 문장 0건 · 가나/한자/말머리 0건
+    for it in items:
+        if not str(it.get("easy_summary_ko") or "").strip():
+            it["easy_summary_ko"] = meta_brief(it, names)
+        for key in ("hook_title", "title_ko"):
+            it[key] = clean_title_text(str(it.get(key) or "")) or str(it.get(key) or "")
+        for key in ("easy_summary_ko", "vision_ko"):
+            it[key] = SPACE_RE.sub(" ", CJK_FOREIGN_RE.sub("", str(it.get(key) or ""))).strip()
+    stats["dedup_removed"] = dedupe_sentences(items, "easy_summary_ko") + dedupe_sentences(items, "vision_ko")
     return stats

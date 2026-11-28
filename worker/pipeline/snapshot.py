@@ -28,6 +28,9 @@ from pipeline.curator import (
 )
 from adapters.rss import ai_relevant
 from pipeline.enrich import FALLBACK_SUFFIX_RE, IMAGE_CACHE_KEY, clean_text, enrich_snapshot_items
+from pipeline.gemini_client import GeminiClient
+from pipeline.gemini_editor import EDITOR_CACHE_KEY
+from pipeline.image_gate import VERDICT_CACHE_KEY
 from pipeline.merge import Candidate
 from pipeline.store import load_seed_platform_names
 from pipeline.translator import (
@@ -965,7 +968,7 @@ def build_planning_feed_payload(items: list[dict[str, Any]], generated_at: str) 
             "importance_score": it.get("importance_score"),
             "source_count": it.get("source_count"),
             "benefit_tag": it.get("benefit_tag"),
-            "highlight_summary": clean_text(it.get("highlight_summary")) or None,
+            "highlight_summary": (it.get("easy_summary_ko") or clean_text(it.get("highlight_summary"))) or None,
             "image_url": it.get("image_url"),
             "easy_summary_ko": it.get("easy_summary_ko"),
             "vision_ko": it.get("vision_ko"),
@@ -1368,14 +1371,31 @@ def build_and_save_snapshot(
         translator.cache.save()
 
     # 5) 대표 사진(image_url) · 대화체 정제 · 미래 비전(vision_ko) · 동일 사건 묶음 (Additive-only)
-    image_cache = _load_meta_key(meta_path, IMAGE_CACHE_KEY) if meta_path is not None else {}
-    if not isinstance(image_cache, dict):
-        image_cache = {}
+    def _meta_dict(key: str) -> dict[str, Any]:
+        v = _load_meta_key(meta_path, key) if meta_path is not None else {}
+        return v if isinstance(v, dict) else {}
+
+    image_cache = _meta_dict(IMAGE_CACHE_KEY)
+    image_verdicts = _meta_dict(VERDICT_CACHE_KEY)
+    editor_cache = _meta_dict(EDITOR_CACHE_KEY)
     if fetch_images is None:
         fetch_images = os.getenv("SNAPSHOT_FETCH_IMAGES", "1") != "0"
-    enrich_stats = enrich_snapshot_items(selected, image_cache=image_cache, now=now, fetch_og=fetch_images)
+    gemini = GeminiClient.from_env() if os.getenv("SNAPSHOT_USE_GEMINI", "1") != "0" else None
+    names = {pid: str(p.get("name") or pid) for pid, p in platforms.items()}
+    enrich_stats = enrich_snapshot_items(
+        selected,
+        image_cache=image_cache,
+        now=now,
+        fetch_og=fetch_images,
+        gemini=gemini,
+        image_verdicts=image_verdicts if fetch_images else None,
+        editor_cache=editor_cache,
+        names=names,
+    )
     if meta_path is not None:
         _save_meta_key(meta_path, IMAGE_CACHE_KEY, dict(sorted(image_cache.items())))
+        _save_meta_key(meta_path, VERDICT_CACHE_KEY, dict(sorted(image_verdicts.items())))
+        _save_meta_key(meta_path, EDITOR_CACHE_KEY, dict(sorted(editor_cache.items())))
     logger.info("enrich: %s", enrich_stats)
 
     changed = (not snapshot_path.exists()) or (_signature(existing_items) != _signature(selected))
