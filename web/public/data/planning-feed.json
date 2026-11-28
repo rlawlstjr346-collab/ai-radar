@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T18:32:21.531573Z",
+  "generated_at": "2026-11-28T18:47:16.495614Z",
   "item_count": 200,
   "signals": [
     {
@@ -31,6 +31,35 @@
       "entities": [
         "Gemini 4",
         "Gemini"
+      ]
+    },
+    {
+      "id": "live-f13dfae52f86",
+      "title_ko": "도널드 커누스, AI 생성 오류 신고 급증으로 포상금 중단했어요",
+      "original_title": "Donald Knuth suspends error bounties due to an influx of AI-generated reports",
+      "platform_id": "hacker-news",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://cs.stanford.edu/~knuth/moratorium.html",
+      "published_at": "2026-11-28T17:53:02Z",
+      "fetched_at": "2026-11-28T18:47:16.495614Z",
+      "importance_score": 29.06,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "컴퓨터 과학자 도널드 커누스가 책에 대한 오류 포상금 제도를 일시 중단했어요. AI 기술로 인해 부정확한 오류 신고가 급증했기 때문이에요.",
+      "image_url": null,
+      "easy_summary_ko": "컴퓨터 과학자 도널드 커누스가 책에 대한 오류 포상금 제도를 일시 중단했어요. AI 기술로 인해 부정확한 오류 신고가 급증했기 때문이에요.",
+      "vision_ko": "앞으로 정확한 정보 검증의 중요성이 더욱 커져서 자동화된 필터링 도구 도입이 활발해질 수 있어요. 우리는 학술과 출판 영역에서 AI가 미치는 신뢰성 저하 문제에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Hacker News의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hacker News"
       ]
     },
     {
@@ -91,6 +120,64 @@
         "Gemini 4 Neon",
         "Gemini 4",
         "Gemini"
+      ]
+    },
+    {
+      "id": "live-bcb4422d56ef",
+      "title_ko": "Hugging Face에서 악성코드 숨긴 GGUF 모델 발견되었어요",
+      "original_title": "Hugging Face의 악성코드 숨긴 GGUF LLM 모델, 다운로드 2,400건 넘어",
+      "platform_id": "geeknews",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://news.hada.io/topic?id=38011",
+      "published_at": "2026-11-28T17:41:28Z",
+      "fetched_at": "2026-11-28T18:47:16.495614Z",
+      "importance_score": 27.41,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "공개 모델 저장소 전수 검사에서 악성코드가 숨겨진 5개의 GGUF 모델이 발견되었어요. 다운로드 횟수가 2,428건을 넘으면서 보안 주의가 요구되고 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "공개 모델 저장소 전수 검사에서 악성코드가 숨겨진 5개의 GGUF 모델이 발견되었어요. 다운로드 횟수가 2,428건을 넘으면서 보안 주의가 요구되고 있어요.",
+      "vision_ko": "앞으로 오픈소스 모델을 내려받아 사용할 때 보안 검증 단계를 거치는 안전장치가 필수화될 수 있어요. 우리는 공개 저장소의 모델 무결성을 확인하는 보안 도구에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Hugging Face의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "live-f56350b26d1e",
+      "title_ko": "사후 학습이 AI 발전의 중심이 된 이유를 다룬 영상 공개되었어요",
+      "original_title": "New video on how post-training became the center of AI progress, the most important research questions for the future…",
+      "platform_id": "bluesky",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3fan7a3is2a",
+      "published_at": "2026-11-28T17:38:50.688000Z",
+      "fetched_at": "2026-11-28T18:47:16.495614Z",
+      "importance_score": 18.42,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "사후 학습이 AI 발전의 핵심으로 자리 잡은 과정과 주요 연구 과제를 다룬 신규 영상이 공개되었어요. 최근 AI 연구 흐름이 사후 학습 중심으로 이동하는 트렌드를 보여주고 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "사후 학습이 AI 발전의 핵심으로 자리 잡은 과정과 주요 연구 과제를 다룬 신규 영상이 공개되었어요. 최근 AI 연구 흐름이 사후 학습 중심으로 이동하는 트렌드를 보여주고 있어요.",
+      "vision_ko": "앞으로 모델의 성능을 끌어올리는 사후 학습 방식이 고도화되면서 더 효율적인 AI 개발이 가능해질 수 있어요. 우리는 연구 접근법의 변화가 가져올 AI 성능 향상 속도에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Bluesky의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Bluesky"
       ]
     },
     {
@@ -164,7 +251,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 22.61,
+      "importance_score": 22.84,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -995,7 +1082,7 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 35.0,
+      "importance_score": 35.11,
       "source_count": 2,
       "benefit_tag": null,
       "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
@@ -1170,7 +1257,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 34.74,
+      "importance_score": 34.83,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -3562,94 +3649,6 @@
       ]
     },
     {
-      "id": "live-2f5f8381451c",
-      "title_ko": "생성형 AI 리스크 감사 실시 비율이 불과 5.7%에 그친 이유는?",
-      "original_title": "AIリスク監査の実施、わずか5.7％ 内部監査が追い付かない「もう一つのリスク」とは？",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://itmedia.co.jp/enterprise/articles/2611/26/news037.html",
-      "published_at": "2026-11-27T01:50:00Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 25.83,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "기업에서 생성형 AI의 중요성이 커지고 있지만 실제 내부 감사를 이미 실시한 곳은 5.7%에 불과한 것으로 나타났어요. 내부 감사 제도가 AI 기술 발전 속도를 따라가지 못하는 리스크를 짚어봐요.",
-      "image_url": null,
-      "easy_summary_ko": "기업에서 생성형 AI의 중요성이 커지고 있지만 실제 내부 감사를 이미 실시한 곳은 5.7%에 불과한 것으로 나타났어요. 내부 감사 제도가 AI 기술 발전 속도를 따라가지 못하는 리스크를 짚어봐요.",
-      "vision_ko": "앞으로 기업들이 AI 도입과 함께 보안과 리스크 관리 체계를 서둘러 정비해야 해요. 우리는 AI 관련 내부 통제와 감사가 실제 현장에서 어떻게 자리잡아 갈지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "ITmedia AI+ — 5.7% 기반 성능·효율 지표",
-        "actionable_idea": "ITmedia AI+의 'ITmedia AI+ — 5.7% 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "ITmedia AI+"
-      ]
-    },
-    {
-      "id": "live-538ffe1164a2",
-      "title_ko": "빛과 그림자 스타일을 내는 시비타이 아니마 모스 로라 나왔어요",
-      "original_title": "sky02 Light and shadow Style [Anima/MOSS] (LORA)",
-      "platform_id": "civitai",
-      "author_handle": null,
-      "category": "image_design",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://civitai.com/models/2652568",
-      "published_at": "2026-11-27T01:29:13.592000Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 19.09,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Civitai 커뮤니티에서 빛과 그림자 느낌을 살려주는 MOSS 이미지 기반의 새로운 LORA 모델이 공개됐어요. 비상업적 목적으로만 쓸 수 있으며 개인 학습과 테스트 용도로 내려받을 수 있어요.",
-      "image_url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/aba61700-5238-4421-a8cd-d87368ff3474/original=true/150327853.jpeg",
-      "easy_summary_ko": "Civitai 커뮤니티에서 빛과 그림자 느낌을 살려주는 MOSS 이미지 기반의 새로운 LORA 모델이 공개됐어요. 비상업적 목적으로만 쓸 수 있으며 개인 학습과 테스트 용도로 내려받을 수 있어요.",
-      "vision_ko": "앞으로 디자인 작업에서 특정 분위기와 조명 효과를 내는 이미지 스타일을 빠르게 구현할 수 있어요. 우리는 다양한 커뮤니티 LORA 모델이 시각 콘텐츠 제작에 어떻게 활용되는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "image-design-studio",
-        "benchmark_point": "시각 생성 품질·일관성·편집 제어력",
-        "actionable_idea": "Civitai의 '시각 생성 품질·일관성·편집 제어력' 요소를 참고해, 우리 image-design-studio 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Civitai"
-      ]
-    },
-    {
-      "id": "live-bec93f9e97c6",
-      "title_ko": "이력서 108건 채용 자동화 평가에서 AI가 사람이 놓친 근거 잡았어요",
-      "original_title": "AI 채용 자동화 7일 회고: 108건 평가에서 사람이 틀리고 AI가 맞힌 이유",
-      "platform_id": "gpters",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://gpters.org/ax-education/post/ai-채용-자동화-7일-회고-108건-평가에서-사람이-틀리고-ai가-맞힌-이유-mwya5eah",
-      "published_at": "2026-11-27T01:05:42Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 23.3,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "7일 동안 108건의 이력서를 직접 평가한 내용과 Claude Code 및 Codex를 활용한 AI 채용 자동화 결과를 비교했어요. 채점표를 정리하는 과정에서 사람이 놓쳤던 근거를 AI가 잡아내 판정을 번복하기도 했어요.",
-      "image_url": null,
-      "easy_summary_ko": "7일 동안 108건의 이력서를 직접 평가한 내용과 Claude Code 및 Codex를 활용한 AI 채용 자동화 결과를 비교했어요. 채점표를 정리하는 과정에서 사람이 놓쳤던 근거를 AI가 잡아내 판정을 번복하기도 했어요.",
-      "vision_ko": "앞으로 반복적이고 객관적인 서류 평가 업무에서 AI가 든든한 보조 역할을 맡을 수 있어요. 우리는 채용 과정에서 인간의 판단과 AI의 분석이 어떻게 상호보완적인 역할을 하는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Claude Code의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
       "id": "live-fcf4cf4d31a8",
       "title_ko": "클로드가 머신러닝 연구를 방해한다는 주장을 직접 검증했어요",
       "original_title": "@RealAstropulse: After seeing the \"Claude sabotages your ML research\" posts, I was still skeptical, so I tested it on my own wo…",
@@ -5637,7 +5636,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 미국 외 지역에서도 AI 에이전트를 활용해 다양한 작업을 더 편리하게 처리할 수 있게 돼요. 우리는 이 서비스가 어떤 환경에서 가장 안정적으로 동작하는지 구체적인 관찰 포인트에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 글로벌 사용자들이 다양한 AI 에이전트 기능을 업무에 직접 활용할 수 있게 될 수 있어요. 우리는 신규 인공지능 에이전트 서비스의 해외 시장 확장 동향에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
