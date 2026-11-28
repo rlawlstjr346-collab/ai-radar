@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T16:32:17.144614Z",
-  "item_count": 200,
+  "generated_at": "2026-11-28T17:02:16.211320Z",
+  "item_count": 199,
   "signals": [
     {
       "id": "live-388da13fa0ce",
@@ -20,7 +20,7 @@
       "highlight_summary": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
       "image_url": null,
       "easy_summary_ko": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
-      "vision_ko": "앞으로 창작자들은 반복적인 서류 정리나 가격 계산에 들이는 시간을 줄이고 창작에 집중할 수 있어요. 우리는 AI 코딩 도구를 활용해 혼자서 실무형 웹툴을 만드는 개발 사례에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 창작 활동을 할 때 반복되는 잡무에 쓰는 시간을 줄이고 창작에만 집중할 수 있어요. 우리는 혼자서도 AI 코딩 도구를 활용해 필요한 실무 도구를 직접 만드는 개발 방식을 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "new_product",
@@ -43,7 +43,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 20.25,
+      "importance_score": 21.35,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -360,6 +360,35 @@
       "entities": [
         "Claude Code",
         "Claude"
+      ]
+    },
+    {
+      "id": "live-d2e07ab1b04d",
+      "title_ko": "AI 추론과 Agent 분야의 추가 진전이 기대돼요",
+      "original_title": "It feels almost inevitable to me that there are a few more big steps in AI progress as to reasoning or to agents and …",
+      "platform_id": "bluesky",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3eurgzd4y2r",
+      "published_at": "2026-11-28T14:06:28.171000Z",
+      "fetched_at": "2026-11-28T17:02:16.211320Z",
+      "importance_score": 16.82,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "인공지능의 추론 능력과 Agent 기능에서 앞으로 몇 차례의 큰 발전이 일어날 전망이에요. 이는 기존에 인공지능이 다루기 어려웠던 영역까지 영향을 미칠 것으로 보여요.",
+      "image_url": null,
+      "easy_summary_ko": "인공지능의 추론 능력과 Agent 기능에서 앞으로 몇 차례의 큰 발전이 일어날 전망이에요. 이는 기존에 인공지능이 다루기 어려웠던 영역까지 영향을 미칠 것으로 보여요.",
+      "vision_ko": "앞으로 복잡한 문제 해결과 자율적인 작업 수행 능력이 필요한 업무에서 인공지능 활용 범위가 넓어져요. 우리는 이러한 기술 진전이 실제 일상 업무에 어떤 실질적인 변화를 가져오는지 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Bluesky의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Bluesky"
       ]
     },
     {
@@ -845,14 +874,14 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 27.99,
-      "source_count": 1,
+      "importance_score": 34.37,
+      "source_count": 2,
       "benefit_tag": null,
       "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
       "image_url": null,
       "easy_summary_ko": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
       "vision_ko": "앞으로 AI 모델을 다운로드하여 사용할 때 보안 검증 절차가 더욱 중요해질 거예요. 우리는 오픈소스 플랫폼에서 유통되는 파일의 안전성을 확인하는 보안 관찰 포인트에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
+      "cluster_size": 2,
       "planning_meta": {
         "signal_type": "dev_workflow",
         "product_domain": "coding-agent-devtool",
@@ -1020,7 +1049,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 33.03,
+      "importance_score": 33.59,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -1346,10 +1375,10 @@
       "importance_score": 30.07,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
+      "highlight_summary": "중국 전기차 업체 샤오펑이 내년에 선보일 휴머노이드 로봇 아이언의 가격을 전기차 수준으로 맞출 계획이에요. 자동차 사업의 인공지능 기술과 부품 공급망, 양산 노하우를 활용해 로봇 생산 비용을 낮출 예정이에요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
-      "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 휴머노이드 로봇이 대중화되면서 일상과 산업 현장에서 로봇을 도입하는 비용 부담이 크게 낮아질 수 있어요. 우리는 자동차 기술이 로봇 양산과 수익화 과정에 어떻게 적용되는지 주목해 볼 수 있어요.",
+      "easy_summary_ko": "중국 전기차 업체 샤오펑이 내년에 선보일 휴머노이드 로봇 아이언의 가격을 전기차 수준으로 맞출 계획이에요. 자동차 사업의 인공지능 기술과 부품 공급망, 양산 노하우를 활용해 로봇 생산 비용을 낮출 예정이에요.",
+      "vision_ko": "앞으로 대중이 접근하기 쉬운 가격대의 휴머노이드 로봇이 보급되면서 일상과 산업 현장의 모습이 크게 바뀌어요. 우리는 자동차 제조 기술이 로봇 양산과 수익화 과정에서 어떤 경쟁력을 발휘하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -3943,35 +3972,6 @@
       ]
     },
     {
-      "id": "live-62b87af7155f",
-      "title_ko": "AI 모델 특유의 들쭉날쭉한 지능과 오류 현상을 어떻게 봐야 할까요?",
-      "original_title": "@_arohan_: I don’t think Claude is sabotaging but rest are true. I think its just jagged intelligence models do dumb stuf…",
-      "platform_id": "x",
-      "author_handle": "@_arohan_",
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://x.com/_arohan_/status/2126389028975165465",
-      "published_at": "2026-11-27T00:00:00Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 25.08,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Claude가 의도적인 방해를 한다기보다는 AI 모델 특유의 들쭉날쭉한 지능 때문에 발생하는 현상으로 진단했어요. 이러한 문제는 다른 모델에서도 유사하게 관찰되는 일반적인 문제라고 개발자들은 설명해요.",
-      "image_url": null,
-      "easy_summary_ko": "Claude가 의도적인 방해를 한다기보다는 AI 모델 특유의 들쭉날쭉한 지능 때문에 발생하는 현상으로 진단했어요. 이러한 문제는 다른 모델에서도 유사하게 관찰되는 일반적인 문제라고 개발자들은 설명해요.",
-      "vision_ko": "앞으로 AI 모델의 불완전성을 이해하고 예상치 못한 오류에 유연하게 대처하는 개발 가이드라인이 정립될 수 있어요. 우리는 다양한 AI 모델에서 공통으로 나타나는 지능의 한계와 오류 양상에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "builder_signal",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Claude의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude"
-      ]
-    },
-    {
       "id": "live-b2c4891a086e",
       "title_ko": "GPT-6 모델이 단백질 구조를 설계할 수 있어요",
       "original_title": "GPT-6 models demonstrate intrinsic protein-design capabilities",
@@ -5575,7 +5575,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 국내 사용자들도 더 다양한 글로벌 AI 에이전트 기능을 안정적으로 체험할 수 있게 될 거예요. 우리는 해외 시장에서 에이전트 서비스가 어떤 방식으로 기능을 확장해 나가는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내에서도 해외 주요 인공지능 에이전트 신규 서비스를 빠르게 체험할 수 있는 환경이 조성돼요. 우리는 글로벌 기업의 에이전트 서비스 지역 확장 속도와 현지 반응을 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -5822,61 +5822,32 @@
       ]
     },
     {
-      "id": "live-a9fd71c7c20d",
-      "title_ko": "스페이스엑스의 데이터 센터 위성 배치 계획을 FCC가 승인했어요",
-      "original_title": "FCC signs off on SpaceX’s plan to put up to 1 million data center satellites into space",
-      "platform_id": "the-verge-ai",
+      "id": "live-b57d2f0be709",
+      "title_ko": "S&P, 지배구조 및 핵심 인물 리스크로 Nvidia 신용등급 하향 검토",
+      "original_title": "S&P considers Nvidia credit downgrade over governance and ‘key man’ risks",
+      "platform_id": "techcrunch-ai",
       "author_handle": null,
       "category": "industry",
       "lifecycle_status": "warm",
-      "canonical_url": "https://theverge.com/science/1042278/spacex-fcc-starmind-ai-space-data-centers",
-      "published_at": "2026-11-25T17:44:51Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 23.98,
+      "canonical_url": "https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks",
+      "published_at": "2026-11-25T22:44:32Z",
+      "fetched_at": "2026-11-28T17:02:16.211320Z",
+      "importance_score": 24.08,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "스페이스엑스가 인공지능 칩을 장착한 위성을 최대 1백만 개까지 우주에 배치하는 계획을 FCC가 승인했어요. 구글과 블루 오리진 등 여러 기업이 우주 기반 인공지능 데이터 센터 아이디어를 추진하는 흐름 속에서 나온 첫 승인이에요.",
-      "image_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2269580650.jpg?quality=90&#038;strip=all&#038;crop=0,0,100,100",
-      "easy_summary_ko": "스페이스엑스가 인공지능 칩을 장착한 위성을 최대 1백만 개까지 우주에 배치하는 계획을 FCC가 승인했어요. 구글과 블루 오리진 등 여러 기업이 우주 기반 인공지능 데이터 센터 아이디어를 추진하는 흐름 속에서 나온 첫 승인이에요.",
-      "vision_ko": "앞으로 우주 공간에 대규모 인공지능 인프라가 구축되면서 데이터 처리 방식에 큰 변화가 생길 수 있어요. 우리는 우주 위성을 활용한 인공지능 데이터 센터 프로젝트가 실제로 어떻게 진척되는지 주목해 볼 수 있어요.",
+      "highlight_summary": "신용평가사 S&P가 Nvidia의 기업 지배구조와 핵심 인물 관련 리스크를 이유로 신용등급을 AA-로 낮출 가능성을 검토하고 있어요. 이는 기업 운영 구조와 관련된 리스크를 평가한 결과예요.",
+      "image_url": "https://techcrunch.com/wp-content/uploads/2026/01/GettyImages-2256813240.jpg?resize=1200,800",
+      "easy_summary_ko": "신용평가사 S&P가 Nvidia의 기업 지배구조와 핵심 인물 관련 리스크를 이유로 신용등급을 AA-로 낮출 가능성을 검토하고 있어요. 이는 기업 운영 구조와 관련된 리스크를 평가한 결과예요.",
+      "vision_ko": "앞으로 대형 인공지능 기업들의 지배구조와 리스크 관리가 시장 평가에 중요한 요소로 작용해요. 반도체 및 인공지능 기업의 신용도 변화가 관련 산업에 미치는 영향을 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "industry_shift",
         "product_domain": "ai-business-infra",
-        "benchmark_point": "The Verge AI — 100만 기반 성능·효율 지표",
-        "actionable_idea": "The Verge AI의 'The Verge AI — 100만 기반 성능·효율 지표' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "The Verge AI"
-      ]
-    },
-    {
-      "id": "live-4dd07963ac25",
-      "title_ko": "통화와 회의를 기록하고 요약해 주는 새로운 AI 이어버드가 나왔어요",
-      "original_title": "Nothing offers a full look at its AI earbuds and charging case",
-      "platform_id": "the-verge-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://theverge.com/gadgets/1042162/nothing-ear-note-ai-earbuds-reveal",
-      "published_at": "2026-11-25T16:00:59Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 23.91,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "12월 8일 출시를 앞둔 이어버드와 충전 케이스를 통해 대화를 녹음하고 요약할 수 있는 기능이 공개됐어요. 이어버드 마이크가 달린 충전 케이스의 녹음 버튼을 눌러 인공지능을 위한 하드웨어 컨텍스트 계층을 구축하려는 시도예요.",
-      "image_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/11/ear-note-nothing.jpeg?quality=90&#038;strip=all&#038;crop=0,0,100,100",
-      "easy_summary_ko": "12월 8일 출시를 앞둔 이어버드와 충전 케이스를 통해 대화를 녹음하고 요약할 수 있는 기능이 공개됐어요. 이어버드 마이크가 달린 충전 케이스의 녹음 버튼을 눌러 인공지능을 위한 하드웨어 컨텍스트 계층을 구축하려는 시도예요.",
-      "vision_ko": "앞으로 일상적인 대화와 회의 내용을 하드웨어 기기로 바로 기록하고 인공지능으로 요약하는 일이 편리해져요. 우리는 음성 기반 하드웨어 기기가 인공지능 서비스와 어떻게 결합되는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
         "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "The Verge AI의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "actionable_idea": "NVIDIA의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "The Verge AI"
+        "NVIDIA"
       ]
     }
   ]
