@@ -1,35 +1,35 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T17:02:16.211320Z",
+  "generated_at": "2026-11-28T17:17:20.840354Z",
   "item_count": 199,
   "signals": [
     {
-      "id": "live-388da13fa0ce",
-      "title_ko": "그림 커미션 잡무를 1분 만에 끝내는 무료 웹툴을 만들었어요",
-      "original_title": "커미션 작가 잡무를 1분으로 줄이는 무료 웹툴을 혼자 만들었습니다 (가격표·수수료 계산기 제작기)",
-      "platform_id": "gpters",
+      "id": "live-616838539e88",
+      "title_ko": "성격과 감정을 가진 대화형 AI 페르소나 제작기예요",
+      "original_title": "個性(ペルソナ)と感情をもった対話AI「FureAI ペルソナ」を作ってみた(番外編)",
+      "platform_id": "qiita",
       "author_handle": null,
-      "category": "llm_chat",
+      "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://gpters.org/vibe-coding/post/커미션-작가-잡무를-1분으로-줄이는-무료-웹툴을-혼자-만들었습니다-가격표수수료-계산기-제작기-mx0l0oht",
-      "published_at": "2026-11-28T15:45:30Z",
-      "fetched_at": "2026-11-28T16:32:17.144614Z",
-      "importance_score": 27.46,
+      "canonical_url": "https://qiita.com/tosumi-Qiita/items/f1be94409a5195cf4d9b",
+      "published_at": "2026-11-28T17:09:15Z",
+      "fetched_at": "2026-11-28T17:17:20.840354Z",
+      "importance_score": 27.57,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
+      "highlight_summary": "페르소나 디자이너를 활용해 캐릭터를 설계하는 개인 개발 프로젝트예요. 현재 2026년 11월 29일 기준으로 Azure 개발 환경에서 운영 중이에요.",
       "image_url": null,
-      "easy_summary_ko": "X에 올릴 가격표 이미지를 캔버스로 새로 만들고, 플랫폼마다 다른 수수료를 계산기로 두드리고, 3.3%가 빠진 금액과 5월 종합소득세를 다시 확인해요. 그 반복을 1분으로 줄이는 무료 웹툴을 만들었어요.",
-      "vision_ko": "앞으로 창작 활동을 할 때 반복되는 잡무에 쓰는 시간을 줄이고 창작에만 집중할 수 있어요. 우리는 혼자서도 AI 코딩 도구를 활용해 필요한 실무 도구를 직접 만드는 개발 방식을 주목해 볼 수 있어요.",
+      "easy_summary_ko": "페르소나 디자이너를 활용해 캐릭터를 설계하는 개인 개발 프로젝트예요. 현재 2026년 11월 29일 기준으로 Azure 개발 환경에서 운영 중이에요.",
+      "vision_ko": "앞으로 대화형 AI 캐릭터의 성격과 감정을 더욱 세밀하게 설정할 수 있어요. 우리는 개인 개발 프로젝트에서 감성적인 대화형 AI를 구현하는 방식에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "GPTers — 3.3% 기반 성능·효율 지표",
-        "actionable_idea": "GPTers의 'GPTers — 3.3% 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "GPTers"
+        "Qiita"
       ]
     },
     {
@@ -43,7 +43,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 21.35,
+      "importance_score": 21.59,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -373,7 +373,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3eurgzd4y2r",
       "published_at": "2026-11-28T14:06:28.171000Z",
       "fetched_at": "2026-11-28T17:02:16.211320Z",
-      "importance_score": 16.82,
+      "importance_score": 17.03,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "인공지능의 추론 능력과 Agent 기능에서 앞으로 몇 차례의 큰 발전이 일어날 전망이에요. 이는 기존에 인공지능이 다루기 어려웠던 영역까지 영향을 미칠 것으로 보여요.",
@@ -874,7 +874,7 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 34.37,
+      "importance_score": 34.46,
       "source_count": 2,
       "benefit_tag": null,
       "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
@@ -1049,7 +1049,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 33.59,
+      "importance_score": 33.78,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -3943,35 +3943,6 @@
       ]
     },
     {
-      "id": "live-9a054122d4c9",
-      "title_ko": "첨단 AI 모델의 일부 제한 가능성에 대한 단상이 올라왔어요.",
-      "original_title": "@lateinteraction: I’m open to it being nerfed on certain narrow strands of “frontier-esque” work. They say as much. This is a to…",
-      "platform_id": "x",
-      "author_handle": "@lateinteraction",
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://x.com/lateinteraction/status/2126436998445510862",
-      "published_at": "2026-11-27T00:00:00Z",
-      "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 25.08,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "첨단 AI 모델의 특정 기능이 제한되는 상황에 수긍하는 개발자 의견이 공유되었어요. 다만 모델이 사용자의 설정을 고의로 조작했다는 일부의 과장된 주장에는 선을 긋는 시각을 보여주었어요.",
-      "image_url": null,
-      "easy_summary_ko": "첨단 AI 모델의 특정 기능이 제한되는 상황에 수긍하는 개발자 의견이 공유되었어요. 다만 모델이 사용자의 설정을 고의로 조작했다는 일부의 과장된 주장에는 선을 긋는 시각을 보여주었어요.",
-      "vision_ko": "앞으로 복잡한 AI 모델의 제약 사항을 개발자들이 어떻게 합리적으로 이해하고 받아들일지 기준이 잡힐 수 있어요. 우리는 커뮤니티에서 모델 성능 한계를 해석하는 시각에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "builder_signal",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Claude의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude"
-      ]
-    },
-    {
       "id": "live-b2c4891a086e",
       "title_ko": "GPT-6 모델이 단백질 구조를 설계할 수 있어요",
       "original_title": "GPT-6 models demonstrate intrinsic protein-design capabilities",
@@ -4001,35 +3972,6 @@
       ]
     },
     {
-      "id": "live-39053b011cb3",
-      "title_ko": "코덱스와 아스트라로 외계 행성을 어떻게 찾을 수 있을까요?",
-      "original_title": "Searching for distant planets with Astra",
-      "platform_id": "openai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://openai.com/index/searching-for-distant-planets-with-astra",
-      "published_at": "2026-11-24T11:00:00Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 27.83,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "두 명의 아마추어 천문학자가 코덱스와 아스트라를 활용해 나사의 케플러와 테스 우주 망원경 공개 데이터에서 잠재적인 외계 행성을 찾고 있어요. 이를 통해 누구나 우주 데이터를 활용해 새로운 행성을 탐색하는 방법을 살펴볼 수 있어요.",
-      "image_url": null,
-      "easy_summary_ko": "두 명의 아마추어 천문학자가 코덱스와 아스트라를 활용해 나사의 케플러와 테스 우주 망원경 공개 데이터에서 잠재적인 외계 행성을 찾고 있어요. 이를 통해 누구나 우주 데이터를 활용해 새로운 행성을 탐색하는 방법을 살펴볼 수 있어요.",
-      "vision_ko": "앞으로 일반 연구자나 천문학 동호인도 AI 도구를 활용해 방대한 우주 데이터에서 미지의 행성을 더 빠르게 발견할 수 있게 돼요. 우리는 아마추어 천문학자들이 공개 데이터를 분석하는 과정에서 AI가 어떤 실질적 도움을 주는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI News"
-      ]
-    },
-    {
       "id": "live-f22dad31bb1e",
       "title_ko": "앤트로픽이 공개한 AI와 함께 일하는 방법에 대해 알아보세요",
       "original_title": "Anthropic Research: Working With AI",
@@ -4056,6 +3998,35 @@
       },
       "entities": [
         "Anthropic"
+      ]
+    },
+    {
+      "id": "live-39053b011cb3",
+      "title_ko": "코덱스와 아스트라로 외계 행성을 어떻게 찾을 수 있을까요?",
+      "original_title": "Searching for distant planets with Astra",
+      "platform_id": "openai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://openai.com/index/searching-for-distant-planets-with-astra",
+      "published_at": "2026-11-24T11:00:00Z",
+      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "importance_score": 27.83,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "두 명의 아마추어 천문학자가 코덱스와 아스트라를 활용해 나사의 케플러와 테스 우주 망원경 공개 데이터에서 잠재적인 외계 행성을 찾고 있어요. 이를 통해 누구나 우주 데이터를 활용해 새로운 행성을 탐색하는 방법을 살펴볼 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "두 명의 아마추어 천문학자가 코덱스와 아스트라를 활용해 나사의 케플러와 테스 우주 망원경 공개 데이터에서 잠재적인 외계 행성을 찾고 있어요. 이를 통해 누구나 우주 데이터를 활용해 새로운 행성을 탐색하는 방법을 살펴볼 수 있어요.",
+      "vision_ko": "앞으로 일반 연구자나 천문학 동호인도 AI 도구를 활용해 방대한 우주 데이터에서 미지의 행성을 더 빠르게 발견할 수 있게 돼요. 우리는 아마추어 천문학자들이 공개 데이터를 분석하는 과정에서 AI가 어떤 실질적 도움을 주는지 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI News"
       ]
     },
     {
@@ -5118,6 +5089,35 @@
       ]
     },
     {
+      "id": "live-8fe5d14b31e7",
+      "title_ko": "llama.cpp의 AMD 전용 포크가 공개되었어요",
+      "original_title": "AMD-specific fork of llama.cpp",
+      "platform_id": "hacker-news",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://devnull.land/amd-specific-llama-cpp",
+      "published_at": "2026-11-26T17:11:29Z",
+      "fetched_at": "2026-11-28T17:17:20.840354Z",
+      "importance_score": 29.43,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "Llama 개발 환경에서 쓸 수 있는 llama.cpp의 AMD 전용 포크 구현 방식이 나왔어요. 실전 적용 사례를 통해 구체적인 작동 방식을 확인할 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "Llama 개발 환경에서 쓸 수 있는 llama.cpp의 AMD 전용 포크 구현 방식이 나왔어요. 실전 적용 사례를 통해 구체적인 작동 방식을 확인할 수 있어요.",
+      "vision_ko": "앞으로 AMD 하드웨어 환경에서 Llama 모델을 더 효율적으로 구동할 수 있어요. 우리는 llama.cpp의 AMD 전용 포크가 제공하는 성능과 적용 방식에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Llama의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Llama"
+      ]
+    },
+    {
       "id": "live-e5c2c860c8ef",
       "title_ko": "구글, AI 에이전트에 MCP 서버 연동 예정이에요",
       "original_title": "Google Will Make AI Agents Use Its MCP Servers. The Gmail One Can't Send Email",
@@ -5234,6 +5234,35 @@
       ]
     },
     {
+      "id": "live-748450eec998",
+      "title_ko": "AI로 치료되는 질병을 추적하는 소식이 나왔어요",
+      "original_title": "Tracking Diseases Cured by AI",
+      "platform_id": "hacker-news",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "warm",
+      "canonical_url": "https://diseasescuredbyai.com/",
+      "published_at": "2026-11-26T17:16:41Z",
+      "fetched_at": "2026-11-28T17:17:20.840354Z",
+      "importance_score": 28.06,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "Hacker News 개발 생태계에서 AI로 치료되는 질병을 추적하는 프로젝트가 공유되었어요. 실제 적용 사례와 구현 방식에 대한 이야기가 담겨 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "Hacker News 개발 생태계에서 AI로 치료되는 질병을 추적하는 프로젝트가 공유되었어요. 실제 적용 사례와 구현 방식에 대한 이야기가 담겨 있어요.",
+      "vision_ko": "이런 변화가 이어지면, 앞으로 코드를 쓰고 고치는 시간이 줄어 작은 팀도 더 많은 걸 만들 수 있게 될 거예요. 우리는 실수했을 때 어떻게 바로잡는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Hacker News의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Hacker News"
+      ]
+    },
+    {
       "id": "live-f992e7398cc8",
       "title_ko": "다양한 운영체제를 넘나드는 컴퓨터 제어 Agent 성능 평가 기술 OS-Omni 공개됐어요",
       "original_title": "OS-Omni: Benchmarking Generalist Computer-Using Agents on Long-Horizon Workflows Across Platforms",
@@ -5302,7 +5331,7 @@
       "canonical_url": "https://arxiv.org/abs/2611.34813",
       "published_at": "2026-11-25T00:00:00Z",
       "fetched_at": "2026-11-28T14:32:16.122081Z",
-      "importance_score": 25.23,
+      "importance_score": 25.28,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "비디오 생성 모델과 달리 코딩 기반 Agent가 시각적 추론 작업에서 더 우수한 성능을 보여주고 있어요. 시각 매체 내에서 직접 추론하는 방식보다 코딩을 활용하는 방식이 강점을 드러내고 있어요.",
@@ -5575,7 +5604,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 국내에서도 해외 주요 인공지능 에이전트 신규 서비스를 빠르게 체험할 수 있는 환경이 조성돼요. 우리는 글로벌 기업의 에이전트 서비스 지역 확장 속도와 현지 반응을 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 해외 사용자들도 앤스로픽의 새로운 AI 에이전트 기능을 미리 써볼 수 있어요. 우리는 클로드 듀엣이 실제 업무 환경에서 어떤 변화를 만드는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -5819,35 +5848,6 @@
       },
       "entities": [
         "The Verge AI"
-      ]
-    },
-    {
-      "id": "live-b57d2f0be709",
-      "title_ko": "S&P, 지배구조 및 핵심 인물 리스크로 Nvidia 신용등급 하향 검토",
-      "original_title": "S&P considers Nvidia credit downgrade over governance and ‘key man’ risks",
-      "platform_id": "techcrunch-ai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "warm",
-      "canonical_url": "https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks",
-      "published_at": "2026-11-25T22:44:32Z",
-      "fetched_at": "2026-11-28T17:02:16.211320Z",
-      "importance_score": 24.08,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "신용평가사 S&P가 Nvidia의 기업 지배구조와 핵심 인물 관련 리스크를 이유로 신용등급을 AA-로 낮출 가능성을 검토하고 있어요. 이는 기업 운영 구조와 관련된 리스크를 평가한 결과예요.",
-      "image_url": "https://techcrunch.com/wp-content/uploads/2026/01/GettyImages-2256813240.jpg?resize=1200,800",
-      "easy_summary_ko": "신용평가사 S&P가 Nvidia의 기업 지배구조와 핵심 인물 관련 리스크를 이유로 신용등급을 AA-로 낮출 가능성을 검토하고 있어요. 이는 기업 운영 구조와 관련된 리스크를 평가한 결과예요.",
-      "vision_ko": "앞으로 대형 인공지능 기업들의 지배구조와 리스크 관리가 시장 평가에 중요한 요소로 작용해요. 반도체 및 인공지능 기업의 신용도 변화가 관련 산업에 미치는 영향을 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "NVIDIA의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "NVIDIA"
       ]
     }
   ]
