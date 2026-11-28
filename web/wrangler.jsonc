@@ -8,7 +8,5 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "kv_namespaces": [{ "binding": "NEXT_INC_CACHE_KV", "id": "f12fe202d4ec447fbc1d53c27f0fd04e" }],
-  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "ai-radar" }],
   "observability": { "enabled": true }
 }

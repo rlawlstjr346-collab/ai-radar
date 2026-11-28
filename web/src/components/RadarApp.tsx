@@ -1,55 +1,37 @@
 "use client";
 
-import { Telescope } from "lucide-react";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 
-import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/categories";
-import {
-  editorialLayout,
-  editorialOrder,
-  hotFeed,
-  HOT_LIMIT,
-  pastFeed,
-  type CategoryFilter,
-} from "@/lib/filter";
-import { isClusterRead } from "@/lib/gravity";
-import { fetchLatestLiveFeed, mergeLiveFeedItems } from "@/lib/live-client";
-import { clusterStories } from "@/lib/story-clusterer";
-import type { FeedItem, Platform, RadarData } from "@/lib/types";
-import {
-  collectClusterItemIds,
-  computeVisitDivider,
-  formatVisitDividerLabel,
-  initSessionLastVisit,
-  loadReadIds,
-  recordReadIds,
-  type VisitDividerInfo,
-} from "@/lib/visit-state";
+import { formatLastCollected, matchesQuery } from "@/lib/filter";
+import { buildFrontPage, foldClusters, frontPageOrder, itemsForTab, newestFirst, type NewsTab } from "@/lib/front-page";
+import { fetchLatestLiveFeed, isNewerSnapshot, mergeLiveFeedItems, type ClientLiveSnapshot } from "@/lib/live-client";
+import type { FeedItem, RadarData } from "@/lib/types";
+import { collectClusterItemIds, formatVisitDividerLabel, loadReadIds, recordReadIds, type VisitDividerInfo } from "@/lib/visit-state";
 
 import { LiquidGlassModal, type Selection } from "./ContextPanel";
 import DirectoryView from "./DirectoryView";
-import { FeatureStory, LeadStory, StreamRow } from "./ItemCard";
-import Sidebar, { MobileHeader, type TitleLang, type View } from "./Sidebar";
+import BriefingModal from "./newsroom/BriefingModal";
+import FrontPage from "./newsroom/FrontPage";
+import { CategoryNav, Masthead } from "./newsroom/Masthead";
+import type { TitleLang } from "./Sidebar";
 
-const CLOCK_TICK_MS = 60_000;
-const LIVE_POLL_INTERVAL_MS = 3 * 60_000;
-const LIVE_REFRESH_MIN_GAP_MS = 30_000;
-const INFINITE_BATCH = 20;
-const LANG_STORAGE_KEY = "ai-radar:lang";
+const CLOCK_TICK_MS = 30_000;
+const LIVE_POLL_INTERVAL_MS = 60_000;
+const LIVE_REFRESH_MIN_GAP_MS = 15_000;
+const AUTO_MERGE_SCROLL_Y = 240;
+const PILL_VISIBLE_MS = 7_000;
 
-/** 기준 시각: 첫 렌더는 서버가 데이터를 만든 시각(hydration 일치), 이후 1분마다 현재 시각으로 */
-function useNow(initialIso: string): [number, () => void] {
+/** 기준 시각: 첫 렌더는 서버가 데이터를 만든 시각(hydration 일치), 이후 30초마다 현재 시각 */
+function useNow(initialIso: string): number {
   const [now, setNow] = useState(() => Date.parse(initialIso));
-  const bumpNow = useCallback(() => setNow(Date.now()), []);
   useEffect(() => {
     setNow(Date.now());
     const t = setInterval(() => setNow(Date.now()), CLOCK_TICK_MS);
     return () => clearInterval(t);
   }, []);
-  return [now, bumpNow];
+  return now;
 }
 
-/** ?item=… / ?platform=… ↔ 선택 상태 */
 function readSelectionFromUrl(): Selection {
   const params = new URLSearchParams(window.location.search);
   const item = params.get("item");
@@ -67,40 +49,8 @@ function writeSelectionToUrl(sel: Selection) {
   if (url.href !== window.location.href) window.history.pushState(null, "", url);
 }
 
-function EmptyFeed({ allCount, onShowAll }: { allCount: number; onShowAll?: () => void }) {
-  return (
-    <div className="newsroom-card flex flex-col items-center gap-3 px-6 py-14 text-center">
-      <Telescope className="h-5 w-5 text-fg-3" strokeWidth={1.8} aria-hidden />
-      {onShowAll && allCount > 0 ? (
-        <>
-          <p className="text-[0.95rem] leading-relaxed text-fg-2">
-            선택한 분야에는 없지만 전체 피드에 <span className="tnum font-semibold text-fg">{allCount}</span>건이 있어요.
-          </p>
-          <button
-            type="button"
-            onClick={onShowAll}
-            className="press rounded-full bg-fg px-5 py-2 text-[0.88rem] font-semibold text-canvas hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          >
-            전체에서 보기
-          </button>
-        </>
-      ) : (
-        <p className="text-[0.95rem] leading-relaxed text-fg-2">이 분야에 맞는 소식이 아직 없어요. 다른 분야를 선택해 보세요.</p>
-      )}
-    </div>
-  );
-}
-
-/** 마지막 방문 이후 경계 마커 — 박스 없는 1px 가로 실선 + 작은 무채색 라벨 */
-export function VisitDivider({
-  info,
-  lang,
-  className = "",
-}: {
-  info: VisitDividerInfo;
-  lang: TitleLang;
-  className?: string;
-}) {
+/** 마지막 방문 이후 경계 마커 — 1px 가로 실선 + 작은 무채색 라벨 */
+export function VisitDivider({ info, lang, className = "" }: { info: VisitDividerInfo; lang: TitleLang; className?: string }) {
   const label = formatVisitDividerLabel(info, lang);
   return (
     <div
@@ -116,347 +66,145 @@ export function VisitDivider({
   );
 }
 
-/** 자동 무한 스크롤(IntersectionObserver, rootMargin 400px) 적용 피드 목록 */
-function FeedList({
-  items,
-  platformsById,
-  selection,
-  now,
-  lang,
-  spotlight,
-  readIdSet,
-  visitDivider,
-  onSelect,
-  onSelectPlatform,
-  onEntity,
-  emptyAllCount,
-  onShowAll,
-}: {
-  items: FeedItem[];
-  platformsById: Map<string, Platform>;
-  selection: Selection;
-  now: number;
-  lang: TitleLang;
-  spotlight: boolean;
-  readIdSet: ReadonlySet<string>;
-  visitDivider: VisitDividerInfo | null;
-  onSelect: (id: string) => void;
-  onSelectPlatform: (id: string) => void;
-  onEntity: (name: string) => void;
-  emptyAllCount: number;
-  onShowAll?: () => void;
-}) {
-  const [visible, setVisible] = useState(INFINITE_BATCH);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-
-  const { lead, features, stream } = editorialLayout(items, spotlight);
-  const shown = stream.slice(0, visible);
-  const remaining = stream.length - shown.length;
-  const isSelected = (id: string) => selection?.type === "item" && selection.id === id;
-
-  const selectedRestIndex = selection?.type === "item" ? stream.findIndex((i) => i.id === selection.id) : -1;
-  useEffect(() => {
-    if (selectedRestIndex >= visible) {
-      setVisible(Math.ceil((selectedRestIndex + 1) / INFINITE_BATCH) * INFINITE_BATCH);
-    }
-  }, [selectedRestIndex, visible]);
-
-  useEffect(() => {
-    if (remaining <= 0) return;
-    const node = sentinelRef.current;
-    if (!node || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setVisible((v) => Math.min(stream.length, v + INFINITE_BATCH));
-        }
-      },
-      { rootMargin: "400px" },
-    );
-    io.observe(node);
-    return () => io.disconnect();
-  }, [remaining, stream.length]);
-
-  if (items.length === 0) return <EmptyFeed allCount={emptyAllCount} onShowAll={onShowAll} />;
-
-  const rowProps = (item: FeedItem) => ({
-    item,
-    platform: platformsById.get(item.platform_id),
-    platformsById,
-    onEntity,
-    selected: isSelected(item.id),
-    now,
-    lang,
-    isRead: isClusterRead(item, readIdSet),
-    isMajor: Boolean(item.is_major_issue),
-    onSelect,
-    onSelectPlatform,
-  });
-
-  const topCount = (lead ? 1 : 0) + features.length;
-  const dividerAfterLead = Boolean(visitDivider && lead && visitDivider.afterIndex === 0);
-  const dividerBetweenFeatures = Boolean(
-    visitDivider && lead && features.length === 2 && visitDivider.afterIndex === 1,
-  );
-  const dividerAfterFeatures = Boolean(
-    visitDivider && lead && features.length > 0 && visitDivider.afterIndex === topCount - 1,
-  );
-  const dividerStreamIdx =
-    visitDivider && visitDivider.afterIndex >= topCount ? visitDivider.afterIndex - topCount : -1;
-
-  return (
-    <div className="flex flex-col gap-5">
-      {/* 최상단 대표 후킹 기사 1개 (Apple Newsroom 둥근 피처드 카드) */}
-      {lead && (
-        <section aria-label="오늘의 대표 소식" data-item-id={lead.id}>
-          <LeadStory {...rowProps(lead)} />
-        </section>
-      )}
-
-      {dividerAfterLead && visitDivider && <VisitDivider info={visitDivider} lang={lang} />}
-
-      {/* 주요 피처 2열 카드 — 2·3번 사이에 구분선이 걸릴 때는 col-span-full + 행 경계 정렬로 2열 깨짐 방지 */}
-      {features.length > 0 && (
-        <ul className="grid grid-cols-1 gap-5 md:grid-cols-2" aria-label="주요 소식">
-          {features.map((item, idx) => (
-            <Fragment key={item.id}>
-              <li
-                data-item-id={item.id}
-                className={`min-w-0 ${dividerBetweenFeatures ? "md:col-span-2" : ""}`}
-              >
-                <FeatureStory {...rowProps(item)} />
-              </li>
-              {dividerBetweenFeatures && idx === 0 && visitDivider && (
-                <li key="visit-divider-features" className="col-span-full list-none">
-                  <VisitDivider info={visitDivider} lang={lang} />
-                </li>
-              )}
-            </Fragment>
-          ))}
-        </ul>
-      )}
-
-      {dividerAfterFeatures && visitDivider && <VisitDivider info={visitDivider} lang={lang} />}
-
-      {/* 정갈하고 큼직한 에디토리얼 아티클 스트림 */}
-      {shown.length > 0 && (
-        <ul className="flex flex-col gap-5" aria-label={topCount > 0 ? "최신 에디토리얼 피드" : "소식 목록"}>
-          {shown.map((item, idx) => (
-            <Fragment key={item.id}>
-              <li data-item-id={item.id} className="min-w-0">
-                <StreamRow {...rowProps(item)} />
-              </li>
-              {dividerStreamIdx === idx && visitDivider && (
-                <li key="visit-divider-stream" className="col-span-full list-none">
-                  <VisitDivider info={visitDivider} lang={lang} />
-                </li>
-              )}
-            </Fragment>
-          ))}
-        </ul>
-      )}
-
-      {/* 자동 무한 스크롤 센티넬 */}
-      {remaining > 0 && (
-        <div ref={sentinelRef} aria-hidden className="flex h-12 items-center justify-center">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-fg-3/50" />
-        </div>
-      )}
-    </div>
-  );
+function countNew(prev: FeedItem[], next: FeedItem[]): number {
+  const ids = new Set(prev.map((i) => i.id));
+  return next.filter((i) => !ids.has(i.id)).length;
 }
 
 export default function RadarApp({ data }: { data: RadarData }) {
-  const [now, bumpNow] = useNow(data.generatedAt);
+  const now = useNow(data.generatedAt);
   const [items, setItems] = useState<FeedItem[]>(data.items);
-  const [lastCollectedAt, setLastCollectedAt] = useState<string | null | undefined>(data.lastCollectedAt);
-  const [view, setView] = useState<View>("feed");
-  const [category, setCategory] = useState<CategoryFilter>("all");
-  const [lang, setLang] = useState<TitleLang>("ko");
-  // 첫 진입 시에는 리퀴드 글라스 모달을 닫아 뉴스룸 피드만 깔끔하게 보여준다 (URL 공유 진입 시 자동 오픈)
+  const [lastCollectedAt, setLastCollectedAt] = useState<string | null>(data.lastCollectedAt ?? null);
+  const [tab, setTab] = useState<NewsTab>("all");
+  const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query.trim());
   const [selection, setSelection] = useState<Selection>(null);
-  const selectionRef = useRef<Selection>(null);
-  selectionRef.current = selection;
-  const lastFetchRef = useRef<number>(0);
-
-  // 세션 고정 직전 방문 시각 (`ai_radar_last_visit_ts`) & 읽은 기사 목록 (`ai_radar_read_ids`, 최대 1,000개)
-  const [sessionLastVisitTs, setSessionLastVisitTs] = useState<number | null>(null);
   const [readIds, setReadIds] = useState<string[]>([]);
-  const [rankReadIds, setRankReadIds] = useState<string[]>([]);
-  const readIdsRef = useRef<string[]>([]);
-  readIdsRef.current = readIds;
+  const [pending, setPending] = useState<ClientLiveSnapshot | null>(null);
+  const [arrival, setArrival] = useState<{ count: number; applied: boolean } | null>(null);
 
-  useEffect(() => {
-    setSessionLastVisitTs(initSessionLastVisit(Date.now()));
-    const storedRead = loadReadIds();
-    setReadIds(storedRead);
-    setRankReadIds(storedRead);
-  }, []);
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
+  const selectionRef = useRef(selection);
+  selectionRef.current = selection;
+  const lastCollectedRef = useRef(lastCollectedAt);
+  lastCollectedRef.current = lastCollectedAt;
 
-  // 뷰/분야 전환 시 최신 읽음 상태를 상단 부력 해제에 반영 (모달 닫을 때 리스트가 갑자기 튀는 현상 방지)
-  useEffect(() => {
-    setRankReadIds(readIdsRef.current);
-  }, [view, category]);
-
+  useEffect(() => setReadIds(loadReadIds()), []);
   const readIdSet = useMemo(() => new Set(readIds), [readIds]);
-  const rankReadIdSet = useMemo(() => new Set(rankReadIds), [rankReadIds]);
-
   const markRead = useCallback((ids: string[]) => {
-    if (ids.length === 0) return;
-    setReadIds((prev) => recordReadIds(prev, ids));
+    if (ids.length > 0) setReadIds((prev) => recordReadIds(prev, ids));
   }, []);
 
   const validPlatformIds = useMemo(() => new Set(data.platforms.map((p) => p.id)), [data.platforms]);
+  const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
+  const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
 
-  // 초기 정적 렌더 직후 + 3분 주기 인터벌 + 탭 복귀(visibilitychange/focus) 시 /api/live-feed 를 조용히 반영
+  const applySnapshot = useCallback((snap: ClientLiveSnapshot) => {
+    const activeId = selectionRef.current?.type === "item" ? selectionRef.current.id : null;
+    setItems((prev) => mergeLiveFeedItems(prev, snap.items, activeId));
+    if (snap.generatedAt) setLastCollectedAt(snap.generatedAt);
+    setPending(null);
+  }, []);
+
+  // 마운트 직후 + 60초 주기 + 탭 포커스 복귀 시 GitHub Raw 최신 피드 조회 → generated_at 이 더 새로우면 병합
   useEffect(() => {
     if (data.source === "supabase") return;
-    let activeCtrl: AbortController | null = null;
-    const syncLatest = (force = false) => {
-      const nowMs = Date.now();
-      if (!force && nowMs - lastFetchRef.current < LIVE_REFRESH_MIN_GAP_MS) return;
-      lastFetchRef.current = nowMs;
-      activeCtrl?.abort();
-      const ctrl = new AbortController();
-      activeCtrl = ctrl;
-      fetchLatestLiveFeed(validPlatformIds, ctrl.signal)
+    let ctrl: AbortController | null = null;
+    let lastFetch = 0;
+    const sync = (force: boolean) => {
+      const t = Date.now();
+      if (!force && t - lastFetch < LIVE_REFRESH_MIN_GAP_MS) return;
+      lastFetch = t;
+      ctrl?.abort();
+      const c = new AbortController();
+      ctrl = c;
+      fetchLatestLiveFeed(validPlatformIds, c.signal)
         .then((snap) => {
-          if (!snap || ctrl.signal.aborted) return;
-          const activeItemId = selectionRef.current?.type === "item" ? selectionRef.current.id : null;
-          setItems((prev) => mergeLiveFeedItems(prev, snap.items, activeItemId));
-          if (snap.generatedAt) {
-            setLastCollectedAt((prev) => {
-              const prevTs = prev ? Date.parse(prev) : 0;
-              const nextTs = Date.parse(snap.generatedAt!);
-              return nextTs >= prevTs ? snap.generatedAt : prev;
-            });
-            bumpNow();
+          if (!snap || c.signal.aborted || !isNewerSnapshot(snap.generatedAt, lastCollectedRef.current)) return;
+          const fresh = countNew(itemsRef.current, snap.items);
+          const reading = window.scrollY > AUTO_MERGE_SCROLL_Y || selectionRef.current !== null;
+          if (fresh === 0 || !reading) {
+            applySnapshot(snap);
+            if (fresh > 0) setArrival({ count: fresh, applied: true });
+          } else {
+            // 읽던 자리가 튀지 않게 보류하고 '새 소식 N건 도착' 필로 알린다
+            setPending(snap);
+            setArrival({ count: fresh, applied: false });
           }
         })
         .catch(() => {
-          // 네트워크 실패 시 기존 SSR/로컬 스냅샷 유지
+          // 네트워크 실패 시 번들 피드 유지
         });
     };
-
-    syncLatest(true);
-    const intervalId = setInterval(() => {
-      if (document.visibilityState === "visible") syncLatest(true);
+    sync(true);
+    const id = setInterval(() => {
+      if (document.visibilityState === "visible") sync(true);
     }, LIVE_POLL_INTERVAL_MS);
-    const onFocus = () => syncLatest(false);
-    const onVisibility = () => {
-      if (document.visibilityState === "visible") syncLatest(false);
+    const onFocus = () => sync(false);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") sync(false);
     };
     window.addEventListener("focus", onFocus);
-    document.addEventListener("visibilitychange", onVisibility);
+    document.addEventListener("visibilitychange", onVisible);
     return () => {
-      activeCtrl?.abort();
-      clearInterval(intervalId);
+      ctrl?.abort();
+      clearInterval(id);
       window.removeEventListener("focus", onFocus);
-      document.removeEventListener("visibilitychange", onVisibility);
+      document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [data.source, validPlatformIds, bumpNow]);
+  }, [data.source, validPlatformIds, applySnapshot]);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(LANG_STORAGE_KEY);
-      if (saved === "ko" || saved === "en") setLang(saved);
-    } catch {
-      // ignore storage errors
+    if (!arrival?.applied) return;
+    const t = setTimeout(() => setArrival(null), PILL_VISIBLE_MS);
+    return () => clearTimeout(t);
+  }, [arrival]);
+
+  const onArrivalClick = () => {
+    if (pending) applySnapshot(pending);
+    setArrival(null);
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
+
+  // 워커가 엄격하게 묶은 동일 사건(같은 사건 · 36시간 · 다른 매체)만 카드 1장으로 접는다
+  const clustered = useMemo(() => foldClusters(items, Date.parse(data.generatedAt)), [items, data.generatedAt]);
+  const knownIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const i of clustered) {
+      s.add(i.id);
+      for (const r of i.relatedArticles ?? []) s.add(r.id);
     }
-  }, []);
+    return s;
+  }, [clustered]);
 
-  const handleLang = useCallback((next: TitleLang) => {
-    setLang(next);
-    try {
-      localStorage.setItem(LANG_STORAGE_KEY, next);
-    } catch {
-      // ignore storage errors
-    }
-  }, []);
+  const tabItems = useMemo(() => itemsForTab(clustered, tab), [clustered, tab]);
+  const searchResults = useMemo(() => {
+    if (!deferredQuery) return null;
+    const pool = clustered.filter((i) => matchesQuery(i, deferredQuery, names.get(i.platform_id)));
+    return newestFirst(pool, now);
+  }, [clustered, deferredQuery, names, now]);
+  const layout = useMemo(() => buildFrontPage(tabItems, now), [tabItems, now]);
 
-  const platformsById = useMemo(() => new Map(data.platforms.map((p) => [p.id, p])), [data.platforms]);
-  const names = useMemo(() => new Map(data.platforms.map((p) => [p.id, p.name])), [data.platforms]);
-  // 36시간 이내 다중 매체 동일 이슈 결정론적 클러스터링 (SSR/CSR hydration 일치)
-  const clusteredItems = useMemo(() => clusterStories(items), [items]);
-  const hotItems = useMemo(
-    () => hotFeed(clusteredItems, category, now, "", names, { readIds: rankReadIdSet }),
-    [clusteredItems, category, now, names, rankReadIdSet],
-  );
-  const pastItems = useMemo(
-    () => pastFeed(clusteredItems, category, "", names, now),
-    [clusteredItems, category, names, now],
-  );
-
-  const findClusterForItemId = useCallback(
+  const findItem = useCallback(
     (id: string): FeedItem | undefined =>
-      clusteredItems.find((i) => i.id === id) ??
-      clusteredItems.find((i) => i.relatedArticles?.some((r) => r.id === id)),
-    [clusteredItems],
+      clustered.find((i) => i.id === id) ??
+      clustered.flatMap((i) => i.relatedArticles ?? []).find((r) => r.id === id) ??
+      items.find((i) => i.id === id),
+    [clustered, items],
   );
 
-  const applySelection = useCallback(
-    (sel: Selection, fromUrl: boolean) => {
-      if (sel?.type === "item") {
-        const item = findClusterForItemId(sel.id) ?? items.find((i) => i.id === sel.id);
-        if (!item) return false;
-        if (fromUrl) setView(item.lifecycle_status === "warm" ? "past" : "feed");
-        markRead(collectClusterItemIds(item));
-      } else if (sel?.type === "platform") {
-        if (!data.platforms.some((p) => p.id === sel.id)) return false;
-        if (fromUrl) setView("directory");
-      }
-      setSelection(sel);
-      return true;
-    },
-    [findClusterForItemId, items, data.platforms, markRead],
-  );
-
-  // 공유 링크(?item= / ?platform=)로 들어왔을 때 자동 오픈 + 브라우저 뒤로/앞으로 가기
-  useEffect(() => {
-    const fromLocation = () => {
-      const sel = readSelectionFromUrl();
-      if (sel && applySelection(sel, true)) return;
-      setSelection(null);
-    };
-    if (readSelectionFromUrl()) fromLocation();
-    window.addEventListener("popstate", fromLocation);
-    return () => window.removeEventListener("popstate", fromLocation);
-  }, [applySelection]);
-
-  const counts = useMemo(() => {
-    const pool =
-      view === "directory"
-        ? data.platforms.map((p) => p.category)
-        : clusteredItems
-            .filter((i) => i.lifecycle_status === (view === "feed" ? "hot" : "warm"))
-            .map((i) => i.category);
-    const c = { all: view === "feed" ? Math.min(pool.length, HOT_LIMIT) : pool.length } as Record<CategoryFilter, number>;
-    for (const cat of CATEGORY_ORDER) c[cat] = pool.filter((x) => x === cat).length;
-    return c;
-  }, [view, clusteredItems, data.platforms]);
-
-  const viewCounts = useMemo(
-    () => ({
-      feed: Math.min(clusteredItems.filter((i) => i.lifecycle_status === "hot").length, HOT_LIMIT),
-      past: clusteredItems.filter((i) => i.lifecycle_status === "warm").length,
-      directory: data.platforms.length,
-    }),
-    [clusteredItems, data.platforms],
-  );
-
-  const selectItem = useCallback(
+  const openItem = useCallback(
     (id: string) => {
-      const target = findClusterForItemId(id);
-      const ids = target ? collectClusterItemIds(target) : [id];
-      markRead(ids);
-      const resolvedId = target ? target.id : id;
-      const sel: Selection = { type: "item", id: resolvedId };
+      const target = findItem(id);
+      markRead(target ? collectClusterItemIds(target) : [id]);
+      const sel: Selection = { type: "item", id };
       setSelection(sel);
       writeSelectionToUrl(sel);
     },
-    [findClusterForItemId, markRead],
+    [findItem, markRead],
   );
-  const selectPlatform = useCallback((id: string) => {
+  const openPlatform = useCallback((id: string) => {
     const sel: Selection = { type: "platform", id };
     setSelection(sel);
     writeSelectionToUrl(sel);
@@ -466,141 +214,146 @@ export default function RadarApp({ data }: { data: RadarData }) {
     writeSelectionToUrl(null);
   }, []);
 
-  const onEntity = useCallback(
-    (name: string) => {
-      const key = name.toLowerCase().replace(/[\s._-]+/g, "");
-      const platform = data.platforms.find((p) => [p.id, p.name].some((x) => x.toLowerCase().replace(/[\s._-]+/g, "") === key));
-      if (platform) {
-        selectPlatform(platform.id);
+  // 공유 링크(?item= / ?platform=) 진입 자동 오픈 + 뒤로/앞으로 가기
+  useEffect(() => {
+    const fromLocation = () => {
+      const sel = readSelectionFromUrl();
+      if (sel?.type === "item" && findItem(sel.id)) {
+        markRead(collectClusterItemIds(findItem(sel.id)!));
+        setSelection(sel);
+      } else if (sel?.type === "platform" && platformsById.has(sel.id)) {
+        setTab("directory");
+        setSelection(sel);
+      } else {
+        setSelection(null);
       }
-    },
-    [data.platforms, selectPlatform],
+    };
+    fromLocation();
+    window.addEventListener("popstate", fromLocation);
+    return () => window.removeEventListener("popstate", fromLocation);
+    // 첫 진입·히스토리 이동 때만 동기화
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const changeTab = useCallback((t: NewsTab) => {
+    setTab(t);
+    setQuery("");
+    const nav = document.querySelector<HTMLElement>(".catnav");
+    if (nav && window.scrollY > nav.offsetTop) window.scrollTo({ top: nav.offsetTop, behavior: "auto" });
+  }, []);
+
+  // J / K 탐색
+  const navOrder = useMemo(
+    () => (searchResults ? searchResults.map((i) => i.id) : tab === "directory" ? [] : frontPageOrder(layout)),
+    [searchResults, tab, layout],
   );
-
-  const editorial = view === "feed" && category === "all";
-  const feedDisplayItems = useMemo(() => {
-    return view === "past" ? pastItems : hotItems;
-  }, [view, hotItems, pastItems]);
-
-  const visitDivider = useMemo(() => {
-    if (view !== "feed") return null;
-    return computeVisitDivider(feedDisplayItems, sessionLastVisitTs, now);
-  }, [view, feedDisplayItems, sessionLastVisitTs, now]);
-
-  const navOrder = useMemo(() => {
-    if (view === "directory") return [];
-    return editorialOrder(editorialLayout(feedDisplayItems, editorial));
-  }, [view, feedDisplayItems, editorial]);
-
-  // J / K 탐색 (모달 닫혀 있을 땐 ↑/↓ 도 지원)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.metaKey || e.ctrlKey || e.altKey || navOrder.length === 0) return;
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-      const next = e.key === "j" || e.key === "J" || (e.key === "ArrowDown" && !selection);
-      const prev = e.key === "k" || e.key === "K" || (e.key === "ArrowUp" && !selection);
-      if ((!next && !prev) || navOrder.length === 0) return;
+      const next = e.key === "j" || e.key === "J";
+      const prev = e.key === "k" || e.key === "K";
+      if (!next && !prev) return;
       e.preventDefault();
       const cur = selection?.type === "item" ? navOrder.indexOf(selection.id) : -1;
       const idx = cur === -1 ? 0 : Math.min(navOrder.length - 1, Math.max(0, cur + (next ? 1 : -1)));
-      const id = navOrder[idx];
-      selectItem(id);
-      requestAnimationFrame(() => document.querySelector(`[data-item-id="${CSS.escape(id)}"]`)?.scrollIntoView({ block: "nearest" }));
+      openItem(navOrder[idx]);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navOrder, selection, selectItem]);
+  }, [navOrder, selection, openItem]);
 
-  const listKey = `${view}:${category}`;
-  const sectionTitle =
-    view === "feed" ? "실시간 레이더" : view === "past" ? "지난 주요 소식" : "AI 플랫폼 도감";
-  const activeCatLabel = category === "all" ? null : CATEGORY_META[category].label;
-  const totalLabel = view === "directory" ? `${data.platforms.length}곳` : `${feedDisplayItems.length}건`;
-
-  const sidebarProps = {
-    view,
-    category,
-    onView: setView,
-    onCategory: setCategory,
-    counts,
-    viewCounts,
-    lang,
-    onLang: handleLang,
-    source: data.source,
-    platformCount: data.platforms.length,
-    lastCollectedAt,
-    now,
-  };
+  const lastLabel = formatLastCollected(lastCollectedAt, now);
+  const statusLabel = lastLabel ? (lastLabel === "방금 전" ? "방금 업데이트" : `마지막 업데이트 ${lastLabel}`) : "실시간 수신 중";
+  const selectedItem = selection?.type === "item" ? findItem(selection.id) ?? null : null;
+  const emptyLayout = { hero: null, side: [], wire: [], features: [], stream: searchResults ?? [] };
 
   return (
-    <div className="min-h-dvh w-full min-w-0 bg-canvas text-fg">
-      {/* 모바일(<lg) 반응형 상단 로고 + 가로 탭/컬러도트 필터 */}
-      <MobileHeader {...sidebarProps} />
+    <div className="newsroom">
+      <Masthead statusLabel={statusLabel} query={query} onQuery={setQuery} />
+      <CategoryNav tab={tab} onTab={changeTab} />
 
-      {/* 데스크톱: 좌측 276px 여백 일체형 컬럼(무배경) + 우측 확장 메인 아티클 스트림 */}
-      <div className="mx-auto w-full max-w-[1380px] px-4 sm:px-6 lg:grid lg:grid-cols-[276px_minmax(0,1fr)] lg:gap-14 lg:px-10">
-        <div className="hidden lg:block">
-          <Sidebar {...sidebarProps} />
-        </div>
+      {arrival && (
+        <button type="button" className="arrival-pill" onClick={onArrivalClick} aria-live="polite">
+          <span className="live-dot" aria-hidden="true" />
+          {arrival.applied ? (
+            <>
+              실시간 수신 중 · 새 소식 <span className="tnum">{arrival.count}</span>건 반영
+            </>
+          ) : (
+            <>
+              새 소식 <span className="tnum">{arrival.count}</span>건 도착 · 눌러서 보기
+            </>
+          )}
+        </button>
+      )}
 
-        <main className="@container min-w-0 pb-24 pt-7 lg:pt-9">
-          {/* Apple ML Research 'All publications' 스타일 1줄 섹션 타이틀 — 바로 아래부터 즉시 기사 시작 */}
-          <header className="mb-7 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-b border-line pb-4">
-            <div className="flex min-w-0 flex-wrap items-baseline gap-3">
-              <h1 className="text-[clamp(26px,2vw,32px)] font-bold leading-tight tracking-[-0.026em] text-fg">
-                {sectionTitle}
-              </h1>
-              {activeCatLabel && (
-                <span className={`text-[16px] font-semibold ${CATEGORY_META[category as Exclude<CategoryFilter, "all">].text}`}>
-                  · {activeCatLabel}
-                </span>
-              )}
-            </div>
-            <span className="t-meta tnum text-[14.5px]">{totalLabel}</span>
-          </header>
-
-          {view === "directory" ? (
+      <main className="wrap newsroom-main" id="main">
+        {searchResults ? (
+          searchResults.length > 0 ? (
+            <FrontPage
+              layout={emptyLayout}
+              now={now}
+              platformsById={platformsById}
+              readIds={readIdSet}
+              onOpen={openItem}
+              streamTitle={`‘${deferredQuery}’ 검색 결과`}
+            />
+          ) : (
+            <p className="empty-note">‘{deferredQuery}’에 맞는 소식이 아직 없어요. 다른 키워드로 찾아보세요.</p>
+          )
+        ) : tab === "directory" ? (
+          <div className="directory-wrap">
             <DirectoryView
               platforms={data.platforms}
               items={items}
-              category={category}
+              category="all"
               selectedId={selection?.type === "platform" ? selection.id : null}
-              onSelect={selectPlatform}
+              onSelect={openPlatform}
             />
-          ) : (
-            <FeedList
-              key={listKey}
-              items={feedDisplayItems}
-              platformsById={platformsById}
-              selection={selection}
-              now={now}
-              lang={lang}
-              spotlight={editorial}
-              readIdSet={readIdSet}
-              visitDivider={visitDivider}
-              onSelect={selectItem}
-              onSelectPlatform={selectPlatform}
-              onEntity={onEntity}
-              emptyAllCount={counts.all}
-              onShowAll={category !== "all" ? () => setCategory("all") : undefined}
-            />
-          )}
-        </main>
-      </div>
+          </div>
+        ) : layout.hero ? (
+          <FrontPage
+            layout={layout}
+            now={now}
+            platformsById={platformsById}
+            readIds={readIdSet}
+            onOpen={openItem}
+            wireTitle={tab === "past" ? "최근 정리된 순" : "최신 속보"}
+            streamTitle={tab === "past" ? "지난 소식 전체" : "시간순 전체 소식"}
+          />
+        ) : (
+          <p className="empty-note">이 분류에는 아직 소식이 없어요. ‘전체’ 탭에서 다른 소식을 둘러보세요.</p>
+        )}
+      </main>
 
-      {/* 정중앙 고밀도 리퀴드 글라스 4단 요약 모달 (기사·플랫폼 클릭 또는 URL 공유 진입 시 오픈) */}
-      <LiquidGlassModal
-        selection={selection}
-        items={clusteredItems}
-        platforms={data.platforms}
-        lang={lang}
-        onSelectItem={selectItem}
-        onSelectPlatform={selectPlatform}
-        onMarkRead={markRead}
+      <footer className="wrap newsroom-foot">
+        <p>
+          AI RADAR는 공개 RSS·API·커뮤니티 글을 15분마다 모아 쉬운 말로 정리해요. 기사 저작권은 각 원문 매체에 있어요.
+        </p>
+      </footer>
+
+      <BriefingModal
+        item={selectedItem}
+        now={now}
+        platformsById={platformsById}
+        knownIds={knownIds}
+        onOpen={openItem}
         onClose={close}
-        easyMode={data.easyMode}
       />
+      {selection?.type === "platform" && (
+        <LiquidGlassModal
+          selection={selection}
+          items={clustered}
+          platforms={data.platforms}
+          onSelectItem={openItem}
+          onSelectPlatform={openPlatform}
+          onMarkRead={markRead}
+          onClose={close}
+          easyMode={data.easyMode}
+        />
+      )}
     </div>
   );
 }

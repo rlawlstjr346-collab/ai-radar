@@ -89,6 +89,16 @@ export interface FeedItem {
   entities: Entity[];
   /** [원본 쉽게 읽기] 해설이 이미 준비돼 있는지 (샘플 데이터 또는 DB 캐시) */
   easy_original_ready: boolean;
+  /** 기사 대표 사진 (RSS 미디어 · GitHub OG 프리뷰 · og:image). 없으면 텍스트 레이아웃 */
+  image_url?: string | null;
+  /** 초보자용 2~3문장 쉬운 대화체 요약 ("쉽게 말해 ~한 소식이에요") */
+  easy_summary_ko?: string | null;
+  /** 미래 비전 & 기회 — 이 변화로 앞으로 무엇이 가능해지는지 대화체 해설 */
+  vision_ko?: string | null;
+  /** 워커가 묶은 동일 사건 기사 수 (자기 자신 포함) */
+  cluster_size?: number;
+  /** 워커가 묶은 같은 사건의 다른 매체 기사 (가벼운 참조) */
+  related_refs?: RelatedRef[];
   /** 다중 매체 동일 이슈 클러스터링으로 묶인 관련 기사들 (대표 카드에만 부착) */
   relatedArticles?: FeedItem[];
   /** 클러스터 대표 ID */
@@ -99,6 +109,14 @@ export interface FeedItem {
   gravity_base_points?: number;
   /** 주요 이슈(고중력·다중 보도·프론티어 공식 발표) 여부 */
   is_major_issue?: boolean;
+}
+
+export interface RelatedRef {
+  id: string;
+  title_ko: string;
+  platform_id: string;
+  canonical_url: string;
+  published_at: string | null;
 }
 
 /** [원본 쉽게 읽기] 완독 해설 — summaries.easy_original_json */

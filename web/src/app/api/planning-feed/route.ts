@@ -1,16 +1,34 @@
 import { NextResponse } from "next/server";
 
-import { loadRadarData } from "@/lib/data";
-import { hotFeed } from "@/lib/filter";
-import { getHighlightSummary, getPlanningMeta } from "@/lib/reading-insights";
-import { stripHighlightMarks } from "@/lib/highlight";
+import samplePlatforms from "@/data/platforms.sample.json";
+import bundledPlanning from "../../../../public/data/planning-feed.json";
+import type { Platform } from "@/lib/types";
 
-export const revalidate = 60;
+// KV·ISR 없이 요청마다 경량 처리: 15분 주기로 갱신되는 정적 planning-feed.json(GitHub Raw, 실패 시 같은 배포의 정적 파일)을
+// 읽어(실패·테스트 시 빌드에 번들된 같은 파일) 필터만 적용한다 (전체 화면 데이터 재계산 없음 → Worker CPU 한도 1102 회피).
+export const dynamic = "force-dynamic";
 
-/**
- * 하위 AI 기획팀 에이전트용 실시간 시그널 피드 엔드포인트.
- * GET /api/planning-feed?limit=50&category=dev&signal_type=new_product
- */
+const REMOTE_PLANNING_URL =
+  "https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/data/planning-feed.json";
+const FETCH_TIMEOUT_MS = 3500;
+const NAMES = new Map((samplePlatforms as Platform[]).map((p) => [p.id, p.name]));
+
+type Signal = Record<string, unknown> & { category?: string; platform_id?: string; planning_meta?: { signal_type?: string } };
+
+async function fetchJson(url: string): Promise<{ generated_at?: string; signals?: Signal[] } | null> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: "application/json" } });
+    if (!res.ok) return null;
+    return (await res.json()) as { generated_at?: string; signals?: Signal[] };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const limitParam = Number(searchParams.get("limit") ?? "60");
@@ -18,55 +36,25 @@ export async function GET(request: Request) {
   const category = searchParams.get("category")?.trim() || "all";
   const signalType = searchParams.get("signal_type")?.trim() || "";
 
-  const data = await loadRadarData();
-  const names = new Map(data.platforms.map((p) => [p.id, p.name]));
-  const now = Date.parse(data.generatedAt);
-
-  const rankedHot = hotFeed(data.items, "all", now);
-  const warmItems = data.items
-    .filter((i) => i.lifecycle_status === "warm")
-    .sort((a, b) => b.importance_score - a.importance_score);
-  const pool = [...rankedHot, ...warmItems];
-
-  const signals = pool
-    .filter((item) => category === "all" || item.category === category)
-    .map((item) => {
-      const planning_meta = getPlanningMeta(item, names.get(item.platform_id));
-      return {
-        id: item.id,
-        title_ko: item.title_ko ?? item.hook_title,
-        original_title: item.original_title ?? item.hook_title,
-        platform_id: item.platform_id,
-        platform_name: names.get(item.platform_id) ?? item.platform_id,
-        author_handle: item.author_handle ?? null,
-        category: item.category,
-        lifecycle_status: item.lifecycle_status,
-        canonical_url: item.canonical_url,
-        published_at: item.published_at,
-        fetched_at: item.fetched_at ?? null,
-        importance_score: item.importance_score,
-        source_count: item.source_count,
-        benefit_tag: item.benefit_tag,
-        highlight_summary: stripHighlightMarks(getHighlightSummary(item)),
-        planning_meta,
-        entities: item.entities.map((e) => e.name),
-      };
-    })
-    .filter((s) => !signalType || s.planning_meta.signal_type === signalType)
-    .slice(0, limit);
+  const offline = process.env.VITEST || process.env.DISABLE_REMOTE_LIVE_FEED === "1";
+  const remote = offline ? null : await fetchJson(REMOTE_PLANNING_URL);
+  const bundled = bundledPlanning as { generated_at?: string; signals?: Signal[] };
+  const feed = remote && Array.isArray(remote.signals) && remote.signals.length > 0 ? remote : bundled;
+  const all = Array.isArray(feed?.signals) ? feed.signals : [];
+  const signals = all
+    .filter((s) => category === "all" || s.category === category)
+    .filter((s) => !signalType || s.planning_meta?.signal_type === signalType)
+    .slice(0, limit)
+    .map((s) => ({ ...s, platform_name: NAMES.get(String(s.platform_id)) ?? s.platform_id }));
 
   return NextResponse.json(
     {
       version: 1,
-      generated_at: data.generatedAt,
-      last_collected_at: data.lastCollectedAt ?? null,
+      generated_at: feed?.generated_at ?? null,
+      last_collected_at: feed?.generated_at ?? null,
       item_count: signals.length,
       signals,
     },
-    {
-      headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
-      },
-    },
+    { headers: { "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=300" } },
   );
 }

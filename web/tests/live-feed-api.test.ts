@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { GET as getLiveFeedRoute, revalidate as liveFeedRevalidate } from "@/app/api/live-feed/route";
+import { GET as getLiveFeedRoute, dynamic as liveFeedDynamic } from "@/app/api/live-feed/route";
 import samplePlatforms from "@/data/platforms.sample.json";
 import { SAMPLE_FEED } from "@/data/sample-feed";
 import { getEasyOriginal } from "@/lib/easy-original";
@@ -360,8 +360,8 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     expect(top.original_title).toBe("DeepSeek announces fast reasoning model");
   });
 
-  it("GET /api/live-feed 라우트는 3분 CDN/ISR 캐시 헤더(s-maxage=180, stale-while-revalidate=300)와 유효한 JSON을 반환한다", async () => {
-    expect(liveFeedRevalidate).toBe(180);
+  it("GET /api/live-feed 라우트는 정적(force-static) 생성 + CDN 캐시 헤더(s-maxage=180, stale-while-revalidate=300)와 유효한 JSON을 반환한다", async () => {
+    expect(liveFeedDynamic).toBe("force-static");
     // 외부 네트워크 없이 로컬 폴백으로 즉시 응답 검증
     const prevFetch = globalThis.fetch;
     globalThis.fetch = vi.fn(async () => new Response("offline", { status: 503 })) as typeof fetch;
@@ -413,7 +413,7 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     expect(parsedAtom[0].link).toBe("https://simonwillison.net/2026/nov/24/claude/");
   });
 
-  it("클라이언트 fetchLatestLiveFeed 는 /api/live-feed 를 최우선 호출하고 모달 열린 기사 보존·무변경 참조 유지를 보장한다", async () => {
+  it("클라이언트 fetchLatestLiveFeed 는 GitHub Raw live-feed.json 을 최우선 호출하고 모달 열린 기사 보존·무변경 참조 유지를 보장한다", async () => {
     const freshItem: FeedItem & { easy_original: { sections: Array<{ heading: string; body: string; quote: null }>; watch_points: string[] } } = {
       ...SAMPLE_FEED[0],
       id: "live-edge-abc123456789",
@@ -433,7 +433,7 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     const mockFetch: typeof fetch = vi.fn(async (input) => {
       const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
       calledUrls.push(url);
-      if (url === "/api/live-feed") {
+      if (url.startsWith("https://raw.githubusercontent.com/")) {
         return new Response(
           JSON.stringify({
             version: 1,
@@ -448,8 +448,8 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     });
 
     const snap = await fetchLatestLiveFeed(VALID_PLATFORM_IDS, undefined, mockFetch);
-    expect(calledUrls).toEqual(["/api/live-feed"]);
-    expect(snap?.source).toBe("api");
+    expect(calledUrls).toEqual(["https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json"]);
+    expect(snap?.source).toBe("remote");
     expect(snap?.items[0].id).toBe("live-edge-abc123456789");
     expect(getClientEasyOriginal("live-edge-abc123456789")?.sections[0].heading).toBe("배경");
 
@@ -467,12 +467,12 @@ describe("실시간 라이브 보강 수집 & 즉시 병합 API (/api/live-feed)
     expect(sameAgain).toBe(merged);
   });
 
-  it("vercel.json 에 일 1회 초과 crons 설정이 없고, collect.yml 이 매시 1회 오프피크 스케줄(23분)과 timeout 12분을 유지한다", () => {
+  it("vercel.json 에 일 1회 초과 crons 설정이 없고, collect.yml 이 15분 주기 스케줄과 timeout 12분을 유지한다", () => {
     const vercelJson = JSON.parse(readFileSync(join(__dirname, "../vercel.json"), "utf8")) as Record<string, unknown>;
     expect(vercelJson.crons).toBeUndefined();
 
     const collectYml = readFileSync(join(__dirname, "../../.github/workflows/collect.yml"), "utf8");
-    expect(collectYml).toContain('cron: "23 * * * *"');
+    expect(collectYml).toContain('cron: "*/15 * * * *"');
     expect(collectYml).toContain("timeout-minutes: 12");
     expect(collectYml).toContain("cancel-in-progress: true");
     expect(collectYml).toContain("web/public/data/planning-feed.json");

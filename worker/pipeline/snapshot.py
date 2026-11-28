@@ -12,6 +12,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
+import os
 import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -24,6 +26,8 @@ from pipeline.curator import (
     is_blocked_noise,
     polish_korean_headline,
 )
+from adapters.rss import ai_relevant
+from pipeline.enrich import FALLBACK_SUFFIX_RE, IMAGE_CACHE_KEY, clean_text, enrich_snapshot_items
 from pipeline.merge import Candidate
 from pipeline.store import load_seed_platform_names
 from pipeline.translator import (
@@ -34,6 +38,7 @@ from pipeline.translator import (
     needs_translation,
 )
 
+logger = logging.getLogger(__name__)
 REPO_ROOT = Path(__file__).resolve().parents[2]
 PLATFORMS_SAMPLE_JSON = REPO_ROOT / "web" / "src" / "data" / "platforms.sample.json"
 
@@ -517,6 +522,8 @@ def candidate_to_snapshot_item(
         return None
     if c.platform_id in {"bluesky", "x"} and len(raw_title) < 12:
         return None
+    if c.platform_id == "bluesky" and not ai_relevant(raw_title, c.body or ""):
+        return None                                        # 연구자 계정의 일상 잡담(운전·선물 추천 등) 제외
     if c.platform_id == "aitimes" and not KR_AI_NEWS_RE.search(f"{raw_title} {c.body[:300]}"):
         return None
 
@@ -706,10 +713,7 @@ def _parse_iso(raw: Any) -> Optional[datetime]:
         return None
 
 
-_FALLBACK_SUFFIX_RE = re.compile(
-    r"\s—\s(?:새 AI 모델·기능 업데이트|개발자 도구·오픈소스 공개|AI 이미지·디자인 모델 공개|"
-    r"AI 영상·음성 모델 업데이트|신규 AI 연구·벤치마크 발표|글로벌 AI 업계 주요 발표|글로벌 AI 빌더 실시간 공유|AI 주요 업데이트)$"
-)
+_FALLBACK_SUFFIX_RE = FALLBACK_SUFFIX_RE
 
 
 def _item_needs_translation(item: dict[str, Any]) -> bool:
@@ -961,7 +965,11 @@ def build_planning_feed_payload(items: list[dict[str, Any]], generated_at: str) 
             "importance_score": it.get("importance_score"),
             "source_count": it.get("source_count"),
             "benefit_tag": it.get("benefit_tag"),
-            "highlight_summary": it.get("highlight_summary"),
+            "highlight_summary": clean_text(it.get("highlight_summary")) or None,
+            "image_url": it.get("image_url"),
+            "easy_summary_ko": it.get("easy_summary_ko"),
+            "vision_ko": it.get("vision_ko"),
+            "cluster_size": int(it.get("cluster_size") or 1),
             "planning_meta": {
                 "signal_type": pm.get("signal_type", "new_product"),
                 "product_domain": pm.get("product_domain", "ai-business-infra"),
@@ -991,9 +999,33 @@ def _signature(items: list[dict[str, Any]]) -> list[tuple[Any, ...]]:
             it.get("lifecycle_status"),
             str(it.get("what_ko") or "")[:60],
             str(it.get("highlight_summary") or "")[:50],
+            it.get("image_url"),
+            str(it.get("easy_summary_ko") or "")[:40],
+            int(it.get("cluster_size") or 1),
         )
         for it in items
     ]
+
+
+def _load_meta_key(meta_path: Path, key: str) -> Any:
+    try:
+        raw = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+    except Exception:
+        return {}
+    return raw.get(key, {}) if isinstance(raw, dict) else {}
+
+
+def _save_meta_key(meta_path: Path, key: str, value: Any) -> None:
+    payload: dict[str, Any] = {}
+    if meta_path.exists():
+        try:
+            disk = json.loads(meta_path.read_text(encoding="utf-8"))
+            payload = disk if isinstance(disk, dict) else {}
+        except Exception:
+            payload = {}
+    payload[key] = value
+    meta_path.parent.mkdir(parents=True, exist_ok=True)
+    meta_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def build_and_save_snapshot(
@@ -1008,6 +1040,7 @@ def build_and_save_snapshot(
     meta_path: Optional[Path] = None,
     planning_path: Optional[Path] = None,
     translator: Optional[ArticleTranslator] = None,
+    fetch_images: Optional[bool] = None,
 ) -> tuple[dict[str, Any], bool]:
     """기존 스냅샷과 신규 후보를 병합해 30일 자정(Auto-Prune)·스마트 승격·자동 한국어 큐레이션 후 저장."""
     now = now or datetime.now(timezone.utc)
@@ -1047,6 +1080,8 @@ def build_and_save_snapshot(
         if not is_valid_https_url(url) or pid not in platforms:
             continue
         if is_blocked_noise(str(item.get("hook_title") or item.get("original_title") or ""), str(item.get("what_ko") or ""), url):
+            continue
+        if pid == "bluesky" and not ai_relevant(str(item.get("original_title") or ""), str(item.get("what_ko") or "")):
             continue
         created_dt = _parse_iso(item.get("published_at")) or _parse_iso(item.get("created_at"))
         if not created_dt or created_dt < cutoff:
@@ -1331,6 +1366,17 @@ def build_and_save_snapshot(
 
     if translator.cache is not None:
         translator.cache.save()
+
+    # 5) 대표 사진(image_url) · 대화체 정제 · 미래 비전(vision_ko) · 동일 사건 묶음 (Additive-only)
+    image_cache = _load_meta_key(meta_path, IMAGE_CACHE_KEY) if meta_path is not None else {}
+    if not isinstance(image_cache, dict):
+        image_cache = {}
+    if fetch_images is None:
+        fetch_images = os.getenv("SNAPSHOT_FETCH_IMAGES", "1") != "0"
+    enrich_stats = enrich_snapshot_items(selected, image_cache=image_cache, now=now, fetch_og=fetch_images)
+    if meta_path is not None:
+        _save_meta_key(meta_path, IMAGE_CACHE_KEY, dict(sorted(image_cache.items())))
+    logger.info("enrich: %s", enrich_stats)
 
     changed = (not snapshot_path.exists()) or (_signature(existing_items) != _signature(selected))
     payload = {

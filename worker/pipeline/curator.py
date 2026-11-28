@@ -21,6 +21,9 @@ BLOCKED_NOISE_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"(웨비나\s*참가자?\s*모집|세미나\s*참가\s*신청|사전\s*등록\s*이벤트|얼리버드\s*할인|선착순\s*모집|모객)", re.I),
     re.compile(r"\b(we['’]?re\s+hiring|we\s+are\s+hiring|job\s+opening|join\s+our\s+team|sponsored\s+post|discount\s+code|giveaway)\b", re.I),
     re.compile(r"github\.com/[^/]+/[^/\s]+-(?:pro-)?(?:win|mac|crack|keygen)(?:$|[^a-z0-9])", re.I),
+    # 상용 소프트웨어 재포장·평가판 초기화 미끼 레포 (예: 'Topaz Video AI 6 Windows', 'Pro Trial Reset & Machine ID')
+    re.compile(r"\b(?:trial\s*reset|machine\s*id|keygen|activator|license\s*key|serial\s*key|cracked|full\s*version|"
+               r"free\s*download|premium\s*unlocked|repack)\b|평가판\s*(?:초기화|리셋)|\b\d+\s+windows\b", re.I),
 )
 
 # ── 블로그/커뮤니티 서두 개인 일화·잡담·인사말 감점 패턴 ─────────────────────────

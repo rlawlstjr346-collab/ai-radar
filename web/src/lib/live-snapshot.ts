@@ -5,6 +5,7 @@ import { join } from "node:path";
 
 import samplePlatforms from "@/data/platforms.sample.json";
 
+import { coerceEnrichment } from "./enrichment";
 import type { Category, Difficulty, EasyOriginal, Entity, FeedItem, Lifecycle, PlanningMeta, Platform, Term, UtilityTip } from "./types";
 
 const DEFAULT_REMOTE_SNAPSHOT_URL = "https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json";
@@ -150,6 +151,7 @@ function coerceItem(raw: unknown): { item: FeedItem; easy: EasyOriginal | null }
     terms,
     entities,
     easy_original_ready: Boolean(easy) || Boolean(r.easy_original_ready),
+    ...coerceEnrichment(r),
   };
 
   return { item, easy };
@@ -190,10 +192,10 @@ export function loadLiveSnapshot(explicitPath?: string): LiveSnapshot {
 }
 
 /**
- * 무부하 실시간 서빙: GitHub Raw 최신 live-feed.json (60초 ISR 캐시)을 우선 가져오고,
+ * 빌드 시 1회: GitHub Raw 최신 live-feed.json 을 우선 가져오고(기본 재검증 없음 → 정적 프리렌더, KV 0건),
  * 네트워크 오류·타임아웃·테스트 환경에서는 로컬 번들 스냅샷으로 안전 폴백한다.
  */
-export async function loadLiveSnapshotAsync(revalidateSeconds = 60): Promise<LiveSnapshot> {
+export async function loadLiveSnapshotAsync(revalidateSeconds: number | false = false): Promise<LiveSnapshot> {
   const local = loadLiveSnapshot();
   if (process.env.NODE_ENV === "test" || process.env.VITEST || process.env.DISABLE_REMOTE_LIVE_FEED === "1") {
     return local;

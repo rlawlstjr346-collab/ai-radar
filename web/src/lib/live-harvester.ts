@@ -1349,7 +1349,7 @@ export async function buildLiveFeedPayload(deps: LiveFeedDeps = {}): Promise<Liv
     const translate = deps.translateFn ?? ((txt: string) => translateToKorean(txt, fetchImpl, translateTimeoutMs));
 
     // 1) 베이스 스냅샷(GitHub Raw 우선 → 로컬 public/live-feed.json 폴백) + 실시간 속보 창구 병렬 동시 가동
-    const snapshotPromise = (deps.loadSnapshot ?? (() => loadLiveSnapshotAsync(180)))().catch(() => loadLiveSnapshot());
+    const snapshotPromise = (deps.loadSnapshot ?? (() => loadLiveSnapshotAsync()))().catch(() => loadLiveSnapshot());
     const harvestPromises = Promise.allSettled(
       sources.map((src) => fetchOneSource(src, now, sourceTimeoutMs, fetchImpl)),
     );

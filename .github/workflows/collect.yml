@@ -1,14 +1,12 @@
 name: collect
 
-# 매시 자동 수집 (X 실시간 연동 매시 + GitHub 핫 오픈소스·릴리즈 매 1시간 게이트 + 글로벌 AI 뉴스):
-# - Public 저장소 + 무부하 구조:
-#   1) 새 기사/실질 변경이 0건이면 커밋을 스킵(No-op)
-#   2) web/vercel.json 의 ignoreCommand 로 피드 JSON 만 바뀐 커밋은 Vercel 전체 재빌드를 건너뛰어
-#      일일 배포 한도(100회)를 0% 소모하고, Next.js ISR(revalidate: 60) + Raw JSON 원격 fetch 로
-#      최대 60초 안에 최신 피드를 즉시 서빙한다.
+# 15분 주기 자동 수집 (공개 저장소라 Actions 무료) — 글로벌 뉴스·Substack·X·커뮤니티·GitHub·중국 5대 소스:
+# - 새 기사/실질 변경이 0건이면 커밋을 스킵(No-op)
+# - 웹은 재배포 없이 브라우저가 60초마다 GitHub Raw live-feed.json 을 조회해 generated_at 이 더 최신이면 즉시 병합
+# - GitHub 핫 오픈소스·릴리즈는 API 예의상 내부 1시간 게이트 유지
 on:
   schedule:
-    - cron: "23 * * * *"   # 매시 23분(하루 24회) — GitHub 수집 게이트(1시간)와 맞춰 과다 실행 완화
+    - cron: "*/15 * * * *"   # 15분 주기 (하루 96회)
   workflow_dispatch:
     inputs:
       dry_run:

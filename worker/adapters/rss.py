@@ -11,8 +11,9 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin
 
 import feedparser
+import httpx
 
-from adapters.base import BaseAdapter, parse_dt
+from adapters.base import BaseAdapter, CooldownError, NotModifiedError, parse_dt
 from collector.classify import classify_news
 from collector.models import RawItem
 from collector.normalize import strip_html
@@ -37,6 +38,11 @@ SUBSTACK_MARKERS: tuple[str, ...] = (
     "oneusefulthing.org",
     "interconnects.ai",
 )
+
+# 데이터센터 IP(GitHub Actions)에서 403 이 잦은 피드의 저자 공식 미러
+FEED_MIRRORS: dict[str, str] = {
+    "importai.substack.com": "https://jack-clark.net/feed/",
+}
 
 # AI 키워드 필터를 적용할 종합 피드 (endpoint 부분 문자열)
 AI_FILTER_MARKERS: tuple[str, ...] = (
@@ -88,8 +94,25 @@ class RSSAdapter(BaseAdapter):
     def matches(cls, source) -> bool:
         return source.method == "rss"
 
+    def _fetch_feed_bytes(self) -> bytes:
+        """원 엔드포인트가 403/429·타임아웃·쿨다운이면 공식 미러 피드로 1회 폴백한다."""
+        try:
+            return self.get(self.source.endpoint).content
+        except NotModifiedError:
+            raise
+        except (httpx.HTTPError, CooldownError) as err:
+            mirror = next((m for k, m in FEED_MIRRORS.items() if k in self.source.endpoint), None)
+            if not mirror:
+                raise
+            try:
+                return self.get(mirror).content
+            except NotModifiedError:
+                raise
+            except (httpx.HTTPError, CooldownError):
+                raise err
+
     def fetch(self) -> list[RawItem]:
-        feed = feedparser.parse(self.get(self.source.endpoint).content)
+        feed = feedparser.parse(self._fetch_feed_bytes())
         if feed.bozo and not feed.entries:
             raise ValueError(f"unparseable feed: {feed.bozo_exception}")
 
@@ -156,9 +179,25 @@ class RSSAdapter(BaseAdapter):
         return out
 
 
+IMG_TAG_RE = re.compile(r"<img\b[^>]*?\bsrc=[\"']([^\"']+)[\"'][^>]*>", re.I)
+IMG_WIDTH_RE = re.compile(r"\bwidth=[\"']?(\d+)", re.I)
+
+
 def _thumbnail(entry) -> str | None:
-    for key in ("media_thumbnail", "media_content"):
+    """media:content·media:thumbnail → 이미지 enclosure → 본문 첫 고해상도 <img> 순서."""
+    for key in ("media_content", "media_thumbnail"):
         for m in entry.get(key) or []:
-            if m.get("url"):
-                return m["url"]
+            url = m.get("url")
+            medium = (m.get("medium") or m.get("type") or "image").lower()
+            if url and url.startswith("https://") and ("image" in medium or medium == ""):
+                return url
+    for link in entry.get("links") or []:
+        if link.get("rel") == "enclosure" and str(link.get("type", "")).startswith("image/") and str(link.get("href", "")).startswith("https://"):
+            return link["href"]
+    content = (entry.get("content") or [{}])[0].get("value") or entry.get("summary") or ""
+    for m in IMG_TAG_RE.finditer(content[:20000]):
+        src = m.group(1)
+        w = IMG_WIDTH_RE.search(m.group(0))
+        if src.startswith("https://") and not (w and int(w.group(1)) < 300):
+            return src
     return None

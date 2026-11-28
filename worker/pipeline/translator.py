@@ -131,7 +131,7 @@ class TranslatedArticle:
 _JP_KANA_RE = re.compile(r"[\u3040-\u30ff]")
 _BAD_CACHE_SUFFIX_RE = re.compile(
     r"\s—\s(?:새 AI 모델·기능 업데이트|개발자 도구·오픈소스 공개|AI 이미지·디자인 모델 공개|"
-    r"AI 영상·음성 모델 업데이트|신규 AI 연구·벤치마크 발표|글로벌 AI 업계 주요 발표|글로벌 AI 빌더 실시간 공유|AI 주요 업데이트)$"
+    r"AI 영상·음성 모델 업데이트|신규 AI 연구·벤치마크 발표|글로벌 AI 업계 주요 발표|글로벌 AI 빌더 실시간 공유|AI 주요 업데이트)(?:됐어요|했어요)?$"
 )
 
 

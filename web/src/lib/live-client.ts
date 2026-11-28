@@ -1,14 +1,13 @@
 "use client";
 
+import { coerceEnrichment } from "./enrichment";
 import type { Category, Difficulty, EasyOriginal, Entity, FeedItem, Lifecycle, PlanningMeta, Term, UtilityTip } from "./types";
 
-const API_LIVE_FEED_URL = "/api/live-feed";
 const REMOTE_LIVE_FEED_URL =
   "https://raw.githubusercontent.com/rlawlstjr346-collab/ai-radar/main/web/public/live-feed.json";
 const LOCAL_LIVE_FEED_URL = "/live-feed.json";
-const API_FETCH_TIMEOUT_MS = 10_000;
+const REMOTE_FETCH_TIMEOUT_MS = 8_000;
 const FALLBACK_FETCH_TIMEOUT_MS = 5_000;
-const THREE_MIN_MS = 180_000;
 
 const VALID_CATEGORIES = new Set<Category>(["llm_chat", "dev", "image_design", "video_audio", "research", "industry", "social"]);
 const VALID_URL_RE = /^https:\/\/[^/\s]+\.[^/\s]+/;
@@ -150,6 +149,7 @@ function coerceClientItem(raw: unknown, validPlatformIds: Set<string>): { item: 
     terms,
     entities,
     easy_original_ready: Boolean(easy) || Boolean(r.easy_original_ready),
+    ...coerceEnrichment(r),
   };
 
   return { item, easy };
@@ -209,47 +209,36 @@ async function fetchJsonWithTimeout(
 }
 
 /**
- * 1순위: 자체 서버 라이브 보강 API(`/api/live-feed`, 3분 CDN/ISR 캐시)
- * 2순위: GitHub Raw 최신 `live-feed.json`
- * 3순위: 로컬 정적 `/live-feed.json` 안전 폴백
+ * 1순위: 공개 GitHub Raw 최신 `live-feed.json` — 15분 주기 수집 커밋을 재배포 없이 바로 받는다.
+ *        `cache: "no-cache"` 로 ETag 조건부 요청을 보내 바뀐 게 없으면 304 로 가볍게 끝난다.
+ * 2순위: 같은 배포에 번들된 정적 `/live-feed.json` 안전 폴백
  */
 export async function fetchLatestLiveFeed(
   validPlatformIds: Set<string>,
   signal?: AbortSignal,
   fetchImpl: typeof fetch = fetch,
 ): Promise<ClientLiveSnapshot | null> {
-  const apiRaw = await fetchJsonWithTimeout(API_LIVE_FEED_URL, API_FETCH_TIMEOUT_MS, "default", signal, fetchImpl);
-  if (apiRaw) {
-    const parsed = parseClientSnapshot(apiRaw, validPlatformIds, "api");
-    if (parsed) return parsed;
-  }
-  if (signal?.aborted) return null;
-
-  const bucket = Math.floor(Date.now() / THREE_MIN_MS);
-  const remoteRaw = await fetchJsonWithTimeout(
-    `${REMOTE_LIVE_FEED_URL}?v=${bucket}`,
-    FALLBACK_FETCH_TIMEOUT_MS,
-    "no-store",
-    signal,
-    fetchImpl,
-  );
+  const remoteRaw = await fetchJsonWithTimeout(REMOTE_LIVE_FEED_URL, REMOTE_FETCH_TIMEOUT_MS, "no-cache", signal, fetchImpl);
   if (remoteRaw) {
     const parsed = parseClientSnapshot(remoteRaw, validPlatformIds, "remote");
     if (parsed) return parsed;
   }
   if (signal?.aborted) return null;
 
-  const localRaw = await fetchJsonWithTimeout(
-    `${LOCAL_LIVE_FEED_URL}?v=${bucket}`,
-    FALLBACK_FETCH_TIMEOUT_MS,
-    "no-store",
-    signal,
-    fetchImpl,
-  );
+  const localRaw = await fetchJsonWithTimeout(LOCAL_LIVE_FEED_URL, FALLBACK_FETCH_TIMEOUT_MS, "no-cache", signal, fetchImpl);
   if (localRaw) {
     return parseClientSnapshot(localRaw, validPlatformIds, "local");
   }
   return null;
+}
+
+/** 수신 스냅샷이 화면 기준보다 새로운지 (generated_at 비교, 없으면 새 것으로 간주하지 않음) */
+export function isNewerSnapshot(nextIso: string | null | undefined, prevIso: string | null | undefined): boolean {
+  if (!nextIso) return false;
+  const next = Date.parse(nextIso);
+  if (Number.isNaN(next)) return false;
+  const prev = prevIso ? Date.parse(prevIso) : Number.NaN;
+  return Number.isNaN(prev) || next > prev;
 }
 
 function sameFeedOrder(a: FeedItem[], b: FeedItem[]): boolean {

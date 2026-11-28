@@ -123,11 +123,13 @@ describe("Apple ML Research 좌측 컬러 도트 · 무한 스크롤 · 고밀�
     expect(cardTsx).not.toContain("<button");
   });
 
-  it("RadarApp·Sidebar 는 검색창·글씨크기 슬라이더·수동 더보기 버튼을 제거하고 IntersectionObserver 무한 스크롤을 사용한다", () => {
+  it("RadarApp·FrontPage 는 글씨크기 슬라이더·수동 더보기 버튼 없이 IntersectionObserver 무한 스크롤을 사용한다", () => {
     const radarTsx = readFileSync(join(__dirname, "../src/components/RadarApp.tsx"), "utf8");
+    const frontTsx = readFileSync(join(__dirname, "../src/components/newsroom/FrontPage.tsx"), "utf8");
     const sidebarTsx = readFileSync(join(__dirname, "../src/components/Sidebar.tsx"), "utf8");
-    expect(radarTsx).toContain("IntersectionObserver");
-    expect(radarTsx).toContain('rootMargin: "400px"');
+    expect(frontTsx).toContain("IntersectionObserver");
+    expect(frontTsx).toContain('rootMargin: "600px"');
+    expect(frontTsx).not.toContain("더보기");
     expect(radarTsx).not.toContain("FontSizeToggle");
     expect(radarTsx).not.toContain("더보기");
     expect(sidebarTsx).not.toContain("FontSizeToggle");
