@@ -1,8 +1,37 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T15:47:14.581243Z",
+  "generated_at": "2026-11-28T16:02:10.147051Z",
   "item_count": 200,
   "signals": [
+    {
+      "id": "live-6c6528fbb1a1",
+      "title_ko": "네온 성능 향상으로 다양한 AI 모델을 자유롭게 쓸 수 있어요",
+      "original_title": "I'm so happy to not feel stuck to Claude now that Neon is good. Were lots of creative workflows that GPT kind of didn…",
+      "platform_id": "bluesky",
+      "author_handle": null,
+      "category": "social",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
+      "published_at": "2026-11-28T15:25:01.214000Z",
+      "fetched_at": "2026-11-28T16:02:10.147051Z",
+      "importance_score": 18.69,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
+      "vision_ko": "앞으로 특정 플랫폼에 묶이지 않고 작업에 가장 알맞은 AI 모델을 골라 쓸 수 있어요. 우리는 다양한 대안 모델이 실제 업무 효율에 미치는 영향을 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "builder-community-signal",
+        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
+        "actionable_idea": "Claude의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude"
+      ]
+    },
     {
       "id": "live-3445fa59e455",
       "title_ko": "패러렐 MCP 인증 경로와 설정 효과를 살펴볼까요?",
@@ -748,7 +777,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 32.33,
+      "importance_score": 32.53,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -1225,7 +1254,7 @@
       "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 로봇 생산 비용을 낮추고 소프트웨어 구독을 결합하는 방식으로 로봇 대중화가 빨라질 수 있어요. 우리는 자동차 사업의 기술과 부품 공급망을 활용한 양산 전략에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 대중적인 가격대의 휴머노이드 로봇이 보급되면서 일상이나 제조 현장에서 로봇 활용이 빠르게 늘어날 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산과 수익화로 이어지는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -3673,33 +3702,32 @@
       ]
     },
     {
-      "id": "live-3f8866a3ef57",
-      "title_ko": "Qwen3.8-27B를 10GB로 줄인 NariQ가 공개됐어요.",
-      "original_title": "Nari Labs, 에이전트 세션으로 보정한 3비트 이하 양자화 NariQ 공개: Qwen3.8-27B를 10GB로 (feat. llama.cpp)",
-      "platform_id": "pytorch-kr",
+      "id": "live-1e1e7907d3f9",
+      "title_ko": "맥오스·윈도우·리눅스를 지원하는 로컬 미디어 다운로더 캡테이가 나왔어요",
+      "original_title": "sol1560/Captae: Local media downloader and library for macOS, Windows and Linux, with a browser extension an",
+      "platform_id": "github",
       "author_handle": null,
-      "category": "research",
+      "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://discuss.pytorch.kr/t/nari-labs-3-nariq-qwen3-8-27b-10gb-feat-llama-cpp/12652",
-      "published_at": "2026-11-26T23:30:21Z",
+      "canonical_url": "https://github.com/sol1560/Captae",
+      "published_at": "2026-11-26T17:28:47Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 23.18,
+      "importance_score": 29.62,
       "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Nari Labs가 긴 에이전트 작업에서도 성능을 유지하는 사후 학습 양자화 방법인 NariQ를 공개했어요. Qwen3.8-27B 모델을 3비트 이하로 줄여 10.1GB, 8.4GB, 6.8GB 크기로 제공해요.",
+      "benefit_tag": "GitHub 급상승 ★315",
+      "highlight_summary": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
       "image_url": null,
-      "easy_summary_ko": "Nari Labs가 긴 에이전트 작업에서도 성능을 유지하는 사후 학습 양자화 방법인 NariQ를 공개했어요. Qwen3.8-27B 모델을 3비트 이하로 줄여 10.1GB, 8.4GB, 6.8GB 크기로 제공해요.",
-      "vision_ko": "앞으로 고성능 대형 언어 모델을 일반 사용자용 GPU 환경에서도 부담 없이 실행할 수 있게 돼요. 우리는 저비트 양자화 기술이 장기 에이전트 벤치마크에서 원본과 얼마나 동등한 성능을 내는지 주목해 볼 수 있어요.",
+      "easy_summary_ko": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
+      "vision_ko": "앞으로 다양한 운영체제에서 인공지능 보조 도구와 연동되는 미디어 관리 도구를 손쉽게 활용할 수 있게 돼요. 우리는 인공지능 생태계와 연결되는 MCP 서버 기반 오픈소스 도구들의 확산세에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "Llama — 27B 기반 성능·효율 지표",
-        "actionable_idea": "Llama의 'Llama — 27B 기반 성능·효율 지표' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "GitHub 급상승 ★315",
+        "actionable_idea": "GitHub의 'GitHub 급상승 ★315' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Llama",
-        "Ollama"
+        "GitHub"
       ]
     },
     {
@@ -3762,32 +3790,32 @@
       ]
     },
     {
-      "id": "live-1e1e7907d3f9",
-      "title_ko": "맥오스·윈도우·리눅스를 지원하는 로컬 미디어 다운로더 캡테이가 나왔어요",
-      "original_title": "sol1560/Captae: Local media downloader and library for macOS, Windows and Linux, with a browser extension an",
-      "platform_id": "github",
+      "id": "live-4478933c2686",
+      "title_ko": "앤트로픽 연구진이 API를 Rust로 옮겼어요",
+      "original_title": "Anthropic Research: Migrating API To Rust",
+      "platform_id": "anthropic",
       "author_handle": null,
-      "category": "dev",
+      "category": "research",
       "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/sol1560/Captae",
-      "published_at": "2026-11-26T17:28:47Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 29.62,
+      "canonical_url": "https://anthropic.com/research/migrating-api-to-rust",
+      "published_at": "2026-11-25T16:27:43.869000Z",
+      "fetched_at": "2026-11-25T21:36:50.284457Z",
+      "importance_score": 29.76,
       "source_count": 1,
-      "benefit_tag": "GitHub 급상승 ★315",
-      "highlight_summary": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
-      "image_url": null,
-      "easy_summary_ko": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
-      "vision_ko": "앞으로 다양한 운영체제에서 인공지능 보조 도구와 연동되는 미디어 관리 도구를 손쉽게 활용할 수 있게 돼요. 우리는 인공지능 생태계와 연결되는 MCP 서버 기반 오픈소스 도구들의 확산세에 주목해 볼 수 있어요.",
+      "benefit_tag": null,
+      "highlight_summary": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
+      "image_url": "https://assets.claude.com/faac348155bf01d5c59ab38cbd05294eb2fa8197.jpg",
+      "easy_summary_ko": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
+      "vision_ko": "앞으로 고성능 AI 서비스를 구축할 때 안정성과 속도를 높이기 위한 시스템 프로그래밍의 중요성이 더욱 커질 거예요. 우리는 대규모 API 환경을 개선하는 개발 방식의 변화에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "GitHub 급상승 ★315",
-        "actionable_idea": "GitHub의 'GitHub 급상승 ★315' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "GitHub"
+        "Anthropic"
       ]
     },
     {
@@ -3849,32 +3877,32 @@
       ]
     },
     {
-      "id": "live-4478933c2686",
-      "title_ko": "앤트로픽 연구진이 API를 Rust로 옮겼어요",
-      "original_title": "Anthropic Research: Migrating API To Rust",
-      "platform_id": "anthropic",
+      "id": "live-81341e7e565b",
+      "title_ko": "인텐트풀의 아리아는 어떻게 성장을 위한 시간을 만들어 줄까요?",
+      "original_title": "How Intentful uses dots to make more time for growth",
+      "platform_id": "openai",
       "author_handle": null,
-      "category": "research",
+      "category": "industry",
       "lifecycle_status": "hot",
-      "canonical_url": "https://anthropic.com/research/migrating-api-to-rust",
-      "published_at": "2026-11-25T16:27:43.869000Z",
-      "fetched_at": "2026-11-25T21:36:50.284457Z",
-      "importance_score": 29.76,
+      "canonical_url": "https://openai.com/business/customer-stories/intentful-dots",
+      "published_at": "2026-11-25T02:43:16.872187Z",
+      "fetched_at": "2026-11-25T02:43:16.872187Z",
+      "importance_score": 26.65,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
-      "image_url": "https://assets.claude.com/faac348155bf01d5c59ab38cbd05294eb2fa8197.jpg",
-      "easy_summary_ko": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
-      "vision_ko": "앞으로 고성능 AI 서비스를 구축할 때 안정성과 속도를 높이기 위한 시스템 프로그래밍의 중요성이 더욱 커질 거예요. 우리는 대규모 API 환경을 개선하는 개발 방식의 변화에 주목해 볼 수 있어요.",
+      "highlight_summary": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
+      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/2DH2aby1xmlzvADCraI7Xi/bbe8b8956578492f2c3fd7326ecbd9e1/intentful-dots-social-c.png?w=1600&h=900&fit=fill",
+      "easy_summary_ko": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
+      "vision_ko": "앞으로 일상적인 웹 조사와 제안서 작성 같은 반복 업무를 AI 도구가 대신 처리해 업무 효율이 크게 높아져요. 우리는 AI 에이전트가 사용자의 메시지 관리와 문제 해결을 얼마나 정확하게 보조하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
-        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Anthropic"
+        "OpenAI News"
       ]
     },
     {
@@ -3907,35 +3935,6 @@
       ]
     },
     {
-      "id": "live-81341e7e565b",
-      "title_ko": "인텐트풀의 아리아는 어떻게 성장을 위한 시간을 만들어 줄까요?",
-      "original_title": "How Intentful uses dots to make more time for growth",
-      "platform_id": "openai",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://openai.com/business/customer-stories/intentful-dots",
-      "published_at": "2026-11-25T02:43:16.872187Z",
-      "fetched_at": "2026-11-25T02:43:16.872187Z",
-      "importance_score": 26.65,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
-      "image_url": "https://images.ctfassets.net/kftzwdyauwt9/2DH2aby1xmlzvADCraI7Xi/bbe8b8956578492f2c3fd7326ecbd9e1/intentful-dots-social-c.png?w=1600&h=900&fit=fill",
-      "easy_summary_ko": "마리나 페트로바의 도트인 아리아는 웹사이트를 조사하고 제안서를 작성하며 메시지에 플래그를 지정해 문제를 해결하는 것을 도와줘요. 이를 통해 반복적인 업무를 줄이고 성장에 집중할 수 있는 시간을 더 많이 확보할 수 있어요.",
-      "vision_ko": "앞으로 일상적인 웹 조사와 제안서 작성 같은 반복 업무를 AI 도구가 대신 처리해 업무 효율이 크게 높아져요. 우리는 AI 에이전트가 사용자의 메시지 관리와 문제 해결을 얼마나 정확하게 보조하는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "industry_shift",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "OpenAI News의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "OpenAI News"
-      ]
-    },
-    {
       "id": "live-3f30f05896e1",
       "title_ko": "아이푸드는 15000개의 저장소에서 어떻게 코딩 에이전트를 쓸까요?",
       "original_title": "How iFood scales coding agents across 15,000 repositories",
@@ -3965,35 +3964,6 @@
       ]
     },
     {
-      "id": "live-f22dad31bb1e",
-      "title_ko": "앤트로픽이 공개한 AI와 함께 일하는 방법에 대해 알아보세요",
-      "original_title": "Anthropic Research: Working With AI",
-      "platform_id": "anthropic",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://anthropic.com/research/working-with-ai",
-      "published_at": "2026-11-23T22:13:27.525000Z",
-      "fetched_at": "2026-11-23T22:28:28.664300Z",
-      "importance_score": 30.54,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "앤트로픽에서 AI와 함께 일하기를 주제로 한 공식 연구 보고서를 새롭게 발표했어요. 업무 환경에서 AI를 효과적으로 활용하는 방식에 대한 연구 결과를 확인할 수 있어요.",
-      "image_url": "https://assets.claude.com/cd30ce2e82eb423476801098073b39e025839018.jpg",
-      "easy_summary_ko": "앤트로픽에서 AI와 함께 일하기를 주제로 한 공식 연구 보고서를 새롭게 발표했어요. 업무 환경에서 AI를 효과적으로 활용하는 방식에 대한 연구 결과를 확인할 수 있어요.",
-      "vision_ko": "앞으로 실제 업무 현장에서 AI를 협업 동반자로 삼아 일하는 방식을 체계적으로 정립할 수 있게 돼요. 우리는 이번 연구 보고서에 담긴 실험 수치와 모델 활용 방안이 실제 기술 로드맵에 어떤 영향을 미치는지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
-        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
-      ]
-    },
-    {
       "id": "live-b2c4891a086e",
       "title_ko": "GPT-6 모델이 단백질 구조를 설계할 수 있어요",
       "original_title": "GPT-6 models demonstrate intrinsic protein-design capabilities",
@@ -4020,6 +3990,35 @@
       },
       "entities": [
         "GPT-6"
+      ]
+    },
+    {
+      "id": "live-f22dad31bb1e",
+      "title_ko": "앤트로픽이 공개한 AI와 함께 일하는 방법에 대해 알아보세요",
+      "original_title": "Anthropic Research: Working With AI",
+      "platform_id": "anthropic",
+      "author_handle": null,
+      "category": "research",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://anthropic.com/research/working-with-ai",
+      "published_at": "2026-11-23T22:13:27.525000Z",
+      "fetched_at": "2026-11-23T22:28:28.664300Z",
+      "importance_score": 30.54,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "앤트로픽에서 AI와 함께 일하기를 주제로 한 공식 연구 보고서를 새롭게 발표했어요. 업무 환경에서 AI를 효과적으로 활용하는 방식에 대한 연구 결과를 확인할 수 있어요.",
+      "image_url": "https://assets.claude.com/cd30ce2e82eb423476801098073b39e025839018.jpg",
+      "easy_summary_ko": "앤트로픽에서 AI와 함께 일하기를 주제로 한 공식 연구 보고서를 새롭게 발표했어요. 업무 환경에서 AI를 효과적으로 활용하는 방식에 대한 연구 결과를 확인할 수 있어요.",
+      "vision_ko": "앞으로 실제 업무 현장에서 AI를 협업 동반자로 삼아 일하는 방식을 체계적으로 정립할 수 있게 돼요. 우리는 이번 연구 보고서에 담긴 실험 수치와 모델 활용 방안이 실제 기술 로드맵에 어떤 영향을 미치는지 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Anthropic"
       ]
     },
     {
@@ -5568,7 +5567,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 앤스로픽의 인공지능 에이전트 서비스를 미국 외 지역에서도 더욱 다양하게 활용할 수 있어요. 우리는 유료 구독 사용자들을 중심으로 일본에서 시작된 연구 미리보기 서비스의 확산에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내에서도 더 다양한 국가와 마찬가지로 새로운 인공지능 에이전트 기능을 미리 체험할 기회가 넓어질 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떻게 활용 범위를 넓혀 가는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
