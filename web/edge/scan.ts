@@ -1,6 +1,6 @@
 /**
  * 5분 엣지 속보 스캐너 (Cloudflare Cron `*\/5 * * * *` 1개).
- * - 초경량 피드 6개만 3초 타임아웃으로 병렬 조회 (하위 요청: 피드 6 + D1 2 + Gemini ≤3 = 최대 11)
+ * - 초경량 피드 5개만 3초 타임아웃으로 병렬 조회 (하위 요청: 피드 5 + D1 2 + Gemini ≤3 = 최대 10)
  * - DOM 파서 없이 앞부분 60KB 만 indexOf/정규식으로 훑어 CPU 를 아낀다
  * - 진짜 신규 기사가 있을 때만 Gemini 1회 배치 (없으면 Gemini 0회, D1 메타 1행만 갱신)
  * - Gemini 실패(429 등) 시: 한국어 기사는 규칙 대화체로 즉시 게시, 영문 기사는 다음 주기로 미룬다
@@ -21,13 +21,14 @@ export interface EdgeSource {
   limit: number;
   /** 앞부분만 훑을 바이트 수 (본문 전문을 싣는 Atom 피드만 크게) */
   maxText?: number;
+  /** 종합 피드: AI 관련 글만 통과 */
+  aiOnly?: boolean;
 }
 
 export const EDGE_SOURCES: EdgeSource[] = [
-  { id: "gn-ko", platform: "google-news", category: "industry", kind: "rss", lang: "ko", limit: 6,
-    url: "https://news.google.com/rss/search?q=AI+OR+%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5+when:1h&hl=ko&gl=KR&ceid=KR:ko" },
-  { id: "gn-en", platform: "google-news", category: "industry", kind: "rss", lang: "en", limit: 5,
-    url: "https://news.google.com/rss/search?q=%22artificial+intelligence%22+OR+OpenAI+OR+Anthropic+OR+Gemini+when:1h&hl=en-US&gl=US&ceid=US:en" },
+  // 구글 뉴스 RSS 는 Cloudflare 엣지에서 매번 3초 타임아웃(실측) → 국내 개발자 커뮤니티 긱뉴스로 대체
+  { id: "geeknews", platform: "geeknews", category: "dev", kind: "rss", lang: "ko", limit: 5, aiOnly: true,
+    url: "https://feeds.feedburner.com/geeknews-feed" },
   { id: "hn", platform: "hacker-news", category: "dev", kind: "hn", lang: "en", limit: 4,
     url: "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=AI&numericFilters=points%3E15&hitsPerPage=8" },
   { id: "aitimes", platform: "aitimes", category: "industry", kind: "rss", lang: "ko", tz: "+09:00", limit: 6,
@@ -55,6 +56,8 @@ export interface RawEntry {
   description: string;
   publisher: string | null;
 }
+
+const AI_RE = /(\bA\.?I\b|인공지능|LLM|GPT|에이전트|agent|Claude|Gemini|OpenAI|Anthropic|머신러닝|딥러닝|생성형|챗봇|Llama|Qwen|DeepSeek|MCP)/i;
 
 const ENTITY: Record<string, string> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&apos;": "'", "&nbsp;": " " };
 
@@ -110,23 +113,23 @@ export function parseFeed(text: string, source: EdgeSource): RawEntry[] {
     if (!rawTitle || !link.startsWith("https://")) continue;
     const publisher = tag(block, "source");
     let title = stripTags(rawTitle);
-    if (source.id.startsWith("gn") && publisher) {
+    if (publisher) {
       const pub = stripTags(publisher);
       if (title.endsWith(` - ${pub}`)) title = title.slice(0, -(pub.length + 3)).trim();
     }
+    const description = stripTags(tag(block, "description") ?? tag(block, "summary") ?? tag(block, "content") ?? "").slice(0, 400);
+    if (source.aiOnly && !AI_RE.test(`${title} ${description}`)) continue;
     out.push({
       source,
       title,
       link: decode(link),
       published: parseDate(tag(block, "pubDate") ?? tag(block, "published") ?? tag(block, "updated") ?? tag(block, "dc:date"), source.tz),
-      description: stripTags(tag(block, "description") ?? tag(block, "summary") ?? "").slice(0, 400),
+      description,
       publisher: publisher ? stripTags(publisher) : null,
     });
   }
   return out;
 }
-
-const BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
 async function fetchText(source: EdgeSource, fetchImpl: typeof fetch): Promise<{ text: string | null; status: string }> {
   const ctrl = new AbortController();
@@ -135,8 +138,7 @@ async function fetchText(source: EdgeSource, fetchImpl: typeof fetch): Promise<{
     const res = await fetchImpl(source.url, {
       signal: ctrl.signal,
       headers: {
-        // 구글 뉴스는 봇 UA 를 거절하는 경우가 있어 일반 브라우저 UA + 언어 헤더로 요청한다
-        "User-Agent": source.id.startsWith("gn") ? BROWSER_UA : "Mozilla/5.0 (compatible; AI-Radar-Edge/1.0)",
+                "User-Agent": "Mozilla/5.0 (compatible; AI-Radar-Edge/1.0)",
         "Accept-Language": source.lang === "ko" ? "ko-KR,ko;q=0.9" : "en-US,en;q=0.9",
         Accept: "application/rss+xml, application/xml, application/json, text/xml;q=0.9, */*;q=0.5",
       },

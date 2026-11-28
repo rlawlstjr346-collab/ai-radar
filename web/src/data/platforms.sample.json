@@ -1738,17 +1738,5 @@
     "access_note": "무료로 읽을 수 있어요. AI·에이전트·오픈소스 글만 골라 한국어로 정리해 드려요.",
     "collect_status": "active",
     "region": "cn"
-  },
-  {
-    "id": "google-news",
-    "name": "Google 뉴스",
-    "category": "industry",
-    "one_liner_ko": "전 세계 언론사의 AI 기사를 실시간으로 모아 보여 주는 뉴스 검색 서비스예요.",
-    "why_visit_ko": "방금 나온 AI 속보를 여러 매체 기사로 한 번에 확인할 수 있어요.",
-    "url": "https://news.google.com",
-    "theme_color": "#1A73E8",
-    "access_note": "무료로 읽을 수 있어요.",
-    "collect_status": "active",
-    "region": "global"
   }
 ]

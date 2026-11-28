@@ -106,12 +106,13 @@ describe("5분 엣지 스캐너", () => {
     expect(new Date(parseDate("Sat, 28 Nov 2026 10:24:40 GMT")!).toISOString()).toBe("2026-11-28T10:24:40.000Z");
   });
 
-  it("구글 뉴스 RSS 에서 ' - 매체명' 접미사를 떼고 링크·발행시각·매체를 뽑는다", () => {
-    const xml = `<rss><channel><item><title>오픈AI, 새 모델 공개 - 연합뉴스</title><link>https://news.google.com/rss/articles/abc</link><pubDate>Sat, 28 Nov 2026 10:24:40 GMT</pubDate><source url="https://yna.co.kr">연합뉴스</source></item></channel></rss>`;
-    const [e] = parseFeed(xml, EDGE_SOURCES[0]);
-    expect(e.title).toBe("오픈AI, 새 모델 공개");
-    expect(e.publisher).toBe("연합뉴스");
-    expect(e.link).toBe("https://news.google.com/rss/articles/abc");
+  it("RSS 에서 ' - 매체명' 접미사를 떼고, 종합 피드는 AI 관련 글만 남긴다", () => {
+    const geek = EDGE_SOURCES.find((s) => s.id === "geeknews")!;
+    const xml = `<rss><channel><item><title><![CDATA[오픈AI, 새 에이전트 공개 - 연합뉴스]]></title><link>https://news.hada.io/topic?id=1</link><pubDate>Sat, 28 Nov 2026 10:24:40 GMT</pubDate><source url="https://yna.co.kr">연합뉴스</source></item><item><title>러스트 1.90 릴리스</title><link>https://news.hada.io/topic?id=2</link></item></channel></rss>`;
+    const out = parseFeed(xml, geek);
+    expect(out).toHaveLength(1);
+    expect(out[0].title).toBe("오픈AI, 새 에이전트 공개");
+    expect(out[0].publisher).toBe("연합뉴스");
   });
 
   it("규칙 대화체·Gemini 검증", () => {
@@ -179,7 +180,7 @@ describe("엣지 Gemini 재시도 상한", () => {
     const r3 = await runEdgeScan({ DB: db, GEMINI_API_KEY: "k" }, new Date("2026-11-28T10:40:00Z"), f);
     expect([r1.deferred, r2.deferred, r3.fresh_new]).toEqual([1, 1, 0]);
     expect(r3.gemini_calls).toBe(0);
-    expect(r1.failed_sources.some((s) => s.startsWith("gn-ko:"))).toBe(true);
+    expect(r1.failed_sources.some((s) => s.startsWith("aitimes:"))).toBe(true);
     expect(calls).toBe(6); // 2주기 × 모델 체인 3개, 이후 0
   });
 });
