@@ -294,7 +294,7 @@ def polish_korean_headline(
     # 어색한 직역 어미 다듬기
     t = re.sub(r"\s*최신\s*소식$", "", t).strip()
     t = re.sub(r"이야기\.$", "이유", t).strip()
-    t = re.sub(r"하는\s*방법$", "실전 가이드", t).strip()
+    t = re.sub(r"하는\s*방법$", "하는 법", t).strip()
 
     # GitHub 급상승/릴리즈 헤드라인 정돈
     if metrics.get("feed") == "github_trending" and metrics.get("stars"):

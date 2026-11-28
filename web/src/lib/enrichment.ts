@@ -25,7 +25,7 @@ export function coerceEnrichment(
   const size = Number(r.cluster_size);
   return {
     image_url: image && HTTPS_RE.test(image) ? image : null,
-    easy_summary_ko: str(r.easy_summary_ko)?.replace(/==/g, "") ?? null,
+    easy_summary_ko: typeof r.easy_summary_ko === "string" ? r.easy_summary_ko.replace(/==/g, "").trim() : null,
     vision_ko: str(r.vision_ko)?.replace(/==/g, "") ?? null,
     cluster_size: Number.isFinite(size) && size >= 1 ? Math.floor(size) : 1,
     related_refs: related,

@@ -32,16 +32,29 @@ def test_conversational_endings():
 
 def test_easy_summary_and_vision_are_conversational():
     item = {
+        "id": "live-1",
         "hook_title": "새 모델 공개",
-        "what_ko": "==OpenAI가== 더 빠른 모델을 내놓았다. 가격도 절반이다.",
-        "why_ko": "개발자 비용이 줄어든다.",
+        "what_ko": "==OpenAI가== 더 빠른 소형 모델을 내놓았다. 가격도 기존의 절반 수준이다.",
+        "why_ko": "AI 가격·정책·생태계 지형을 바꾸는 업계 시그널이라 벤더 전략과 서비스 원가 점검의 기준점이 돼요.",
         "planning_meta": {"signal_type": "model_release", "benchmark_point": "추론 비용 절감"},
         "entities": [{"name": "GPT-9 Mini", "kind": "model"}],
     }
     s = easy_summary(item)
-    assert s.startswith("쉽게 말해") and "==" not in s and "요" in s
+    assert s == "OpenAI가 더 빠른 소형 모델을 내놓았어요. 가격도 기존의 절반 수준이에요."
     v = vision_text(item)
-    assert v.startswith("앞으로는") and "주목해 볼 수 있어요" in v and "GPT-9 Mini" in v
+    assert "주목해 볼 수 있어요" in v and "GPT-9 Mini" in v
+    for banned in ("벤더", "원가", "생태계 지형", "쉽게 말해"):
+        assert banned not in s + v
+
+
+def test_easy_summary_drops_templates_toc_and_title_echo():
+    item = {
+        "hook_title": "Claude Code 팀이 코드 검토를 수행하는 법",
+        "what_ko": "Juejin 개발 생태계에서 'Claude Code 팀이 코드 검토를 수행하는 법' 구현 방식과 실전 적용 사례가 공개됐어요.",
+        "easy_original": {"sections": [{"heading": "상세 해독: 원문 본문", "body": "원문 본문에 담긴 세부 내용을 흐름대로 정리하면 다음과 같아요. 요약 0x00 요약 0.1 원본 논문 0.2 핵심 정보. Claude Code 팀이 코드 검토를 수행하는 법. 팀은 모든 변경을 두 단계로 나눠 검토한다."}]},
+    }
+    assert easy_summary(item) == "팀은 모든 변경을 두 단계로 나눠 검토해요."
+    assert conversational_title("Claude Code 팀이 코드 검토를 수행실전 가이드") == "Claude Code 팀이 코드 검토를 수행하는 법"
 
 
 def test_image_helpers():
@@ -105,3 +118,13 @@ def test_verb_i_and_vowel_harmony():
     assert conversational_title("코드를 먹습니다") == "코드를 먹어요"
 def test_repairs_old_mistake():
     assert conversational_title("Shirudo를 선보예요") == "Shirudo를 선보여요"
+
+
+def test_repeated_sentences_across_items_are_dropped():
+    from pipeline.enrich import enrich_snapshot_items
+    filler = "원래 이 문장은 모든 기사에 똑같이 붙는 설명 문장이었다."
+    items = [{"id": f"i{n}", "canonical_url": f"https://x.example.net/{n}", "hook_title": f"제목 {n}",
+              "what_ko": f"{filler} 사건 {n}번의 고유한 사실이 공개됐다."} for n in range(4)]
+    enrich_snapshot_items(items, image_cache={}, fetch_og=False)
+    for n, it in enumerate(items):
+        assert it["easy_summary_ko"] == f"사건 {n}번의 고유한 사실이 공개됐어요."

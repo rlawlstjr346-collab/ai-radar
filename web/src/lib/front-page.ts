@@ -62,36 +62,61 @@ export interface FrontPageLayout {
 export const WIRE_COUNT = 6;
 export const SIDE_COUNT = 2;
 export const FEATURE_COUNT = 2;
-const HERO_WINDOW_MS = 48 * 3_600_000;
+/** 1면 포토 슬롯(히어로 + 좌측 2선) 신선도 창: 30시간 → 부족하면 48시간 → 전체 */
+export const PHOTO_SLOT_WINDOWS_H: readonly number[] = [30, 48, Number.POSITIVE_INFINITY];
+/** 경과 시간 감쇠 반감기 — 12시간마다 점수가 절반 */
+export const PHOTO_DECAY_HALF_LIFE_H = 12;
+const PHOTO_SLOTS = 1 + SIDE_COUNT;
+
+const ageHours = (item: FeedItem, now: number) => Math.max(0, (now - itemTime(item, now)) / 3_600_000);
+
+/** 묶음 보도 수·중요도·사진 보유를 시간 감쇠로 눌러, 오래된 대형 묶음이 첫 포토 자리를 붙잡지 못하게 한다 */
+export function photoSlotScore(item: FeedItem, now: number): number {
+  const base = 1 + 0.75 * (coverage(item) - 1) + item.importance_score / 40;
+  const decay = 0.5 ** (ageHours(item, now) / PHOTO_DECAY_HALF_LIFE_H);
+  const explained = item.easy_summary_ko == null || item.easy_summary_ko.length > 0;
+  return base * decay * (hasImage(item) ? 1.3 : 1) * (explained ? 1.2 : 1);
+}
+
+function byPhotoScore(items: FeedItem[], now: number): FeedItem[] {
+  return items
+    .map((item) => ({ item, s: photoSlotScore(item, now) }))
+    .sort((a, b) => b.s - a.s || itemTime(b.item, now) - itemTime(a.item, now) || a.item.id.localeCompare(b.item.id))
+    .map((x) => x.item);
+}
 
 /**
  * BBC식 1면 배치.
- * - 히어로: 48시간 안에서 가장 여러 매체가 동시에 다룬 사건 (동률이면 사진 보유 → 중요도 → 최신)
+ * - 히어로 + 좌측 2선: 최근 30시간 기사 중 감쇠 점수 순 (모자랄 때만 48시간 → 전체로 넓힘)
  * - 속보 와이어: 가중치 없이 순수 최신 시간순 6건
- * - 좌측 포토 2건 · 중단 포토 피처 2건: 사진이 있는 주요 기사
+ * - 중단 포토 피처 2건: 사진이 있는 다음 최신 기사
  * - 스트림: 위에 안 나온 나머지 전부 시간순
  */
 export function buildFrontPage(items: FeedItem[], now: number): FrontPageLayout {
   if (items.length === 0) return { hero: null, side: [], wire: [], features: [], stream: [] };
   const chrono = newestFirst(items, now);
-  const recent = chrono.filter((i) => now - itemTime(i, now) <= HERO_WINDOW_MS);
-  const heroPool = recent.length > 0 ? recent : chrono;
-  const hero = [...heroPool].sort(
-    (a, b) =>
-      coverage(b) - coverage(a) ||
-      Number(hasImage(b)) - Number(hasImage(a)) ||
-      b.importance_score - a.importance_score ||
-      itemTime(b, now) - itemTime(a, now),
-  )[0];
+  const within = (h: number) => chrono.filter((i) => ageHours(i, now) <= h);
+
+  const heroWindow = PHOTO_SLOT_WINDOWS_H.find((h) => within(h).length >= PHOTO_SLOTS) ?? Number.POSITIVE_INFINITY;
+  const hero = byPhotoScore(within(heroWindow), now)[0] ?? chrono[0];
 
   const wire = chrono.filter((i) => i.id !== hero.id).slice(0, WIRE_COUNT);
   const used = new Set<string>([hero.id, ...wire.map((i) => i.id)]);
 
-  const byWeight = chrono
-    .filter((i) => !used.has(i.id))
-    .sort((a, b) => coverage(b) - coverage(a) || b.importance_score - a.importance_score || itemTime(b, now) - itemTime(a, now));
-  const side = [...byWeight.filter(hasImage), ...byWeight.filter((i) => !hasImage(i))].slice(0, SIDE_COUNT);
-  for (const i of side) used.add(i.id);
+  const side: FeedItem[] = [];
+  for (const h of PHOTO_SLOT_WINDOWS_H) {
+    for (const i of byPhotoScore(within(h).filter((x) => hasImage(x) && !used.has(x.id)), now)) {
+      if (side.length >= SIDE_COUNT) break;
+      side.push(i);
+      used.add(i.id);
+    }
+    if (side.length >= SIDE_COUNT) break;
+  }
+  for (const i of byPhotoScore(chrono.filter((x) => !used.has(x.id)), now)) {
+    if (side.length >= SIDE_COUNT) break;
+    side.push(i);
+    used.add(i.id);
+  }
 
   const features = chrono.filter((i) => !used.has(i.id) && hasImage(i)).slice(0, FEATURE_COUNT);
   for (const i of features) used.add(i.id);
@@ -122,7 +147,8 @@ export function sourceLabel(item: Pick<FeedItem, "platform_id" | "author_handle"
 
 /** `==` 형광 마커·여분 공백 없이 화면용 쉬운 요약 */
 export function plainSummary(item: FeedItem): string {
-  const raw = item.easy_summary_ko || item.what_ko || item.highlight_summary || item.context_ko || "";
+  // 워커가 정제한 요약이 있으면(빈 문자열 포함) 그것만 쓴다 — 상투구 폴백 템플릿으로 되돌아가지 않게
+  const raw = item.easy_summary_ko != null ? item.easy_summary_ko : item.what_ko || item.highlight_summary || item.context_ko || "";
   return raw.replace(/==/g, "").replace(/\s{2,}/g, " ").trim();
 }
 

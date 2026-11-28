@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 import struct
 from concurrent.futures import ThreadPoolExecutor
@@ -370,7 +371,8 @@ FALLBACK_SUFFIX_RE = re.compile(r"\s—\s(?:" + "|".join(re.escape(x) for x in F
 
 def conversational_title(title: str) -> str:
     t = clean_text(title)
-    t = re.sub(r"(" + "|".join(VERB_I_STEMS) + r")예요$", r"\1여요", t)   # 이전 규칙의 '선보예요' 오변환 복구
+    t = re.sub(r"(" + "|".join(VERB_I_STEMS) + r")예요$", r"\1여요", t)
+    t = re.sub(r"(?<=[가-힣])실전 가이드$", "하는 법", t)          # '수행실전 가이드' 붙어쓰기 복구   # 이전 규칙의 '선보예요' 오변환 복구
     if FALLBACK_SUFFIX_RE.search(t):
         return FALLBACK_SUFFIX_RE.sub(lambda m: m.group(0).removesuffix("됐어요").removesuffix("했어요"), t)
     if not t or t.endswith(("요", "?", "!", "…", '"', "”", "'", "’")):
@@ -434,66 +436,168 @@ def _subject(item: dict[str, Any]) -> str:
     return ""
 
 
-def easy_summary(item: dict[str, Any]) -> str:
-    """초보자용 2~3문장 쉬운 대화체 요약 — '쉽게 말해 ~한 소식이에요' 톤."""
-    what = conversational_paragraph(item.get("what_ko"))
-    title = conversational_title(str(item.get("hook_title") or item.get("title_ko") or ""))
-    core = _first_sentences(what, 150, 2) if what else ""
-    if not core or len(core) < 18:
-        core = title
-    core = core.rstrip(".")
-    lead = core if core.startswith("쉽게 말해") else f"쉽게 말해, {core}"
-    second = conversational_paragraph(item.get("why_ko"))
-    second = _first_sentences(second, 110, 1) if second else ""
-    text = f"{lead}." if not lead.endswith(("?", "…")) else lead
-    if second and second not in text:
-        text = f"{text} {second if second.endswith(('.', '?', '!')) else second + '.'}"
-    return SPACE_RE.sub(" ", text).strip()
+# 큐레이터 폴백 템플릿·상투구 — 기사 내용과 무관하게 반복되는 문장은 요약에서 제외한다
+STOCK_PHRASE_RE = re.compile(
+    r"(가 전한 '|에서 '.{0,120}' (?:구현 방식|이미지·디자인|멀티모달|연구 결과)|커뮤니티에서 '.{0,120}'를 둘러싼|"
+    r"를 공개하며 대화형 AI의 실사용 품질|생태계 지형|벤더 전략|원가 점검|방향 변화가 뚜렷|업계 시그널|"
+    r"도입 여부를 빠르게 가늠|기술 로드맵에 도움|기획 통찰이 선명|한발 앞서 잡을 수|업그레이드 시점을 판단|"
+    r"안정화 패치와 신규 기능을 바로|실무 효율이 빨라져|요금 조건을 먼저 살펴|파이프라인에 바로 참고|"
+    r"차세대 모델 성능과 추론 효율의 새 기준|X에서 직접 공유한|빌더 스레드 반응|오픈소스 개발자들의 주목|"
+    r"다음과 같아요|정리하면|요약하자면|이처럼 원문은|원문 흐름|원문 링크|핵심 소식이에요|실시간 속보예요|"
+    r"최신 시그널이에요|신규 런칭·실전 프로젝트예요|에 오신 것을 환영|구독|subscribe|^원문(?:에서는|은|이|의)\s|"
+    r"구체적인 맥락으로 설명|중심으로 서술|비교 지점|짧은 헤드라인만 보면|차근차근 풀어|생태계 흐름 속에서|"
+    r"제기된 업데이트예요|실무나 서비스 기획 관점|실제로 적용해 보고 싶다면|기획·벤치마킹 관점)",
+    re.I,
+)
+# 기술 블로그 목차·번호 나열 찌꺼기 (예: '0x00', '0.1 원본 논문 0.2', '1. 2. 3.')
+TOC_NOISE_RE = re.compile(r"(\b0x[0-9a-f]{2}\b|(?:\b\d+\.\d+\b.{0,24}){2,}|(?:^|\s)(?:\d+\.\s*){3,}|목차|#{2,}|\|\s*---)", re.I)
+GLUED_SENTENCE_RE = re.compile(r"([.!?])(?=[가-힣A-Z\"'“(])")
+BODY_PREFIX_RE = re.compile(r"^.*?(?:다음과 같아요|담겨 있어요)\.\s*")
 
 
-VISION_BY_SIGNAL: dict[str, tuple[str, str]] = {
+def _norm(text: str) -> str:
+    return re.sub(r"[^0-9a-z가-힣]", "", text.lower())
+
+
+def _echoes_title(sentence: str, title: str) -> bool:
+    a, b = _norm(sentence), _norm(title)
+    if not a or not b:
+        return False
+    if a in b or (b in a and len(a) < len(b) + 20) or a[:16] == b[:16]:
+        return True
+    ta = set(TOKEN_RE.findall(sentence.lower()))
+    tb = set(TOKEN_RE.findall(title.lower()))
+    return bool(ta) and len(ta & tb) / len(ta) >= 0.8
+
+
+def _body_candidates(item: dict[str, Any]) -> list[str]:
+    """what_ko → easy_original 의 원문 본문 단락 순으로 실제 사실 문장 후보를 모은다."""
+    texts = [str(item.get("what_ko") or "")]
+    easy = item.get("easy_original") if isinstance(item.get("easy_original"), dict) else {}
+    for sec in easy.get("sections") or []:
+        if isinstance(sec, dict) and re.search(r"상세|핵심 내용", str(sec.get("heading") or "")):
+            texts.append(BODY_PREFIX_RE.sub("", str(sec.get("body") or ""), count=1))
+    out: list[str] = []
+    for t in texts:
+        t = GLUED_SENTENCE_RE.sub(r"\1 ", clean_text(t)).replace("핵심 변경점:", "").strip()
+        out.extend(p.strip() for p in SENT_SPLIT_RE.split(t) if p.strip())
+    return out
+
+
+def is_clean_fact(sentence: str, title: str) -> bool:
+    s = sentence.strip()
+    if len(s) < 12 or len(s) > 220:
+        return False
+    if STOCK_PHRASE_RE.search(s) or TOC_NOISE_RE.search(s):
+        return False
+    if s.endswith(("…", "...", ":")) or s.count("'") % 2 or s.count('"') % 2 or s.count("“") != s.count("”"):
+        return False
+    if re.search(r"[\u4e00-\u9fff\u3040-\u30ff]", s):
+        return False
+    return not _echoes_title(s, title)
+
+
+def summary_candidates(item: dict[str, Any]) -> list[str]:
+    """원문 본문에서 고른 깨끗한 사실 문장 후보(대화체 변환 완료)."""
+    title = str(item.get("hook_title") or item.get("title_ko") or "")
+    out: list[str] = []
+    seen: set[str] = set()
+    for sent in _body_candidates(item):
+        key = _norm(sent)[:40]
+        if key in seen or not is_clean_fact(sent, title):
+            continue
+        seen.add(key)
+        conv = to_conversational(sent.rstrip(".!? "))
+        if STOCK_PHRASE_RE.search(conv):
+            continue                                   # 변환 뒤에야 드러나는 미완결 서두('~다음과 같아요')
+        if conv.endswith("요"):                        # 대화체로 자연스럽게 떨어지는 문장만
+            out.append(conv + ".")
+    return out
+
+
+BOILERPLATE_MIN_ITEMS = 3
+
+
+def easy_summary(item: dict[str, Any], boilerplate: frozenset[str] = frozenset()) -> str:
+    """핵심 사실 1~2문장. 여러 기사에 반복되는 문장(boilerplate)·상투구·목차·제목 반복뿐이면 빈 문자열."""
+    picked: list[str] = []
+    for sent in summary_candidates(item):
+        if _norm(sent)[:40] in boilerplate:
+            continue
+        picked.append(sent)
+        if len(picked) == 2 or sum(len(x) for x in picked) > 150:
+            break
+    return " ".join(picked)
+
+
+def find_boilerplate(items: list[dict[str, Any]]) -> frozenset[str]:
+    """3개 이상 기사에 똑같이 나오는 문장은 기사 내용이 아니라 생성 템플릿이다."""
+    counts: dict[str, int] = {}
+    for it in items:
+        for key in {_norm(s)[:40] for s in summary_candidates(it)}:
+            counts[key] = counts.get(key, 0) + 1
+    return frozenset(k for k, n in counts.items() if n >= BOILERPLATE_MIN_ITEMS)
+
+
+# 미래 비전 — 어려운 한자어(벤더·원가·생태계 지형 등) 없이 일상·업무 변화로. 기사마다 문장이 겹치지 않게 변형을 고른다
+VISION_BY_SIGNAL: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
     "model_release": (
-        "이런 새 모델이 나올수록 더 똑똑한 AI를 더 싸게, 우리가 매일 쓰는 앱 안에서 바로 쓰게 될 거예요",
-        "기존 도구보다 무엇을 더 잘하는지, 가격과 속도가 어떻게 달라지는지",
+        ("더 똑똑한 AI를 더 싸게, 매일 쓰는 앱 안에서 바로 쓰게 될 거예요",
+         "번역·요약·글쓰기처럼 손이 많이 가던 일을 AI가 더 정확하게 대신해 줄 거예요",
+         "휴대폰과 노트북에서도 지금보다 빠르고 똑똑한 AI 비서를 쓰게 될 거예요"),
+        ("지금 쓰는 도구보다 무엇을 더 잘하는지", "무료로 어디까지 써 볼 수 있는지", "답이 얼마나 빨라지고 정확해지는지"),
     ),
     "industry_shift": (
-        "이 흐름이 이어지면 AI가 회사의 일하는 방식과 서비스 가격, 규칙까지 바꿔 놓을 수 있어요",
-        "이 변화가 내 업계와 일자리, 그리고 쓰고 있는 서비스에 어떤 영향을 줄지",
+        ("AI가 회사에서 일하는 방식과 우리가 내는 서비스 요금까지 바꿔 놓을 수 있어요",
+         "AI를 둘러싼 규칙과 약속이 바뀌면서 우리가 쓰는 서비스의 모습도 달라질 거예요",
+         "큰 회사들의 선택에 따라 내가 쓰는 AI 서비스의 가격과 기능이 달라질 수 있어요"),
+        ("내 일과 내가 쓰는 서비스에 어떤 변화가 생기는지", "요금이나 이용 규칙이 바뀌는지", "비슷한 서비스들이 어떻게 따라 움직이는지"),
     ),
     "new_product": (
-        "이런 제품이 자리를 잡으면 전문가만 하던 일을 누구나 몇 번의 클릭으로 해내는 날이 가까워져요",
-        "실제로 써 봤을 때 시간을 얼마나 아껴 주는지, 무료로 어디까지 쓸 수 있는지",
+        ("전문가만 하던 일을 누구나 몇 번의 클릭으로 해내는 날이 가까워져요",
+         "반복되는 귀찮은 일을 버튼 하나로 맡기는 게 자연스러워질 거예요",
+         "혼자서도 작은 팀만큼 일을 해내는 사람이 늘어날 거예요"),
+        ("실제로 써 봤을 때 시간을 얼마나 아껴 주는지", "무료로 어디까지 쓸 수 있는지", "내 일에 바로 붙여 쓸 수 있는지"),
     ),
     "research_breakthrough": (
-        "지금은 연구 단계지만, 이런 성과가 쌓이면 몇 년 안에 우리가 쓰는 AI의 실력이 한 단계 올라가요",
-        "이 연구가 실제 제품에 언제, 어떤 모습으로 들어올지",
+        ("지금은 연구 단계지만, 몇 년 안에 우리가 쓰는 AI의 실력이 한 단계 올라가요",
+         "이런 연구가 쌓이면 AI가 실수를 덜 하고 더 어려운 문제도 풀게 될 거예요",
+         "연구실의 아이디어가 곧 우리가 쓰는 앱의 새 기능으로 들어올 거예요"),
+        ("이 연구가 언제 실제 제품에 들어올지", "무엇이 아직 안 되는지", "어떤 일에 먼저 쓰이게 될지"),
     ),
     "builder_signal": (
-        "개인 개발자와 작은 팀이 먼저 써 보는 방식이라, 곧 더 많은 서비스의 기본 기능이 될 가능성이 커요",
-        "사람들이 어떤 점을 가장 반기고 어떤 점을 불편해하는지",
+        ("개발자들이 먼저 써 보는 방식이라, 곧 많은 서비스의 기본 기능이 될 가능성이 커요",
+         "개인이 만든 작은 실험이 몇 달 뒤 큰 서비스의 기능으로 이어지는 경우가 많아요",
+         "사람들의 반응이 좋으면 비슷한 기능이 여러 앱에 빠르게 퍼질 거예요"),
+        ("사람들이 무엇을 반기고 무엇을 불편해하는지", "직접 따라 해 볼 수 있는지", "어떤 문제를 풀려고 만든 건지"),
     ),
     "open_source_trend": (
-        "누구나 무료로 가져다 쓸 수 있는 공개 도구라, 큰 회사가 아니어도 비슷한 AI 서비스를 직접 만들 수 있게 돼요",
-        "설치가 얼마나 쉬운지, 내 컴퓨터나 회사 서버에서도 돌릴 수 있는지",
+        ("누구나 무료로 가져다 쓸 수 있어서, 큰 회사가 아니어도 비슷한 AI 서비스를 직접 만들 수 있게 돼요",
+         "공개된 도구가 늘수록 비싼 서비스 없이도 내 컴퓨터에서 AI를 돌리는 일이 쉬워져요",
+         "개발자들이 함께 고쳐 나가는 도구라 빠르게 좋아지고 쓰는 사람도 늘어날 거예요"),
+        ("설치가 얼마나 쉬운지", "내 컴퓨터에서도 돌아가는지", "누가 얼마나 활발하게 고치고 있는지"),
     ),
     "dev_workflow": (
-        "코딩과 반복 업무를 AI에게 맡기는 방식이 더 자연스러워져서, 사람은 아이디어와 판단에 더 집중하게 될 거예요",
-        "내 작업 흐름 중 어떤 단계를 바로 AI에게 넘길 수 있는지",
+        ("코딩과 반복 업무를 AI에게 맡기는 게 자연스러워져서, 사람은 아이디어와 판단에 더 집중하게 돼요",
+         "코드를 쓰고 고치는 시간이 줄어 작은 팀도 더 많은 걸 만들 수 있게 될 거예요",
+         "AI와 함께 일하는 방식이 개발자의 기본 업무 습관이 될 거예요"),
+        ("내 업무 중 어떤 단계를 바로 AI에게 넘길 수 있는지", "실수했을 때 어떻게 바로잡는지", "기존 도구와 함께 쓸 수 있는지"),
     ),
 }
 
 
+def _variant(item: dict[str, Any], n: int, salt: str) -> int:
+    return int(hashlib.md5(f"{salt}:{item.get('id')}".encode()).hexdigest(), 16) % n
+
+
 def vision_text(item: dict[str, Any]) -> str:
     pm = item.get("planning_meta") if isinstance(item.get("planning_meta"), dict) else {}
-    signal = str(pm.get("signal_type") or "")
-    future, watch = VISION_BY_SIGNAL.get(signal, VISION_BY_SIGNAL["industry_shift"])
+    futures, watches = VISION_BY_SIGNAL.get(str(pm.get("signal_type") or ""), VISION_BY_SIGNAL["industry_shift"])
+    future = futures[_variant(item, len(futures), "f")]
+    watch = watches[_variant(item, len(watches), "w")]
     subject = _subject(item)
-    head = f"{subject} 소식처럼 " if subject and len(subject) <= 24 else ""
-    if head:
-        future = future[0].lower() + future[1:] if future[:1].isascii() else future
-    bench = clean_text(pm.get("benchmark_point"))
-    tail = f" 특히 '{bench}' 부분은 눈여겨볼 만해요." if bench and 4 <= len(bench) <= 40 else ""
-    return f"앞으로는 {head}{future}. 우리는 {watch}에 주목해 볼 수 있어요.{tail}"
+    lead = f"{subject} 소식처럼 이런 변화가 이어지면, " if subject and len(subject) <= 24 else "이런 변화가 이어지면, "
+    return f"{lead}앞으로 {future}. 우리는 {watch}에 주목해 볼 수 있어요."
 
 
 # ---------------------------------------------------------------- 동일 사건 묶음
@@ -614,8 +718,10 @@ def enrich_snapshot_items(
         for key in ("what_ko", "why_ko", "context_ko"):
             if it.get(key):
                 it[key] = conversational_paragraph(it[key])
-        it["easy_summary_ko"] = easy_summary(it)
         it["vision_ko"] = vision_text(it)
+    boilerplate = find_boilerplate(items)
+    for it in items:
+        it["easy_summary_ko"] = easy_summary(it, boilerplate)
     stats = assign_images(items, image_cache, now=now, client_factory=client_factory, fetch_og=fetch_og)
     stats["clusters"] = assign_clusters(items)
     return stats
