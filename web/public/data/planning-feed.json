@@ -1,8 +1,38 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T18:02:15.985190Z",
+  "generated_at": "2026-11-28T18:17:14.389700Z",
   "item_count": 200,
   "signals": [
+    {
+      "id": "live-3c2cd4f2c3db",
+      "title_ko": "Gemini로만 개발한 19세기 싱가포르 배경 3D 무역 RPG 출시됐어요",
+      "original_title": "little singapura 19 世纪新加坡背景的 3D 贸易 rpg，全由 gemini 4 carbon 写成",
+      "platform_id": "v2ex",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://v2ex.com/t/1260651",
+      "published_at": "2026-11-28T18:12:03Z",
+      "fetched_at": "2026-11-28T18:17:14.389700Z",
+      "importance_score": 27.33,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "개발자가 직접 코드를 수정하지 않고 Gemini를 활용해 19세기 싱가포르를 배경으로 한 3D 무역 RPG 게임 전체를 제작했어요. 플레이어는 화물의 가격과 무게를 계산해 교역하고 상회 계약과 거래 경쟁을 진행하는 총 5개 장으로 구성된 게임을 즐길 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "개발자가 직접 코드를 수정하지 않고 Gemini를 활용해 19세기 싱가포르를 배경으로 한 3D 무역 RPG 게임 전체를 제작했어요. 플레이어는 화물의 가격과 무게를 계산해 교역하고 상회 계약과 거래 경쟁을 진행하는 총 5개 장으로 구성된 게임을 즐길 수 있어요.",
+      "vision_ko": "앞으로 LLM을 활용해 코딩 지식이 없거나 직접 코드를 수정하지 않고도 완성도 높은 게임 소프트웨어를 제작하는 일이 더 흔해질 수 있어요. 우리는 AI가 개발 과정에 적극적으로 관여해 아이디어를 실제 구동되는 프로그램으로 구현하는 방식을 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "new_product",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "중국 인디빌더 신규 AI 웹/앱·툴 런칭",
+        "actionable_idea": "Gemini 4의 '중국 인디빌더 신규 AI 웹/앱·툴 런칭' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Gemini 4",
+        "Gemini"
+      ]
+    },
     {
       "id": "live-c97b83e1ada5",
       "title_ko": "OpenAI, 애플의 협력사 압박에 맞서 소송을 제기했어요",
@@ -17,10 +47,10 @@
       "importance_score": 30.02,
       "source_count": 1,
       "benefit_tag": null,
-      "highlight_summary": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어 OpenAI가 맞소송을 제기했어요. 두 기업 간의 법적 공방이 격화되면서 관련 업계의 긴장감이 높아지고 있어요.",
+      "highlight_summary": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어, OpenAI가 이에 맞서는 맞소송을 제기했어요. 이번 맞소송으로 두 기업 간의 법적 공방이 본격적으로 심화되는 양상을 보이고 있어요.",
       "image_url": "https://techcrunch.com/wp-content/uploads/2026/11/GettyImages-2297209338.jpg?w=1024",
-      "easy_summary_ko": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어 OpenAI가 맞소송을 제기했어요. 두 기업 간의 법적 공방이 격화되면서 관련 업계의 긴장감이 높아지고 있어요.",
-      "vision_ko": "앞으로 두 기업의 법적 공방 결과에 따라 관련 기술을 활용하는 기업들의 제휴 전략이 크게 달라질 수 있어요. 우리는 주요 IT 기업 간의 정책 변화와 시장 흐름에 주목해 볼 수 있어요.",
+      "easy_summary_ko": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어, OpenAI가 이에 맞서는 맞소송을 제기했어요. 이번 맞소송으로 두 기업 간의 법적 공방이 본격적으로 심화되는 양상을 보이고 있어요.",
+      "vision_ko": "앞으로 대형 기술 기업 간의 법적 갈등과 정책 공방이 AI 산업 전반의 서비스 운영 방식에 큰 영향을 줄 수 있어요. 우리는 주요 기업들이 법정 다툼을 통해 시장 주도권을 어떻게 다투는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "industry_shift",
@@ -134,7 +164,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 22.35,
+      "importance_score": 22.52,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -965,7 +995,7 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 34.87,
+      "importance_score": 35.0,
       "source_count": 2,
       "benefit_tag": null,
       "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
@@ -1140,7 +1170,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 34.5,
+      "importance_score": 34.63,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -3620,35 +3650,6 @@
       ]
     },
     {
-      "id": "live-754a1f0a3bd5",
-      "title_ko": "덴쓰, 제미나이 활용할 인재 3천 명 양성 프로그램 시작했어요",
-      "original_title": "電通が「Geminiを使いこなすFDE」ら3000人育成プログラムを開始 その内容とは？",
-      "platform_id": "itmedia-aiplus",
-      "author_handle": null,
-      "category": "industry",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://atmarkit.itmedia.co.jp/ait/articles/2611/27/news038.html",
-      "published_at": "2026-11-27T00:45:00Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 25.75,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "덴쓰가 현업 업무에 생성형 인공지능을 정착시키기 위해 제미나이 엔터프라이즈를 다룰 3천 명 규모의 사내 인재 육성 프로그램을 시작했어요. 기업 현장에서 생성형 인공지능 활용도를 높이기 위한 구체적인 교육 및 인재 양성 방안을 다루고 있어요.",
-      "image_url": "https://image.itmedia.co.jp/ait/articles/2611/27/cover_news038.jpg",
-      "easy_summary_ko": "덴쓰가 현업 업무에 생성형 인공지능을 정착시키기 위해 제미나이 엔터프라이즈를 다룰 3천 명 규모의 사내 인재 육성 프로그램을 시작했어요. 기업 현장에서 생성형 인공지능 활용도를 높이기 위한 구체적인 교육 및 인재 양성 방안을 다루고 있어요.",
-      "vision_ko": "앞으로 기업 현장에서 생성형 인공지능을 능숙하게 다루는 임직원이 늘어나면서 실무 업무 처리 방식이 크게 바뀔 수 있어요. 우리는 실제 현업에서 AI 도입 효과를 높이는 교육 프로그램과 인재 양성 방식에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "Gemini의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Gemini"
-      ]
-    },
-    {
       "id": "live-fcf4cf4d31a8",
       "title_ko": "클로드가 머신러닝 연구를 방해한다는 주장을 직접 검증했어요",
       "original_title": "@RealAstropulse: After seeing the \"Claude sabotages your ML research\" posts, I was still skeptical, so I tested it on my own wo…",
@@ -5636,7 +5637,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 국내 사용자들도 다양한 지역에서 앤스로픽의 에이전트 서비스를 보다 원활하게 체험할 수 있게 돼요. AI 기업의 해외 서비스 확장 속도와 현지 접속 환경에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 다양한 국가의 사용자가 최신 AI 에이전트 기능을 빠르게 체험하고 업무에 활용할 수 있게 될 수 있어요. 우리는 앤스로픽의 서비스가 미국 외 글로벌 시장으로 확장되면서 어떤 반응을 얻는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
