@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-11-28T15:02:11.348793Z",
+  "updated_at": "2026-11-28T15:17:07.973282Z",
   "sources": {
     "https://aws.amazon.com/blogs/machine-learning/feed/": {
       "source_id": "seed-56-aws-ml",
       "platform_id": "aws-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.246763Z",
+      "last_checked_at": "2026-11-28T15:15:39.201881Z",
       "cooldown_until": null,
       "last_modified": "Fri, 27 Nov 2026 22:27:21 GMT"
     },
@@ -13,21 +13,21 @@
       "source_id": "seed-31-hatena-bookmark",
       "platform_id": "hatena-bookmark",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.440337Z",
+      "last_checked_at": "2026-11-28T15:15:37.614240Z",
       "cooldown_until": null
     },
     "https://blog.google/technology/ai/rss/": {
       "source_id": "seed-57-google-deepmind",
       "platform_id": "google-deepmind",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:38.407699Z",
+      "last_checked_at": "2026-11-28T15:15:39.369140Z",
       "cooldown_until": null
     },
     "https://blogs.nvidia.com/feed/": {
       "source_id": "seed-51-nvidia-ai",
       "platform_id": "nvidia-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.108474Z",
+      "last_checked_at": "2026-11-28T15:15:39.064525Z",
       "cooldown_until": null,
       "etag": "\"09dbf3ffa8fbd71fcf4527a9f9e12030-gzip\"",
       "last_modified": "Thu, 26 Nov 2026 14:00:22 GMT"
@@ -36,22 +36,22 @@
       "source_id": "seed-11-civitai",
       "platform_id": "civitai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.305458Z",
+      "last_checked_at": "2026-11-28T15:15:35.837947Z",
       "cooldown_until": null,
-      "etag": "W/\"ht9rxv9yzp1v1a9\""
+      "etag": "W/\"17tinlut4511v1jp\""
     },
     "https://d2.naver.com/d2.atom": {
       "source_id": "seed-24-naver-d2",
       "platform_id": "naver-d2",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:37.619262Z",
+      "last_checked_at": "2026-11-28T15:15:38.152436Z",
       "cooldown_until": null
     },
     "https://deepmind.google/blog/rss.xml": {
       "source_id": "seed-05-google-deepmind",
       "platform_id": "google-deepmind",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:34.926284Z",
+      "last_checked_at": "2026-11-28T15:15:35.594871Z",
       "cooldown_until": null,
       "etag": "\"0M48Dw\""
     },
@@ -59,14 +59,14 @@
       "source_id": "seed-14-pytorch-kr",
       "platform_id": "pytorch-kr",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:37.018942Z",
+      "last_checked_at": "2026-11-28T15:15:37.718708Z",
       "cooldown_until": null
     },
     "https://engineering.linecorp.com/ko/feed/": {
       "source_id": "seed-25-line-engineering",
       "platform_id": "line-engineering",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:36.472636Z",
+      "last_checked_at": "2026-11-28T15:15:37.389918Z",
       "cooldown_until": null,
       "etag": "W/\"058bfee94670b9bb2cc7c2916bdb2b49\"",
       "last_modified": "Fri, 27 Nov 2026 03:07:43 GMT"
@@ -75,7 +75,7 @@
       "source_id": "seed-62-ars-technica-ai",
       "platform_id": "ars-technica-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.629316Z",
+      "last_checked_at": "2026-11-28T15:15:39.348189Z",
       "cooldown_until": null,
       "etag": "\"3809dace6e9f8747f953f7cd9f5f72cc\"",
       "last_modified": "Sat, 28 Nov 2026 12:00:20 GMT"
@@ -84,23 +84,23 @@
       "source_id": "seed-39-qwen",
       "platform_id": "qwen",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:42.916044Z",
+      "last_checked_at": "2026-11-28T15:15:44.090934Z",
       "cooldown_until": null,
-      "etag": "W/\"02788b9d16991eed68a722bb0bfb89a5\""
+      "etag": "W/\"f7c4958325d8aa930614e1fe0a01bccd\""
     },
     "https://github.com/QwenLM/qwen-code/releases.atom": {
       "source_id": "seed-41-qwen",
       "platform_id": "qwen",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:47.709900Z",
+      "last_checked_at": "2026-11-28T15:15:49.501254Z",
       "cooldown_until": null,
-      "etag": "W/\"4f499660fba3db1c0f3d332d2fc3edef\""
+      "etag": "W/\"a5c6af1daefd5f98852f9727d28b522d\""
     },
     "https://github.com/comfyanonymous/ComfyUI/releases.atom": {
       "source_id": "seed-10-comfyui",
       "platform_id": "comfyui",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:41.029937Z",
+      "last_checked_at": "2026-11-28T15:15:41.977107Z",
       "cooldown_until": null,
       "etag": "W/\"e954c08a63e40b60196a5d454b0a7419\""
     },
@@ -108,7 +108,7 @@
       "source_id": "seed-40-deepseek",
       "platform_id": "deepseek",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:45.302987Z",
+      "last_checked_at": "2026-11-28T15:15:46.278543Z",
       "cooldown_until": null,
       "etag": "\"cbf1dbad3a8bde6996e6c66e305587f7\""
     },
@@ -116,15 +116,15 @@
       "source_id": "seed-09-github",
       "platform_id": "github",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:39.237726Z",
+      "last_checked_at": "2026-11-28T15:15:40.292023Z",
       "cooldown_until": null,
-      "etag": "W/\"f1c410b82562f763ed501cc4a0942118\""
+      "etag": "W/\"6992c2e90e3787acfc7bf1556bb2eb25\""
     },
     "https://github.com/langchain-ai/langgraph/releases.atom": {
       "source_id": "seed-49-langchain",
       "platform_id": "langchain",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:50.950067Z",
+      "last_checked_at": "2026-11-28T15:15:52.465576Z",
       "cooldown_until": null,
       "etag": "W/\"8fde805c09318178a4064fcf42278485\""
     },
@@ -132,7 +132,7 @@
       "source_id": "seed-63-mistral-ai",
       "platform_id": "mistral-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:52.678627Z",
+      "last_checked_at": "2026-11-28T15:15:54.583590Z",
       "cooldown_until": null,
       "etag": "W/\"b2c25625bb5ad483543502a5b74094a0\""
     },
@@ -140,7 +140,7 @@
       "source_id": "seed-42-modelscope",
       "platform_id": "modelscope",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:49.448728Z",
+      "last_checked_at": "2026-11-28T15:15:50.641866Z",
       "cooldown_until": null,
       "etag": "W/\"15bcf55fb0b5f98cab6b5ea8ffb0b094\""
     },
@@ -148,7 +148,7 @@
       "source_id": "seed-07-ollama",
       "platform_id": "ollama",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:34.784952Z",
+      "last_checked_at": "2026-11-28T15:15:35.818286Z",
       "cooldown_until": null,
       "etag": "W/\"8cf2b3188788fb88126d1b94ab9ead65\""
     },
@@ -156,7 +156,7 @@
       "source_id": "seed-08-github",
       "platform_id": "github",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:37.841560Z",
+      "last_checked_at": "2026-11-28T15:15:37.891137Z",
       "cooldown_until": null,
       "etag": "W/\"bc43809cab157d12b073a8717180ea5e\""
     },
@@ -164,105 +164,105 @@
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:45.915400Z",
+      "last_checked_at": "2026-11-28T15:15:37.243478Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Anthropic&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:05.162160Z",
+      "last_checked_at": "2026-11-28T15:15:50.821815Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Claude&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:54.583490Z",
+      "last_checked_at": "2026-11-28T15:15:46.036573Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=GPT&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:50.227778Z",
+      "last_checked_at": "2026-11-28T15:15:39.801485Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Gemini&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:59.112795Z",
+      "last_checked_at": "2026-11-28T15:15:47.812995Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=LLM&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:39.551643Z",
+      "last_checked_at": "2026-11-28T15:15:35.673475Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=Llama&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:20.957604Z",
+      "last_checked_at": "2026-11-28T15:16:02.460586Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=OpenAI&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:03.729301Z",
+      "last_checked_at": "2026-11-28T15:15:49.241788Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=agent&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:18.338569Z",
+      "last_checked_at": "2026-11-28T15:16:00.539502Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=diffusion&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:10.202502Z",
+      "last_checked_at": "2026-11-28T15:15:55.786203Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=machine+learning&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:14.317186Z",
+      "last_checked_at": "2026-11-28T15:15:58.047820Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=open+source+model&hitsPerPage=50": {
       "source_id": "seed-06-hacker-news",
       "platform_id": "hacker-news",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:07.044337Z",
+      "last_checked_at": "2026-11-28T15:15:53.814367Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=twitter.com%20status%20AI&hitsPerPage=40": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:44.531267Z",
+      "last_checked_at": "2026-11-28T15:15:43.900497Z",
       "cooldown_until": null
     },
     "https://hn.algolia.com/api/v1/search_by_date?tags=story&query=x.com%20status&hitsPerPage=50": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:43.384887Z",
+      "last_checked_at": "2026-11-28T15:15:42.034970Z",
       "cooldown_until": null
     },
     "https://huggingface.co/api/daily_papers": {
       "source_id": "seed-00-huggingface",
       "platform_id": "huggingface",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:34.859876Z",
+      "last_checked_at": "2026-11-28T15:15:35.511946Z",
       "cooldown_until": null,
       "etag": "W/\"45446-CJ7STPXx6f9HiW0NlX7xgUBt+tI\""
     },
@@ -286,7 +286,7 @@
       "source_id": "seed-26-huggingface",
       "platform_id": "huggingface",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:36.644004Z",
+      "last_checked_at": "2026-11-28T15:15:37.560022Z",
       "cooldown_until": null,
       "etag": "W/\"42676-LtG2tM8PP55r2AsJTaaxFMoyXOI\""
     },
@@ -311,7 +311,7 @@
       "source_id": "seed-52-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.346632Z",
+      "last_checked_at": "2026-11-28T15:15:38.993996Z",
       "cooldown_until": null,
       "etag": "W/\"6b00aa86-260d\"",
       "last_modified": "Fri, 20 Nov 2026 20:16:06 GMT"
@@ -320,7 +320,7 @@
       "source_id": "seed-46-ahead-of-ai",
       "platform_id": "ahead-of-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:37.885651Z",
+      "last_checked_at": "2026-11-28T15:15:38.495765Z",
       "cooldown_until": null,
       "etag": "W/\"2c2642-c9xeo4DIbj8/x8CTPSke/B+Q/fo\""
     },
@@ -328,21 +328,21 @@
       "source_id": "seed-21-daangn-tech",
       "platform_id": "daangn-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.104902Z",
+      "last_checked_at": "2026-11-28T15:15:36.255418Z",
       "cooldown_until": null
     },
     "https://medium.com/feed/musinsa-tech": {
       "source_id": "seed-22-musinsa-tech",
       "platform_id": "musinsa-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.817003Z",
+      "last_checked_at": "2026-11-28T15:15:37.677797Z",
       "cooldown_until": null
     },
     "https://news.aikoreacommunity.com/rss/": {
       "source_id": "seed-16-ai-korea-community",
       "platform_id": "ai-korea-community",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:34.860790Z",
+      "last_checked_at": "2026-11-28T15:15:35.473327Z",
       "cooldown_until": null,
       "etag": "W/\"4b14d-yLvSyOYyYQg27EOGgLJGd+gQ90I\""
     },
@@ -350,7 +350,7 @@
       "source_id": "seed-13-geeknews",
       "platform_id": "geeknews",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.573114Z",
+      "last_checked_at": "2026-11-28T15:15:36.306196Z",
       "cooldown_until": null,
       "last_modified": "Sat, 28 Nov 2026 14:49:01 GMT"
     },
@@ -358,97 +358,97 @@
       "source_id": "seed-03-openai",
       "platform_id": "openai",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:34.806068Z",
+      "last_checked_at": "2026-11-28T15:15:35.517569Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=clem.hf.co&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:57.717571Z",
+      "last_checked_at": "2026-11-28T15:15:58.941958Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=emollick.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:43.369281Z",
+      "last_checked_at": "2026-11-28T15:15:44.586570Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=hamel.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:51.687150Z",
+      "last_checked_at": "2026-11-28T15:15:52.938674Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=huggingface.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.021953Z",
+      "last_checked_at": "2026-11-28T15:15:35.705509Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=jeffdean.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:53.521350Z",
+      "last_checked_at": "2026-11-28T15:15:54.780820Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=karpathy.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:38.669400Z",
+      "last_checked_at": "2026-11-28T15:15:39.917763Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=natolambert.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:45.793122Z",
+      "last_checked_at": "2026-11-28T15:15:46.118225Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=ollama.com&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 400,
-      "last_checked_at": "2026-11-28T15:00:40.997623Z"
+      "last_checked_at": "2026-11-28T15:15:42.309631Z"
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=rasbt.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:49.731772Z",
+      "last_checked_at": "2026-11-28T15:15:50.504384Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=simonwillison.net&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.763345Z",
+      "last_checked_at": "2026-11-28T15:15:38.130156Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=swyx.io&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:59.550191Z",
+      "last_checked_at": "2026-11-28T15:16:01.242016Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=thomwolf.bsky.social&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:55.308759Z",
+      "last_checked_at": "2026-11-28T15:15:56.889501Z",
       "cooldown_until": null
     },
     "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=timkellogg.me&limit=30&filter=posts_no_replies": {
       "source_id": "seed-12-bluesky",
       "platform_id": "bluesky",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:48.010777Z",
+      "last_checked_at": "2026-11-28T15:15:48.229621Z",
       "cooldown_until": null
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F0x45o%2Fstatus%2F2117332304880169152&omit_script=true&dnt=true": {
@@ -479,9 +479,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:43.102971Z",
+      "last_checked_at": "2026-11-28T15:16:40.012746Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:43 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:39 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FAlexRobey23%2Fstatus%2F2123872680718082542&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -559,17 +559,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:18.433442Z",
+      "last_checked_at": "2026-11-28T15:16:16.220733Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:18 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:16 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FDeepInsightLabs%2Fstatus%2F2123721278112911860&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:40.643359Z",
+      "last_checked_at": "2026-11-28T15:16:37.883936Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:40 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:37 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FDorialexander%2Fstatus%2F2126300342992200099&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -599,9 +599,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:58.349691Z",
+      "last_checked_at": "2026-11-28T15:16:55.576081Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:58 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:55 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FFounderClipsHQ%2Fstatus%2F2123411646777307310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -623,9 +623,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:31.478559Z",
+      "last_checked_at": "2026-11-28T15:16:28.725074Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:31 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:28 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FKSHartnett%2Fstatus%2F2123847664064241799&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -639,17 +639,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:44.818752Z",
+      "last_checked_at": "2026-11-28T15:15:44.247796Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:44 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:44 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FKobeissiLetter%2Fstatus%2F2121689817301819425&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:04.008141Z",
+      "last_checked_at": "2026-11-28T15:17:00.824901Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:03 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:17:00 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FLinusMixson%2Fstatus%2F2123283812184699218&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -663,9 +663,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:54.806080Z",
+      "last_checked_at": "2026-11-28T15:16:51.586505Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:54 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:51 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FMParakhin%2Fstatus%2F2126160722816335941&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -679,17 +679,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:47.026196Z",
+      "last_checked_at": "2026-11-28T15:15:45.998652Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:46 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:45 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNTSB_Newsroom%2Fstatus%2F2119925879975395746&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:56.677047Z",
+      "last_checked_at": "2026-11-28T15:15:55.996637Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:56 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:55 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FNielsRogge%2Fstatus%2F2123398384790684128&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -767,25 +767,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:35.606821Z",
+      "last_checked_at": "2026-11-28T15:16:32.985953Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:35 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:32 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FScott_Helme%2Fstatus%2F2122422157959471456&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:48.995309Z",
+      "last_checked_at": "2026-11-28T15:15:48.477868Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:48 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:48 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FStationhouseAI%2Fstatus%2F2121393278407123388&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:52.822284Z",
+      "last_checked_at": "2026-11-28T15:15:52.218368Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:52 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:52 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FSteveRattner%2Fstatus%2F2123523070044356875&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -799,9 +799,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:23.780739Z",
+      "last_checked_at": "2026-11-28T15:16:21.197604Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:23 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:21 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FTaylorLorenz%2Fstatus%2F2118095796981637203&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -879,9 +879,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:16.175876Z",
+      "last_checked_at": "2026-11-28T15:16:14.042268Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:16 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:13 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FWappy_x%2Fstatus%2F2126334414128873752&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -895,17 +895,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:00.744724Z",
+      "last_checked_at": "2026-11-28T15:16:57.128451Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:00 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:57 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F_TomHoward%2Fstatus%2F2124989725773856769&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:27.651450Z",
+      "last_checked_at": "2026-11-28T15:16:24.772525Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:27 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:24 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2F_arohan_%2Fstatus%2F2126389028975165465&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -935,41 +935,41 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:52.596487Z",
+      "last_checked_at": "2026-11-28T15:16:49.695552Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:52 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:49 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fahmedmm72234641%2Fstatus%2F2124869402634129901&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:29.543658Z",
+      "last_checked_at": "2026-11-28T15:16:27.067679Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:29 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:26 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faidenybai%2Fstatus%2F2124550726882136542&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:33.318785Z",
+      "last_checked_at": "2026-11-28T15:16:30.552354Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:33 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:30 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Faionic_labs%2Fstatus%2F2125019686136095036&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:11.666992Z",
+      "last_checked_at": "2026-11-28T15:16:09.816020Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:11 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:09 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Falexmichael%2Fstatus%2F2125976282303471643&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:05.270824Z",
+      "last_checked_at": "2026-11-28T15:16:03.881061Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:05 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:03 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fandersonbcdefg%2Fstatus%2F2126333185201991922&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -999,9 +999,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:47.167348Z",
+      "last_checked_at": "2026-11-28T15:16:43.446883Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:47 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:43 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbebuu_ai%2Fstatus%2F2118052769856888892&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1023,25 +1023,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:20.040544Z",
+      "last_checked_at": "2026-11-28T15:16:17.843090Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:19 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:17 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fbinance%2Fstatus%2F2117626126214504729&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:58.772960Z",
+      "last_checked_at": "2026-11-28T15:15:57.839253Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:58 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:57 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcatalinmpit%2Fstatus%2F2123061832781090948&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:48.740921Z",
+      "last_checked_at": "2026-11-28T15:16:45.337194Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:48 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:45 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fcloneofsimo%2Fstatus%2F2123851306150605248&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1079,9 +1079,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:06.442902Z",
+      "last_checked_at": "2026-11-28T15:17:02.670381Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:06 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:17:02 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fdejavucoder%2Fstatus%2F2126302008273764535&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1095,9 +1095,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:55.100487Z",
+      "last_checked_at": "2026-11-28T15:15:53.752167Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:55 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:53 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Felder_plinius%2Fstatus%2F2126369007079133601&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1135,9 +1135,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:08.065693Z",
+      "last_checked_at": "2026-11-28T15:17:04.341061Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:08 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:17:04 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ffuturenomics%2Fstatus%2F2123501930580480142&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1159,9 +1159,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:44.949259Z",
+      "last_checked_at": "2026-11-28T15:16:41.883409Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:44 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:41 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fidekimforever%2Fstatus%2F2124674178741682684&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1191,9 +1191,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:56.587494Z",
+      "last_checked_at": "2026-11-28T15:16:53.748001Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:56 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:53 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fjerryjliu0%2Fstatus%2F2126369240001466664&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1223,9 +1223,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:01.047348Z",
+      "last_checked_at": "2026-11-28T15:15:59.646523Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:00 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:59 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fkarinanguyen%2Fstatus%2F2123509936475001310&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1319,9 +1319,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:50.707854Z",
+      "last_checked_at": "2026-11-28T15:16:47.840325Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:50 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:47 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Flateinteraction%2Fstatus%2F2123827471325765706&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1375,25 +1375,25 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:07.093900Z",
+      "last_checked_at": "2026-11-28T15:16:05.843435Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:07 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:05 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmax_spero_%2Fstatus%2F2122032840204226687&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:02.519628Z",
+      "last_checked_at": "2026-11-28T15:16:58.738881Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:02 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:58 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmicro1_ai%2Fstatus%2F2123849880426926402&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:38.909001Z",
+      "last_checked_at": "2026-11-28T15:16:36.572814Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:38 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:36 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fmike64_t%2Fstatus%2F2126420692405285146&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1431,9 +1431,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:13.977148Z",
+      "last_checked_at": "2026-11-28T15:16:11.874629Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:13 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:11 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fnptacek%2Fstatus%2F2126351949222285715&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1455,17 +1455,17 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:51.246668Z",
+      "last_checked_at": "2026-11-28T15:15:50.272874Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:00:51 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:15:50 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpaulosyibelo%2Fstatus%2F2106378929158135903&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:03.232739Z",
+      "last_checked_at": "2026-11-28T15:16:01.363389Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:03 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:01 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fpushmeet%2Fstatus%2F2118752095859794390&omit_script=true&dnt=true": {
       "source_id": "seed-67-x",
@@ -1487,9 +1487,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:25.635968Z",
+      "last_checked_at": "2026-11-28T15:16:22.923116Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:25 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:22 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fsaranormous%2Fstatus%2F2123504877674660255&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1535,9 +1535,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:09.434593Z",
+      "last_checked_at": "2026-11-28T15:16:07.662862Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:09 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:07 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2FshakoistsLog%2Fstatus%2F2123478561449492504&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1551,9 +1551,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:22.098114Z",
+      "last_checked_at": "2026-11-28T15:16:19.526243Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:22 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:19 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fsolbier1%2Fstatus%2F2123485713760935944&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1655,9 +1655,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:01:37.330061Z",
+      "last_checked_at": "2026-11-28T15:16:34.503196Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:01:37 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:16:34 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Ftheojaffee%2Fstatus%2F2123851368951910847&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1727,9 +1727,9 @@
       "source_id": "seed-67-x",
       "platform_id": "x",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:02:10.152022Z",
+      "last_checked_at": "2026-11-28T15:17:06.627757Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 15:02:10 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:17:06 GMT"
     },
     "https://publish.twitter.com/oembed?url=https%3A%2F%2Fx.com%2Fyacinelearning%2Fstatus%2F2123439520616173794&omit_script=true&dnt=true": {
       "source_id": "seed-59-x",
@@ -1798,16 +1798,16 @@
     "https://qiita.com/tags/llm/feed": {
       "source_id": "seed-29-qiita",
       "platform_id": "qiita",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:36.424685Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:15:36.886165Z",
       "cooldown_until": null,
-      "etag": "W/\"2f0afa0d4583717e185ccc98f6c1bb51\""
+      "etag": "W/\"7a78959d93fd92aa915440584906b7d4\""
     },
     "https://qwenlm.github.io/blog/index.xml": {
       "source_id": "seed-38-qwen",
       "platform_id": "qwen",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:36.919489Z",
+      "last_checked_at": "2026-11-28T15:15:37.874742Z",
       "cooldown_until": null,
       "etag": "W/\"6970c244-98ff\"",
       "last_modified": "Wed, 21 Jan 2026 12:10:44 GMT"
@@ -1816,7 +1816,7 @@
       "source_id": "seed-58-arxiv",
       "platform_id": "arxiv",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.394567Z",
+      "last_checked_at": "2026-11-28T15:15:39.283696Z",
       "cooldown_until": null,
       "etag": "0f51919e665ed79d455326a1daff4c821d3d443eb1dcb2315b4064853477c33b"
     },
@@ -1824,16 +1824,16 @@
       "source_id": "seed-30-itmedia-aiplus",
       "platform_id": "itmedia-aiplus",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.853498Z",
+      "last_checked_at": "2026-11-28T15:15:37.581378Z",
       "cooldown_until": null,
-      "etag": "\"31fc-66156f1d43184-gzip\"",
-      "last_modified": "Sat, 28 Nov 2026 14:25:12 GMT"
+      "etag": "\"31fc-661575d023f88-gzip\"",
+      "last_modified": "Sat, 28 Nov 2026 14:55:10 GMT"
     },
     "https://sakana.ai/feed.xml": {
       "source_id": "seed-32-sakana-ai",
       "platform_id": "sakana-ai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.591837Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-28T15:15:37.500696Z",
       "cooldown_until": null,
       "etag": "W/\"6b09410d-4f5b3\"",
       "last_modified": "Fri, 27 Nov 2026 08:36:29 GMT"
@@ -1842,7 +1842,7 @@
       "source_id": "seed-43-simon-willison",
       "platform_id": "simon-willison",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:37.725383Z",
+      "last_checked_at": "2026-11-28T15:15:38.418168Z",
       "cooldown_until": null,
       "last_modified": "Fri, 27 Nov 2026 23:57:17 GMT"
     },
@@ -1850,7 +1850,7 @@
       "source_id": "seed-23-kakao-tech",
       "platform_id": "kakao-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:36.705570Z",
+      "last_checked_at": "2026-11-28T15:15:37.406285Z",
       "cooldown_until": null
     },
     "https://techblog.woowahan.com/feed/": {
@@ -1866,7 +1866,7 @@
       "source_id": "seed-59-techcrunch-ai",
       "platform_id": "techcrunch-ai",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.333738Z",
+      "last_checked_at": "2026-11-28T15:15:39.316698Z",
       "cooldown_until": null,
       "etag": "W/\"0d0a0771740a7218779ec713f8673790\"",
       "last_modified": "Sat, 28 Nov 2026 14:00:11 GMT"
@@ -1875,14 +1875,14 @@
       "source_id": "seed-19-toss-tech",
       "platform_id": "toss-tech",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:37.202250Z",
+      "last_checked_at": "2026-11-28T15:15:38.015572Z",
       "cooldown_until": null
     },
     "https://vercel.com/atom": {
       "source_id": "seed-50-vercel-v0",
       "platform_id": "vercel-v0",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.004593Z",
+      "last_checked_at": "2026-11-28T15:15:38.836799Z",
       "cooldown_until": null,
       "etag": "\"6c452dff835dd8b986ec4b3827382256\""
     },
@@ -1890,7 +1890,7 @@
       "source_id": "seed-18-aitimes",
       "platform_id": "aitimes",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:35.706809Z",
+      "last_checked_at": "2026-11-28T15:15:36.546698Z",
       "cooldown_until": null,
       "etag": "\"ca81-661534896c034-gzip\"",
       "last_modified": "Sat, 28 Nov 2026 10:03:08 GMT"
@@ -1899,37 +1899,37 @@
       "source_id": "seed-04-anthropic",
       "platform_id": "anthropic",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.078609Z",
+      "last_checked_at": "2026-11-28T15:15:35.649893Z",
       "cooldown_until": null
     },
     "https://www.apple.com/kr/newsroom/rss-feed.rss": {
       "source_id": "seed-54-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:39.788203Z",
+      "last_checked_at": "2026-11-28T15:15:41.367039Z",
       "cooldown_until": null,
-      "last_modified": "Wed, 18 Nov 2026 14:15:54 GMT"
+      "last_modified": "Wed, 18 Nov 2026 14:02:29 GMT"
     },
     "https://www.apple.com/newsroom/rss-feed.rss": {
       "source_id": "seed-53-apple-ml",
       "platform_id": "apple-ml",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.159102Z",
+      "last_checked_at": "2026-11-28T15:15:39.114557Z",
       "cooldown_until": null,
-      "last_modified": "Thu, 19 Nov 2026 16:00:17 GMT"
+      "last_modified": "Thu, 19 Nov 2026 16:00:20 GMT"
     },
     "https://www.gpters.org/rss/feed": {
       "source_id": "seed-15-gpters",
       "platform_id": "gpters",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.201591Z",
+      "last_checked_at": "2026-11-28T15:15:35.792765Z",
       "cooldown_until": null
     },
     "https://www.interconnects.ai/feed": {
       "source_id": "seed-48-interconnects",
       "platform_id": "interconnects",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:37.951388Z",
+      "last_checked_at": "2026-11-28T15:15:38.692179Z",
       "cooldown_until": null,
       "etag": "W/\"7fac4-ncpLkdnahKSCAhxW8j3faT5+Uw8\""
     },
@@ -1937,15 +1937,15 @@
       "source_id": "seed-44-latent-space",
       "platform_id": "latent-space",
       "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:38.445981Z",
+      "last_checked_at": "2026-11-28T15:15:38.732024Z",
       "cooldown_until": null,
-      "last_modified": "Sat, 28 Nov 2026 14:42:18 GMT"
+      "last_modified": "Sat, 28 Nov 2026 15:11:11 GMT"
     },
     "https://www.microsoft.com/en-us/research/feed/": {
       "source_id": "seed-55-microsoft-research",
       "platform_id": "microsoft-research",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.480927Z",
+      "last_checked_at": "2026-11-28T15:15:39.270759Z",
       "cooldown_until": null,
       "etag": "\"a9f83ee40cf2a9fc9ff27b558da9638c\"",
       "last_modified": "Sat, 28 Nov 2026 12:11:02 GMT"
@@ -1953,10 +1953,10 @@
     "https://www.oneusefulthing.org/feed": {
       "source_id": "seed-47-one-useful-thing",
       "platform_id": "one-useful-thing",
-      "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.038715Z",
+      "last_status": 200,
+      "last_checked_at": "2026-11-28T15:15:38.588769Z",
       "cooldown_until": null,
-      "etag": "W/\"e0f01-ULDjr1GGiitxw0FFTYFAeNpLxFA\""
+      "etag": "W/\"e0f01-6dOhy9C9y/czyMMhskkdJQrKoxI\""
     },
     "https://www.producthunt.com/feed": {
       "source_id": "seed-61-x",
@@ -2001,7 +2001,7 @@
       "source_id": "seed-61-mit-tech-review",
       "platform_id": "mit-tech-review",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:38.418829Z",
+      "last_checked_at": "2026-11-28T15:15:39.381375Z",
       "cooldown_until": null,
       "etag": "W/\"777316aa5bd542835cdf44da4160da74\"",
       "last_modified": "Fri, 27 Nov 2026 13:00:08 GMT"
@@ -2010,7 +2010,7 @@
       "source_id": "seed-17-mit-tr-korea",
       "platform_id": "mit-tr-korea",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:36.272107Z",
+      "last_checked_at": "2026-11-28T15:15:37.706198Z",
       "cooldown_until": null,
       "etag": "\"24ccafef699df95bc17b63649538ed9a\"",
       "last_modified": "Sat, 28 Nov 2026 01:10:56 GMT"
@@ -2018,8 +2018,8 @@
     "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml": {
       "source_id": "seed-60-the-verge-ai",
       "platform_id": "the-verge-ai",
-      "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:38.565168Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-28T15:15:39.379688Z",
       "cooldown_until": null,
       "etag": "W/\"8ee619b0a7d8a3b36f7c1e86499d95a3\""
     },
@@ -2027,15 +2027,15 @@
       "source_id": "seed-28-zenn",
       "platform_id": "zenn",
       "last_status": 304,
-      "last_checked_at": "2026-11-28T15:00:37.801556Z",
+      "last_checked_at": "2026-11-28T15:15:38.667916Z",
       "cooldown_until": null,
       "last_modified": "Sat, 28 Nov 2026 10:11:03 GMT"
     },
     "https://zenn.dev/topics/llm/feed": {
       "source_id": "seed-27-zenn",
       "platform_id": "zenn",
-      "last_status": 200,
-      "last_checked_at": "2026-11-28T15:00:35.765528Z",
+      "last_status": 304,
+      "last_checked_at": "2026-11-28T15:15:36.482361Z",
       "cooldown_until": null,
       "last_modified": "Sat, 28 Nov 2026 11:16:28 GMT"
     }
@@ -6890,6 +6890,13 @@
       "provider": "snapshot_cache",
       "cached_at": "2026-11-28T08:46:34.897011Z"
     },
+    "https://news.hada.io/topic?id=38005": {
+      "original_title": "Claude Code의 사보타주: 예비 벤치마킹",
+      "title_ko": "Claude Code에 특정 조건을 주었을 때 성능 차이가 난 이유가 뭘까요?",
+      "body_ko": "",
+      "provider": "snapshot_cache",
+      "cached_at": "2026-11-28T15:02:11.362046Z"
+    },
     "https://news.web.nhk/newsweb/na/nd-20261124de80746": {
       "original_title": "三重県警 小学校元講師 AI生成の児童ポルノ画像所持で追送検 | NHKニュース",
       "title_ko": "미에현 경 초등학교 전 강사 AI 생성의 아동 포르노 화상 소지로 추송검 | NHK 뉴스",
@@ -8067,6 +8074,14 @@
       "provider": "gemini_batch",
       "cached_at": "2026-11-28T14:32:16.122081Z",
       "why_ko": "RAG 검색 성능을 높이기 위해 벡터 검색과 키워드 검색을 혼합하는 실무적인 개선 방법을 다루고 있기 때문입니다."
+    },
+    "https://qiita.com/yuri-hexis/items/891d7a9db2f5baa285a3": {
+      "original_title": "「Attention Is All You Need」を読む：Transformer はそれまでの翻訳モデルと何が違い、なぜ大事なのか",
+      "title_ko": "'Attention Is All You Need' 읽기: Transformer가 기존 번역 모델과 다른 점과 중요성",
+      "body_ko": "Transformer는 순환 신경망이나 합성곱을 사용하지 않고 Attention이라는 메커니즘만으로 구성된 시퀀스 변환 모델입니다. Vaswani 연구팀이 제안한 이 구조는 기존 모델의 한계를 극복하고 자연어 처리 분야의 표준으로 자리 잡았습니다.",
+      "provider": "gemini_batch",
+      "cached_at": "2026-11-28T15:17:07.986871Z",
+      "why_ko": "AI 기술의 근간이 되는 Transformer 모델의 핵심 개념과 기존 모델과의 차이점을 명확히 정리했습니다."
     },
     "https://ricapar.net/ClawDOS": {
       "original_title": "ClawDOS – An AI coding agent for DOS",
@@ -10351,7 +10366,7 @@
       "cached_at": "2026-11-21T23:01:55.322216Z"
     }
   },
-  "github_last_collected_at": "2026-11-28T14:00:44.046020Z",
+  "github_last_collected_at": "2026-11-28T15:15:39.378367Z",
   "github_seen_repos": {
     "ai-fange/a-microrobot-that-can-rollerskate": "2026-11-27T18:16:19.630137Z",
     "alesha-pro/machine-code-llm-battle": "2026-11-28T01:29:52.835288Z",
@@ -10457,10 +10472,6 @@
     "https://anthropic.com/research/working-with-ai": {
       "image": "https://assets.claude.com/cd30ce2e82eb423476801098073b39e025839018.jpg",
       "checked_at": "2026-11-28T08:40:07.015333Z"
-    },
-    "https://atmarkit.itmedia.co.jp/ait/articles/2611/27/news035.html": {
-      "image": "https://image.itmedia.co.jp/ait/articles/2611/27/cover_news035.jpg",
-      "checked_at": "2026-11-28T14:02:19.856932Z"
     },
     "https://atmarkit.itmedia.co.jp/ait/articles/2611/27/news038.html": {
       "image": "https://image.itmedia.co.jp/ait/articles/2611/27/cover_news038.jpg",
@@ -10778,6 +10789,10 @@
       "image": null,
       "checked_at": "2026-11-28T14:32:16.122081Z"
     },
+    "https://qiita.com/yuri-hexis/items/891d7a9db2f5baa285a3": {
+      "image": null,
+      "checked_at": "2026-11-28T15:17:07.986871Z"
+    },
     "https://speakerdeck.com/yossyds/deta-saientisuto-no-claude-code-katsuyoujutsu": {
       "image": "https://files.speakerdeck.com/presentations/92a4f40ed7924cecbff10af79032351f/slide_0.jpg?41411252",
       "checked_at": "2026-11-28T08:40:07.015333Z"
@@ -10995,11 +11010,6 @@
     "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/eca172d0-65ff-4e9d-b005-000dd56c21c4/original=true/150317367.jpeg": {
       "ok": true,
       "why": "plain(top=0.07,H=6.4);vision:illustration@gemini-3.5-flash-lite",
-      "at": "2026-11-28T14:32:16.122081Z"
-    },
-    "https://image.itmedia.co.jp/ait/articles/2611/27/cover_news035.jpg": {
-      "ok": true,
-      "why": "plain(top=0.05,H=6.4);vision:illustration@gemini-3.5-flash-lite",
       "at": "2026-11-28T14:32:16.122081Z"
     },
     "https://image.itmedia.co.jp/ait/articles/2611/27/cover_news038.jpg": {
@@ -11322,10 +11332,10 @@
     },
     "https://aitimes.com/news/articleView.html?idxno=217899": {
       "title_ko": "전기차 가격으로 휴머노이드 로봇을 출시하겠다는 샤오펑의 계획이에요",
-      "vision_ko": "앞으로 대중화된 가격으로 휴머노이드 로봇을 일상이나 산업 현장에서 만날 수 있게 될 수 있어요. 우리는 로봇 양산과 소프트웨어 구독 모델이 가져올 수익화 방식에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 대중화된 가격대의 로봇이 보급되면서 일상과 산업 현장에서 로봇 활용이 훨씬 빨라질 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산과 가격 경쟁력으로 이어지는지 주목해 볼 수 있어요.",
       "src": "8bdfc1e4fb80448e",
       "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:02:11.362046Z"
+      "at": "2026-11-28T15:17:07.986871Z"
     },
     "https://aitimes.com/news/articleView.html?idxno=217900": {
       "title_ko": "유발 하라리가 경고한 인류의 최대 위협은 무엇일까요?",
@@ -11391,6 +11401,14 @@
       "easy_summary_ko": "앤트 인터내셔널의 내부 데이터를 활용해 행동과 관계를 학습하는 결제 기반 모델이 공개되었어요. 시퀀스와 표 형식, 그래프 정보를 통합하여 지불 위험을 효과적으로 찾아내요.",
       "vision_ko": "앞으로 금융 및 결제 시스템에서 이상 거래를 더욱 정확하고 빠르게 찾아내는 보안 솔루션이 강화될 수 있어요. 우리는 이 대규모 모델이 실제 비즈니스 환경에서 얼마나 안정적으로 위험을 차단하는지 주목해 볼 수 있어요."
     },
+    "https://arxiv.org/abs/2611.31619": {
+      "src": "f2a9890810fd4759",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "title_ko": "시계열 예측 모델의 성능을 정확히 비교하는 도구 Vernier가 나왔어요",
+      "easy_summary_ko": "시계열 기초 모델의 성능을 평가할 때 공개된 리더보드에만 의존하던 한계를 해결하기 위한 도구예요. 성능 차이 미세 단위를 계산해 주는 측정 해상도 도구인 Vernier를 연구팀이 새롭게 선보였어요.",
+      "vision_ko": "앞으로 복잡한 시계열 예측 모델들의 성능 차이를 객관적으로 비교하고 검증할 수 있게 돼요. 우리는 새로운 평가 도구가 실제 모델 개발과 순위 산정에 어떤 영향을 주는지 주목해 볼 수 있어요."
+    },
     "https://arxiv.org/abs/2611.34051": {
       "src": "558e579075e8ecac",
       "model": "gemini-3.5-flash-lite",
@@ -11430,20 +11448,6 @@
       "title_ko": "비디오 생성 모델보다 코딩 기반 Agent가 시각적 추론에 더 뛰어난가요?",
       "easy_summary_ko": "비디오 생성 모델과 달리 코딩 기반 Agent가 시각적 추론 작업에서 더 우수한 성능을 보여주고 있어요. 시각 매체 내에서 직접 추론하는 방식보다 코딩을 활용하는 방식이 강점을 드러내고 있어요.",
       "vision_ko": "앞으로 복잡한 시각적 과제를 해결할 때 영상 생성 방식 대신 코딩 기반의 정밀한 추론 접근법이 더 많이 쓰이게 돼요. 우리는 시각적 추론 영역에서 코딩 에이전트가 보여주는 성능 향상 폭에 주목해 볼 수 있어요."
-    },
-    "https://atmarkit.itmedia.co.jp/ait/articles/2611/27/news035.html": {
-      "src": "493985b516362543",
-      "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:02:11.362046Z",
-      "glossary": [
-        {
-          "term": "AI 에이전트",
-          "desc": "스스로 계획을 세우고 도구를 사용해 복잡한 작업을 수행하는 인공지능 시스템이에요."
-        }
-      ],
-      "title_ko": "구글이 밝힌 인공지능 에이전트 테스트의 한계와 검증 방안은 무엇인가요?",
-      "easy_summary_ko": "인공지능 에이전트의 작동을 검증할 때 최종 답변이나 단순 조작 테스트만으로는 파악하기 어려운 문제가 존재한다고 밝혔어요. 구글은 코딩 에이전트 플러그인 개발을 통해 에이전트 행동의 적절성을 확인하는 방안을 다뤘어요.",
-      "vision_ko": "앞으로 복잡한 자율 동작을 수행하는 인공지능 에이전트의 안전성과 신뢰성을 검증하는 테스트 기법이 더욱 고도화될 수 있어요. 우리는 에이전트의 폭주나 오작동을 사전에 감지하는 검증 기술에 주목해 볼 수 있어요."
     },
     "https://atmarkit.itmedia.co.jp/ait/articles/2611/27/news038.html": {
       "src": "6bfa69c0fa4038d1",
@@ -11968,17 +11972,17 @@
       "vision_ko": "앞으로 노트 앱 안에서 에이전트가 문서를 직접 정리하고 관리하는 작업 자동화가 훨씬 수월해져요. 우리는 에이전트와 생산성 도구가 결합할 때 만들어지는 개인 문서 관리의 변화에 주목해 볼 수 있어요."
     },
     "https://itmedia.co.jp/aiplus/article/2611/26/2000003483": {
-      "src": "b0af9e6b2f0f111b",
-      "model": "gemini-3.5-flash-lite",
-      "at": "2026-11-28T15:02:11.362046Z",
       "glossary": [
         {
-          "term": "Agent",
-          "desc": "사람의 개입 없이 스스로 판단하고 작업을 수행하는 AI 프로그램을 말해요."
+          "term": "Claude",
+          "desc": "다양한 대화와 문서 작업을 도와주는 앤스로픽의 인공지능 모델이에요."
         }
       ],
-      "title_ko": "앤스로픽의 인공지능 에이전트 클로드 듀엣 연구 미리보기, 일본을 포함해 미국 외 지역으로 확대했어요",
-      "vision_ko": "앞으로 국내외 더 많은 사용자들이 앤스로픽의 앞선 에이전트 기능을 직접 체험하고 업무에 활용할 수 있게 돼요. 우리는 글로벌 지역으로 확장되는 AI 에이전트 서비스의 기능과 반응에 주목해 볼 수 있어요."
+      "title_ko": "클로드 듀엣 연구 미리보기 서비스가 일본을 포함해 해외로 넓혀졌어요",
+      "vision_ko": "앞으로 글로벌 사용자들이 다양한 지역에서 최신 인공지능 에이전트 기능을 더 빠르게 접할 수 있게 돼요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떤 반응을 얻고 어떻게 확장되는지 주목해 볼 수 있어요.",
+      "src": "b0af9e6b2f0f111b",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z"
     },
     "https://itmedia.co.jp/aiplus/article/2611/26/2000003490": {
       "src": "e4f8ad39f6594323",
@@ -12276,6 +12280,14 @@
       "easy_summary_ko": "OpenAI가 최근 운영 비용을 줄이고 효율성을 높이는 관리 체제로 전환하고 있어요. 인공지능 기업들의 운영 전략에 어떤 변화가 생기고 있는지 살펴볼 수 있어요.",
       "vision_ko": "앞으로 개발 환경에서 비용 부담이 줄어들며 다양한 자동화 도구를 더 가볍게 쓸 수 있게 돼요. 우리는 주요 AI 기업의 예산 집행 방식과 효율성 중심의 운영 변화에 주목해 볼 수 있어요."
     },
+    "https://monoist.itmedia.co.jp/mn/articles/2611/26/news014.html": {
+      "src": "a4611237245c94c6",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "title_ko": "공연공업이 AI를 활용해 도면 검색 시간을 줄이고 업무 효율을 높였어요",
+      "easy_summary_ko": "창업 70주년을 맞이한 공연공업이 Recursive와 공동으로 AI 지식 기반 시스템을 개발했어요. 이를 통해 도면 검색 공수를 최대 90%까지 줄일 수 있을 것으로 보이며 기술 전승에도 도움을 줄 전망이에요.",
+      "vision_ko": "앞으로 오랜 문서와 도면 자료를 인공지능으로 쉽게 찾아 현장 기술 전승과 업무 속도가 크게 빨라질 수 있어요. 우리는 전통 제조 기업이 인공지능 도입으로 실제 업무 효율을 얼마나 높이는지 주목해 볼 수 있어요."
+    },
     "https://news.google.com/rss/articles/CBMiTkFVX3lxTE40ZGw3OHN0S2JtaE5qUEFHYzNnUjkxekpzYjlVX2FGUTVSbTJ1akdhcHdRejExamJPZ1VZRjVMdm5vejZmNE5KcWQ0S3F5Zw?oc=5": {
       "src": "681c0e21a89d59a8",
       "model": "gemini-3.5-flash-lite",
@@ -12572,6 +12584,24 @@
       "easy_summary_ko": "벡터 검색만으로 찾기 힘들던 모델 번호를 키워드 검색인 BM25와 결합해 정확도를 높였어요. 두 방식을 함께 사용하는 RRF 통합 방법으로 검색 품질을 구체적으로 개선했어요.",
       "vision_ko": "앞으로 복잡한 부품 번호나 전문 모델명을 다루는 문서 검색 시스템의 정확도가 크게 높아져요. 우리는 실제 데이터 특성에 맞춰 벡터와 키워드 검색을 조합하는 최적화 방식에 주목해 볼 수 있어요."
     },
+    "https://qiita.com/yuri-hexis/items/891d7a9db2f5baa285a3": {
+      "src": "e527607e7aaf80d2",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "glossary": [
+        {
+          "term": "Transformer",
+          "desc": "문장 전체의 단어 관계를 한 번에 파악해 번역과 글 이해를 돕는 핵심 인공지능 구조예요."
+        },
+        {
+          "term": "Attention",
+          "desc": "문장 속 여러 단어 중에서 어떤 단어에 더 집중해야 할지 스스로 찾아내는 메커니즘이에요."
+        }
+      ],
+      "title_ko": "트랜스포머 모델이 기존 번역 모델과 어떻게 다른지 알아볼까요?",
+      "easy_summary_ko": "순환 신경망이나 합성곱을 쓰지 않고 오직 Attention 메커니즘만으로 이뤄진 시퀀스 변환 모델이에요. 자연어 처리 분야의 표준으로 자리 잡은 핵심 구조와 기존 방식과의 차이점을 정리했어요.",
+      "vision_ko": "앞으로 인공지능 모델의 근간이 되는 구조를 이해하고 더 효율적인 개발 방식을 설계할 수 있게 돼요. 우리는 Transformer 모델의 세부 작동 원리와 실제 개발 환경에서의 응용 방식에 주목해 볼 수 있어요."
+    },
     "https://speakerdeck.com/yossyds/deta-saientisuto-no-claude-code-katsuyoujutsu": {
       "src": "71600ec0fd5f5211",
       "model": "gemini-3.5-flash-lite",
@@ -12640,6 +12670,22 @@
       "easy_summary_ko": "New York Times가 프리랜서 사진가들에게 최신 버전의 Adobe Photoshop 업데이트를 자제하라고 요청했어요. 인공지능 기능이 사진에 원치 않는 메타데이터를 생성할 수 있기 때문이에요.",
       "vision_ko": "앞으로 창작물에 인공지능 사용 여부를 판별하는 메타데이터 표준이 저작권과 원본 증명에 중요해져요. 우리는 디자인 도구의 인공지능 도입이 현업 작업자들에게 미치는 영향에 주목해 볼 수 있어요."
     },
+    "https://theverge.com/entertainment/1042221/google-my-channel-ai-video-patent": {
+      "src": "ae134790b772f51b",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "title_ko": "사용자 맞춤형 AI 영상 피드를 만들려는 구글의 특허가 눈길을 끌고 있어요",
+      "easy_summary_ko": "구글은 사용자 정보를 바탕으로 맞춤형 인공지능 생성 영상과 광고를 채우는 My Channel 시스템 특허를 출원했어요. 해당 특허는 거부되었지만 구글이 수정안을 다시 제출할 가능성이 있어 업계에서 주목하고 있어요.",
+      "vision_ko": "앞으로 엔터테인먼트와 미디어 플랫폼에서 개인 맞춤형 인공지능 콘텐츠 생성이 더욱 활발해질 수 있어요. 우리는 대기업의 인공지능 영상 관련 지식재산권 확보 움직임과 그 파급효과에 주목해 볼 수 있어요."
+    },
+    "https://theverge.com/gadgets/1042162/nothing-ear-note-ai-earbuds-reveal": {
+      "src": "6f8c779289e6d6e0",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "title_ko": "통화와 회의를 기록하고 요약해 주는 새로운 AI 이어버드가 나왔어요",
+      "easy_summary_ko": "12월 8일 출시를 앞둔 이어버드와 충전 케이스를 통해 대화를 녹음하고 요약할 수 있는 기능이 공개됐어요. 이어버드 마이크가 달린 충전 케이스의 녹음 버튼을 눌러 인공지능을 위한 하드웨어 컨텍스트 계층을 구축하려는 시도예요.",
+      "vision_ko": "앞으로 일상적인 대화와 회의 내용을 하드웨어 기기로 바로 기록하고 인공지능으로 요약하는 일이 편리해져요. 우리는 음성 기반 하드웨어 기기가 인공지능 서비스와 어떻게 결합되는지 주목해 볼 수 있어요."
+    },
     "https://theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats": {
       "src": "4761e494ee6942c5",
       "model": "gemini-3.5-flash-lite",
@@ -12647,6 +12693,14 @@
       "title_ko": "42개 주 법무장관 연합이 Character.AI의 사용자 채팅 매각을 막으려나요?",
       "easy_summary_ko": "파산 절차를 밟고 있는 Character.AI가 2,100만 개 이상의 미공개 채팅 기록을 경매에 부치는 것을 막기 위해 주 법무장관들이 나섰어요. 미성년자 계정의 데이터가 포함된 비공개 대화가 보호 장치 없이 판매되는 상황을 우려하고 있어요.",
       "vision_ko": "앞으로 파산 기업의 인공지능 사용자 데이터 처리 과정에서 법적 제재와 보호 장치가 더욱 강화돼요. 우리는 기업의 재정 위기 속에서 이용자의 프라이버시와 민감한 대화 기록이 어떻게 다뤄지는지 주목해 볼 수 있어요."
+    },
+    "https://theverge.com/science/1042278/spacex-fcc-starmind-ai-space-data-centers": {
+      "src": "b718ba175131568b",
+      "model": "gemini-3.5-flash-lite",
+      "at": "2026-11-28T15:17:07.986871Z",
+      "title_ko": "스페이스엑스의 데이터 센터 위성 배치 계획을 FCC가 승인했어요",
+      "easy_summary_ko": "스페이스엑스가 인공지능 칩을 장착한 위성을 최대 1백만 개까지 우주에 배치하는 계획을 FCC가 승인했어요. 구글과 블루 오리진 등 여러 기업이 우주 기반 인공지능 데이터 센터 아이디어를 추진하는 흐름 속에서 나온 첫 승인이에요.",
+      "vision_ko": "앞으로 우주 공간에 대규모 인공지능 인프라가 구축되면서 데이터 처리 방식에 큰 변화가 생길 수 있어요. 우리는 우주 위성을 활용한 인공지능 데이터 센터 프로젝트가 실제로 어떻게 진척되는지 주목해 볼 수 있어요."
     },
     "https://theverge.com/tech/1041801/android-intelligence-create-my-widget-gemini": {
       "src": "f008450e22f577db",
