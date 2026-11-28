@@ -267,6 +267,20 @@ export default function RadarApp({ data }: { data: RadarData }) {
   const lastLabel = formatLastCollected(lastCollectedAt, now);
   const statusLabel = lastLabel ? (lastLabel === "방금 전" ? "방금 업데이트" : `마지막 업데이트 ${lastLabel}`) : "실시간 수신 중";
   const selectedItem = selection?.type === "item" ? findItem(selection.id) ?? null : null;
+
+  // 연속 읽기: 현재 피드 순서에서 다음 미열람 기사(없으면 바로 다음) / 이전 기사
+  const { nextItem, prevItem } = useMemo(() => {
+    if (!selectedItem) return { nextItem: null, prevItem: null };
+    const idx = navOrder.indexOf(selectedItem.id);
+    const after = idx >= 0 ? navOrder.slice(idx + 1) : navOrder;
+    const nextId = after.find((id) => id !== selectedItem.id && !readIdSet.has(id)) ?? after.find((id) => id !== selectedItem.id);
+    const prevId = idx > 0 ? navOrder[idx - 1] : null;
+    return {
+      nextItem: nextId ? findItem(nextId) ?? null : null,
+      prevItem: prevId ? findItem(prevId) ?? null : null,
+    };
+    // readIdSet 은 읽음 표시가 바뀔 때 '다음 미열람' 을 새로 고르기 위해 포함
+  }, [selectedItem, navOrder, readIdSet, findItem]);
   const emptyLayout = { hero: null, side: [], wire: [], features: [], stream: searchResults ?? [] };
 
   return (
@@ -290,6 +304,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
       )}
 
       <main className="wrap newsroom-main" id="main">
+        <div key={tab} className="tab-panel">
         {searchResults ? (
           searchResults.length > 0 ? (
             <FrontPage
@@ -326,6 +341,7 @@ export default function RadarApp({ data }: { data: RadarData }) {
         ) : (
           <p className="empty-note">이 분류에는 아직 소식이 없어요. ‘전체’ 탭에서 다른 소식을 둘러보세요.</p>
         )}
+        </div>
       </main>
 
       <footer className="wrap newsroom-foot">
@@ -336,6 +352,8 @@ export default function RadarApp({ data }: { data: RadarData }) {
 
       <BriefingModal
         item={selectedItem}
+        nextItem={nextItem}
+        prevItem={prevItem}
         now={now}
         platformsById={platformsById}
         knownIds={knownIds}

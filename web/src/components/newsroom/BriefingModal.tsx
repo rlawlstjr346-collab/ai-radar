@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import { copyText } from "@/lib/clipboard";
@@ -56,6 +56,39 @@ const ExternalIcon = () => (
 
 const EXIT_MS = 200;
 
+const ArrowIcon = () => (
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <path d="M4 10h11M11 5.5L15.5 10 11 14.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+/** 반투명 글래스 카드 — 포인터 위치를 따라 가장자리에 아주 옅은 순백 스페큘러 글로우가 맺힌다 (rAF 로 1프레임 1회 갱신) */
+function GlassCard({ index, className = "", label, children }: { index: number; className?: string; label: string; children: ReactNode }) {
+  const frame = useRef(0);
+  const onMove = (e: ReactPointerEvent<HTMLElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      el.style.setProperty("--mx", `${x}px`);
+      el.style.setProperty("--my", `${y}px`);
+    });
+  };
+  return (
+    <section
+      className={`briefing-card ${className}`}
+      aria-label={label}
+      onPointerMove={onMove}
+      style={{ "--i": index } as CSSProperties}
+    >
+      {children}
+    </section>
+  );
+}
+
 /**
  * 애플 리퀴드 글래스 브리핑 모달 — 20초 안에 흐름과 비전을 얻어가는 6단 구성.
  * ESC · 바깥 클릭 · 우상단 닫기. 닫을 때 바디 스크롤 위치를 그대로 둔다(스크롤바 폭만큼 튀지 않게 gutter 고정).
@@ -67,8 +100,12 @@ export default function BriefingModal({
   knownIds,
   onOpen,
   onClose,
+  nextItem = null,
+  prevItem = null,
 }: {
   item: FeedItem | null;
+  nextItem?: FeedItem | null;
+  prevItem?: FeedItem | null;
   now: number;
   platformsById: Map<string, Platform>;
   knownIds: ReadonlySet<string>;
@@ -81,6 +118,20 @@ export default function BriefingModal({
   const dialogRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
+  const [dir, setDir] = useState<"next" | "prev" | "none">("none");
+  const navRef = useRef<{ next: () => void; prev: () => void }>({ next: () => {}, prev: () => {} });
+  navRef.current = {
+    next: () => {
+      if (!nextItem) return;
+      setDir("next");
+      onOpen(nextItem.id);
+    },
+    prev: () => {
+      if (!prevItem) return;
+      setDir("prev");
+      onOpen(prevItem.id);
+    },
+  };
 
   // 열기·전환은 즉시, 닫기는 짧은 퇴장 모션 뒤 언마운트
   useEffect(() => {
@@ -103,11 +154,23 @@ export default function BriefingModal({
   const open = Boolean(item);
   useEffect(() => {
     if (!open) return;
+    setDir("none");
     returnFocus.current = document.activeElement as HTMLElement | null;
     const html = document.documentElement;
     html.dataset.modal = "open";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      const t = e.target as HTMLElement | null;
+      const typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
+      if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          navRef.current.next();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          navRef.current.prev();
+        }
+      }
       if (e.key === "Tab" && dialogRef.current) {
         const nodes = dialogRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
         if (nodes.length === 0) return;
@@ -177,10 +240,12 @@ export default function BriefingModal({
         tabIndex={-1}
         className="briefing-sheet"
       >
+        <span className="briefing-sheen" aria-hidden="true" />
         <button type="button" className="briefing-close" onClick={onClose} aria-label="브리핑 닫기 (ESC)">
           <CloseIcon />
         </button>
         <div ref={scrollRef} className="briefing-scroll thin-scroll">
+          <div key={current.id} className="briefing-content" data-dir={dir}>
           {imageOk && current.image_url && (
             <StoryImage
               key={current.image_url}
@@ -211,17 +276,17 @@ export default function BriefingModal({
           </h2>
 
           {story && (
-            <section className="briefing-card" aria-labelledby="b-story">
-              <h3 id="b-story">한눈에 보는 이야기</h3>
+            <GlassCard index={0} label="한눈에 보는 이야기">
+              <h3>한눈에 보는 이야기</h3>
               <p>{story}</p>
-            </section>
+            </GlassCard>
           )}
 
           {vision && (
-            <section className="briefing-card briefing-vision" aria-labelledby="b-vision">
-              <h3 id="b-vision">여기서 얻을 미래 비전 & 기회</h3>
+            <GlassCard index={story ? 1 : 0} className="briefing-vision" label="여기서 얻을 미래 비전 & 기회">
+              <h3>여기서 얻을 미래 비전 & 기회</h3>
               <p>{vision}</p>
-            </section>
+            </GlassCard>
           )}
 
           {current.terms.length > 0 && (
@@ -245,7 +310,13 @@ export default function BriefingModal({
                 {related.map((r) => (
                   <li key={r.id}>
                     {r.openable ? (
-                      <button type="button" onClick={() => onOpen(r.id)}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setDir("next");
+                          onOpen(r.id);
+                        }}
+                      >
                         <span className="rel-src">{platformsById.get(r.platformId)?.name ?? r.platformId}</span>
                         <span className="rel-title">{r.title}</span>
                       </button>
@@ -271,7 +342,24 @@ export default function BriefingModal({
               <ExternalIcon />
             </a>
           </div>
+          </div>
         </div>
+        {(nextItem || prevItem) && (
+          <div className="nextup">
+            {prevItem && (
+              <button type="button" className="nextup-prev" onClick={() => navRef.current.prev()} aria-label={`이전 소식: ${prevItem.hook_title}`}>
+                <ArrowIcon />
+              </button>
+            )}
+            {nextItem && (
+              <button type="button" className="nextup-bar" onClick={() => navRef.current.next()}>
+                <span className="nextup-label">다음 소식</span>
+                <span className="nextup-title">{nextItem.hook_title}</span>
+                <ArrowIcon />
+              </button>
+            )}
+          </div>
+        )}
       </div>
       {toast && (
         <div role="status" className="briefing-toast">
