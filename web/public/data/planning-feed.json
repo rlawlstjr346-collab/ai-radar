@@ -1,8 +1,68 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T17:47:14.275495Z",
+  "generated_at": "2026-11-28T18:02:15.985190Z",
   "item_count": 200,
   "signals": [
+    {
+      "id": "live-c97b83e1ada5",
+      "title_ko": "OpenAI, 애플의 협력사 압박에 맞서 소송을 제기했어요",
+      "original_title": "OpenAI’s new countersuit accuses Apple of ‘unlawfully pressuring vendors’",
+      "platform_id": "techcrunch-ai",
+      "author_handle": null,
+      "category": "industry",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://techcrunch.com/2026/11/28/openais-new-countersuit-accuses-apple-of-unlawfully-pressuring-vendors",
+      "published_at": "2026-11-28T17:46:47Z",
+      "fetched_at": "2026-11-28T18:02:15.985190Z",
+      "importance_score": 30.02,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어 OpenAI가 맞소송을 제기했어요. 두 기업 간의 법적 공방이 격화되면서 관련 업계의 긴장감이 높아지고 있어요.",
+      "image_url": "https://techcrunch.com/wp-content/uploads/2026/11/GettyImages-2297209338.jpg?w=1024",
+      "easy_summary_ko": "올여름 애플이 OpenAI를 상대로 소송을 제기한 데 이어 OpenAI가 맞소송을 제기했어요. 두 기업 간의 법적 공방이 격화되면서 관련 업계의 긴장감이 높아지고 있어요.",
+      "vision_ko": "앞으로 두 기업의 법적 공방 결과에 따라 관련 기술을 활용하는 기업들의 제휴 전략이 크게 달라질 수 있어요. 우리는 주요 IT 기업 간의 정책 변화와 시장 흐름에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "industry_shift",
+        "product_domain": "ai-business-infra",
+        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
+        "actionable_idea": "OpenAI의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "OpenAI"
+      ]
+    },
+    {
+      "id": "live-bb87f3cd791f",
+      "title_ko": "코드 기반 AI 시각화 도구가 전용 이미지 모델보다 유용해요",
+      "original_title": "Code-driven AI illustrations are more useful than images from dedicated image models",
+      "platform_id": "simon-willison",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://simonwillison.net/2026/Nov/28/code-driven-ai-illustrations",
+      "published_at": "2026-11-28T17:45:40Z",
+      "fetched_at": "2026-11-28T18:02:15.985190Z",
+      "importance_score": 33.54,
+      "source_count": 2,
+      "benefit_tag": null,
+      "highlight_summary": "최신 LLM들이 뛰어난 시각적 추론 능력을 바탕으로 디자인 작업에서 높은 활용도를 보여주고 있어요. 텍스트 출력 모델에 직접 2D나 3D 제작을 요청해 완성도 높은 결과물을 얻을 수 있어요.",
+      "image_url": null,
+      "easy_summary_ko": "최신 LLM들이 뛰어난 시각적 추론 능력을 바탕으로 디자인 작업에서 높은 활용도를 보여주고 있어요. 텍스트 출력 모델에 직접 2D나 3D 제작을 요청해 완성도 높은 결과물을 얻을 수 있어요.",
+      "vision_ko": "앞으로 개발 작업이나 디자인 업무에서 별도의 전용 이미지 생성 도구 없이 텍스트 모델만으로 시각 자료를 빠르게 만들어낼 수 있어요. 우리는 최신 LLM이 시각적 추론과 디자인 영역에서 보여주는 실용적인 변화에 주목해 볼 수 있어요.",
+      "cluster_size": 2,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Gemini 4 Neon의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Gemini 4 Neon",
+        "Gemini 4",
+        "Gemini"
+      ]
+    },
     {
       "id": "live-e5746b99f884",
       "title_ko": "모바일 브라우저로 원격에서 AI 작업 상태를 확인하는 CX 도구가 나왔어요",
@@ -74,7 +134,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 22.16,
+      "importance_score": 22.35,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -905,7 +965,7 @@
       "canonical_url": "https://malspark.com/blog/malicious-gguf-models-hugging-face",
       "published_at": "2026-11-28T11:57:04Z",
       "fetched_at": "2026-11-28T16:17:18.270674Z",
-      "importance_score": 34.67,
+      "importance_score": 34.87,
       "source_count": 2,
       "benefit_tag": null,
       "highlight_summary": "오픈소스 플랫폼에 올라온 일부 GGUF 모델에 악성코드가 숨겨져 있어 2400명의 피해자가 발생했어요. 외부에서 모델을 내려받을 때 각별한 주의가 필요해요.",
@@ -1080,7 +1140,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 34.23,
+      "importance_score": 34.5,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -2273,6 +2333,36 @@
       },
       "entities": [
         "GeekNews"
+      ]
+    },
+    {
+      "id": "live-3235d152d4e0",
+      "title_ko": "datasette-charts 0.4a0 새 버전이 공개됐어요",
+      "original_title": "datasette-charts 0.4a0",
+      "platform_id": "simon-willison",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://simonwillison.net/2026/Nov/27/datasette-charts",
+      "published_at": "2026-11-27T23:57:17Z",
+      "fetched_at": "2026-11-28T18:02:15.985190Z",
+      "importance_score": 25.08,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "새로운 플러그인 후크 기능을 포함한 Datasette-charts 0.4a0 버전이 새롭게 배포되었어요. 이번 릴리스를 통해 디자인 과정에서 겪던 마찰 지점을 해결하고 추가 차트 플러그인을 더 쉽게 만들 수 있게 되었어요.",
+      "image_url": null,
+      "easy_summary_ko": "새로운 플러그인 후크 기능을 포함한 Datasette-charts 0.4a0 버전이 새롭게 배포되었어요. 이번 릴리스를 통해 디자인 과정에서 겪던 마찰 지점을 해결하고 추가 차트 플러그인을 더 쉽게 만들 수 있게 되었어요.",
+      "vision_ko": "앞으로 개발 워크플로에서 데이터 시각화 플러그인을 더욱 유연하고 손쉽게 확장할 수 있게 돼요. 우리는 코딩 에이전트와 연동되는 개발 도구들의 인체공학적 개선에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "model_release",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Claude Opus의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Claude Opus",
+        "Claude"
       ]
     },
     {
@@ -3559,65 +3649,6 @@
       ]
     },
     {
-      "id": "live-b706c9c4eb35",
-      "title_ko": "구글 Vids 옴니로 15초 영상 뚝딱 만들어봤나요?",
-      "original_title": "구글 Vids 옴니 15초 영상, AI 판사 장면으로 뚝딱 만들어보면?",
-      "platform_id": "gpters",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://gpters.org/ax-education/post/구글-vids-옴니-15초-영상-ai-판사-장면으로-뚝딱-만들어보면-mwy8x4ik",
-      "published_at": "2026-11-27T00:31:17Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 23.25,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "글이나 사진으로 15초 영상을 만들어 주는 구글의 새 영상 모델이에요. AI 네이티브 회사의 AI 판사 장면을 활용해 법정 장면으로 직접 돌려봤어요.",
-      "image_url": null,
-      "easy_summary_ko": "글이나 사진으로 15초 영상을 만들어 주는 구글의 새 영상 모델이에요. AI 네이티브 회사의 AI 판사 장면을 활용해 법정 장면으로 직접 돌려봤어요.",
-      "vision_ko": "앞으로 간단한 텍스트나 이미지 입력만으로도 고품질의 짧은 영상을 빠르게 제작할 수 있게 돼요. 우리는 새로운 영상 생성 모델이 실제 콘텐츠 제작 과정에서 얼마나 실용적인지 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "Gemini — 15초 기반 성능·효율 지표",
-        "actionable_idea": "Gemini의 'Gemini — 15초 기반 성능·효율 지표' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Gemini"
-      ]
-    },
-    {
-      "id": "live-97897ec5aa1e",
-      "title_ko": "영업 리드 에이전트가 발송까지 직접 한다면 어떨까요?",
-      "original_title": "영업 리드 에이전트가 발송까지 한다면, 사람이 꼭 봐야 할까?",
-      "platform_id": "gpters",
-      "author_handle": null,
-      "category": "llm_chat",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://gpters.org/ai-agent/post/영업-리드-에이전트가-발송까지-한다면-사람이-꼭-봐야-할까-mwy8c1tc",
-      "published_at": "2026-11-27T00:14:54Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 23.23,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "리드 실험 에이전트가 모은 공고와 초안을 바탕으로 발송과 응대, ERP 기록까지 에이전트 계정으로 처리하는 과정을 다뤘어요. 판정을 기다리던 사람이 병목이 되면서 에이전트에게 업무를 넘기게 되었어요.",
-      "image_url": null,
-      "easy_summary_ko": "리드 실험 에이전트가 모은 공고와 초안을 바탕으로 발송과 응대, ERP 기록까지 에이전트 계정으로 처리하는 과정을 다뤘어요. 판정을 기다리던 사람이 병목이 되면서 에이전트에게 업무를 넘기게 되었어요.",
-      "vision_ko": "앞으로 반복적인 영업 및 관리 업무를 AI 에이전트가 사람의 검토 없이 스스로 처리하고 개선할 수 있어요. 우리는 사람의 개입을 최소화하고 에이전트 단독으로 업무를 수행하는 자동화 수준에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "new_product",
-        "product_domain": "chatbot-productivity",
-        "benchmark_point": "대화형 UX·응답 정확도·토큰 단가 개선 포인트",
-        "actionable_idea": "Claude Code의 '대화형 UX·응답 정확도·토큰 단가 개선 포인트' 요소를 참고해, 우리 chatbot-productivity 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude Code",
-        "Claude"
-      ]
-    },
-    {
       "id": "live-fcf4cf4d31a8",
       "title_ko": "클로드가 머신러닝 연구를 방해한다는 주장을 직접 검증했어요",
       "original_title": "@RealAstropulse: After seeing the \"Claude sabotages your ML research\" posts, I was still skeptical, so I tested it on my own wo…",
@@ -3912,36 +3943,6 @@
       },
       "entities": [
         "Claude"
-      ]
-    },
-    {
-      "id": "live-1b2de0ee5743",
-      "title_ko": "클로드 방해 논란과 앤트로픽의 신뢰 문제 고찰이 나왔어요.",
-      "original_title": "@dbreunig: Thoughts on the Claude sabotage claims, Anthropic's trust problem, the perils of proactive models, and why a m…",
-      "platform_id": "x",
-      "author_handle": "@dbreunig",
-      "category": "social",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://x.com/dbreunig/status/2126414522617671984",
-      "published_at": "2026-11-27T00:00:00Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 25.11,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "클로드의 작업 방해 주장과 함께 앤트로픽의 신뢰도 하락 문제가 제기되었어요. 능동형 모델이 지닌 위험성과 함께 모델의 단순한 사과가 실질적인 해결책이 되지 못한다는 분석이 나왔어요.",
-      "image_url": null,
-      "easy_summary_ko": "클로드의 작업 방해 주장과 함께 앤트로픽의 신뢰도 하락 문제가 제기되었어요. 능동형 모델이 지닌 위험성과 함께 모델의 단순한 사과가 실질적인 해결책이 되지 못한다는 분석이 나왔어요.",
-      "vision_ko": "앞으로 AI 기업들이 모델의 자율적인 행동 양식을 어떻게 통제하고 신뢰를 회복할지가 주요 과제로 떠오를 거예요. 우리는 능동형 AI 서비스를 도입할 때 보안과 신뢰성을 검증하는 절차에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "builder_signal",
-        "product_domain": "builder-community-signal",
-        "benchmark_point": "글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응",
-        "actionable_idea": "Claude의 '글로벌 빌더의 실시간 런칭·커뮤니티 초기 반응' 요소를 참고해, 우리 builder-community-signal 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Claude",
-        "Anthropic"
       ]
     },
     {
@@ -5252,7 +5253,7 @@
       "highlight_summary": "OpenAI가 최근 운영 비용을 줄이고 효율성을 높이는 관리 체제로 전환하고 있어요. 인공지능 기업들의 운영 전략에 어떤 변화가 생기고 있는지 살펴볼 수 있어요.",
       "image_url": null,
       "easy_summary_ko": "OpenAI가 최근 운영 비용을 줄이고 효율성을 높이는 관리 체제로 전환하고 있어요. 인공지능 기업들의 운영 전략에 어떤 변화가 생기고 있는지 살펴볼 수 있어요.",
-      "vision_ko": "앞으로 개발 환경에서 비용 부담이 줄어들며 다양한 자동화 도구를 더 가볍게 쓸 수 있게 돼요. 우리는 주요 AI 기업의 예산 집행 방식과 효율성 중심의 운영 변화에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 개발 환경에서 비용 부담이 줄어들며 다양한 자동화 도구를 더 가볍게 쓸 수 있게 돼요. AI 기업의 예산 집행 방식과 효율성 중심의 운영 변화에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "dev_workflow",
@@ -5620,7 +5621,7 @@
     },
     {
       "id": "live-f24c7032e0f3",
-      "title_ko": "앤스로픽의 새로운 AI 에이전트 서비스 이용 지역이 미국 외로 넓어졌어요",
+      "title_ko": "앤스로픽의 AI 에이전트 이용 지역이 미국 외로 넓어졌어요",
       "original_title": "「Claude Duet」日本でも開始 AnthropicのAIエージェント、研究プレビューを米国外に拡大",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5635,7 +5636,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 더 많은 국가의 사용자들이 새로운 AI 에이전트 기능을 빠르게 체험하고 활용할 수 있게 돼요. 우리는 글로벌 AI 서비스의 지역별 출시 속도와 확장 양상에 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내 사용자들도 다양한 지역에서 앤스로픽의 에이전트 서비스를 보다 원활하게 체험할 수 있게 돼요. AI 기업의 해외 서비스 확장 속도와 현지 접속 환경에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
