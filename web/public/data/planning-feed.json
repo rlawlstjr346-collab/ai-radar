@@ -1,8 +1,37 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T15:17:07.986871Z",
+  "generated_at": "2026-11-28T15:32:24.365105Z",
   "item_count": 200,
   "signals": [
+    {
+      "id": "live-3445fa59e455",
+      "title_ko": "패러렐 MCP 인증 경로와 설정 효과를 살펴볼까요?",
+      "original_title": "Parallel の MCP を実測した：キーなし経路の限界と override settings の効き目",
+      "platform_id": "qiita",
+      "author_handle": null,
+      "category": "dev",
+      "lifecycle_status": "hot",
+      "canonical_url": "https://qiita.com/Mt-yutto/items/059e6e489bb9dd3d427f",
+      "published_at": "2026-11-28T15:19:03Z",
+      "fetched_at": "2026-11-28T15:32:24.365105Z",
+      "importance_score": 27.55,
+      "source_count": 1,
+      "benefit_tag": null,
+      "highlight_summary": "패러렐 웹 시스템즈는 AI 에이전트를 위한 웹 검색 기반 시설로, 호스트형 MCP 서버를 통해 web_search 및 web_fetch 등의 도구를 제공해요. 로컬 검증 환경에서 인증이 없는 연결과 인증이 포함된 연결의 성능을 비교 점검했어요.",
+      "image_url": null,
+      "easy_summary_ko": "패러렐 웹 시스템즈는 AI 에이전트를 위한 웹 검색 기반 시설로, 호스트형 MCP 서버를 통해 web_search 및 web_fetch 등의 도구를 제공해요. 로컬 검증 환경에서 인증이 없는 연결과 인증이 포함된 연결의 성능을 비교 점검했어요.",
+      "vision_ko": "이런 변화가 이어지면, 앞으로 AI와 함께 일하는 방식이 개발자의 기본 업무 습관이 될 거예요. 우리는 내 업무 중 어떤 단계를 바로 AI에게 넘길 수 있는지에 주목해 볼 수 있어요.",
+      "cluster_size": 1,
+      "planning_meta": {
+        "signal_type": "dev_workflow",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "개발자 워크플로 자동화·에이전트 통합 생산성",
+        "actionable_idea": "Qiita의 '개발자 워크플로 자동화·에이전트 통합 생산성' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+      },
+      "entities": [
+        "Qiita"
+      ]
+    },
     {
       "id": "live-ddd79d217800",
       "title_ko": "트랜스포머 모델이 기존 번역 모델과 어떻게 다른지 알아볼까요?",
@@ -571,7 +600,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 31.78,
+      "importance_score": 32.02,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -1048,7 +1077,7 @@
       "highlight_summary": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
       "image_url": "https://cdn.aitimes.com/news/photo/202611/217899_222296_5810.jpeg",
       "easy_summary_ko": "AI타임스에 올라온 AI 업계 소식이에요. 짧은 글이라 자세한 배경과 수치는 원문에서 바로 확인할 수 있어요.",
-      "vision_ko": "앞으로 대중화된 가격대의 로봇이 보급되면서 일상과 산업 현장에서 로봇 활용이 훨씬 빨라질 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산과 가격 경쟁력으로 이어지는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 고가의 휴머노이드 로봇이 대중화되면서 일상이나 산업 현장에서 로봇을 도입하는 비용 부담이 크게 줄어들 수 있어요. 우리는 자동차 제조 기술이 어떻게 로봇 양산 비용을 낮추는 데 기여하는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
@@ -3734,33 +3763,32 @@
       ]
     },
     {
-      "id": "live-fdb12ef6565e",
-      "title_ko": "Clay가 GTM 에이전트를 구축하는 방법이 소개됐어요.",
-      "original_title": "How Clay Builds GTM Agents — Jeff Barg, Head of AI",
-      "platform_id": "latent-space",
+      "id": "live-1e1e7907d3f9",
+      "title_ko": "맥오스·윈도우·리눅스를 지원하는 로컬 미디어 다운로더 캡테이가 나왔어요",
+      "original_title": "sol1560/Captae: Local media downloader and library for macOS, Windows and Linux, with a browser extension an",
+      "platform_id": "github",
       "author_handle": null,
-      "category": "industry",
+      "category": "dev",
       "lifecycle_status": "hot",
-      "canonical_url": "https://latent.space/p/how-clay-builds-gtm-agents-jeff-barg-head-of-ai",
-      "published_at": "2026-11-26T23:02:48Z",
+      "canonical_url": "https://github.com/sol1560/Captae",
+      "published_at": "2026-11-26T17:28:47Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 24.38,
+      "importance_score": 29.62,
       "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "Clay의 AI 책임자인 Jeff Barg가 출연해 모든 에이전트가 공통으로 활용할 수 있는 시장 진출 인프라 구축 이야기를 들려주었어요. Clay에서는 자체 에이전트와 Claude Code를 활용한 사용량이 절반씩 나뉘어 있어요.",
+      "benefit_tag": "GitHub 급상승 ★315",
+      "highlight_summary": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
       "image_url": null,
-      "easy_summary_ko": "Clay의 AI 책임자인 Jeff Barg가 출연해 모든 에이전트가 공통으로 활용할 수 있는 시장 진출 인프라 구축 이야기를 들려주었어요. Clay에서는 자체 에이전트와 Claude Code를 활용한 사용량이 절반씩 나뉘어 있어요.",
-      "vision_ko": "앞으로 다양한 영업 및 시장 진출 자동화 도구에서 여러 AI 에이전트를 매끄럽게 연동하는 환경이 중요해져요. 우리는 기업들이 에이전트 인프라를 어떤 방식으로 통합하고 확장하는지 주목해 볼 수 있어요.",
+      "easy_summary_ko": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
+      "vision_ko": "앞으로 다양한 운영체제에서 인공지능 보조 도구와 연동되는 미디어 관리 도구를 손쉽게 활용할 수 있게 돼요. 우리는 인공지능 생태계와 연결되는 MCP 서버 기반 오픈소스 도구들의 확산세에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "model_release",
-        "product_domain": "ai-business-infra",
-        "benchmark_point": "AI 생태계 가격·정책·시장 재편 시그널",
-        "actionable_idea": "Claude Code의 'AI 생태계 가격·정책·시장 재편 시그널' 요소를 참고해, 우리 ai-business-infra 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "open_source_trend",
+        "product_domain": "coding-agent-devtool",
+        "benchmark_point": "GitHub 급상승 ★315",
+        "actionable_idea": "GitHub의 'GitHub 급상승 ★315' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "Claude Code",
-        "Claude"
+        "GitHub"
       ]
     },
     {
@@ -3822,32 +3850,32 @@
       ]
     },
     {
-      "id": "live-1e1e7907d3f9",
-      "title_ko": "맥오스·윈도우·리눅스를 지원하는 로컬 미디어 다운로더 캡테이가 나왔어요",
-      "original_title": "sol1560/Captae: Local media downloader and library for macOS, Windows and Linux, with a browser extension an",
-      "platform_id": "github",
+      "id": "live-4478933c2686",
+      "title_ko": "앤트로픽 연구진이 API를 Rust로 옮겼어요",
+      "original_title": "Anthropic Research: Migrating API To Rust",
+      "platform_id": "anthropic",
       "author_handle": null,
-      "category": "dev",
+      "category": "research",
       "lifecycle_status": "hot",
-      "canonical_url": "https://github.com/sol1560/Captae",
-      "published_at": "2026-11-26T17:28:47Z",
-      "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 29.62,
+      "canonical_url": "https://anthropic.com/research/migrating-api-to-rust",
+      "published_at": "2026-11-25T16:27:43.869000Z",
+      "fetched_at": "2026-11-25T21:36:50.284457Z",
+      "importance_score": 29.76,
       "source_count": 1,
-      "benefit_tag": "GitHub 급상승 ★315",
-      "highlight_summary": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
-      "image_url": null,
-      "easy_summary_ko": "브라우저 확장 프로그램과 인공지능 보조 도구를 위한 MCP 서버를 포함한 크로스플랫폼 로컬 미디어 다운로더 및 라이브러리예요. 러스트 언어로 개발되었으며 공개 직후 GitHub 스타 315개를 빠르게 넘겼어요.",
-      "vision_ko": "앞으로 다양한 운영체제에서 인공지능 보조 도구와 연동되는 미디어 관리 도구를 손쉽게 활용할 수 있게 돼요. 우리는 인공지능 생태계와 연결되는 MCP 서버 기반 오픈소스 도구들의 확산세에 주목해 볼 수 있어요.",
+      "benefit_tag": null,
+      "highlight_summary": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
+      "image_url": "https://assets.claude.com/faac348155bf01d5c59ab38cbd05294eb2fa8197.jpg",
+      "easy_summary_ko": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
+      "vision_ko": "앞으로 고성능 AI 서비스를 구축할 때 안정성과 속도를 높이기 위한 시스템 프로그래밍의 중요성이 더욱 커질 거예요. 우리는 대규모 API 환경을 개선하는 개발 방식의 변화에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
-        "signal_type": "open_source_trend",
-        "product_domain": "coding-agent-devtool",
-        "benchmark_point": "GitHub 급상승 ★315",
-        "actionable_idea": "GitHub의 'GitHub 급상승 ★315' 요소를 참고해, 우리 coding-agent-devtool 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
+        "signal_type": "research_breakthrough",
+        "product_domain": "ai-research-model",
+        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
+        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
       },
       "entities": [
-        "GitHub"
+        "Anthropic"
       ]
     },
     {
@@ -3877,35 +3905,6 @@
       },
       "entities": [
         "X"
-      ]
-    },
-    {
-      "id": "live-4478933c2686",
-      "title_ko": "앤트로픽 연구진이 API를 Rust로 옮겼어요",
-      "original_title": "Anthropic Research: Migrating API To Rust",
-      "platform_id": "anthropic",
-      "author_handle": null,
-      "category": "research",
-      "lifecycle_status": "hot",
-      "canonical_url": "https://anthropic.com/research/migrating-api-to-rust",
-      "published_at": "2026-11-25T16:27:43.869000Z",
-      "fetched_at": "2026-11-25T21:36:50.284457Z",
-      "importance_score": 29.76,
-      "source_count": 1,
-      "benefit_tag": null,
-      "highlight_summary": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
-      "image_url": "https://assets.claude.com/faac348155bf01d5c59ab38cbd05294eb2fa8197.jpg",
-      "easy_summary_ko": "앤트로픽이 API를 Rust 언어로 마이그레이션하는 연구 내용을 공식 공개했어요. 모델 효율과 추론 성능을 높이기 위한 개발 환경의 구체적인 변화를 보여주고 있어요.",
-      "vision_ko": "앞으로 고성능 AI 서비스를 구축할 때 안정성과 속도를 높이기 위한 시스템 프로그래밍의 중요성이 더욱 커질 거예요. 우리는 대규모 API 환경을 개선하는 개발 방식의 변화에 주목해 볼 수 있어요.",
-      "cluster_size": 1,
-      "planning_meta": {
-        "signal_type": "research_breakthrough",
-        "product_domain": "ai-research-model",
-        "benchmark_point": "모델 효율·추론 성능·오픈 벤치마크 진전",
-        "actionable_idea": "Anthropic의 '모델 효율·추론 성능·오픈 벤치마크 진전' 요소를 참고해, 우리 ai-research-model 영역 서비스의 핵심 워크플로 자동화 또는 차별화 기능 MVP로 검증"
-      },
-      "entities": [
-        "Anthropic"
       ]
     },
     {
@@ -5555,7 +5554,7 @@
     },
     {
       "id": "live-f24c7032e0f3",
-      "title_ko": "클로드 듀엣 연구 미리보기 서비스가 일본을 포함해 해외로 넓혀졌어요",
+      "title_ko": "클로드 듀엣 연구 미리보기 서비스가 해외로 넓혀졌어요",
       "original_title": "「Claude Duet」日本でも開始 AnthropicのAIエージェント、研究プレビューを米国外に拡大",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5570,7 +5569,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 글로벌 사용자들이 다양한 지역에서 최신 인공지능 에이전트 기능을 더 빠르게 접할 수 있게 돼요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떤 반응을 얻고 어떻게 확장되는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 국내외 더 많은 사용자가 최신 AI 에이전트 기능을 직접 써보며 일상적인 업무를 더 빠르게 처리할 수 있어요. 우리는 앤스로픽의 에이전트 서비스가 해외 시장에서 어떤 사용자 반응을 이끌어내는지 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
