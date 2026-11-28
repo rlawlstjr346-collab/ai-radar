@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-28T18:17:14.389700Z",
+  "generated_at": "2026-11-28T18:32:21.531573Z",
   "item_count": 200,
   "signals": [
     {
@@ -164,7 +164,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3ez5vpzvd25",
       "published_at": "2026-11-28T15:25:01.214000Z",
       "fetched_at": "2026-11-28T16:02:10.147051Z",
-      "importance_score": 22.52,
+      "importance_score": 22.61,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "네온의 성능이 좋아지면서 클로드에만 의존하지 않고 창작 작업을 할 수 있게 되었어요. 기존 GPT 모델이 잘 이해하지 못했던 창작 워크플로우를 네온이 원활하게 지원해 사용자 선택권이 넓어지고 있어요.",
@@ -494,7 +494,7 @@
       "canonical_url": "https://bsky.app/profile/natolambert.bsky.social/post/3n3eurgzd4y2r",
       "published_at": "2026-11-28T14:06:28.171000Z",
       "fetched_at": "2026-11-28T17:02:16.211320Z",
-      "importance_score": 17.19,
+      "importance_score": 17.29,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "인공지능의 추론 능력과 Agent 기능에서 앞으로 몇 차례의 큰 발전이 일어날 전망이에요. 이는 기존에 인공지능이 다루기 어려웠던 영역까지 영향을 미칠 것으로 보여요.",
@@ -1170,7 +1170,7 @@
       "canonical_url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "published_at": "2026-11-28T10:37:40Z",
       "fetched_at": "2026-11-28T14:02:19.856932Z",
-      "importance_score": 34.63,
+      "importance_score": 34.74,
       "source_count": 1,
       "benefit_tag": null,
       "highlight_summary": "Claude Code의 성능과 동작을 평가하기 위한 사전 벤치마크 관련 내용을 다루고 있어요. AI 개발 도구의 성능 평가 동향을 파악할 수 있어요.",
@@ -5622,7 +5622,7 @@
     },
     {
       "id": "live-f24c7032e0f3",
-      "title_ko": "앤스로픽의 AI 에이전트 이용 지역이 미국 외로 넓어졌어요",
+      "title_ko": "앤스로픽의 AI 에이전트 서비스가 미국 외 지역으로 확대되었어요",
       "original_title": "「Claude Duet」日本でも開始 AnthropicのAIエージェント、研究プレビューを米国外に拡大",
       "platform_id": "itmedia-aiplus",
       "author_handle": null,
@@ -5637,7 +5637,7 @@
       "highlight_summary": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
       "image_url": null,
       "easy_summary_ko": "앤스로픽의 신규 인공지능 에이전트 서비스가 해외 시장으로 확장되는 동향을 보여줘요.",
-      "vision_ko": "앞으로 다양한 국가의 사용자가 최신 AI 에이전트 기능을 빠르게 체험하고 업무에 활용할 수 있게 될 수 있어요. 우리는 앤스로픽의 서비스가 미국 외 글로벌 시장으로 확장되면서 어떤 반응을 얻는지 주목해 볼 수 있어요.",
+      "vision_ko": "앞으로 미국 외 지역에서도 AI 에이전트를 활용해 다양한 작업을 더 편리하게 처리할 수 있게 돼요. 우리는 이 서비스가 어떤 환경에서 가장 안정적으로 동작하는지 구체적인 관찰 포인트에 주목해 볼 수 있어요.",
       "cluster_size": 1,
       "planning_meta": {
         "signal_type": "model_release",
